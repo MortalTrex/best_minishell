@@ -1,0 +1,10 @@
+{
+	"C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+		"clang-diagnostic-pointer-integer-compare"
+	],
+	"files.associations": {
+		"*.c": "c",
+		"libft.h": "c",
+		"stddef.h": "c"
+	}
+}
