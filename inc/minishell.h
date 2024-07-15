@@ -4,6 +4,7 @@
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
+# include "structures.h"
 # include <curses.h>            // for tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <dirent.h>            // for opendir, readdir, closedir
 # include <errno.h>             // for strerror, perror

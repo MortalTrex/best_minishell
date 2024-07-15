@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/07/14 17:18:25 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/07/15 12:06:33 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INC = -Iincs
 
 LIBS = -L$(LIBFTDIR) -lft
 
-SRCS = srcs/test.c
+SRCS = srcs/main.c
 
 OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 
