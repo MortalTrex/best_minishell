@@ -3,24 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/07/15 12:06:33 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/08/16 15:03:51 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -f
-FLAGS = -Wall -Wextra -Werror -g 
+FLAGS = -Wall -Wextra -Werror -g
 LIBFTDIR = libft/
 OBJ_DIR = objs/
-INC = -Iincs
+INC = -Iincs -I../../inc -Isrcs
 
 LIBS = -L$(LIBFTDIR) -lft
 
-SRCS = srcs/main.c
+SRCS = srcs/main.c srcs/builtins/echo.c
 
 OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 
@@ -31,14 +31,14 @@ RESET	=	\033[00m
 
 all: create_dirs $(NAME)
 
-$(OBJS): $(OBJ_DIR)%.o: %.c
-	@mkdir -p $(@D)
-	$(CC) $(FLAGS) $(INC) -c $< -o $@
-
 $(NAME): $(OBJS)
 	$(MAKE) -s -C $(LIBFTDIR)
 	$(CC) $(FLAGS) -lreadline -lm $(OBJS) $(LIBS) -o $(NAME)
 	@echo "$(INDI)The best minishell on the world compiled!$(RESET)"
+
+$(OBJ_DIR)%.o: %.c
+	@mkdir -p $(@D)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@
 
 create_dirs:
 	@mkdir -p $(OBJ_DIR)
@@ -51,7 +51,7 @@ fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -s -C $(LIBFTDIR) fclean
 
-re: clean all
+re: fclean all
 
 .PHONY: all clean fclean create_dirs re
 

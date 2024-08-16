@@ -22,4 +22,12 @@
 
 ////////////////////////// DEFINES ////////////////////////////
 
+# define PROMPT "minishell> "
+# define PROMPT_SIZE 11
+# define MAX_PATH 4096
+
+////////////////////////// PROTOTYPES /////////////////////////
+
+void	ft_echo(char *line);
+
 #endif
