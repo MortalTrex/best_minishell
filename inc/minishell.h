@@ -4,7 +4,6 @@
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
-# include "structures.h"
 # include <curses.h>            // for tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <dirent.h>            // for opendir, readdir, closedir
 # include <errno.h>             // for strerror, perror
@@ -19,15 +18,22 @@
 # include <term.h>              // for tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <termios.h>           // for tcsetattr, tcgetattr
 # include <unistd.h>            // for write, access, read, close, fork, getcwd, chdir, dup, dup2, pipe, isatty
+# include "structures.h"
 
-////////////////////////// DEFINES ////////////////////////////
+////////////////////////// DEFINITIONS ////////////////////////////
 
 # define PROMPT "minishell> "
-# define PROMPT_SIZE 11
-# define MAX_PATH 4096
 
-////////////////////////// PROTOTYPES /////////////////////////
 
+
+////////////////////////// FUNCTION PROTOTYPES /////////////////////////
+
+/* builtins */
+
+// ECHO
 void	ft_echo(char *line);
+
+/* signal */
+
 
 #endif

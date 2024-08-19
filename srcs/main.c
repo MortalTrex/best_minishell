@@ -1,5 +1,7 @@
 #include "../inc/minishell.h"
 
+sig_atomic_t g_received_signal = 0;
+
 // void ft_commands()
 // {
 

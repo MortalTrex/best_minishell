@@ -14,6 +14,7 @@ https://www.gnu.org/software/bash/manual/bash.html
 
 shorter HOWTO
 https://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
+	https://www.linuxdoc.org/HOWTO/Bash-Prog-Intro-HOWTO-9.html
 
 
 merging from existing branch
