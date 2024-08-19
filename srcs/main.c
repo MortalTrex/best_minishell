@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	// READ COMMANDS
 	while (true)
 	{
-		line = readline("minishell> ");
+		line = readline(PROMPT);
 
 		// printf("%s\n", line);
 

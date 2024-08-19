@@ -12,6 +12,11 @@ https://tldp.org/LDP/Bash-Beginners-Guide/html/index.html
 
 https://www.gnu.org/software/bash/manual/bash.html
 
+shorter HOWTO
+https://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
+
+
+merging from existing branch
 
 ```c
 git checkout feature/feature_b
@@ -26,7 +31,7 @@ steps
 3. fork before excve (otherwise rewrites our processes)
 
 notes
-minitalk can be used for ctrl + V and ctrl + c
+minitalk can be used for ctrl + d and ctrl + c
 
 
  Minishell - Project Flow
@@ -45,7 +50,7 @@ minitalk can be used for ctrl + V and ctrl + c
         Handle Syntax Errors: Provide meaningful error messages.
 
         Expand Variables: Replace $ tokens with their corresponding values.
-               Expand Variables: After tokenization, and while parsing, you should expand the variables. The order here is critical:
+				Expand Variables: After tokenization, and while parsing, you should expand the variables. The order here is critical:
               Outside Quotes: If a variable appears outside of quotes, replace it with its value immediately.
               Inside Double Quotes ("): Variables inside double quotes should be expanded. For example, "Hello $USER" should expand $USER but
               preserve the other content.
@@ -69,3 +74,8 @@ minitalk can be used for ctrl + V and ctrl + c
      Heredocs
 
      Testing & Debugging
+
+
+**bash**
+pipes
+

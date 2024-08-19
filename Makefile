@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/16 15:03:51 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/08/19 13:33:05 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RM = rm -f
 FLAGS = -Wall -Wextra -Werror -g
 LIBFTDIR = libft/
 OBJ_DIR = objs/
-INC = -Iincs -I../../inc -Isrcs
+INC = -Iinc -Isrcs
 
 LIBS = -L$(LIBFTDIR) -lft
 
