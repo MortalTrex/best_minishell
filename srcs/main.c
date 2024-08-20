@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-sig_atomic_t g_received_signal = 0;
+sig_atomic_t	g_received_signal = 0;
 
 // void ft_commands()
 // {
@@ -9,6 +9,7 @@ sig_atomic_t g_received_signal = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
+
 	(void)envp;
 	(void)argc;
 	(void)argv;

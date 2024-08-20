@@ -7,7 +7,7 @@ void	ft_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_recieved_signal = 130;
+	g_received_signal = 130;
 }
 
 void	ft_init_signal(void)
