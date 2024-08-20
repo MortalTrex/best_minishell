@@ -90,7 +90,7 @@ void	ft_process(char **argv, int *fd, char **envp, int inout)
 		ft_perror_msg("Error opening input_file", fd);
 	if (dup2(fd[nb], nb) == -1)
 		ft_perror_msg("Error redirecting stdin", fd);
-	if (dup2(file, nb) == -1)
+	if (dup2(file, inout) == -1)
 		ft_perror_msg("Error redirecting stdout", fd);
 	close(fd[0]);
 	close(fd[1]);
@@ -100,7 +100,7 @@ void	ft_process(char **argv, int *fd, char **envp, int inout)
 		exit(EXIT_SUCCESS);
 }
 
-void	ft_process_child(char **argv, int *fd, char **envp)
+void	ft_process_infile(char **argv, int *fd, char **envp)
 {
 	int	input_file;
 
@@ -120,7 +120,7 @@ void	ft_process_child(char **argv, int *fd, char **envp)
 	exit (EXIT_SUCCESS);
 }
 
-void	ft_process_parent(char **argv, int *fd, char **envp)
+void	ft_process_outfile(char **argv, int *fd, char **envp)
 {
 	int	output_file;
 
@@ -142,7 +142,7 @@ int	main(int argc, char **argv, char **envp)
 	int fd[2];
 	pid_t pid;
 	pid_t pid2;
-
+	int i = 0;
 	(void)argc;
 	if (pipe(fd) == -1)
 		ft_perror_msg("Error creating pipe", NULL);
