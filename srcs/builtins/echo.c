@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+/*        echo - display a line of text
+ */
+
 void ft_echo(char *line)
 {
 	char *res;

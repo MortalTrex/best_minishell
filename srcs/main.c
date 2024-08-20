@@ -21,12 +21,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline(PROMPT);
 
-		// printf("%s\n", line);
-
 		//data = parser(line);
 
 		//execute(data);
-		ft_echo(line);
 		if (ft_strncmp(line, "exit", 4) == 0)
 
 		if (ft_strncmp(line, "exit", 5) == 0)
