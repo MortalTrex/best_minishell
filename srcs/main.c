@@ -7,6 +7,7 @@ sig_atomic_t	g_received_signal = 0;
 
 // }
 
+/*
 int	main(int argc, char **argv, char **envp)
 {
 
@@ -33,3 +34,4 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:20:46 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/08/19 13:54:47 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:55:04 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int		ft_put_nbr(long long int nb, int base, char *string);
 int		ft_put_str(char *s);
 int		ft_put_hexa(unsigned int nb, char c);
 int		ft_put_ptr(unsigned long long ptr);
+
+// new functions
+void ft_free_tab(char **tab);
 
 // linked list functions
 
