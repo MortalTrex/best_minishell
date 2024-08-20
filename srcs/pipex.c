@@ -142,7 +142,7 @@ int	main(int argc, char **argv, char **envp)
 	int fd[2];
 	pid_t pid;
 	pid_t pid2;
-	int i = 0;
+	
 	(void)argc;
 	if (pipe(fd) == -1)
 		ft_perror_msg("Error creating pipe", NULL);
