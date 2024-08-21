@@ -19,6 +19,7 @@
 # include <termios.h>           // for tcsetattr, tcgetattr
 # include <unistd.h>            // for write, access, read, close, fork, getcwd, chdir, dup, dup2, pipe, isatty
 # include "structures.h"
+# include "lexer.h"
 
 ////////////////////////// DEFINITIONS ////////////////////////////
 
