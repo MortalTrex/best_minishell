@@ -27,3 +27,4 @@ typedef struct s_data
 	t_cmd			*cmds;
 	struct termios	terminal;
 }					t_data;
+
