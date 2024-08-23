@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:57:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2023/11/23 17:14:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:46:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ static size_t	get_word_len(char const *s, char c)
 	return (i);
 }
 
-static void	free_array(size_t i, char **array)
+static void	free_array(int i, char **array)
 {
-	while (i > 0)
+	while (i >= 0)
 	{
-		i--;
 		free(*(array + i));
+		i--;
 	}
 	free(array);
 }
@@ -66,10 +66,7 @@ static char	**ft_split1(char const *s, char c, char **array, size_t words_count)
 			j++;
 		*(array + i) = ft_substr(s, j, get_word_len((const char *)(s + j), c));
 		if (!*(array + i))
-		{
-			free_array(i, array);
-			return (NULL);
-		}
+			return (free_array(i, array), NULL);
 		while (*(s + j) && *(s + j) != c)
 			j++;
 		i++;
@@ -88,40 +85,24 @@ char	**ft_split(char const *s, char c)
 	words = count_words(s, c);
 	array = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!array)
-		return (NULL);
+		return (free(array), NULL);
 	array = ft_split1(s, c, array, words);
 	return (array);
 }
-/*
-// Function to free the memory allocated for the result of ft_split
-void free_split_result(char **result) {
-    char **temp = result;
-    while (*temp) {
-        free(*temp);
-        temp++;
-    }
-    free(result);
-}
 
-int main() {
-    // Example usage
-    char input_string[] = "Hello,World,C,Programming";
-    char delimiter = ',';
+// int	main(void)
+// {
+// 	char	*s;
+// 	char	**res;
+// 	int		i;
 
-    printf("Input String: %s\n", input_string);
-    printf("Delimiter: %c\n", delimiter);
-
-    // Call the ft_split function
-    char **result = ft_split(input_string, delimiter);
-
-    // Print the result
-    printf("Result:\n");
-    for (int i = 0; result[i] != NULL; i++) {
-        printf("%s\n", result[i]);
-    }
-
-    // Free the memory allocated for the result
-    free_split_result(result);
-
-    return 0;
-}*/
+//   s = "salutca-va";
+//   res = ft_split(s, '-');
+//   i = 0;
+//   while(res[i])
+//   {
+// 	printf("%s", res[i]);
+// 	i++;
+//   }
+//   free(res);
+// }

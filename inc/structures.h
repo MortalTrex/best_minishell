@@ -18,8 +18,7 @@ typedef struct s_cmd
 	char			**argv;
 	pid_t			pid;
 	struct s_cmd	*next;
-	t_redir			*redir_in;
-	t_redir			*redir_out;
+	t_redir			*redir;
 }					t_cmd;
 
 typedef struct s_data
