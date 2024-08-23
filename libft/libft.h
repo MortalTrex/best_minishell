@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:20:46 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/08/16 14:23:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/23 15:16:41 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+# include <stdbool.h>
 
 // libft functions
 
