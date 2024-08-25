@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 17:47:01 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/25 19:24:21 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool is_split_token(char c)
 void token_function(char *line)
 {
 	char **tokens;
-	tokens = ft_split(line, ' ');
+	tokens = ft_token_split(line, ' ');
 	int i = 0;
 
 	while (tokens[i])

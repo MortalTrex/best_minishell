@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:12:06 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 15:46:35 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/25 19:25:48 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,8 @@ void	ft_perror_msg(char *msg, int *fd);
 //Builtins
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
+
+//Token
+char **ft_token_split(char *line);
 
 #endif
