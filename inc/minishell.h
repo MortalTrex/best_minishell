@@ -1,22 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 14:12:06 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 15:46:35 by rbalazs          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
-# include "structures.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
@@ -31,8 +18,14 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
+# include "structures.h"
+# include "lexer.h"
 
-////////////////////////// PROTOTYPES ///////////////////////////
+////////////////////////// DEFINITIONS ////////////////////////////
+
+# define PROMPT "minishell> "
+
+////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
 //Pipex
 char	*find_path(char *cmd, char **envp);
@@ -46,5 +39,7 @@ void	ft_perror_msg(char *msg, int *fd);
 //Builtins
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
+
+/* signal */
 
 #endif

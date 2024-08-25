@@ -21,7 +21,6 @@ t_token	*ft_stacknew(int type, char *value)
 	return (token);
 }
 
-
 t_token	*ft_stacklast(t_token *stack)
 {
 	if (!stack)

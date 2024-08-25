@@ -1,3 +1,6 @@
+#ifndef STRUCTURES_H
+# define STRUCTURES_H
+
 typedef enum e_redir_type
 {
 	IN,
@@ -27,3 +30,4 @@ typedef struct s_data
 	//struct termios	terminal;
 }					t_data;
 
+#endif

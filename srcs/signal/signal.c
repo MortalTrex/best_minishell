@@ -13,6 +13,4 @@ void	ft_sigint(int sig)
 void	ft_init_signal(void)
 {
 	struct sigaction	act_sa;
-
-
 }
