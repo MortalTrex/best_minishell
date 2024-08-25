@@ -7,7 +7,5 @@ t_token	*ft_lexer(char *line)
 	stack = NULL;
 	while (*line)
 	{
-		
 	}
-
 }
