@@ -25,8 +25,6 @@
 
 # define PROMPT "minishell> "
 
-
-
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
 /* builtins */
@@ -35,6 +33,5 @@
 void	ft_echo(char *line);
 
 /* signal */
-
 
 #endif

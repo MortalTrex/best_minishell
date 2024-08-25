@@ -1,3 +1,5 @@
+#include "minishell.h"
+
 typedef enum e_redir_type
 {
 	IN,
