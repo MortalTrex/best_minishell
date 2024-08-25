@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/25 16:27:59 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/08/25 16:31:21 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ INC = -Iinc -Isrcs
 LIBS = -L$(LIBFTDIR) -lft
 
 SRCS = srcs/main.c srcs/builtins/echo.c\
-	srcs/pipex.c \
-	srcs/errors.c
+	srcs/utils/pipex.c \
+	srcs/utils/errors.c
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m
