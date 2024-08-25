@@ -1,3 +1,5 @@
 /objs
 *.o
 minishell
+infile
+outfile
