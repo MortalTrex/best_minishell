@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:24:07 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/08/23 19:08:55 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/25 14:15:13 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_substr(char const *s, unsigned int start, int len)
 {
 	char	*str;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	if (!s)
 		return (NULL);

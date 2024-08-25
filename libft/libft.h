@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:20:46 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/08/23 20:15:12 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/08/25 15:47:20 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		ft_put_hexa(unsigned int nb, char c);
 int		ft_put_ptr(unsigned long long ptr);
 
 // new functions
-void ft_free_tab(char **tab);
+void	ft_free_tab(char **tab);
 
 // linked list functions
 

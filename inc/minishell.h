@@ -1,40 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/25 14:12:06 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/08/25 15:46:35 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
-# include <curses.h>            // for tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-# include <dirent.h>            // for opendir, readdir, closedir
-# include <errno.h>             // for strerror, perror
-# include <fcntl.h>             // for open
-# include <readline/history.h>  // for add_history
-# include <readline/readline.h> // for readline, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay
-# include <signal.h>            // for signal, sigaction, sigemptyset, sigaddset, kill
-# include <stdlib.h>            // for malloc, free, exit
-# include <sys/stat.h>          // for stat, lstat, fstat
-# include <sys/types.h>         // for wait, waitpid, wait3, wait4
-# include <sys/wait.h>          // for wait, waitpid, wait3, wait4
-# include <term.h>              // for tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-# include <termios.h>           // for tcsetattr, tcgetattr
-# include <unistd.h>            // for write, access, read, close, fork, getcwd, chdir, dup, dup2, pipe, isatty
 # include "structures.h"
-# include "lexer.h"
+# include <curses.h>
+# include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdlib.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <term.h>
+# include <termios.h>
+# include <unistd.h>
 
-////////////////////////// DEFINITIONS ////////////////////////////
+////////////////////////// PROTOTYPES ///////////////////////////
 
-# define PROMPT "minishell> "
+//Pipex
+char	*find_path(char *cmd, char **envp);
+void	exec(char *arg, char **envp);
+void	ft_process_infile(char **argv, int *fd, char **envp);
+void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
+//Errors
+void	ft_perror_msg(char *msg, int *fd);
 
-
-////////////////////////// FUNCTION PROTOTYPES /////////////////////////
-
-/* builtins */
-
-// ECHO
+//Builtins
 void	ft_echo(char *line);
-
-/* signal */
-
+void	print_line(char *line, int start, int len);
 
 #endif
