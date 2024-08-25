@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 14:17:41 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/25 17:55:56 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ sig_atomic_t	g_received_signal = 0;
 
 // }
 
-/*
+
 int	main(int argc, char **argv, char **envp)
 {
 
 	(void)envp;
 	(void)argc;
 	(void)argv;
-
+	t_token *data;
 	char *line;
 	//t_data data;
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = readline(PROMPT);
 
-		//data = parser(line);
+		data = ft_lexer(line);
 
 		//execute(data);
 		if (ft_strncmp(line, "exit", 4) == 0)
@@ -46,4 +46,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-*/
+
+

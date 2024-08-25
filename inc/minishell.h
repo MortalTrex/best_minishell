@@ -40,6 +40,9 @@ void	ft_perror_msg(char *msg, int *fd);
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
 
-/* signal */
+// lexer
+t_token	*ft_lexer(char *line);
+char	**ft_split_ms(char const *s);
+
 
 #endif

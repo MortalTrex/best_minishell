@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:54 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 15:43:25 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/25 17:47:18 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_process_outfile(char **argv, int *fd, char **envp, int argc)
 	exec(argv[3], envp);
 }
 
-int	main(int argc, char **argv, char **envp)
+/* int	main(int argc, char **argv, char **envp)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -111,4 +111,4 @@ int	main(int argc, char **argv, char **envp)
 	close(fd[1]);
 	waitpid(pid, NULL, 0);
 	return (EXIT_SUCCESS);
-}
+} */
