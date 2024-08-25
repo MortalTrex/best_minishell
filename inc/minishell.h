@@ -27,10 +27,18 @@
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
-/* builtins */
+//Pipex
+char	*find_path(char *cmd, char **envp);
+void	exec(char *arg, char **envp);
+void	ft_process_infile(char **argv, int *fd, char **envp);
+void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
-// ECHO
+//Errors
+void	ft_perror_msg(char *msg, int *fd);
+
+//Builtins
 void	ft_echo(char *line);
+void	print_line(char *line, int start, int len);
 
 /* signal */
 

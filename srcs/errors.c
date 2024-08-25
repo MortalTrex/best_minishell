@@ -1,49 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 14:17:41 by rbalazs          ###   ########.fr       */
+/*   Created: 2024/08/25 15:29:32 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/08/25 15:37:07 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-sig_atomic_t	g_received_signal = 0;
-
-// void ft_commands()
-// {
-
-// }
-
-/*
-int	main(int argc, char **argv, char **envp)
+void	ft_perror_msg(char *msg, int *fd)
 {
-
-	(void)envp;
-	(void)argc;
-	(void)argv;
-
-	char *line;
-	//t_data data;
-
-	// READ COMMANDS
-	while (true)
+	if (fd != NULL)
 	{
-		line = readline(PROMPT);
-
-		//data = parser(line);
-
-		//execute(data);
-		if (ft_strncmp(line, "exit", 4) == 0)
-
-		if (ft_strncmp(line, "exit", 5) == 0)
-			break ;
-		free(line);
+		close(fd[0]);
+		close(fd[1]);
 	}
-	return (0);
+	perror(msg);
+	exit(EXIT_FAILURE);
 }
-*/

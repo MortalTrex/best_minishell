@@ -1,18 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/25 14:17:54 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/08/25 15:43:25 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 // tests : ./minishell infile "ls -l" "wc -l" outfile
 //  ./minishell infile "grep a1" "wc -w" outfile
 
-void	ft_perror_msg(char *msg, int *fd)
-{
-	if (fd != NULL)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
-	perror(msg);
-	exit(EXIT_FAILURE);
-}
 char	*find_path(char *cmd, char **envp)
 {
 	char	*path;
@@ -39,6 +41,7 @@ char	*find_path(char *cmd, char **envp)
 	ft_free_tab(dir_path);
 	return (NULL);
 }
+
 void	exec(char *arg, char **envp)
 {
 	char	**cmd;
@@ -46,10 +49,7 @@ void	exec(char *arg, char **envp)
 
 	cmd = ft_split(arg, 32);
 	if (!cmd || !cmd[0])
-	{
-		//ft_free_tab(cmd);
 		ft_perror_msg("Error: empty command", NULL);
-	}
 	path = find_path(cmd[0], envp);
 	if (!path || execve(path, cmd, envp) == -1)
 	{
@@ -57,6 +57,7 @@ void	exec(char *arg, char **envp)
 		ft_perror_msg("Error: command not found", NULL);
 	}
 }
+
 void	ft_process_infile(char **argv, int *fd, char **envp)
 {
 	int	fd_in;
@@ -94,8 +95,8 @@ void	ft_process_outfile(char **argv, int *fd, char **envp, int argc)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int fd[2];
-	pid_t pid;
+	int		fd[2];
+	pid_t	pid;
 
 	if (pipe(fd) == -1)
 		ft_perror_msg("Error creating pipe", NULL);

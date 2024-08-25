@@ -1,16 +1,46 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/25 14:22:19 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/08/25 15:47:35 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/*        echo - display a line of text
- */
+#include "../inc/minishell.h"
 
-void ft_echo(char *line)
+void	print_line(char *line, int start, int len)
 {
-	char *res;
+	char	*res;
+	int		i;
 
-	int i = 0;
-	int len = 0;
-	int start = 0;
-	if (line[i] == 'e' && line[i + 1] == 'c' && line[i + 2] == 'h' && line[i + 3] == 'o')
+	res = malloc(sizeof(char) * len + 1);
+	i = 0;
+	while (line[start])
+	{
+		res[i] = line[start];
+		i++;
+		start++;
+	}
+	res[i] = '\0';
+	ft_printf("%s\n", res);
+	free(res);
+}
+
+void	ft_echo(char *line)
+{
+	int		i;
+	int		len;
+	int		start;
+
+	i = 0;
+	len = 0;
+	start = 0;
+	if (line[i] == 'e' && line[i + 1] == 'c'
+		&& line[i + 2] == 'h' && line[i + 3] == 'o')
 	{
 		i = 4;
 		start = 4;
@@ -25,15 +55,5 @@ void ft_echo(char *line)
 			i++;
 		}
 	}
-	res = malloc(sizeof(char) * len + 1);
-	i = 0;
-	while (line[start])
-	{
-		res[i] = line[start];
-		i++;
-		start++;
-	}
-	res[i] = '\0';
-	ft_printf("%s\n", res);
-	free(res);
+	print_line(line, start, len);
 }

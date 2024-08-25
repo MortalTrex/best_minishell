@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "libft.h": "c"
-    }
+		"*.c": "c",
+		"libft.h": "c",
+		"lexer.h": "c"
+	}
 }
