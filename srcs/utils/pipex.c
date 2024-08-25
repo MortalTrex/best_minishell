@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:54 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 15:43:25 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/25 16:51:52 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,22 @@ void	ft_process_outfile(char **argv, int *fd, char **envp, int argc)
 	exec(argv[3], envp);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	int		fd[2];
-	pid_t	pid;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	int		fd[2];
+// 	pid_t	pid;
 
-	if (pipe(fd) == -1)
-		ft_perror_msg("Error creating pipe", NULL);
-	pid = fork();
-	if (pid == -1)
-		ft_perror_msg("Error forking", NULL);
-	if (pid == 0)
-		ft_process_infile(argv, fd, envp);
-	if (pid != 0)
-		ft_process_outfile(argv, fd, envp, argc);
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(pid, NULL, 0);
-	return (EXIT_SUCCESS);
-}
+// 	if (pipe(fd) == -1)
+// 		ft_perror_msg("Error creating pipe", NULL);
+// 	pid = fork();
+// 	if (pid == -1)
+// 		ft_perror_msg("Error forking", NULL);
+// 	if (pid == 0)
+// 		ft_process_infile(argv, fd, envp);
+// 	if (pid != 0)
+// 		ft_process_outfile(argv, fd, envp, argc);
+// 	close(fd[0]);
+// 	close(fd[1]);
+// 	waitpid(pid, NULL, 0);
+// 	return (EXIT_SUCCESS);
+// }
