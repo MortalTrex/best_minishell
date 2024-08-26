@@ -1,18 +1,18 @@
 #include "minishell.h"
 
-void	ft_stackadd_back(t_token **stack, t_token *new)
+void ft_stackadd_back(t_token **stack, t_token *new)
 {
-	t_token	*last;
-
+	t_token *last;
 	last = ft_stacklast(*stack);
 	if (!last)
 		*stack = new;
-	last->next = new;
+	else
+		last->next = new;
 }
 
-t_token	*ft_stacknew(int type, void *value)
+t_token *ft_stacknew(int type, void *value)
 {
-	t_token	*token;
+	t_token *token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
@@ -23,9 +23,9 @@ t_token	*ft_stacknew(int type, void *value)
 	return (token);
 }
 
-t_token	*ft_stacklast(t_token *stack)
+t_token *ft_stacklast(t_token *stack)
 {
-	t_token	*tmp;
+	t_token *tmp;
 	if (!stack)
 		return (NULL);
 	tmp = stack;
@@ -34,9 +34,9 @@ t_token	*ft_stacklast(t_token *stack)
 	return (tmp);
 }
 
-void	ft_stackclear(t_token **stack)
+void ft_stackclear(t_token **stack)
 {
-	t_token	*tmp;
+	t_token *tmp;
 
 	while (*stack)
 	{
