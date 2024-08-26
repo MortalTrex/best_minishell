@@ -35,13 +35,32 @@ void ft_append_word(t_token **tokens, char *line, unsigned int *i)
 
 	// Add debugging statement
 	printf("Appending word starting at index %u\n", *i);
-
-	while (line[*i] && !ft_isspace(line[*i]) && !ft_isoperator(line[*i]))
+	if (line [*i] == '\'' || line[*i] == '\"')
 	{
 		(*i)++;
 		len++;
+		while (line[*i] && line[*i] != line[start])
+		{
+			(*i)++;
+			len++;
+		}
+		if (line[*i] == line[start])
+		{
+			(*i)++;
+			len++;
+		}
 	}
-
+	else if (line[*i] && !ft_isspace(line[*i]) && !ft_isoperator(line[*i]))
+	{
+		(*i)++;
+		len++;
+		while (line[*i] && !ft_isspace(line[*i]) && !ft_isoperator(line[*i]))
+		{
+			(*i)++;
+			len++;
+		}
+	}
+	printf("Word length: %d\n", len);
 	// Check if ft_substr returns NULL
 	char *substr = ft_substr(line, start, len);
 	if (!substr)
