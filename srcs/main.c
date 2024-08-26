@@ -6,19 +6,39 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 17:55:56 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:40:53 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-sig_atomic_t	g_received_signal = 0;
+bool is_whiteSpace(char c)
+{
+    if ((c >= 9 && c <= 13) || c == 32)
+        return (true);
+    return (false);
+}
 
-// void ft_commands()
-// {
+bool is_split_token(char c)
+{
+    if (is_whiteSpace(c) || c == '|')
+        return (true);
+    return (false);
+}
 
-// }
+void token_function(char *line)
+{
+	char **tokens;
+	tokens = ft_token_split(line, ' ');
+	int i = 0;
 
+	while (tokens[i])
+	{
+		ft_printf("%s\n", tokens[i]);
+		i++;
+	}
+
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -28,17 +48,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	t_token *data;
 	char *line;
-	//t_data data;
 
-	// READ COMMANDS
 	while (true)
 	{
-		line = readline(PROMPT);
+		line = readline("minishell> ");
 
-		data = ft_lexer(line);
-
-		//execute(data);
-		if (ft_strncmp(line, "exit", 4) == 0)
+		token_function(line);
 
 		if (ft_strncmp(line, "exit", 5) == 0)
 			break ;
@@ -46,5 +61,3 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-

@@ -27,7 +27,7 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	t_cmd			*cmds;
-	struct termios	terminal;
+	//struct termios	terminal;
 }					t_data;
 
 #endif
