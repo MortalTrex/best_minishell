@@ -3,9 +3,8 @@
 t_token	*ft_lexer(char *line)
 {
 	t_token *tokens;
-	int i = 0;
 
-	tokens = NULL;
-	
-	return (NULL);
+	if (!ft_tokenize(line, &tokens))
+		return (ft_stackclear(&tokens), NULL);
+	return (tokens);
 }

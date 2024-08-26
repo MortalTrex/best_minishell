@@ -2,10 +2,12 @@
 
 void	ft_stackadd_back(t_token **stack, t_token *new)
 {
-	if (!*(stack))
+	t_token	*last;
+
+	last = ft_stacklast(*stack);
+	if (!last)
 		*stack = new;
-	else
-		ft_stacklast(*stack)->next = new;
+	last->next = new;
 }
 
 t_token	*ft_stacknew(int type, char *value)
@@ -23,11 +25,13 @@ t_token	*ft_stacknew(int type, char *value)
 
 t_token	*ft_stacklast(t_token *stack)
 {
+	t_token	*tmp;
 	if (!stack)
 		return (NULL);
-	while (stack->next)
-		stack = stack->next;
-	return (stack);
+	tmp = stack;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }
 
 void	ft_stackclear(t_token **stack)

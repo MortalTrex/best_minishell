@@ -21,6 +21,8 @@ a-recursive-descent-parser-with-an-infix-expression-evaluator
 
 https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10
 
+https://trove.assistants.epita.fr/docs/42sh/lexer-parser
+
 
 ```c
 git checkout feature/feature_b

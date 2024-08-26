@@ -40,11 +40,23 @@ void	ft_perror_msg(char *msg, int *fd);
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
 
-// lexer
+/* lexer */
+
+// lexer.c
 t_token	*ft_lexer(char *line);
-char	**ft_split_ms(char const *s);
-char **ft_token_split(char *line);
 
+// tokenize.c
+void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
+void	ft_append_word(t_token **tokens, char *line, unsigned int *i);
+bool	ft_tokenize(char *line, t_token **tokens);
 
+// grammar_check.c
+bool	ft_isoperator(char c);
+
+// stack_utils.c
+t_token	*ft_stacknew(int type, char *value);
+void	ft_stackadd_back(t_token **stack, t_token *new);
+t_token	*ft_stacklast(t_token *stack);
+void	ft_stackclear(t_token **stack);
 
 #endif

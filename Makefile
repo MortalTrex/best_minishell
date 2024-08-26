@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/26 11:42:16 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/08/26 15:12:45 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,10 @@ LIBS = -L$(LIBFTDIR) -lft
 SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/utils/pipex.c \
 	srcs/utils/errors.c\
-	srcs/utils/token_split.c
+	srcs/lexing/lexer.c\
+	srcs/lexing/tokenize.c\
+	srcs/lexing/stack_utils.c\
+	srcs/lexing/grammar_check.c
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m

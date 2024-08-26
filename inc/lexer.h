@@ -3,11 +3,10 @@
 
 typedef enum e_token_type
 {
-	T_WORD, // T_ATOM is a token that is not a special character (command, argument, file name)
+	T_WORD,
 	T_IO_NUMBER,
 	T_NEWLINE,
-	T_NAME,
-	T_ERROR,
+	T_OPERATOR,
 	T_EOF
 }					t_token_type;
 
