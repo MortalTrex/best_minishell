@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/26 15:12:45 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/08/26 16:08:02 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,14 +36,15 @@ OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(FLAGS) $(INC) -c $< -o $@
+	@$(CC) $(FLAGS) $(INC) -c $< -o $@
 
 OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
+
 all: create_dirs $(NAME)
 
 $(NAME): $(OBJS)
-	$(MAKE) -s -C $(LIBFTDIR)
-	$(CC) $(FLAGS) -lreadline -lm $(OBJS) $(LIBS) -o $(NAME)
+	@$(MAKE) -s -C $(LIBFTDIR)
+	@$(CC) $(FLAGS) -lreadline -lm $(OBJS) $(LIBS) -o $(NAME)
 	@echo "$(INDI)The best minishell on the world compiled!$(RESET)"
 
 create_dirs:
@@ -51,11 +52,11 @@ create_dirs:
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	$(MAKE) -s -C $(LIBFTDIR) clean
+	@$(MAKE) -s -C $(LIBFTDIR) clean
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) -s -C $(LIBFTDIR) fclean
+	@$(RM) $(NAME)
+	@$(MAKE) -s -C $(LIBFTDIR) fclean
 
 re: fclean all
 
