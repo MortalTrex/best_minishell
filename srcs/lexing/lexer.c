@@ -2,15 +2,10 @@
 
 t_token	*ft_lexer(char *line)
 {
-	char **tokens;
+	t_token *tokens;
 	int i = 0;
 
-	tokens = ft_split_ms(line);
-	while(tokens[i])
-	{
-		printf("%s\n", tokens[i]);
-		i++;
-	}
-	free(tokens);
+	tokens = NULL;
+	
 	return (NULL);
 }
