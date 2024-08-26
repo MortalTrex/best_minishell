@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/26 15:07:56 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:45:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	(void)argc;
 	(void)argv;
-	t_token *tokens;
+	t_token *tok;
 	char *line;
 
 	while (true)
 	{
 		line = readline("minishell> ");
-		tokens = ft_lexer(line);
+		tok = ft_lexer(line);
+		t_token *tokens = tok;
 		while (tokens)
 		{
 			if (tokens->type == T_WORD)

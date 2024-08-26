@@ -85,6 +85,6 @@ bool ft_tokenize(char *line, t_token **tokens)
 		i++;
 	}
 	if (line[i] == EOF)
-			ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL));
+		ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL));
 	return (true);
 }

@@ -10,7 +10,7 @@ void	ft_stackadd_back(t_token **stack, t_token *new)
 	last->next = new;
 }
 
-t_token	*ft_stacknew(int type, char *value)
+t_token	*ft_stacknew(int type, void *value)
 {
 	t_token	*token;
 
