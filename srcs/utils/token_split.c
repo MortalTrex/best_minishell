@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "minishell.h"
 #include <stdbool.h>
 
 //If it is in "quotes" it will skip the spaces without counting them

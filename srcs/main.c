@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/26 11:40:53 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/08/26 11:47:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ bool is_split_token(char c)
 void token_function(char *line)
 {
 	char **tokens;
-	tokens = ft_token_split(line, ' ');
+	tokens = ft_token_split(line);
 	int i = 0;
 
 	while (tokens[i])
 	{
-		ft_printf("%s\n", tokens[i]);
+		ft_printf("token num [%i] is: %s\n", i, tokens[i]);
 		i++;
 	}
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	(void)argc;
 	(void)argv;
-	t_token *data;
+	//t_token *data;
 	char *line;
 
 	while (true)

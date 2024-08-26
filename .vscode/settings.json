@@ -2,9 +2,4 @@
 	"files.associations": {
 		"fcntl.h": "c"
 	}
-    "files.associations": {
-		"*.c": "c",
-		"libft.h": "c",
-		"lexer.h": "c"
-	}
 }

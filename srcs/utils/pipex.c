@@ -1,17 +1,5 @@
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/25 14:17:54 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 16:51:52 by rbalazs          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 // tests : ./minishell infile "ls -l" "wc -l" outfile
 //  ./minishell infile "grep a1" "wc -w" outfile

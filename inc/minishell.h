@@ -43,6 +43,8 @@ void	print_line(char *line, int start, int len);
 // lexer
 t_token	*ft_lexer(char *line);
 char	**ft_split_ms(char const *s);
+char **ft_token_split(char *line);
+
 
 
 #endif
