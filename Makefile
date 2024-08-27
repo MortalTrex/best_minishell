@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/26 16:08:02 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/08/27 11:40:41 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ all: create_dirs $(NAME)
 $(NAME): $(OBJS)
 	@$(MAKE) -s -C $(LIBFTDIR)
 	@$(CC) $(FLAGS) -lm $(OBJS) $(LIBS) -o $(NAME) $(LDLIBS)
-	@echo "$(INDI)The best minishell on the world compiled!$(RESET)"
+	@echo "$(INDI)The best minishell on the world is compiled!$(RESET)"
 
 create_dirs:
 	@mkdir -p $(OBJ_DIR)

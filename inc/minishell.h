@@ -47,11 +47,13 @@ t_token	*ft_lexer(char *line);
 
 // tokenize.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_word(t_token **tokens, char *line, unsigned int *i);
+bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
 bool	ft_tokenize(char *line, t_token **tokens);
 
 // grammar_check.c
-bool	ft_isoperator(char c);
+bool	ft_is_operator(char c);
+bool	ft_is_quote(char c);
+bool	ft_skip_quotes(char *line, unsigned int *i);
 
 // stack_utils.c
 t_token	*ft_stacknew(int type, void *value);
