@@ -12,34 +12,6 @@
 
 #include "../inc/minishell.h"
 
-/* bool is_whiteSpace(char c)
-{
-    if ((c >= 9 && c <= 13) || c == 32)
-        return (true);
-    return (false);
-}
-
-bool is_split_token(char c)
-{
-    if (is_whiteSpace(c) || c == '|')
-        return (true);
-    return (false);
-}
-
-void token_function(char *line)
-{
-	char **tokens;
-	tokens = ft_token_split(line);
-	int i = 0;
-
-	while (tokens[i])
-	{
-		ft_printf("token num [%i] is: %s\n", i, tokens[i]);
-		i++;
-	}
-
-} */
-
 int	main(int argc, char **argv, char **envp)
 {
 
