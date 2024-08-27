@@ -1,6 +1,7 @@
 /objs
 *.o
 /bin
+libft.a
 minishell
 infile
 outfile
