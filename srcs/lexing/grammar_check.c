@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool ft_isoperator(char c)
+bool	ft_isoperator(char c)
 {
 	if (c == '|' || c == ';' || c == '>' || c == '<')
 		return (true);

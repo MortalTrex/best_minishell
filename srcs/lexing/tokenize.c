@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = NULL;
 	if (line[*i] == '|')
@@ -27,13 +27,16 @@ void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	ft_stackadd_back(tokens, new);
 }
 
-void ft_append_word(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 {
-	unsigned int start = *i;
-	int len = 0;
-	t_token *new;
+	unsigned int	start;
+	int				len;
+	t_token			*new;
+	char			*substr;
 
-	if (line [*i] == '\'' || line[*i] == '\"')
+	start = *i;
+	len = 0;
+	if (line[*i] == '\'' || line[*i] == '\"')
 	{
 		(*i)++;
 		len++;
@@ -58,57 +61,59 @@ void ft_append_word(t_token **tokens, char *line, unsigned int *i)
 			len++;
 		}
 	}
-	char *substr = ft_substr(line, start, len);
+	substr = ft_substr(line, start, len);
 	if (!substr)
 	{
 		fprintf(stderr, "Error: ft_substr returned NULL\n");
-		return;
+		return ;
 	}
 	new = ft_stacknew(T_WORD, substr);
 	if (!new)
 	{
 		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
 		free(substr);
-		return;
+		return ;
 	}
 	ft_stackadd_back(tokens, new);
 }
 
-void ft_append_word_space(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_word_space(t_token **tokens, char *line, unsigned int *i)
 {
-	unsigned int start = *i;
-	int len = 0;
-	t_token *new;
+	unsigned int	start;
+	int				len;
+	t_token			*new;
+	char			*substr;
 
+	start = *i;
+	len = 0;
 	while (line[*i] && line[*i] != '"')
 	{
 		(*i)++;
 		len++;
 	}
-	char *substr = ft_substr(line, start, len);
+	substr = ft_substr(line, start, len);
 	if (!substr)
 	{
 		fprintf(stderr, "Error: ft_substr returned NULL\n");
-		return;
+		return ;
 	}
 	new = ft_stacknew(T_WORD, substr);
 	if (!new)
 	{
 		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
-		free(substr);
-		return;
+
+		return (free(substr));
 	}
 	ft_stackadd_back(tokens, new);
 }
 
-bool ft_tokenize(char *line, t_token **tokens)
+bool	ft_tokenize(char *line, t_token **tokens)
 {
 	unsigned int	i;
-	bool			is_quotes;	
+	bool			is_quotes;
 
 	i = 0;
 	is_quotes = false;
-
 	while (line[i] != '\0')
 	{
 		if (line[i] == '"')

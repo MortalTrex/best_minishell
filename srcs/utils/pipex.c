@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 // tests : ./minishell infile "ls -l" "wc -l" outfile
