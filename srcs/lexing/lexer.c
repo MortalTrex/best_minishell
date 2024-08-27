@@ -2,10 +2,10 @@
 
 t_token	*ft_lexer(char *line)
 {
-	t_token	*stack;
+	t_token *tokens;
 
-	stack = NULL;
-	while (*line)
-	{
-	}
+	tokens = NULL;
+	if (!ft_tokenize(line, &tokens))
+		return (ft_stackclear(&tokens), NULL);
+	return (tokens);
 }

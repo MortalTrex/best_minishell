@@ -3,47 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 14:17:41 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/26 16:57:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-sig_atomic_t	g_received_signal = 0;
-
-// void ft_commands()
-// {
-
-// }
-
-/*
 int	main(int argc, char **argv, char **envp)
 {
 
 	(void)envp;
 	(void)argc;
 	(void)argv;
-
+	t_token *tok;
 	char *line;
-	//t_data data;
 
-	// READ COMMANDS
 	while (true)
 	{
-		line = readline(PROMPT);
-
-		//data = parser(line);
-
-		//execute(data);
-		if (ft_strncmp(line, "exit", 4) == 0)
-
+		line = readline("minishell> ");
+		tok = ft_lexer(line);
+		t_token *tokens = tok;
+		while (tokens)
+		{
+			if (tokens->type == T_WORD)
+				printf("T_WORD: %s\n", tokens->value);
+			else if (tokens->type == T_OPERATOR)
+				printf("T_OPERATOR: %s\n", tokens->value);
+			else if (tokens->type == T_EOF)
+				printf("T_EOF\n");
+			tokens = tokens->next;
+		}
 		if (ft_strncmp(line, "exit", 5) == 0)
 			break ;
 		free(line);
 	}
 	return (0);
 }
-*/

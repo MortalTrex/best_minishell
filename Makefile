@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/25 16:31:21 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/08/26 16:08:02 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,17 @@ FLAGS = -Wall -Wextra -Werror -g
 LIBFTDIR = libft/
 OBJ_DIR = build/
 INC = -Iinc -Isrcs
+LDLIBS = -lreadline
 
 LIBS = -L$(LIBFTDIR) -lft
 
 SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/utils/pipex.c \
-	srcs/utils/errors.c
+	srcs/utils/errors.c\
+	srcs/lexing/lexer.c\
+	srcs/lexing/tokenize.c\
+	srcs/lexing/stack_utils.c\
+	srcs/lexing/grammar_check.c
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m
@@ -32,14 +37,15 @@ OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(FLAGS) $(INC) -c $< -o $@
+	@$(CC) $(FLAGS) $(INC) -c $< -o $@
 
 OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
+
 all: create_dirs $(NAME)
 
 $(NAME): $(OBJS)
-	$(MAKE) -s -C $(LIBFTDIR)
-	$(CC) $(FLAGS) -lreadline -lm $(OBJS) $(LIBS) -o $(NAME)
+	@$(MAKE) -s -C $(LIBFTDIR)
+	@$(CC) $(FLAGS) -lm $(OBJS) $(LIBS) -o $(NAME) $(LDLIBS)
 	@echo "$(INDI)The best minishell on the world compiled!$(RESET)"
 
 create_dirs:
@@ -47,11 +53,11 @@ create_dirs:
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	$(MAKE) -s -C $(LIBFTDIR) clean
+	@$(MAKE) -s -C $(LIBFTDIR) clean
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) -s -C $(LIBFTDIR) fclean
+	@$(RM) $(NAME)
+	@$(MAKE) -s -C $(LIBFTDIR) fclean
 
 re: fclean all
 

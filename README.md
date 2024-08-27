@@ -16,7 +16,13 @@ shorter HOWTO
 https://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
 	https://www.linuxdoc.org/HOWTO/Bash-Prog-Intro-HOWTO-9.html
 
-https://eli.thegreenplace.net/2009/03/20/a-recursive-descent-parser-with-an-infix-expression-evaluator
+https://eli.thegreenplace.net/2009/03/20/
+a-recursive-descent-parser-with-an-infix-expression-evaluator
+
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10
+
+https://trove.assistants.epita.fr/docs/42sh/lexer-parser
+
 
 ```c
 git checkout feature/feature_b
