@@ -17,6 +17,7 @@ FLAGS = -Wall -Wextra -Werror -g
 LIBFTDIR = libft/
 OBJ_DIR = build/
 INC = -Iinc -Isrcs
+LDLIBS = -lreadline
 
 LIBS = -L$(LIBFTDIR) -lft
 
@@ -44,7 +45,7 @@ all: create_dirs $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s -C $(LIBFTDIR)
-	@$(CC) $(FLAGS) -lreadline -lm $(OBJS) $(LIBS) -o $(NAME)
+	@$(CC) $(FLAGS) -lm $(OBJS) $(LIBS) -o $(NAME) $(LDLIBS)
 	@echo "$(INDI)The best minishell on the world compiled!$(RESET)"
 
 create_dirs:

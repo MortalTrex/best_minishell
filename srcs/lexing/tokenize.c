@@ -33,8 +33,6 @@ void ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	int len = 0;
 	t_token *new;
 
-	// Add debugging statement
-	printf("Appending word starting at index %u\n", *i);
 	if (line [*i] == '\'' || line[*i] == '\"')
 	{
 		(*i)++;
@@ -60,18 +58,12 @@ void ft_append_word(t_token **tokens, char *line, unsigned int *i)
 			len++;
 		}
 	}
-	printf("Word length: %d\n", len);
-	// Check if ft_substr returns NULL
 	char *substr = ft_substr(line, start, len);
 	if (!substr)
 	{
 		fprintf(stderr, "Error: ft_substr returned NULL\n");
 		return;
 	}
-
-	// Add debugging statement
-	printf("Created substring: %s\n", substr);
-
 	new = ft_stacknew(T_WORD, substr);
 	if (!new)
 	{
@@ -79,31 +71,68 @@ void ft_append_word(t_token **tokens, char *line, unsigned int *i)
 		free(substr);
 		return;
 	}
-
-	// Add debugging statement
-	printf("Created new token\n");
-
 	ft_stackadd_back(tokens, new);
+}
 
-	// Add debugging statement
-	printf("Added new token to the list\n");
+void ft_append_word_space(t_token **tokens, char *line, unsigned int *i)
+{
+	unsigned int start = *i;
+	int len = 0;
+	t_token *new;
+
+	while (line[*i] && line[*i] != '"')
+	{
+		(*i)++;
+		len++;
+	}
+	char *substr = ft_substr(line, start, len);
+	if (!substr)
+	{
+		fprintf(stderr, "Error: ft_substr returned NULL\n");
+		return;
+	}
+	new = ft_stacknew(T_WORD, substr);
+	if (!new)
+	{
+		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
+		free(substr);
+		return;
+	}
+	ft_stackadd_back(tokens, new);
 }
 
 bool ft_tokenize(char *line, t_token **tokens)
 {
-	unsigned int i = 0;
+	unsigned int	i;
+	bool			is_quotes;	
 
-	while (line[i])
+	i = 0;
+	is_quotes = false;
+
+	while (line[i] != '\0')
 	{
-		if (ft_isspace(line[i]))
+		if (line[i] == '"')
+		{
+			is_quotes = !is_quotes;
 			i++;
-		else if (ft_isoperator(line[i]))
-			ft_append_operator(tokens, line, &i);
+		}
+		else if (is_quotes == true)
+			ft_append_word_space(tokens, line, &i);
 		else
-			ft_append_word(tokens, line, &i);
-		i++;
+		{
+			if (ft_isspace(line[i]))
+				i++;
+			else if (ft_isoperator(line[i]))
+				ft_append_operator(tokens, line, &i);
+			else
+				ft_append_word(tokens, line, &i);
+		}
 	}
-	if (line[i] == EOF)
-		ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL));
+	if (is_quotes == true)
+	{
+		ft_printf("Error: Unclosed quotes\n");
+		return (false);
+	}
+	ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL));
 	return (true);
 }
