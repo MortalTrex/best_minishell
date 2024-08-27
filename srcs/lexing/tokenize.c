@@ -2,7 +2,7 @@
 
 void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = NULL;
 	if (line[*i] == '|')
@@ -74,14 +74,14 @@ void ft_append_word_space(t_token **tokens, char *line, unsigned int *i)
 	if (!substr)
 	{
 		fprintf(stderr, "Error: ft_substr returned NULL\n");
-		return;
+		return ;
 	}
 	new = ft_stacknew(T_WORD, substr);
 	if (!new)
 	{
 		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
 		free(substr);
-		return;
+		return ;
 	}
 	ft_stackadd_back(tokens, new);
 }
