@@ -23,6 +23,10 @@ https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18
 
 https://trove.assistants.epita.fr/docs/42sh/lexer-parser
 
+https://www.geeksforgeeks.org/developing-linux-based-shell/
+
+https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
+
 
 ```c
 git checkout feature/feature_b
