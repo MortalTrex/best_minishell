@@ -27,7 +27,10 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/lexing/lexer.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/stack_utils.c\
-	srcs/lexing/grammar_check.c
+	srcs/lexing/grammar_check.c\
+	srcs/lexing/append.c\
+	srcs/builtins/env.c\
+	srcs/builtins/pwd.c
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m

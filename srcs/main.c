@@ -12,33 +12,55 @@
 
 #include "../inc/minishell.h"
 
+int		g_global_state = 0;
+
+// valgrind --leak-check=full ./minishell
+
+void	verify_builtin(char *line, char **envp)
+{
+	if (ft_strncmp(line, "pwd", 4) == 0)
+		ft_pwd(envp);
+	else if (ft_strncmp(line, "echo", 5) == 0)
+		ft_echo(line);
+	else if (ft_strncmp(line, "env", 4) == 0)
+		ft_env(envp);
+	else if (ft_strncmp(line, "exit", 5) == 0)
+		exit(0);
+}
+
+void	print_tokens(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->type == T_WORD)
+			printf("\033[1;32mT_WORD: %s\033[0m\n", tokens->value);
+		else if (tokens->type == T_OPERATOR)
+			printf("\033[1;34mT_OPERATOR: %s\033[0m\n", tokens->value);
+		else if (tokens->type == T_EOF)
+			printf("\033[1;31mT_EOF\033[0m\n");
+		tokens = tokens->next;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
+	t_token	*tok;
+	char	*line;
+	t_token	*tokens;
 
 	(void)envp;
 	(void)argc;
 	(void)argv;
-	t_token *tok;
-	char *line;
-
+	// ft_bzero(&tok, sizeof(t_token));
 	while (true)
 	{
-		line = readline("minishell> ");
+		line = readline(PROMPT);
 		tok = ft_lexer(line);
-		t_token *tokens = tok;
-		while (tokens)
-		{
-			if (tokens->type == T_WORD)
-				printf("T_WORD: %s\n", tokens->value);
-			else if (tokens->type == T_OPERATOR)
-				printf("T_OPERATOR: %s\n", tokens->value);
-			else if (tokens->type == T_EOF)
-				printf("T_EOF\n");
-			tokens = tokens->next;
-		}
-		if (ft_strncmp(line, "exit", 5) == 0)
-			break ;
+		tokens = tok;
+		print_tokens(tokens);
+		verify_builtin(line, envp);
 		free(line);
 	}
+	//ft_free_all(tok);
 	return (0);
 }

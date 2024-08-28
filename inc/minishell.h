@@ -39,15 +39,20 @@ void	ft_perror_msg(char *msg, int *fd);
 //Builtins
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
+void	ft_env(char **envp);
+void	ft_pwd(char **envp);
 
 /* lexer */
 
 // lexer.c
 t_token	*ft_lexer(char *line);
 
-// tokenize.c
+// append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
 bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
+bool	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
+
+// tokenize.c
 bool	ft_tokenize(char *line, t_token **tokens);
 
 // grammar_check.c
