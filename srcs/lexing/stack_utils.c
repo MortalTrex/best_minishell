@@ -55,8 +55,8 @@ void	ft_stackclear(t_token **stack)
 	while (*stack)
 	{
 		tmp = (*stack)->next;
-		free((*stack));
 		free((*stack)->value);
+		free((*stack));
 		*stack = tmp;
 	}
 	*stack = NULL;
