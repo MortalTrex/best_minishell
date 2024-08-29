@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:38 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/29 12:36:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/29 13:56:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	analyze_line(bool is_quotes, char *line, t_token **tokens,
 			else if (ft_is_operator(line[i]))
 				ft_append_operator(tokens, line, &i);
 			else
-				ft_append_word(tokens, line, &i);
+				ft_append_word(tokens, line, &i); 
 		}
 	}
 	return (is_quotes);

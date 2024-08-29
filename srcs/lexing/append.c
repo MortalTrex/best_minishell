@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/29 12:36:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/29 15:10:51 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	ft_stackadd_back(tokens, new);
 }
 
-bool	ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
+void	ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
 		int len)
 {
 	char	*substr;
@@ -47,16 +47,18 @@ bool	ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
 
 	substr = ft_substr(line, start, len);
 	if (!substr)
-		return (fprintf(stderr, "Error: ft_substr returned NULL\n"), false);
+	{
+		fprintf(stderr, "Error: ft_substr returned NULL\n");
+		return;
+	}
 	new = ft_stacknew(T_WORD, substr);
 	if (!new)
 	{
 		free(substr);
-		return (fprintf(stderr, "Error: ft_stacknew returned NULL\n"), false);
+		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
+		return;
 	}
 	ft_stackadd_back(tokens, new);
-	free(substr);
-	return (true);
 }
 
 bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
@@ -64,7 +66,7 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	unsigned int	start;
 	int				len;
 
-	start = *i;
+	start = *i;  
 	len = 0;
 	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i]))
 	{
@@ -79,8 +81,7 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 			len++;
 		}
 	}
-	if (!ft_substr_append_word(tokens, line, start, len))
-		return (false);
+	ft_substr_append_word(tokens, line, start, len);
 	return (true);
 }
 
@@ -96,7 +97,6 @@ bool	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i)
 		(*i)++;
 		len++;
 	}
-	if (!ft_substr_append_word(tokens, line, start, len))
-		return (false);
+	ft_substr_append_word(tokens, line, start, len);
 	return (true);
 }
