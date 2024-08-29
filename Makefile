@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/27 11:40:41 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/08/29 16:23:28 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/stack_utils.c\
 	srcs/lexing/grammar_check.c\
-	srcs/lexing/append.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c
 

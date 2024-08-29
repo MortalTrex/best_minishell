@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+#include "minishell.h"
+
 void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 {
 	t_token	*new;
@@ -102,7 +104,7 @@ bool ft_tokenize(char *line, t_token **tokens)
 			i++;
 		}
 		else if (is_quotes == true)
-			ft_append_word_quotes(tokens, line, &i);
+			ft_append_word_space(tokens, line, &i);
 		else
 		{
 			if (ft_isspace(line[i]))
@@ -110,21 +112,12 @@ bool ft_tokenize(char *line, t_token **tokens)
 			else if (ft_is_operator(line[i]))
 				ft_append_operator(tokens, line, &i);
 			else
-				ft_append_word(tokens, line, &i); 
+				ft_append_word(tokens, line, &i);
 		}
 	}
-	return (is_quotes);
-}
-
-bool	ft_tokenize(char *line, t_token **tokens)
-{
-	unsigned int	i;
-	bool			is_quotes;
-
-	i = 0;
-	is_quotes = analyze_line(false, line, tokens, i);
 	if (is_quotes == true)
 		return (ft_msg_free_exit("Error: Unclosed quotes\n", tokens), false);
 	ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL));
 	return (true);
 }
+
