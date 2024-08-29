@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/26 16:57:13 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:33:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strncmp(line, "exit", 5) == 0)
 			break ;
 		free(line);
+		ft_stackclear(&tok);
 	}
 	return (0);
 }

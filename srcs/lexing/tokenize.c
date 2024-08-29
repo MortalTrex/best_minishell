@@ -33,7 +33,7 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	int len = 0;
 	t_token *new;
 
-	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i]))
+	while (line[*i] && ft_is_wordchar(line[*i]) && !ft_isspace(line[*i]))
 	{
 		if (ft_is_quote(line[*i]))
 		{
@@ -114,10 +114,7 @@ bool ft_tokenize(char *line, t_token **tokens)
 		}
 	}
 	if (is_quotes == true)
-	{
-		ft_printf("Error: Unclosed quotes\n");
-		return (false);
-	}
+		return (ft_msg_free_exit("Error: Unclosed quotes\n", tokens), false);
 	ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL));
 	return (true);
 }

@@ -35,6 +35,9 @@ void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
 //Errors
 void	ft_perror_msg(char *msg, int *fd);
+void	ft_msg_free_exit(char *msg, t_token **tokens);
+bool	ft_is_wordchar(char c);
+
 
 //Builtins
 void	ft_echo(char *line);

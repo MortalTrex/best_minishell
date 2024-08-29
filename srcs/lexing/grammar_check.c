@@ -30,3 +30,14 @@ bool	ft_skip_quotes(char *line, unsigned int *i)
 	}
 	return (false);
 }
+
+bool	ft_is_wordchar(char c)
+
+{
+	if (c == '~' || c == '-' || c == '.' || c == '/' || c == '*' || c == '?' || c == '=')
+		return (true);
+	else if (ft_isalnum(c) || c == '_' || c == '$')
+		return (true);
+	else
+		return (false);
+}
