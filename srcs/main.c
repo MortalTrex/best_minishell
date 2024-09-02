@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/29 18:48:07 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/02 12:52:10 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int		g_global_state = 0;
 
 // valgrind --leak-check=full ./minishell
+// valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+// valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --log-file=log_errors.txt ./minishell
 
 void	verify_builtin(char *line, char **envp)
 {
@@ -51,7 +53,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	(void)argc;
 	(void)argv;
-	// ft_bzero(&tok, sizeof(t_token));
 	while (true)
 	{
 		line = readline(PROMPT);
@@ -62,6 +63,5 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		ft_stackclear(&tok);
 	}
-	//ft_free_all(tok);
 	return (0);
 }

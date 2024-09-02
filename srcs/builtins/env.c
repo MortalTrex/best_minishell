@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/09/02 11:42:32 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 typedef struct s_env
 {
-	char	*line;
+	char			*line;
 	struct s_env	*next;
-}	t_env;
+}					t_env;
 
-void	ft_copy_env (char **envp)
+void	ft_copy_env(char **envp)
 {
-	int	i;
+	int		i;
 	t_env	*env;
 	t_env	*new;
 
@@ -32,7 +44,7 @@ void	ft_copy_env (char **envp)
 	}
 }
 
-void ft_print_env(t_env *env)
+void	ft_print_env(t_env *env)
 {
 	t_env	*tmp;
 

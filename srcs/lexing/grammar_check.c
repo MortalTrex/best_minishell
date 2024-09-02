@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/29 12:36:53 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/02 11:42:16 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ bool	ft_skip_quotes(char *line, unsigned int *i)
 bool	ft_is_wordchar(char c)
 
 {
-	if (c == '~' || c == '-' || c == '.' || c == '/' || c == '*' || c == '?' || c == '=')
+	if (c == '~' || c == '-' || c == '.' || c == '/'
+		|| c == '*' || c == '?' || c == '=')
 		return (true);
 	else if (ft_isalnum(c) || c == '_' || c == '$')
 		return (true);

@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/09/02 11:35:40 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
+# include "lexer.h"
+# include "structures.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
@@ -18,8 +32,6 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-# include "structures.h"
-# include "lexer.h"
 
 ////////////////////////// DEFINITIONS ////////////////////////////
 
@@ -27,19 +39,18 @@
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
-//Pipex
+// Pipex
 char	*find_path(char *cmd, char **envp);
 void	exec(char *arg, char **envp);
 void	ft_process_infile(char **argv, int *fd, char **envp);
 void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
-//Errors
+// Errors
 void	ft_perror_msg(char *msg, int *fd);
 void	ft_msg_free_exit(char *msg, t_token **tokens);
 bool	ft_is_wordchar(char c);
 
-
-//Builtins
+// Builtins
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
 void	ft_env(char **envp);

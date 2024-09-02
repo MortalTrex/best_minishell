@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/29 15:10:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/02 11:41:41 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,23 @@
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 {
 	t_token	*new;
+	char	*operator;
 
+	operator = ft_substr(line, *i, 1);
 	new = NULL;
-	if (line[*i] == '|')
-		new = ft_stacknew(T_OPERATOR, &line[*i]);
-	else if (line[*i] == ';')
-		new = ft_stacknew(T_OPERATOR, &line[*i]);
-	else
+	if (line[*i + 1] == '>' && line[*i] == '>')
 	{
-		if (line[*i + 1] == '>' && line[*i] == '>')
-		{
-			new = ft_stacknew(T_OPERATOR, ">>");
-			(*i)++;
-		}
-		else if (line[*i] == '<' && line[*i + 1] == '<')
-		{
-			new = ft_stacknew(T_OPERATOR, "<<");
-			(*i)++;
-		}
-		else
-			new = ft_stacknew(T_OPERATOR, &line[*i]);
+		new = ft_stacknew(T_OPERATOR, ">>");
+		(*i)++;
 	}
+	else if (line[*i] == '<' && line[*i + 1] == '<')
+	{
+		new = ft_stacknew(T_OPERATOR, "<<");
+		(*i)++;
+	}
+	else
+		new = ft_stacknew(T_OPERATOR, operator);
+	(*i)++;
 	ft_stackadd_back(tokens, new);
 }
 
@@ -49,14 +45,14 @@ void	ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
 	if (!substr)
 	{
 		fprintf(stderr, "Error: ft_substr returned NULL\n");
-		return;
+		return ;
 	}
 	new = ft_stacknew(T_WORD, substr);
 	if (!new)
 	{
 		free(substr);
 		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
-		return;
+		return ;
 	}
 	ft_stackadd_back(tokens, new);
 }
@@ -66,7 +62,7 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	unsigned int	start;
 	int				len;
 
-	start = *i;  
+	start = *i;
 	len = 0;
 	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i]))
 	{
@@ -85,7 +81,7 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	return (true);
 }
 
-bool	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i)
 {
 	unsigned int	start;
 	int				len;
@@ -98,5 +94,4 @@ bool	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i)
 		len++;
 	}
 	ft_substr_append_word(tokens, line, start, len);
-	return (true);
 }

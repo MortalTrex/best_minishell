@@ -5,3 +5,4 @@ libft.a
 minishell
 infile
 outfile
+log_errors.txt
