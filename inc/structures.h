@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 11:35:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/02 17:34:47 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,17 @@ typedef struct s_cmd
 	t_redir			*redir;
 }					t_cmd;
 
+typedef struct s_env
+{
+	char			*line;
+	struct s_env	*next;
+}					t_env;
+
 typedef struct s_data
 {
 	t_cmd			*cmds;
+	t_env 			*env;
+	char			**env_shell;
 	//t_struct	termios	term;
 }					t_data;
 
