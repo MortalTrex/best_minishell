@@ -27,6 +27,12 @@ https://www.geeksforgeeks.org/developing-linux-based-shell/
 
 https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 
+https://medium.com/swlh/lets-build-a-linux-shell-part-iii-a472c0102849
+
+https://medium.com/swlh/lets-build-a-linux-shell-part-ii-340ecf471028
+
+https://github.com/twagger/minishell
+
 
 ```c
 git checkout feature/feature_b
