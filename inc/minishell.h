@@ -53,7 +53,7 @@ t_token	*ft_lexer(char *line);
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
 bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
-bool	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
+void	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
 
 // tokenize.c
 bool	ft_tokenize(char *line, t_token **tokens);
@@ -68,5 +68,6 @@ t_token	*ft_stacknew(int type, void *value);
 void	ft_stackadd_back(t_token **stack, t_token *new);
 t_token	*ft_stacklast(t_token *stack);
 void	ft_stackclear(t_token **stack);
+t_token	*ft_stacknew_char(int type, char value);
 
 #endif
