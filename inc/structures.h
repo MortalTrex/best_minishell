@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 17:34:47 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/03 14:56:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 {
 	t_cmd			*cmds;
 	t_env 			*env;
-	char			**env_shell;
+	//char			**env_shell;
 	//t_struct	termios	term;
 }					t_data;
 

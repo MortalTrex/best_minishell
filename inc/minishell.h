@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 11:35:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/03 17:09:16 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,15 @@ void	ft_msg_free_exit(char *msg, t_token **tokens);
 bool	ft_is_wordchar(char c);
 
 // Builtins
+
+// env.c
+void	ft_env(t_data *data);
+void	push_node_to_env(t_data *data, char *line);
+void	ft_print_env(t_data *data);
+
+void 	ft_export(t_data *data, char *line);
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
-void	ft_env(char **envp);
 void	ft_pwd(char **envp);
 
 /* lexer */
