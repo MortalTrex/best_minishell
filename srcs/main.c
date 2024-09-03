@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 12:52:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/03 17:14:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*tok;
 	char	*line;
 	t_token	*tokens;
+	t_ast_node	*ast = 0;
 
 	(void)envp;
 	(void)argc;
@@ -59,9 +60,12 @@ int	main(int argc, char **argv, char **envp)
 		tok = ft_lexer(line);
 		tokens = tok;
 		print_tokens(tokens);
+		ast = parse_tokens(tokens);
+		print_ast(ast, 0);
 		verify_builtin(line, envp);
 		free(line);
 		ft_stackclear(&tok);
+		free_ast(ast);
 	}
 	return (0);
 }

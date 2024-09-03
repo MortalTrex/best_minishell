@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/02 11:38:33 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/09/03 17:12:29 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/lexing/stack_utils.c\
 	srcs/lexing/grammar_check.c\
 	srcs/builtins/env.c\
-	srcs/builtins/pwd.c
+	srcs/builtins/pwd.c\
+	srcs/parsing/parser.c\
+	srcs/parsing/ast.c
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m

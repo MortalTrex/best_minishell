@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 11:35:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/03 17:19:47 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
-# include "lexer.h"
-# include "structures.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
@@ -32,6 +30,9 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
+# include "lexer.h"
+# include "structures.h"
+# include "ast.h"
 
 ////////////////////////// DEFINITIONS ////////////////////////////
 
@@ -80,5 +81,11 @@ void	ft_stackadd_back(t_token **stack, t_token *new);
 t_token	*ft_stacklast(t_token *stack);
 void	ft_stackclear(t_token **stack);
 t_token	*ft_stacknew_char(int type, char value);
+
+// ast.c
+t_ast_node *create_ast_node(t_ast_node_type type, char *value);
+void free_ast(t_ast_node *root);
+void print_ast(t_ast_node *root, int depth);
+t_ast_node	*parse_tokens(t_token *tokens);
 
 #endif
