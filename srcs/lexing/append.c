@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/04 18:02:51 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:13:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 
 	start = *i;
 	len = 0;
-	(*i)++; // Skip the '\'' character
+	(*i)++;
 	while (line[*i] && line[*i] != '\'')
 	{
 		(*i)++;
@@ -96,7 +96,7 @@ void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 	}
 	ft_substr_append_word(tokens, line, start, len);
 	if (line[*i] == '\'')
-		(*i)++;
+		(*i)++; // Skip the closing single quote
 }
 
 void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
@@ -106,7 +106,7 @@ void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 
 	start = *i;
 	len = 0;
-	(*i)++; // Skip the '"' character
+	(*i)++;
 	while (line[*i] && line[*i] != '"')
 	{
 		if (line[*i] == '$')
@@ -124,7 +124,7 @@ void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 	}
 	ft_substr_append_word(tokens, line, start, len);
 	if (line[*i] == '"')
-		(*i)++;
+		(*i)++; // Skip the closing double quote
 }
 
 void ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
