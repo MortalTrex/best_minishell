@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/03 17:19:47 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:21:55 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 ////////////////////////// INCLUDES ///////////////////////////
 
+# include "ast.h"
+# include "lexer.h"
+# include "structures.h"
 # include "../libft/libft.h"
 # include <curses.h>
 # include <dirent.h>
@@ -30,9 +33,10 @@
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-# include "lexer.h"
-# include "structures.h"
-# include "ast.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <string.h>
 
 ////////////////////////// DEFINITIONS ////////////////////////////
 
@@ -65,7 +69,10 @@ t_token	*ft_lexer(char *line);
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
 bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
+void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i);
+void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i);
+void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
+
 
 // tokenize.c
 bool	ft_tokenize(char *line, t_token **tokens);
@@ -83,9 +90,13 @@ void	ft_stackclear(t_token **stack);
 t_token	*ft_stacknew_char(int type, char value);
 
 // ast.c
+
 t_ast_node *create_ast_node(t_ast_node_type type, char *value);
 void free_ast(t_ast_node *root);
 void print_ast(t_ast_node *root, int depth);
-t_ast_node	*parse_tokens(t_token *tokens);
+t_ast_node *parse_tokens(t_token *tokens);
+t_ast_node *parse_command(t_token **tokens);
+t_ast_node *parse_pipeline(t_token **tokens);
+t_ast_node *parse_sequence(t_token **tokens);
 
 #endif

@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include "ast.h"
 
 t_ast_node *parse_command(t_token **tokens);
 t_ast_node *parse_pipeline(t_token **tokens);

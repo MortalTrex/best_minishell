@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/03 17:14:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:04:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	print_tokens(t_token *tokens)
 			printf("\033[1;34mT_OPERATOR: %s\033[0m\n", tokens->value);
 		else if (tokens->type == T_EOF)
 			printf("\033[1;31mT_EOF\033[0m\n");
+		else if (tokens->type == T_ENV_VAR)
+			printf("\033[1;33mT_ENV_VAR: %s\033[0m\n", tokens->value);
 		tokens = tokens->next;
 	}
 }
