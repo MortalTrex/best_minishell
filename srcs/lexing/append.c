@@ -42,7 +42,7 @@ void	ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
 	t_token	*new;
 
 	substr = ft_substr(line, start, len);
-	if (!subs
+	if (!substr)
 	{
 		fprintf(stderr, "Error: ft_substr returned NULL\n");
 		return ;
@@ -107,7 +107,8 @@ void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 	{
 		if (line[*i] == '$')
 		{
-			ft_substr_append_word(tokens, line, start, len);
+			if (len > 0)
+				ft_substr_append_word(tokens, line, start, len);
 			ft_append_env_var(tokens, line, i);
 			start = *i;
 			len = 0;
@@ -118,8 +119,10 @@ void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 			len++;
 		}
 	}
-	ft_substr_append_word(tokens, line, start, len);
+	if (len > 0)
+		ft_substr_append_word(tokens, line, start, len);
 }
+
 
 void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
 {
