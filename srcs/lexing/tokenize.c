@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/04 19:09:11 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/05 17:32:51 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,18 @@ bool ft_tokenize(char *line, t_token **tokens)
 			ft_append_word_dquotes(tokens, line, &i);
 		else if (is_single_quotes == true)
 			ft_append_word_squotes(tokens, line, &i);
-		else
+		else if(ft_isspace(line[i]))
+			i++;
+		else if(line[i] == '$')
+			ft_append_env_var(tokens, line, &i);
+		else if(ft_is_operator(line[i]))
 		{
-			if (ft_isspace(line[i]))
-				i++;
-			else if (line[i] == '$')
-				ft_append_env_var(tokens, line, &i);
-			else if (ft_is_operator(line[i]))
-			{
-				ft_append_operator(tokens, line, &i);
-				if (line[i] != '\0' && ft_is_operator(line[i]))
-					return (fprintf(stderr, "Error: Unexpected operator sequence\n"), false);
-			}
-			else if (!ft_append_word(tokens, line, &i))
-				return (false);
+			ft_append_operator(tokens, line, &i);
+			if (line[i] != '\0' && ft_is_operator(line[i]))
+				return (fprintf(stderr, "Error: Unexpected operator sequence\n"), false);
 		}
+		else if (!ft_append_word(tokens, line, &i))
+			return (false);
 	}
 	if (is_double_quotes == true || is_single_quotes == true)
 		return (ft_msg_free_exit("Error: Unclosed quotes\n", tokens), false);
