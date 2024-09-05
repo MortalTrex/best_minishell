@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/04 19:07:26 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/05 16:47:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
 void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i);
 void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i);
 void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
-
+bool	ft_handle_quotes(t_token **tokens, char *line, unsigned int *i, char quote_char);
 
 // tokenize.c
 bool	ft_tokenize(char *line, t_token **tokens);
