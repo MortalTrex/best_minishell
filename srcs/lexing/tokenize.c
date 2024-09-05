@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/05 14:04:25 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:18:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,17 @@ bool ft_tokenize(char *line, t_token **tokens)
 		if (line[i] == '"')
 		{
 			is_double_quotes = !is_double_quotes;
-			if (is_double_quotes == true)
-			{
-				ft_append_word_dquotes(tokens, line, &i);
-				is_double_quotes = false; // Reset the flag after processing
-			}
+			i++;
 		}
 		else if (line[i] == '\'')
 		{
 			is_single_quotes = !is_single_quotes;
-			if (is_single_quotes == true)
-			{
-				ft_append_word_squotes(tokens, line, &i);
-				is_single_quotes = false; // Reset the flag after processing
-			}
+			i++;
 		}
+		else if (is_double_quotes == true)
+			ft_append_word_dquotes(tokens, line, &i);
+		else if (is_single_quotes == true)
+			ft_append_word_squotes(tokens, line, &i);
 		else
 		{
 			if (ft_isspace(line[i]))

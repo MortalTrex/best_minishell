@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/04 17:21:55 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:07:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_token	*ft_lexer(char *line);
 
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
+void    ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
 bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
 void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i);
 void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i);

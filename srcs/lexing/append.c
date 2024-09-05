@@ -6,16 +6,16 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/04 19:13:35 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:18:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 {
-	t_token *new;
-	char *operator;
+	t_token	*new;
+	char	*operator;
 
 	operator= ft_substr(line, *i, 1);
 	new = NULL;
@@ -35,32 +35,32 @@ void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	ft_stackadd_back(tokens, new);
 }
 
-void ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
-						   int len)
+void	ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
+		int len)
 {
-	char *substr;
-	t_token *new;
+	char	*substr;
+	t_token	*new;
 
 	substr = ft_substr(line, start, len);
 	if (!substr)
 	{
 		fprintf(stderr, "Error: ft_substr returned NULL\n");
-		return;
+		return ;
 	}
 	new = ft_stacknew(T_WORD, substr);
 	if (!new)
 	{
 		free(substr);
 		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
-		return;
+		return ;
 	}
 	ft_stackadd_back(tokens, new);
 }
 
-bool ft_append_word(t_token **tokens, char *line, unsigned int *i)
+bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 {
-	unsigned int start;
-	int len;
+	unsigned int	start;
+	int				len;
 
 	start = *i;
 	len = 0;
@@ -81,37 +81,34 @@ bool ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	return (true);
 }
 
-void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 {
-	unsigned int start;
-	int len;
+	unsigned int	start;
+	int				len;
 
 	start = *i;
 	len = 0;
-	(*i)++;
 	while (line[*i] && line[*i] != '\'')
 	{
 		(*i)++;
 		len++;
 	}
 	ft_substr_append_word(tokens, line, start, len);
-	if (line[*i] == '\'')
-		(*i)++; // Skip the closing single quote
 }
 
-void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 {
-	unsigned int start;
-	int len;
+	unsigned int	start;
+	int				len;
 
 	start = *i;
 	len = 0;
-	(*i)++;
 	while (line[*i] && line[*i] != '"')
 	{
 		if (line[*i] == '$')
 		{
-			ft_substr_append_word(tokens, line, start, len);
+			if (len > 0)
+				ft_substr_append_word(tokens, line, start, len);
 			ft_append_env_var(tokens, line, i);
 			start = *i;
 			len = 0;
@@ -122,63 +119,31 @@ void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 			len++;
 		}
 	}
-	ft_substr_append_word(tokens, line, start, len);
-	if (line[*i] == '"')
-		(*i)++; // Skip the closing double quote
+	if (len > 0)
+		ft_substr_append_word(tokens, line, start, len);
 }
 
-void ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
+
+void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
 {
-	unsigned int start = *i;
-	int len = 0;
-	char *env_var_name;
-	char *env_var_value;
-	t_token *new;
+	int		len;
+	char	*env_var_name;
 
-	(*i)++; // Skip the '$' character
-
-	// Check if the variable is enclosed in braces
-	if (line[*i] == '{')
+	unsigned int start = *i + 1; // Skip the '$' character
+	len = 0;
+	while (line[start + len] && (ft_isalnum(line[start + len]) || line[start
+			+ len] == '_'))
 	{
-		(*i)++; // Skip the '{' character
-		start = *i;
-		while (line[*i] && line[*i] != '}')
-		{
-			(*i)++;
-			len++;
-		}
-		if (line[*i] == '}')
-		{
-			(*i)++; // Skip the '}' character
-		}
+		len++;
 	}
-	else
+	env_var_name = ft_substr(line, start, len);
+	char *env_var_value = getenv(env_var_name);
+		// Or use your own function to get the env var value
+	free(env_var_name);
+	if (env_var_value)
 	{
-		start = *i;
-		while (ft_isalnum(line[*i]) || line[*i] == '_')
-		{
-			(*i)++;
-			len++;
-		}
+		ft_substr_append_word(tokens, env_var_value, 0,
+			ft_strlen(env_var_value));
 	}
-
-	env_var_name = ft_substr(line, start, len); // Extract the variable name
-	if (!env_var_name)
-	{
-		fprintf(stderr, "Error: ft_substr returned NULL\n");
-		return;
-	}
-	env_var_value = getenv(env_var_name); // Retrieve the environment variable's value
-	free(env_var_name);					  // Free the variable name as it's no longer needed
-	if (!env_var_value)
-	{
-		env_var_value = ""; // If the variable is not found, use an empty string
-	}
-	new = ft_stacknew(T_ENV_VAR, ft_strdup(env_var_value)); // Store the value in the token
-	if (!new)
-	{
-		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
-		return;
-	}
-	ft_stackadd_back(tokens, new);
+	*i = start + len; // Advance the index past the environment variable
 }
