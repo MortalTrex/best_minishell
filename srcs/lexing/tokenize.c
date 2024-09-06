@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/05 17:32:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/06 14:14:17 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void ft_detect_builtin(t_token **tokens)
 		if (current->type == T_WORD)
 		{
 			if (!ft_strcmp(current->value, "cd"))
+				current->type = T_BUILTIN;
+			else if (!ft_strcmp(current->value, "echo"))
 				current->type = T_BUILTIN;
 			else if (!ft_strcmp(current->value, "pwd"))
 				current->type = T_BUILTIN;
