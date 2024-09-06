@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/06 14:26:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/06 14:32:13 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 		print_tokens(tokens);
 		ast = parse_tokens(tokens);
 		print_ast(ast, 0);
-		verify_builtin(line, envp);
+		verify_builtin(line, &data);
 		free(line);
 		ft_stackclear(&tok);
 		free_ast(ast);
