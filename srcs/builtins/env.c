@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/03 17:18:53 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/06 15:32:38 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ t_env *new_node_env(char *line)
 	return new_node;
 }
 
-void push_node_to_env(t_data *data, char *line)
+void push_node_to_env(t_data *data, char *env_line)
 {
 	t_env *new_node;
 	t_env *current;
 
-	new_node = new_node_env(line);
+	new_node = new_node_env(env_line);
 	current = data->env;
 	if (data->env == NULL)
 		data->env = new_node;

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/06 14:32:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/06 15:30:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	verify_builtin(char *line, t_data *data)
 	if (ft_strncmp(line, "echo", 5) == 0)
 		ft_echo(line);
 	else if (ft_strncmp(line, "env", 4) == 0)
-		ft_env(data);
+		printf("env\n");
 	else if (ft_strncmp(line, "export", 7) == 0)
 		ft_export(data, line);
 	else if (ft_strncmp(line, "exit", 5) == 0)
