@@ -27,6 +27,12 @@ https://www.geeksforgeeks.org/developing-linux-based-shell/
 
 https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 
+https://medium.com/swlh/lets-build-a-linux-shell-part-iii-a472c0102849
+
+https://medium.com/swlh/lets-build-a-linux-shell-part-ii-340ecf471028
+
+https://github.com/twagger/minishell
+
 
 ```c
 git checkout feature/feature_b
@@ -58,7 +64,7 @@ minitalk can be used for ctrl + d and ctrl + c
      Parsing
         Parsing Validations: Ensure tokens follow the correct syntax rules.
         Handle Syntax Errors: Provide meaningful error messages.
-
+		
         Expand Variables: Replace $ tokens with their corresponding values.
 				Expand Variables: After tokenization, and while parsing, you should expand the variables. The order here is critical:
               Outside Quotes: If a variable appears outside of quotes, replace it with its value immediately.

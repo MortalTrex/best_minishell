@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/03 17:08:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/06 14:26:40 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ void	print_tokens(t_token *tokens)
 			printf("\033[1;34mT_OPERATOR: %s\033[0m\n", tokens->value);
 		else if (tokens->type == T_EOF)
 			printf("\033[1;31mT_EOF\033[0m\n");
+		else if (tokens->type == T_ENV_VAR)
+			printf("\033[1;33mT_ENV_VAR: %s\033[0m\n", tokens->value);
+		else if (tokens->type == T_BUILTIN)
+			printf("\033[1;35mT_BUILTIN: %s\033[0m\n", tokens->value);
 		tokens = tokens->next;
 	}
 }
@@ -61,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*tok;
 	char	*line;
 	t_token	*tokens;
+	t_ast_node	*ast = 0;
 
 	(void)envp;
 	(void)argc;
@@ -73,9 +78,12 @@ int	main(int argc, char **argv, char **envp)
 		tok = ft_lexer(line);
 		tokens = tok;
 		print_tokens(tokens);
-		verify_builtin(line, &data);
+		ast = parse_tokens(tokens);
+		print_ast(ast, 0);
+		verify_builtin(line, envp);
 		free(line);
 		ft_stackclear(&tok);
+		free_ast(ast);
 	}
 	return (0);
 }

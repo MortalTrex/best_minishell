@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 11:33:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/04 16:52:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ typedef enum e_token_type
 	T_IO_NUMBER,
 	T_NEWLINE,
 	T_OPERATOR,
-	T_EOF
+	T_EOF,
+	T_BUILTIN,
+	T_ENV_VAR
 }					t_token_type;
 
 typedef struct s_token

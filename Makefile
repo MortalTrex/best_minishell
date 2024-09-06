@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/03 17:08:02 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/09/06 14:24:52 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/lexing/grammar_check.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c\
+	srcs/parsing/parser.c\
+	srcs/parsing/ast.c\
 	srcs/builtins/export.c
 
 INDI	=	\033[38;5;213m
