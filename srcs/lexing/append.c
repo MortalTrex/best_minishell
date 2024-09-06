@@ -35,7 +35,7 @@ void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	ft_stackadd_back(tokens, new);
 }
 
-void	ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
+void	ft_word_to_token(t_token **tokens, char *line, unsigned int start,
 		int len)
 {
 	char	*substr;
@@ -64,20 +64,18 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 
 	start = *i;
 	len = 0;
-	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i]))
+	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i]) &&
+		!ft_is_quote(line[*i]))
 	{
-		if (ft_is_quote(line[*i]))
-		{
-			if (!ft_skip_quotes(line, i))
-				return (false);
-		}
-		else
-		{
-			(*i)++;
-			len++;
-		}
+		(*i)++;
+		len++;
+		// if (ft_is_quote(line[*i]))
+		// {
+		// 	if (!ft_skip_quotes(line, i))
+		// 		return (false);
+		// }
 	}
-	ft_substr_append_word(tokens, line, start, len);
+	ft_word_to_token(tokens, line, start, len);
 	return (true);
 }
 
@@ -93,7 +91,7 @@ void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 		(*i)++;
 		len++;
 	}
-	ft_substr_append_word(tokens, line, start, len);
+	ft_word_to_token(tokens, line, start, len);
 }
 
 void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
@@ -108,7 +106,7 @@ void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 		if (line[*i] == '$')
 		{
 			if (len > 0)
-				ft_substr_append_word(tokens, line, start, len);
+				ft_word_to_token(tokens, line, start, len);
 			ft_append_env_var(tokens, line, i);
 			start = *i;
 			len = 0;
@@ -120,7 +118,7 @@ void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 		}
 	}
 	if (len > 0)
-		ft_substr_append_word(tokens, line, start, len);
+		ft_word_to_token(tokens, line, start, len);
 }
 
 
@@ -142,7 +140,7 @@ void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
 	free(env_var_name);
 	if (env_var_value)
 	{
-		ft_substr_append_word(tokens, env_var_value, 0,
+		ft_word_to_token(tokens, env_var_value, 0,
 			ft_strlen(env_var_value));
 	}
 	*i = start + len; // Advance the index past the environment variable

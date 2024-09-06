@@ -20,6 +20,7 @@ typedef enum e_token_type
 	T_NEWLINE,
 	T_OPERATOR,
 	T_EOF,
+	T_BUILTIN,
 	T_ENV_VAR
 }					t_token_type;
 

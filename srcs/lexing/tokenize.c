@@ -12,6 +12,41 @@
 
 #include "minishell.h"
 
+int ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+void ft_detect_builtin(t_token **tokens)
+{
+	t_token *current;
+
+	current = *tokens;
+	while (current)
+	{
+		if (current->type == T_WORD)
+		{
+			if (!ft_strcmp(current->value, "cd"))
+				current->type = T_BUILTIN;
+			else if (!ft_strcmp(current->value, "pwd"))
+				current->type = T_BUILTIN;
+			else if (!ft_strcmp(current->value, "export"))
+				current->type = T_BUILTIN;
+			else if (!ft_strcmp(current->value, "unset"))
+				current->type = T_BUILTIN;
+			else if (!ft_strcmp(current->value, "env"))
+				current->type = T_BUILTIN;
+			else if (!ft_strcmp(current->value, "exit"))
+				current->type = T_BUILTIN;
+		}
+		current = current->next;
+	}
+}
+
 bool ft_tokenize(char *line, t_token **tokens)
 {
 	unsigned int i;
@@ -52,5 +87,6 @@ bool ft_tokenize(char *line, t_token **tokens)
 	}
 	if (is_double_quotes == true || is_single_quotes == true)
 		return (ft_msg_free_exit("Error: Unclosed quotes\n", tokens), false);
+	ft_detect_builtin(tokens);
 	return (ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL)), true);
 }
