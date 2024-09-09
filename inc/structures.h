@@ -6,14 +6,14 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/06 14:26:16 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/09 09:20:57 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
-#include <sys/types.h>
+#include <minishell.h>
 
 typedef enum e_redir_type
 {
@@ -33,7 +33,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**argv;
-	pid_t			pid;
+	//pid_t			pid;
 	struct s_cmd	*next;
 	t_redir			*redir;
 }					t_cmd;
@@ -48,7 +48,6 @@ typedef struct s_data
 {
 	t_cmd			*cmds;
 	t_env 			*env;
-	//char			**env_shell;
 	//t_struct	termios	term;
 }					t_data;
 

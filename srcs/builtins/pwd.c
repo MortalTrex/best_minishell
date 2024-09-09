@@ -6,27 +6,22 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 11:32:22 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/09 10:02:10 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/*        pwd - print name of current/working directory
- */
-
-void	ft_pwd(char **envp)
+void	ft_pwd()
 {
-	int	i;
+	char	*pwd;
 
-	i = 0;
-	while (envp[i])
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		perror("Error PWD");
+	else
 	{
-		if (envp[i][0] == 'P' && envp[i][1] == 'W' && envp[i][2] == 'D')
-		{
-			ft_printf("%s\n", envp[i] + 4);
-			break ;
-		}
-		i++;
+		ft_printf("%s\n", pwd);
+		free(pwd);
 	}
 }

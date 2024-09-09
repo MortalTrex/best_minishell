@@ -6,24 +6,26 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/06 15:32:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/09 09:28:40 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env *new_node_env(char *line)
+t_env	*new_node_env(char *line)
 {
-	t_env *new_node = malloc(sizeof(t_env));
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
 	new_node->line = ft_strdup(line);
 	new_node->next = NULL;
-	return new_node;
+	return (new_node);
 }
 
-void push_node_to_env(t_data *data, char *env_line)
+void	push_node_to_env(t_data *data, char *env_line)
 {
-	t_env *new_node;
-	t_env *current;
+	t_env	*new_node;
+	t_env	*current;
 
 	new_node = new_node_env(env_line);
 	current = data->env;
@@ -37,11 +39,27 @@ void push_node_to_env(t_data *data, char *env_line)
 		current->next = new_node;
 	}
 }
-void ft_env(t_data *data)
+
+void	copy_env(char **envp, t_data *data)
 {
-	while (data->env)
+	int	i;
+
+	i = 0;
+	while (envp[i])
 	{
-		ft_printf("%s\n", data->env->line);
-		data->env = data->env->next;
+		push_node_to_env(data, envp[i]);
+		i++;
+	}
+}
+
+void	ft_env(t_data *data)
+{
+	t_env	*current;
+
+	current = data->env;
+	while (current != NULL)
+	{
+		ft_printf("%s\n", current->line);
+		current = current->next;
 	}
 }

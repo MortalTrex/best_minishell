@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/06 15:30:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/09 17:04:48 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,16 @@ int		g_global_state = 0;
 
 void	verify_builtin(char *line, t_data *data)
 {
-	//if (ft_strncmp(line, "pwd", 4) == 0)
-	//	ft_pwd(data);
-	if (ft_strncmp(line, "echo", 5) == 0)
+	if (ft_strncmp(line, "pwd", 4) == 0)
+		ft_pwd();
+	else if (ft_strncmp(line, "echo", 5) == 0)
 		ft_echo(line);
 	else if (ft_strncmp(line, "env", 4) == 0)
-		printf("env\n");
+		ft_env(data);
 	else if (ft_strncmp(line, "export", 7) == 0)
 		ft_export(data, line);
 	else if (ft_strncmp(line, "exit", 5) == 0)
 		exit(0);
-}
-void	copy_env(char **envp, t_data *data)
-{
-	int i = 0;
-	while (envp[i])
-	{
-		push_node_to_env(data, envp[i]);
-		i++;
-	}
 }
 
 void	print_tokens(t_token *tokens)
@@ -61,12 +52,13 @@ void	print_tokens(t_token *tokens)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	data;
-	t_token	*tok;
-	char	*line;
-	t_token	*tokens;
-	t_ast_node	*ast = 0;
+	t_data		data;
+	t_token		*tok;
+	char		*line;
+	t_token		*tokens;
+	t_ast_node	*ast;
 
+	ast = 0;
 	(void)envp;
 	(void)argc;
 	(void)argv;
@@ -80,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 		print_tokens(tokens);
 		ast = parse_tokens(tokens);
 		print_ast(ast, 0);
-		verify_builtin(line, &data);
+		//verify_builtin(line, &data);
 		free(line);
 		ft_stackclear(&tok);
 		free_ast(ast);
