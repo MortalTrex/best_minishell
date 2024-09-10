@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/05 17:30:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:48:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	ft_stackadd_back(tokens, new);
 }
 
-void ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
-						   int len)
+void	ft_word_to_token(t_token **tokens, char *line, unsigned int start,
+		int len)
 {
 	char *substr;
 	t_token *new;
@@ -59,64 +59,24 @@ void ft_substr_append_word(t_token **tokens, char *line, unsigned int start,
 
 bool ft_append_word(t_token **tokens, char *line, unsigned int *i)
 {
-	unsigned int start = *i;
-	int len = 0;
+	unsigned int	start;
+	int				len;
 
-	while (line[*i] && !ft_is_operator(line[*i]) && !ft_isspace(line[*i]))
+	start = *i;
+	len = 0;
+	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i]) &&
+		!ft_is_quote(line[*i]))
 	{
-		if (line[*i] == '"')
-		{
-			if (!ft_handle_quotes(tokens, line, i, '"'))
-				return false;
-		}
-		else if (line[*i] == '\'')
-		{
-			if (!ft_handle_quotes(tokens, line, i, '\''))
-				return false;
-		}
-		else
-		{
-			(*i)++;
-			len++;
-		}
+		(*i)++;
+		len++;
+		// if (ft_is_quote(line[*i]))
+		// {
+		// 	if (!ft_skip_quotes(line, i))
+		// 		return (false);
+		// }
 	}
-	if (len > 0)
-		ft_substr_append_word(tokens, line, start, len);
-	return true;
-}
-
-bool ft_handle_quotes(t_token **tokens, char *line, unsigned int *i, char quote_char)
-{
-    unsigned int start = ++(*i); // Move past the opening quote
-    int len = 0;
-
-    while (line[*i] && line[*i] != quote_char) // Find the matching closing quote
-    {
-        // Handle escaped quotes
-        if (line[*i] == '\\' && line[*i + 1] == quote_char)
-        {
-            (*i)++; // Skip the backslash
-        }
-        (*i)++;
-        len++;
-    }
-
-    if (line[*i] != quote_char) // Check if the quote is closed
-    {
-        fprintf(stderr, "Error: Unclosed quote '%c'\n", quote_char);
-        return false; // Unclosed quote error
-    }
-
-    if (len > 0)
-        ft_substr_append_word(tokens, line, start, len);
-    (*i)++; // Move past the closing quote
-    return true;
-}
-
-
-void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
-{
-	ft_handle_quotes(tokens, line, i, '"');
+	ft_word_to_token(tokens, line, start, len);
+	return (true);
 }
 
 void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
@@ -137,8 +97,7 @@ void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 		(*i)++;
 		len++;
 	}
-	ft_substr_append_word(tokens, line, start, len);
-	(*i)++; // Move past the closing single quote
+	ft_word_to_token(tokens, line, start, len);
 }
 
 void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
@@ -153,7 +112,7 @@ void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 		if (line[*i] == '$') // Handle environment variables within double quotes
 		{
 			if (len > 0)
-				ft_substr_append_word(tokens, line, start, len);
+				ft_word_to_token(tokens, line, start, len);
 			ft_append_env_var(tokens, line, i);
 			start = *i;
 			len = 0;
@@ -169,9 +128,9 @@ void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 		}
 	}
 	if (len > 0)
-		ft_substr_append_word(tokens, line, start, len);
-	(*i)++; // Move past the closing double quote
-} */
+		ft_word_to_token(tokens, line, start, len);
+}
+
 
 void ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
 {
@@ -201,7 +160,7 @@ void ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
 
 	if (env_var_value)
 	{
-		// Append the environment variable value as a token
-		ft_substr_append_word(tokens, env_var_value, 0, ft_strlen(env_var_value));
+		ft_word_to_token(tokens, env_var_value, 0,
+			ft_strlen(env_var_value));
 	}
 }
