@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/03 17:12:29 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/09/10 15:48:02 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,17 @@ $(OBJ_DIR)%.o: %.c
 
 OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 
-all: create_dirs $(NAME)
+all: check create_dirs $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s -C $(LIBFTDIR)
 	@$(CC) $(FLAGS) -lm $(OBJS) $(LIBS) -o $(NAME) $(LDLIBS)
 	@echo "$(INDI)The best minishell on the world is compiled!$(RESET)"
+
+check:
+	@if [ -f $(NAME) ]; then \
+		echo "$(GREEN)no updates, using last version of minishell$(RESET)"; \
+	fi
 
 create_dirs:
 	@mkdir -p $(OBJ_DIR)
@@ -66,7 +71,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean create_dirs re
+.PHONY: all clean fclean create_dirs re check
 
 
 

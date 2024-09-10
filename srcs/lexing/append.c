@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 15:04:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:54:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 	unsigned int start;
 	int len;
 
-
-	start = (*i)++;// Move past the opening single quote
+	start = ++(*i);// Move past the opening single quote
 	len = 0;
 	while (line[*i] && line[*i] != '\'') // Read until closing single quote
 	{
 		(*i)++;
 		len++;
 	}
-	ft_word_to_token(tokens, line, start, len);
+	if (len > 0)
+		ft_word_to_token(tokens, line, start, len);
 }
 
 void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
@@ -142,9 +142,7 @@ void ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
 
 	// Handle cases where the next character is a quote
 	if (line[*i] == '"' || line[*i] == '\'')
-	{
 		return;
-	}
 
 	len = 0;
 	unsigned int start = *i;
