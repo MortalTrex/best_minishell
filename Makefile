@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/10 15:48:02 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/09/10 16:15:34 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,8 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c\
 	srcs/parsing/parser.c\
-	srcs/parsing/ast.c
+	srcs/parsing/ast.c\
+	srcs/builtins/export.c
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m

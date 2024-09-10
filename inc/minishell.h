@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/05 16:47:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:15:21 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,28 @@ void	ft_perror_msg(char *msg, int *fd);
 void	ft_msg_free_exit(char *msg, t_token **tokens);
 bool	ft_is_wordchar(char c);
 
-// Builtins
+// BUILTINS
+
+// env.c
+void 	copy_env(char **envp, t_data *data);
+void	ft_env(t_data *data);
+void	push_node_to_env(t_data *data, char *line);
+void	ft_print_env(t_data *data);
+
+// export.c
+void 	ft_export(t_data *data, char *line);
+
+// echo.c
 void	ft_echo(char *line);
 void	print_line(char *line, int start, int len);
-void	ft_env(char **envp);
-void	ft_pwd(char **envp);
 
-/* lexer */
+// pwd.c
+void	ft_pwd();
+
+// LEXING
 
 // lexer.c
-t_token	*ft_lexer(char *line);
+t_token	*ft_lexer(char *line, t_data *data);
 
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
@@ -76,7 +88,7 @@ void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
 bool	ft_handle_quotes(t_token **tokens, char *line, unsigned int *i, char quote_char);
 
 // tokenize.c
-bool	ft_tokenize(char *line, t_token **tokens);
+bool	ft_tokenize(char *line, t_token **tokens, t_data *data);
 
 // grammar_check.c
 bool	ft_is_operator(char c);
@@ -90,8 +102,10 @@ t_token	*ft_stacklast(t_token *stack);
 void	ft_stackclear(t_token **stack);
 t_token	*ft_stacknew_char(int type, char value);
 
-// ast.c
 
+//PARSING
+
+// ast.c
 t_ast_node *create_ast_node(t_ast_node_type type, char *value);
 void free_ast(t_ast_node *root);
 void print_ast(t_ast_node *root, int depth);

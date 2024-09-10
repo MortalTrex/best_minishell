@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 15:54:13 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:14:23 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	t_token *new;
 	char *operator;
 
-	operator= ft_substr(line, *i, 1);
+	operator = ft_substr(line, *i, 1);
 	new = NULL;
 	if (line[*i + 1] == '>' && line[*i] == '>')
 	{
@@ -64,8 +64,8 @@ bool ft_append_word(t_token **tokens, char *line, unsigned int *i)
 
 	start = *i;
 	len = 0;
-	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i]) &&
-		!ft_is_quote(line[*i]))
+	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i])
+		&& !ft_is_quote(line[*i]))
 	{
 		(*i)++;
 		len++;
@@ -131,34 +131,28 @@ void ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 		ft_word_to_token(tokens, line, start, len);
 }
 
-
-void ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
 {
-	int len;
-	char *env_var_name;
-	char *env_var_value;
+	int				len;
+	char			*env_var_name;
+	char			*env_var_value;
+	unsigned int	start;
 
-	(*i)++; // Move past the '$' character
-
-	// Handle cases where the next character is a quote
-	if (line[*i] == '"' || line[*i] == '\'')
-		return;
-
+	start = *i + 1; // Skip the '$' character
 	len = 0;
-	unsigned int start = *i;
-	while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_')) // Read the env var name
+	while (line[start + len] && (ft_isalnum(line[start + len]) || line[start
+				+ len] == '_'))
 	{
 		len++;
 		(*i)++;
 	}
-
-	env_var_name = ft_substr(line, start, len); // Get the env var name
-	env_var_value = getenv(env_var_name);		// Fetch env var value from environment
+	env_var_name = ft_substr(line, start, len);
+	env_var_value = getenv(env_var_name);
+	// Or use your own function to get the env var value
 	free(env_var_name);
 
 	if (env_var_value)
 	{
-		ft_word_to_token(tokens, env_var_value, 0,
-			ft_strlen(env_var_value));
+		ft_word_to_token(tokens, env_var_value, 0, ft_strlen(env_var_value));
 	}
 }
