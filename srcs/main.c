@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/09 17:04:48 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/10 16:15:54 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		line = readline(PROMPT);
-		tok = ft_lexer(line);
+		tok = ft_lexer(line, &data);
 		tokens = tok;
 		print_tokens(tokens);
 		ast = parse_tokens(tokens);
