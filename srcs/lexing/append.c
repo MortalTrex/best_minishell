@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 14:48:17 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:04:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,18 @@ bool ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	return (true);
 }
 
-void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
+/* void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 {
 	ft_handle_quotes(tokens, line, i, '\'');
-}
+} */
 
-/*
 void ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 {
 	unsigned int start;
 	int len;
 
-	start = ++(*i); // Move past the opening single quote
+
+	start = (*i)++;// Move past the opening single quote
 	len = 0;
 	while (line[*i] && line[*i] != '\'') // Read until closing single quote
 	{

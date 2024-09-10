@@ -7,6 +7,8 @@ t_ast_node *create_ast_node(t_ast_node_type type, char *value)
 {
 	t_ast_node *node;
 
+	printf("Creating AST node: type=%d, value=%s\n", type, value);
+
 	node = malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
@@ -26,7 +28,6 @@ void free_ast(t_ast_node *root)
 	free_ast(root->right);
 	free(root);
 }
-
 void print_ast(t_ast_node *root, int depth)
 {
 	if (!root)
@@ -41,19 +42,21 @@ void print_ast(t_ast_node *root, int depth)
 		printf("COMMAND: %s\n", root->value);
 		break;
 	case NODE_PIPE:
-		printf("PIPE: %s\n", root->value);
+		printf("PIPE\n");
 		break;
 	case NODE_REDIRECT:
 		printf("REDIRECT: %s\n", root->value);
 		break;
 	case NODE_SEQUENCE:
-		printf("SEQUENCE: %s\n", root->value);
+		printf("SEQUENCE\n");
 		break;
 	default:
 		printf("UNKNOWN NODE TYPE\n");
 		break;
 	}
 
-	print_ast(root->left, depth + 1);
-	print_ast(root->right, depth + 1);
+	if (root->left)
+		print_ast(root->left, depth + 1);
+	if (root->right)
+		print_ast(root->right, depth + 1);
 }
