@@ -13,7 +13,7 @@
 NAME = minishell
 CC = cc
 RM = rm -f
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g3
 LIBFTDIR = libft/
 OBJ_DIR = build/
 INC = -Iinc -Isrcs

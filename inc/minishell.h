@@ -52,7 +52,7 @@ void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
 // Errors
 void	ft_perror_msg(char *msg, int *fd);
-void	ft_msg_free_exit(char *msg, t_token **tokens);
+void	ft_msg_free_exit(char *msg, t_data *data);
 bool	ft_is_wordchar(char c);
 
 // BUILTINS
@@ -79,16 +79,16 @@ void	ft_pwd();
 t_token	*ft_lexer(char *line, t_data *data);
 
 // append.c
-void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
-void    ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
-bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
-bool	ft_handle_quotes(t_token **tokens, char *line, unsigned int *i, char quote_char);
+void	ft_append_operator(t_token *tokens, char *line, unsigned int *i);
+void    ft_append_word_quotes(t_token *tokens, char *line, unsigned int *i);
+bool	ft_append_word(t_token *tokens, char *line, unsigned int *i);
+void	ft_append_word_squotes(t_token *tokens, char *line, unsigned int *i);
+void	ft_append_word_dquotes(t_token *tokens, char *line, unsigned int *i);
+void	ft_append_env_var(t_token *tokens, char *line, unsigned int *i);
+bool	ft_handle_quotes(t_token *tokens, char *line, unsigned int *i, char quote_char);
 
 // tokenize.c
-bool	ft_tokenize(char *line, t_token **tokens, t_data *data);
+bool	ft_tokenize(char *line, t_data *data);
 
 // grammar_check.c
 bool	ft_is_operator(char c);
@@ -97,7 +97,7 @@ bool	ft_skip_quotes(char *line, unsigned int *i);
 
 // stack_utils.c
 t_token	*ft_stacknew(int type, void *value);
-void	ft_stackadd_back(t_token **stack, t_token *new);
+void	ft_stackadd_back(t_token *stack, t_token *new);
 t_token	*ft_stacklast(t_token *stack);
 void	ft_stackclear(t_data *data);
 t_token	*ft_stacknew_char(int type, char value);

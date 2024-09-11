@@ -12,13 +12,13 @@
 
 #include "minishell.h"
 
-void	ft_stackadd_back(t_token **stack, t_token *new)
+void	ft_stackadd_back(t_token *stack, t_token *new)
 {
 	t_token	*last;
 
-	last = ft_stacklast(*stack);
+	last = ft_stacklast(stack);
 	if (!last)
-		*stack = new;
+		stack = new;
 	else
 		last->next = new;
 }

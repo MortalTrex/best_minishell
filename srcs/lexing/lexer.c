@@ -14,7 +14,7 @@
 
 t_token	*ft_lexer(char *line, t_data *data)
 {
-	if (!ft_tokenize(line, &data->tokens, data))
+	if (!ft_tokenize(line, data))
 		return (ft_stackclear(data), NULL);
 	return (data->tokens);
 }

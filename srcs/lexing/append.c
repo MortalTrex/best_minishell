@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_operator(t_token *tokens, char *line, unsigned int *i)
 {
 	t_token	*new;
 	char	*operator;
@@ -35,7 +35,7 @@ void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	ft_stackadd_back(tokens, new);
 }
 
-void	ft_word_to_token(t_token **tokens, char *line, unsigned int start,
+void	ft_word_to_token(t_token *tokens, char *line, unsigned int start,
 		int len)
 {
 	char	*substr;
@@ -57,7 +57,7 @@ void	ft_word_to_token(t_token **tokens, char *line, unsigned int start,
 	ft_stackadd_back(tokens, new);
 }
 
-bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
+bool	ft_append_word(t_token *tokens, char *line, unsigned int *i)
 {
 	unsigned int	start;
 	int				len;
@@ -79,7 +79,7 @@ bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
 	return (true);
 }
 
-void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_word_squotes(t_token *tokens, char *line, unsigned int *i)
 {
 	unsigned int	start;
 	int				len;
@@ -94,7 +94,7 @@ void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
 	ft_word_to_token(tokens, line, start, len);
 }
 
-void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_word_dquotes(t_token *tokens, char *line, unsigned int *i)
 {
 	unsigned int	start;
 	int				len;
@@ -121,7 +121,7 @@ void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
 		ft_word_to_token(tokens, line, start, len);
 }
 
-void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_env_var(t_token *tokens, char *line, unsigned int *i)
 {
 	int				len;
 	char			*env_var_name;

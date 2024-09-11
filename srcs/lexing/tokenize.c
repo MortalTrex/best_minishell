@@ -99,7 +99,7 @@ bool	ft_tokenize(char *line, t_data *data)
 			return (false);
 	}
 	if (is_double_quotes == true || is_single_quotes == true)
-		return (ft_msg_free_exit("Error: Unclosed quotes\n", data->tokens), false);
+		return (ft_msg_free_exit("Error: Unclosed quotes\n", data), false);
 	ft_detect_builtin(data);
 	return (ft_stackadd_back(data->tokens, ft_stacknew(T_EOF, NULL)), true);
 }

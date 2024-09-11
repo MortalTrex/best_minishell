@@ -23,8 +23,8 @@ void	ft_perror_msg(char *msg, int *fd)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_msg_free_exit(char *msg, t_token **tokens)
+void	ft_msg_free_exit(char *msg, t_data *data)
 {
-	ft_stackclear(tokens);
+	ft_stackclear(data);
 	perror(msg);
 }
