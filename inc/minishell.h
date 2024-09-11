@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 16:15:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:56:15 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ bool	ft_skip_quotes(char *line, unsigned int *i);
 t_token	*ft_stacknew(int type, void *value);
 void	ft_stackadd_back(t_token **stack, t_token *new);
 t_token	*ft_stacklast(t_token *stack);
-void	ft_stackclear(t_token **stack);
+void	ft_stackclear(t_data *data);
 t_token	*ft_stacknew_char(int type, char value);
 
 
