@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 16:18:28 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:17:47 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 	t_token	*new;
 	char	*operator;
 
-	operator = ft_substr(line, *i, 1);
+	operator = ft_substr(line, *i, 1);  // Get the single operator character
 	new = NULL;
+
 	if (line[*i + 1] == '>' && line[*i] == '>')
 	{
 		new = ft_stacknew(T_OPERATOR, ">>");
@@ -30,10 +31,17 @@ void	ft_append_operator(t_token **tokens, char *line, unsigned int *i)
 		(*i)++;
 	}
 	else
-		new = ft_stacknew(T_OPERATOR, operator);
-	(*i)++;
+	{
+		new = ft_stacknew(T_OPERATOR, operator);  // Single operator
+	}
+
+	free(operator);  // Free the temporary substr
+	(*i)++;          // Move index forward
+
+	// Add the new token to the token list
 	ft_stackadd_back(tokens, new);
 }
+
 
 void	ft_word_to_token(t_token **tokens, char *line, unsigned int start,
 		int len)
@@ -57,91 +65,109 @@ void	ft_word_to_token(t_token **tokens, char *line, unsigned int start,
 	ft_stackadd_back(tokens, new);
 }
 
-bool	ft_append_word(t_token **tokens, char *line, unsigned int *i)
+bool	ft_append_word(t_token **tokens, char *token_buffer)
 {
-	unsigned int	start;
-	int				len;
+	t_token	*new;
+	char	*word;
 
-	start = *i;
-	len = 0;
-	while (line[*i] && !ft_is_operator(line[*i + 1]) && !ft_isspace(line[*i])
-		&& !ft_is_quote(line[*i]))
+	// If the buffer is empty, return false (no word to append)
+	if (!token_buffer || token_buffer[0] == '\0')
+		return false;
+
+	// Duplicate the buffer content to use as the token's value
+	word = strdup(token_buffer);
+	if (!word)
 	{
-		(*i)++;
-		len++;
-		// if (ft_is_quote(line[*i]))
-		// {
-		// 	if (!ft_skip_quotes(line, i))
-		// 		return (false);
-		// }
+		fprintf(stderr, "Error: strdup failed to allocate memory\n");
+		return false;
 	}
-	ft_word_to_token(tokens, line, start, len);
-	return (true);
+
+	// Create a new token with the type T_WORD
+	new = ft_stacknew(T_WORD, word);
+	if (!new)
+	{
+		free(word);
+		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
+		return false;
+	}
+
+	// Add the new token to the end of the tokens list
+	ft_stackadd_back(tokens, new);
+	return true;
 }
 
-void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i)
-{
-	unsigned int	start;
-	int				len;
 
-	start = *i;
-	len = 0;
-	while (line[*i] && line[*i] != '\'')
+bool	ft_append_word_dquotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i)
+{
+	(*i)++; // Skip the opening double quote
+	while (line[*i] != '"' && line[*i] != '\0')
 	{
-		(*i)++;
-		len++;
+		token_buffer[(*buffer_index)++] = line[(*i)++];
 	}
-	ft_word_to_token(tokens, line, start, len);
+	if (line[*i] == '"')
+		(*i)++; // Skip the closing double quote
+	else
+		return false; // Unclosed double quote
+	return true;
 }
 
-void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i)
+bool	ft_append_word_squotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i)
 {
-	unsigned int	start;
-	int				len;
-
-	start = *i;
-	len = 0;
-	while (line[*i] && line[*i] != '"')
+	(*i)++; // Skip the opening single quote
+	while (line[*i] != '\'' && line[*i] != '\0')
 	{
-		if (line[*i] == '$')
-		{
-			if (len > 0)
-				ft_word_to_token(tokens, line, start, len);
-			ft_append_env_var(tokens, line, i);
-			start = *i;
-			len = 0;
-		}
-		else
-		{
-			(*i)++;
-			len++;
-		}
+		token_buffer[(*buffer_index)++] = line[(*i)++];
 	}
-	if (len > 0)
-		ft_word_to_token(tokens, line, start, len);
+	if (line[*i] == '\'')
+		(*i)++; // Skip the closing single quote
+	else
+		return false; // Unclosed single quote
+	return true;
 }
 
-void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i)
+void	ft_append_env_var(t_token **tokens, char *token_buffer, int *buffer_index, char *line, unsigned int *i)
 {
+	unsigned int	start;
 	int				len;
 	char			*env_var_name;
 	char			*env_var_value;
-	unsigned int	start;
 
 	start = *i + 1; // Skip the '$' character
 	len = 0;
-	while (line[start + len] && (ft_isalnum(line[start + len]) || line[start
-				+ len] == '_'))
+
+	// Accumulate the environment variable name into the token buffer
+	while (line[start + len] && (ft_isalnum(line[start + len]) || line[start + len] == '_'))
 	{
+		token_buffer[(*buffer_index)++] = line[start + len];
 		len++;
 	}
-	env_var_name = ft_substr(line, start, len);
+
+	// Null-terminate the environment variable name
+	token_buffer[*buffer_index] = '\0';
+
+	// Retrieve the environment variable's value
+	env_var_name = strdup(token_buffer);
+	if (!env_var_name)
+	{
+		fprintf(stderr, "Error: strdup failed to allocate memory\n");
+		return;
+	}
 	env_var_value = getenv(env_var_name);
-	// Or use your own function to get the env var value
 	free(env_var_name);
+
 	if (env_var_value)
 	{
-		ft_word_to_token(tokens, env_var_value, 0, ft_strlen(env_var_value));
+		// Append the environment variable value to the token list
+		if (!ft_append_word(tokens, env_var_value))
+		{
+			fprintf(stderr, "Error: ft_append_word failed\n");
+			return;
+		}
 	}
-	*i = start + len; // Advance the index past the environment variable
+
+	// Update the index to move past the environment variable
+	*i = start + len;
 }
+
+
+

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 16:15:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:18:07 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ t_token	*ft_lexer(char *line, t_data *data);
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
 void    ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
-bool	ft_append_word(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_word_squotes(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_word_dquotes(t_token **tokens, char *line, unsigned int *i);
-void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
+bool	ft_append_word(t_token **tokens, char *token_buffer);
+bool	ft_append_word_dquotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
+bool	ft_append_word_squotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
+void	ft_append_env_var(t_token **tokens, char *token_buffer, int *buffer_index, char *line, unsigned int *i);
 bool	ft_handle_quotes(t_token **tokens, char *line, unsigned int *i, char quote_char);
 
 // tokenize.c

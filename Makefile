@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/10 16:15:34 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/09/12 13:46:49 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,16 +47,20 @@ $(OBJ_DIR)%.o: %.c
 
 OBJS = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRCS))
 
-all: check create_dirs $(NAME)
+all: check $(NAME)
 
 $(NAME): $(OBJS)
 	@$(MAKE) -s -C $(LIBFTDIR)
 	@$(CC) $(FLAGS) -lm $(OBJS) $(LIBS) -o $(NAME) $(LDLIBS)
-	@echo "$(INDI)The best minishell on the world is compiled!$(RESET)"
+	@echo "$(INDI)The best minishell in the world is compiled!$(RESET)"
 
 check:
 	@if [ -f $(NAME) ]; then \
-		echo "$(GREEN)no updates, using last version of minishell$(RESET)"; \
+		latest_obj=$$(find $(OBJ_DIR) -type f -name '*.o' -newer $(NAME) | wc -l); \
+		latest_src=$$(find srcs -type f -name '*.c' -newer $(NAME) | wc -l); \
+		if [ "$$latest_obj" -eq 0 ] && [ "$$latest_src" -eq 0 ]; then \
+			echo "no updates, using last version of minishell exec"; \
+		fi \
 	fi
 
 create_dirs:
