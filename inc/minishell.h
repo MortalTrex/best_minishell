@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/11 15:56:15 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:11:55 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,6 @@ void	ft_pwd();
 
 // LEXING
 
-// lexer.c
-t_token	*ft_lexer(char *line, t_data *data);
-
 // append.c
 void	ft_append_operator(t_token *tokens, char *line, unsigned int *i);
 void    ft_append_word_quotes(t_token *tokens, char *line, unsigned int *i);
@@ -99,7 +96,7 @@ bool	ft_skip_quotes(char *line, unsigned int *i);
 t_token	*ft_stacknew(int type, void *value);
 void	ft_stackadd_back(t_token *stack, t_token *new);
 t_token	*ft_stacklast(t_token *stack);
-void	ft_stackclear(t_data *data);
+void	ft_stackclear(t_token **stack);
 t_token	*ft_stacknew_char(int type, char value);
 
 

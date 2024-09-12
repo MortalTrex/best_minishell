@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/11 15:42:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/12 16:11:34 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,21 @@ int		g_global_state = 0;
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --log-file=log_errors.txt ./minishell
 
-
-void	print_tokens(t_data *data)
+void	print_tokens(t_token *tokens)
 {
-	while (data->tokens)
+	while (tokens)
 	{
-		if (data->tokens->type == T_WORD)
-			printf("\033[1;32mT_WORD: %s\033[0m\n", data->tokens->value);
-		else if (data->tokens->type == T_OPERATOR)
-			printf("\033[1;34mT_OPERATOR: %s\033[0m\n", data->tokens->value);
-		else if (data->tokens->type == T_EOF)
+		if (tokens->type == T_WORD)
+			printf("\033[1;32mT_WORD: %s\033[0m\n", tokens->value);
+		else if (tokens->type == T_OPERATOR)
+			printf("\033[1;34mT_OPERATOR: %s\033[0m\n", tokens->value);
+		else if (tokens->type == T_EOF)
 			printf("\033[1;31mT_EOF\033[0m\n");
-		else if (data->tokens->type == T_ENV_VAR)
-			printf("\033[1;33mT_ENV_VAR: %s\033[0m\n", data->tokens->value);
-		else if (data->tokens->type == T_BUILTIN)
-			printf("\033[1;35mT_BUILTIN: %s\033[0m\n", data->tokens->value);
-		data->tokens = data->tokens->next;
+		else if (tokens->type == T_ENV_VAR)
+			printf("\033[1;33mT_ENV_VAR: %s\033[0m\n", tokens->value);
+		else if (tokens->type == T_BUILTIN)
+			printf("\033[1;35mT_BUILTIN: %s\033[0m\n", tokens->value);
+		tokens = tokens->next;
 	}
 }
 
@@ -44,20 +43,21 @@ int	main(int argc, char **argv, char **envp)
 	t_ast_node	*ast;
 
 	ast = 0;
-	(void)argc; 
+	(void)argc;
 	(void)argv;
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
 	while (true)
 	{
 		line = readline(PROMPT);
-		data.tokens = ft_lexer(line, &data);
-		//data.tokens = data.tmp;
-		print_tokens(&data);
-		//ast = parse_tokens(&data);
+		if (!ft_tokenize(line, &data.tok, &data))
+			return(ft_stackclear(&data.tok), 0);
+		data.tokens = data.tok;
+		print_tokens(data.tokens);
+		//ast = parse_tokens(tokens);
 		//print_ast(ast, 0);
 		free(line);
-		ft_stackclear(&data);
+		ft_stackclear(&data.tok);
 		free_ast(ast);
 	}
 	return (0);

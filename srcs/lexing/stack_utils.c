@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/11 15:41:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/08/29 12:36:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,16 @@ t_token	*ft_stacklast(t_token *stack)
 	return (tmp);
 }
 
-void	ft_stackclear(t_data *data)
+void	ft_stackclear(t_token **stack)
 {
-	while (data->tokens)
-	{
-		data->tmp = data->tokens->next;
-		free(data->tokens->value);
-		free(data->tokens);
-		data->tokens = data->tmp;
-	}
-	data->tokens = NULL;
-}
+	t_token	*tmp;
 
+	while (*stack)
+	{
+		tmp = (*stack)->next;
+		free((*stack)->value);
+		free((*stack));
+		*stack = tmp;
+	}
+	*stack = NULL;
+}
