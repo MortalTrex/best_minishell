@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 16:15:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:11:55 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ void	print_line(char *line, int start, int len);
 void	ft_pwd();
 
 // LEXING
-
-// lexer.c
-t_token	*ft_lexer(char *line, t_data *data);
 
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);

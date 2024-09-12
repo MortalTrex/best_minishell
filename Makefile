@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/10 16:15:34 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/09/12 16:10:47 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ LIBS = -L$(LIBFTDIR) -lft
 SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/utils/pipex.c \
 	srcs/utils/errors.c\
-	srcs/lexing/lexer.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\
