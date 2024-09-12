@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 16:20:12 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 14:43:55 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,15 @@ void	ft_detect_builtin(t_token **tokens, t_data *data)
 			else if (!ft_strcmp(current->value, "echo"))
 				current->type = T_BUILTIN;
 			else if (!ft_strcmp(current->value, "pwd"))
+			{
 				current->type = T_BUILTIN;
+				ft_pwd();
+			}
 			else if (!ft_strcmp(current->value, "export"))
+			{
 				current->type = T_BUILTIN;
+				ft_env(data);
+			}
 			else if (!ft_strcmp(current->value, "unset"))
 				current->type = T_BUILTIN;
 			else if (!ft_strcmp(current->value, "env"))
@@ -47,7 +53,7 @@ void	ft_detect_builtin(t_token **tokens, t_data *data)
 				ft_env(data);
 			}
 			else if (!ft_strcmp(current->value, "exit"))
-				current->type = T_BUILTIN;
+				exit(0);
 		}
 		current = current->next;
 	}
