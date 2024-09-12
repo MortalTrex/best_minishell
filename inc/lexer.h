@@ -13,7 +13,6 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-
 typedef enum e_token_type
 {
 	T_WORD,
@@ -32,7 +31,5 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
-
-
 
 #endif

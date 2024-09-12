@@ -34,7 +34,6 @@ t_token	*ft_stacknew(int type, void *value)
 	token->value = value;
 	token->next = NULL;
 	token->prev = NULL;
-
 	return (token);
 }
 

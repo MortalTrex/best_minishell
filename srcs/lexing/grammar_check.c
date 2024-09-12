@@ -12,14 +12,16 @@
 
 #include "minishell.h"
 
-bool ft_is_operator(char c)
+bool	ft_is_operator(char c)
 {
-	return (c == '|' || c == '(' || c == '>' || c == '<' || c == ')' || c == '&');
+	return (c == '|' || c == '(' || c == '>' || c == '<' || c == ')'
+		|| c == '&');
 }
 
-bool ft_is_multi_char_operator(const char *str)
+bool	ft_is_multi_char_operator(const char *str)
 {
-	return (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0 || ft_strncmp(str, "&&", 2) == 0 || ft_strncmp(str, "||", 2) == 0);
+	return (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0
+		|| ft_strncmp(str, "&&", 2) == 0 || ft_strncmp(str, "||", 2) == 0);
 }
 
 bool	ft_is_quote(char c)
@@ -48,8 +50,8 @@ bool	ft_skip_quotes(char *line, unsigned int *i)
 bool	ft_is_wordchar(char c)
 
 {
-	if (c == '~' || c == '-' || c == '.' || c == '/'
-		|| c == '*' || c == '?' || c == '=')
+	if (c == '~' || c == '-' || c == '.' || c == '/' || c == '*' || c == '?'
+		|| c == '=')
 		return (true);
 	else if (ft_isalnum(c) || c == '_' || c == '$')
 		return (true);

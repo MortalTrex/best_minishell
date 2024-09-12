@@ -15,10 +15,10 @@
 
 ////////////////////////// INCLUDES ///////////////////////////
 
+# include "../libft/libft.h"
 # include "ast.h"
 # include "lexer.h"
 # include "structures.h"
-# include "../libft/libft.h"
 # include <curses.h>
 # include <dirent.h>
 # include <errno.h>
@@ -26,17 +26,16 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <term.h>
 # include <termios.h>
 # include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <string.h>
 
 ////////////////////////// DEFINITIONS ////////////////////////////
 
@@ -45,69 +44,69 @@
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
 // Pipex
-char	*find_path(char *cmd, char **envp);
-void	exec(char *arg, char **envp);
-void	ft_process_infile(char **argv, int *fd, char **envp);
-void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
+char		*find_path(char *cmd, char **envp);
+void		exec(char *arg, char **envp);
+void		ft_process_infile(char **argv, int *fd, char **envp);
+void		ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
 // Errors
-void	ft_perror_msg(char *msg, int *fd);
-void	ft_msg_free_exit(char *msg, t_data *data);
-bool	ft_is_wordchar(char c);
-void 	ft_free_all(t_data *data);
+void		ft_perror_msg(char *msg, int *fd);
+void		ft_msg_free_exit(char *msg, t_data *data);
+bool		ft_is_wordchar(char c);
+void		ft_free_all(t_data *data);
 
 // BUILTINS
 
 // env.c
-void 	copy_env(char **envp, t_data *data);
-void	ft_env(t_data *data);
-void	push_node_to_env(t_data *data, char *line);
-void	ft_print_env(t_data *data);
+void		copy_env(char **envp, t_data *data);
+void		ft_env(t_data *data);
+void		push_node_to_env(t_data *data, char *line);
+void		ft_print_env(t_data *data);
 
 // export.c
-void 	ft_export(t_data *data, char *line);
+void		ft_export(t_data *data, char *line);
 
 // echo.c
-void	ft_echo(char *line);
-void	print_line(char *line, int start, int len);
+void		ft_echo(char *line);
+void		print_line(char *line, int start, int len);
 
 // pwd.c
-void	ft_pwd();
+void		ft_pwd(void);
 
 // LEXING
 
 // append.c
-void	ft_append_operator(t_data *data, char *line, unsigned int *i);
-bool	ft_append_word(t_data *data, char *token_buffer);
-bool	ft_append_word_quotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
-void	ft_append_env_var(t_data *data, char *line, unsigned int *i);
+void		ft_append_operator(t_data *data, char *line, unsigned int *i);
+bool		ft_append_word(t_data *data, char *token_buffer);
+bool		ft_append_word_quotes(char *token_buffer, int *buffer_index,
+				char *line, unsigned int *i);
+void		ft_append_env_var(t_data *data, char *line, unsigned int *i);
 
 // tokenize.c
-bool	ft_tokenize(t_data *data);
+bool		ft_tokenize(t_data *data);
 
 // grammar_check.c
-bool	ft_is_operator(char c);
-bool	ft_is_multi_char_operator(const char *str);
-bool	ft_is_quote(char c);
-bool	ft_skip_quotes(char *line, unsigned int *i);
+bool		ft_is_operator(char c);
+bool		ft_is_multi_char_operator(const char *str);
+bool		ft_is_quote(char c);
+bool		ft_skip_quotes(char *line, unsigned int *i);
 
 // stack_utils.c
-t_token	*ft_stacknew(int type, void *value);
-void	ft_stackadd_back(t_token **stack, t_token *new);
-t_token	*ft_stacklast(t_token *stack);
-void	ft_stackclear(t_token **stack);
+t_token		*ft_stacknew(int type, void *value);
+void		ft_stackadd_back(t_token **stack, t_token *new);
+t_token		*ft_stacklast(t_token *stack);
+void		ft_stackclear(t_token **stack);
 
-
-//PARSING
+// PARSING
 
 // ast.c
-t_ast_node *create_ast_node(t_ast_node_type type, char *value);
-void free_ast(t_ast_node *root);
-void print_ast(t_ast_node *root, int depth);
-void ft_expand_env_vars(t_token **tokens);
-void parse_tokens(t_data *data);
-t_ast_node *parse_command(t_token **tokens);
-t_ast_node *parse_pipeline(t_token **tokens);
-t_ast_node *parse_sequence(t_token **tokens);
+t_ast_node	*create_ast_node(t_ast_node_type type, char *value);
+void		free_ast(t_ast_node *root);
+void		print_ast(t_ast_node *root, int depth);
+void		ft_expand_env_vars(t_token **tokens);
+void		parse_tokens(t_data *data);
+t_ast_node	*parse_command(t_token **tokens);
+t_ast_node	*parse_pipeline(t_token **tokens);
+t_ast_node	*parse_sequence(t_token **tokens);
 
 #endif

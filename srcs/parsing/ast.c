@@ -36,24 +36,24 @@ void	print_ast(t_ast_node *root, int depth)
 		return ;
 	}
 	for (int i = 0; i < depth; i++)
-		printf("  "); // Indentation for depth
+		printf("  ");
 	switch (root->type)
 	{
 		case NODE_COMMAND:
 			printf("COMMAND: %s\n", root->value);
-			break ;
+		break ;
 		case NODE_PIPE:
 			printf("PIPE\n");
-			break ;
+		break ;
 		case NODE_REDIRECT:
 			printf("REDIRECT: %s\n", root->value);
-			break ;
+		break ;
 		case NODE_SEQUENCE:
 			printf("SEQUENCE\n");
-			break ;
-		default:
+		break ;
+		default :
 			printf("UNKNOWN NODE TYPE\n");
-			break ;
+		break ;
 	}
 	if (root->left)
 		print_ast(root->left, depth + 1);
