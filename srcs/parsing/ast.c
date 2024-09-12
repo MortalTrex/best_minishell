@@ -61,14 +61,11 @@ void	print_ast(t_ast_node *root, int depth)
 		print_ast(root->right, depth + 1);
 }
 
-t_ast_node	*parse_tokens(t_token *tokens)
+void	parse_tokens(t_data *data)
 {
-	t_ast_node	*ast;
-
 	printf("Parsing tokens...\n");
-	ft_expand_env_vars(&tokens);
-	ast = parse_sequence(&tokens);
+	ft_expand_env_vars(&data->tokens);
+	data->ast = parse_sequence(&data->tokens);
 	printf("AST constructed, printing...\n");
-	print_ast(ast, 0); // Print the AST after parsing
-	return (ast);
+	print_ast(data->ast, 0);
 }

@@ -1,9 +1,5 @@
 #include "minishell.h"
 
-t_ast_node *parse_command(t_token **tokens);
-t_ast_node *parse_pipeline(t_token **tokens);
-t_ast_node *parse_sequence(t_token **tokens);
-
 t_ast_node *parse_command(t_token **tokens)
 {
 	t_token *token = *tokens;
@@ -99,7 +95,6 @@ void ft_expand_env_vars(t_token **tokens)
 				}
 			}
 		}
-
 		// Move to the next token
 		prev = current;
 		current = current->next;

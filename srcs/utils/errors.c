@@ -29,3 +29,15 @@ void	ft_msg_free_exit(char *msg, t_data *data)
 	perror(msg);
 	exit(EXIT_FAILURE);
 }
+
+void	ft_free_all(t_data *data)
+{
+	if (data->tokens)
+		ft_stackclear(&data->tokens);
+	if (data->user_line)
+		free(data->user_line);
+	if (data->tok)
+		ft_stackclear(&data->tok);
+	if (data->ast)
+		free_ast(data->ast);
+}

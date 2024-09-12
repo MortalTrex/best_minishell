@@ -59,56 +59,54 @@ void ft_detect_builtin(t_data *data)
     }
 }
 
-bool ft_tokenize(char *line, t_data *data)
+bool ft_tokenize(t_data *data)
 {
 	unsigned int    i;
-	bool            is_double_quotes;
-	bool            is_single_quotes;
+	bool            is_quotes;
 	char            token_buffer[256];
 	int             buffer_index;
 
 	i = 0;
-	is_double_quotes = true;
-	is_single_quotes = true;
+	is_quotes = true;
 	buffer_index = 0;
 
-	while (line[i] != '\0')
+	while (data->user_line[i] != '\0')
 	{
-		if (ft_isspace(line[i]))
+		if (ft_isspace(data->user_line[i]))
 		{
 			if (buffer_index > 0)
 			{
 				token_buffer[buffer_index] = '\0';
-				ft_append_word(&data->tok, token_buffer);
+				ft_append_word(data, token_buffer);
 				buffer_index = 0;
 			}
 			i++;
 		}
-		else if (line[i] == '"' || line[i] == '\'')
-			is_double_quotes = ft_append_word_quotes(token_buffer, &buffer_index, line, &i);
-		else if (line[i] == '$')
-			ft_append_env_var(&data->tok, line, &i);
-		else if (ft_is_operator(line[i]))
+		else if (data->user_line[i] == '"' || data->user_line[i] == '\'')
+			is_quotes = ft_append_word_quotes(token_buffer, &buffer_index, data->user_line, &i);
+		else if (data->user_line[i] == '$')
+			ft_append_env_var(data, data->user_line, &i);
+		else if (ft_is_operator(data->user_line[i]))
 		{
 			if (buffer_index > 0)
 			{
 				token_buffer[buffer_index] = '\0';
-				ft_append_word(&data->tok, token_buffer);
+				ft_append_word(data, token_buffer);
 				buffer_index = 0;
 			}
-			ft_append_operator(&data->tok, line, &i);
-			if (line[i] != '\0' && ft_is_operator(line[i]))
+			ft_append_operator(data, data->user_line, &i);
+			if (data->user_line[i] != '\0' && ft_is_operator(data->user_line[i]))
 				return (fprintf(stderr, "Error: Unexpected operator sequence\n"), false);
 		}
 		else
-			token_buffer[buffer_index++] = line[i++];
+			token_buffer[buffer_index++] = data->user_line[i++];
 	}
 	if (buffer_index > 0)
 	{
 		token_buffer[buffer_index] = '\0';
-		ft_append_word(&data->tok, token_buffer);
+		ft_append_word(data, token_buffer);
 	}
-	if (is_double_quotes == false || is_single_quotes == false)
+	if (is_quotes == false)
 		return (ft_msg_free_exit("Error: Unclosed quotes\n", data), false);
 	ft_detect_builtin(data);
 	return (ft_stackadd_back(&data->tok, ft_stacknew(T_EOF, NULL)), true);

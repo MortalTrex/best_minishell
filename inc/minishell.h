@@ -76,13 +76,13 @@ void	ft_pwd();
 // LEXING
 
 // append.c
-void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
-bool	ft_append_word(t_token **tokens, char *token_buffer);
+void	ft_append_operator(t_data *data, char *line, unsigned int *i);
+bool	ft_append_word(t_data *data, char *token_buffer);
 bool	ft_append_word_quotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
-void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
+void	ft_append_env_var(t_data *data, char *line, unsigned int *i);
 
 // tokenize.c
-bool	ft_tokenize(char *line, t_data *data);
+bool	ft_tokenize(t_data *data);
 
 // grammar_check.c
 bool	ft_is_operator(char c);
@@ -104,7 +104,7 @@ t_ast_node *create_ast_node(t_ast_node_type type, char *value);
 void free_ast(t_ast_node *root);
 void print_ast(t_ast_node *root, int depth);
 void ft_expand_env_vars(t_token **tokens);
-t_ast_node *parse_tokens(t_token *tokens);
+void parse_tokens(t_data *data);
 t_ast_node *parse_command(t_token **tokens);
 t_ast_node *parse_pipeline(t_token **tokens);
 t_ast_node *parse_sequence(t_token **tokens);
