@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:30:04 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:35:55 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		line = readline(PROMPT);
-		tok = ft_lexer(line, &data);
-		tokens = tok;
-		print_tokens(tokens);
-		ast = parse_tokens(tokens);
-		//verify_builtin(line, &data);
+		data.tok = ft_lexer(line, &data);
+		data.tokens = data.tok;
+		print_tokens(data.tokens);
+		//ast = parse_tokens(tokens);
 		free(line);
 		ft_stackclear(&data.tok);
 		free_ast(ast);

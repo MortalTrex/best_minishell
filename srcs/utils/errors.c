@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/02 11:40:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:47:34 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	ft_perror_msg(char *msg, int *fd)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_msg_free_exit(char *msg, t_data *data)
+void	ft_msg_free_exit(char *msg, t_token **stack)
 {
-	ft_stackclear(data);
+	ft_stackclear(stack);
 	perror(msg);
 }

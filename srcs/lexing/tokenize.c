@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:30:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:53:35 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_detect_builtin(t_token **tok, t_data *data)
 	}
 }
 
-bool	ft_tokenize(char *line, t_token **tok, t_data *data)
+bool	ft_tokenize(char *line, t_token **tokens, t_data *data)
 {
 	unsigned int	i;
 	bool			is_double_quotes;

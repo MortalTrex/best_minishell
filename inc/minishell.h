@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:29:53 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/12 17:54:35 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
 // Errors
 void	ft_perror_msg(char *msg, int *fd);
-void	ft_msg_free_exit(char *msg, t_data *data);
+void	ft_msg_free_exit(char *msg, t_token **stack);
 bool	ft_is_wordchar(char c);
 
 // BUILTINS
@@ -75,6 +75,8 @@ void	ft_pwd();
 
 // LEXING
 
+t_token	*ft_lexer(char *line, t_data *data);
+
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
 bool	ft_append_word(t_token **tokens, char *token_buffer);
@@ -83,7 +85,7 @@ bool	ft_append_word_squotes(char *token_buffer, int *buffer_index, char *line, u
 void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
 
 // tokenize.c
-bool	ft_tokenize(char *line, t_data *data);
+bool	ft_tokenize(char *line, t_token **tokens, t_data *data);
 
 // grammar_check.c
 bool	ft_is_operator(char c);
@@ -93,7 +95,7 @@ bool	ft_skip_quotes(char *line, unsigned int *i);
 
 // stack_utils.c
 t_token	*ft_stacknew(int type, void *value);
-void	ft_stackadd_back(t_token *stack, t_token *new);
+void	ft_stackadd_back(t_token **stack, t_token *new);
 t_token	*ft_stacklast(t_token *stack);
 void	ft_stackclear(t_token **stack);
 

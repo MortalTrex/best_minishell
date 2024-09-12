@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 14:14:14 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:55:15 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_stackadd_back(t_token *stack, t_token *new)
+void	ft_stackadd_back(t_token **stack, t_token *new)
 {
 	t_token	*last;
 
-	last = ft_stacklast(stack);
+	last = ft_stacklast(*stack);
 	if (!last)
-		stack = new;
+		*stack = new;
 	else
 		last->next = new;
 }
