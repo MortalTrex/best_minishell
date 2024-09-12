@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/12 17:55:36 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/09/12 18:01:44 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\
-	srcs/lexing/lexer.c\
 	srcs/lexing/grammar_check.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c\

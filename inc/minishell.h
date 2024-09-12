@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:54:35 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/12 18:01:10 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	print_line(char *line, int start, int len);
 void	ft_pwd();
 
 // LEXING
-
-t_token	*ft_lexer(char *line, t_data *data);
 
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
