@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		line = readline(PROMPT);
-		if (!ft_tokenize(line, &data.tok, &data))
+		if (!ft_tokenize(line, &data))
 			return (ft_stackclear(&data.tok), 0);
 		data.tokens = data.tok;
 		print_tokens(data.tokens);

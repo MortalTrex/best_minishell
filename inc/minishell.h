@@ -52,7 +52,7 @@ void	ft_process_outfile(char **argv, int *fd, char **envp, int argc);
 
 // Errors
 void	ft_perror_msg(char *msg, int *fd);
-void	ft_msg_free_exit(char *msg, t_token **stack);
+void	ft_msg_free_exit(char *msg, t_data *data);
 bool	ft_is_wordchar(char c);
 
 // BUILTINS
@@ -82,7 +82,7 @@ bool	ft_append_word_quotes(char *token_buffer, int *buffer_index, char *line, un
 void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
 
 // tokenize.c
-bool	ft_tokenize(char *line, t_token **tokens, t_data *data);
+bool	ft_tokenize(char *line, t_data *data);
 
 // grammar_check.c
 bool	ft_is_operator(char c);
