@@ -78,8 +78,7 @@ void	ft_pwd();
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
 bool	ft_append_word(t_token **tokens, char *token_buffer);
-bool	ft_append_word_dquotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
-bool	ft_append_word_squotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
+bool	ft_append_word_quotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
 void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
 
 // tokenize.c

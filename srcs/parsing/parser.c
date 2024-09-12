@@ -64,6 +64,7 @@ void ft_expand_env_vars(t_token **tokens)
 {
 	t_token *current = *tokens;
 	t_token *prev = NULL;
+	(void)prev;
 
 	while (current)
 	{

@@ -85,18 +85,10 @@ bool	ft_tokenize(char *line, t_token **tokens, t_data *data)
 			}
 			i++;
 		}
-		else if (line[i] == '"')
-		{
-			is_double_quotes = ft_append_word_dquotes(token_buffer, &buffer_index, line, &i);
-		}
-		else if (line[i] == '\'')
-		{
-			is_single_quotes = ft_append_word_squotes(token_buffer, &buffer_index, line, &i);
-		}
+		else if (line[i] == '"' || line[i] == '\'')
+			is_double_quotes = ft_append_word_quotes(token_buffer, &buffer_index, line, &i);
 		else if (line[i] == '$')
-		{
 			ft_append_env_var(tokens, line, &i); // Store env var as part of the token
-		}
 		else if (ft_is_operator(line[i]))
 		{
 			// If we have a token in the buffer, append it before the operator
@@ -116,21 +108,15 @@ bool	ft_tokenize(char *line, t_token **tokens, t_data *data)
 			token_buffer[buffer_index++] = line[i++];
 		}
 	}
-
 	// Append any leftover token in the buffer at the end
 	if (buffer_index > 0)
 	{
 		token_buffer[buffer_index] = '\0';
 		ft_append_word(tokens, token_buffer);
 	}
-
-	// Check for unclosed quotes
 	if (is_double_quotes == false || is_single_quotes == false)
 		return (ft_msg_free_exit("Error: Unclosed quotes\n", tokens), false);
-
-	// Detect built-in commands (e.g., echo, cd, etc.)
 	ft_detect_builtin(tokens, data);
-
 	// Append an EOF token at the end
 	return (ft_stackadd_back(tokens, ft_stacknew(T_EOF, NULL)), true);
 }
