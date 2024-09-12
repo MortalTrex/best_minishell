@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 15:18:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:16:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,17 @@ t_token	*ft_lexer(char *line, t_data *data);
 
 // append.c
 void	ft_append_operator(t_token **tokens, char *line, unsigned int *i);
-void    ft_append_word_quotes(t_token **tokens, char *line, unsigned int *i);
 bool	ft_append_word(t_token **tokens, char *token_buffer);
 bool	ft_append_word_dquotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
 bool	ft_append_word_squotes(char *token_buffer, int *buffer_index, char *line, unsigned int *i);
-void	ft_append_env_var(t_token **tokens, char *token_buffer, int *buffer_index, char *line, unsigned int *i);
-bool	ft_handle_quotes(t_token **tokens, char *line, unsigned int *i, char quote_char);
+void	ft_append_env_var(t_token **tokens, char *line, unsigned int *i);
 
 // tokenize.c
 bool	ft_tokenize(char *line, t_token **tokens, t_data *data);
 
 // grammar_check.c
 bool	ft_is_operator(char c);
+bool	ft_is_multi_char_operator(const char *str);
 bool	ft_is_quote(char c);
 bool	ft_skip_quotes(char *line, unsigned int *i);
 
@@ -100,7 +99,6 @@ t_token	*ft_stacknew(int type, void *value);
 void	ft_stackadd_back(t_token **stack, t_token *new);
 t_token	*ft_stacklast(t_token *stack);
 void	ft_stackclear(t_token **stack);
-t_token	*ft_stacknew_char(int type, char value);
 
 
 //PARSING
@@ -109,6 +107,7 @@ t_token	*ft_stacknew_char(int type, char value);
 t_ast_node *create_ast_node(t_ast_node_type type, char *value);
 void free_ast(t_ast_node *root);
 void print_ast(t_ast_node *root, int depth);
+void ft_expand_env_vars(t_token **tokens);
 t_ast_node *parse_tokens(t_token *tokens);
 t_ast_node *parse_command(t_token **tokens);
 t_ast_node *parse_pipeline(t_token **tokens);

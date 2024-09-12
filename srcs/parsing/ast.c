@@ -30,7 +30,10 @@ void free_ast(t_ast_node *root)
 void print_ast(t_ast_node *root, int depth)
 {
 	if (!root)
+	{
+		printf("AST is empty.\n");
 		return;
+	}
 	for (int i = 0; i < depth; i++)
 		printf("  "); // Indentation for depth
 	switch (root->type)
@@ -55,4 +58,14 @@ void print_ast(t_ast_node *root, int depth)
 		print_ast(root->left, depth + 1);
 	if (root->right)
 		print_ast(root->right, depth + 1);
+}
+
+t_ast_node *parse_tokens(t_token *tokens)
+{
+	printf("Parsing tokens...\n");
+	ft_expand_env_vars(&tokens);
+	t_ast_node *ast = parse_sequence(&tokens);
+	printf("AST constructed, printing...\n");
+	print_ast(ast, 0); // Print the AST after parsing
+	return ast;
 }

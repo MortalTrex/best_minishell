@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 15:30:52 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:48:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ bool	ft_tokenize(char *line, t_token **tokens, t_data *data)
 		}
 		else if (line[i] == '$')
 		{
-			ft_append_env_var(tokens, token_buffer, &buffer_index, line, &i); // Store env var as part of the token
+			ft_append_env_var(tokens, line, &i); // Store env var as part of the token
 		}
 		else if (ft_is_operator(line[i]))
 		{

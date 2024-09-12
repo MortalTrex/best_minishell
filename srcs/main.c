@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/10 16:15:54 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/12 16:11:54 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	main(int argc, char **argv, char **envp)
 		tokens = tok;
 		print_tokens(tokens);
 		ast = parse_tokens(tokens);
-		print_ast(ast, 0);
 		//verify_builtin(line, &data);
 		free(line);
 		ft_stackclear(&tok);

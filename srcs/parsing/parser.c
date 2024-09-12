@@ -60,6 +60,50 @@ t_ast_node *parse_pipeline(t_token **tokens)
 	}
 	return left;
 }
+void ft_expand_env_vars(t_token **tokens)
+{
+	t_token *current = *tokens;
+	t_token *prev = NULL;
+
+	while (current)
+	{
+		if (current->type == T_WORD && current->value[0] == '$')
+		{
+			char *env_var_name = current->value + 1; // Skip the '$'
+			char *env_var_value = getenv(env_var_name);
+			char *new_value;
+
+			if (env_var_value)
+			{
+				new_value = strdup(env_var_value);
+				if (!new_value)
+				{
+					fprintf(stderr, "Error: strdup failed to allocate memory\n");
+					return;
+				}
+
+				// Replace current token's value with the expanded value
+				free(current->value);
+				current->value = new_value;
+			}
+			else
+			{
+				// Replace with a default value if the environment variable is not found
+				free(current->value);
+				current->value = strdup("default_value"); // Replace "default_value" with your chosen default
+				if (!current->value)
+				{
+					fprintf(stderr, "Error: strdup failed to allocate memory\n");
+					return;
+				}
+			}
+		}
+
+		// Move to the next token
+		prev = current;
+		current = current->next;
+	}
+}
 
 t_ast_node *parse_sequence(t_token **tokens)
 {
@@ -87,8 +131,3 @@ t_ast_node *parse_sequence(t_token **tokens)
 	return left;
 }
 
-
-t_ast_node *parse_tokens(t_token *tokens)
-{
-	return (parse_sequence(&tokens));
-}
