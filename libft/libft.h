@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:20:46 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/08/25 15:47:20 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:50:04 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		ft_put_ptr(unsigned long long ptr);
 
 // new functions
 void	ft_free_tab(char **tab);
+int		ft_strcmp(const char *s1, const char *s2);
 
 // linked list functions
 

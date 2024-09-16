@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 18:01:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:39:28 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		push_node_to_env(t_data *data, char *line);
 void		ft_print_env(t_data *data);
 
 // export.c
-void		ft_export(t_data *data, char *line);
+void		ft_export(t_data *data);
 
 // echo.c
 void		ft_echo(char *line);

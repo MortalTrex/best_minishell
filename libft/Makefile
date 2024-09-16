@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/22 11:20:05 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/08/25 17:59:26 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/09/16 10:50:33 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS	=	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 			ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
 			ft_tolower.c ft_toupper.c ft_putendl_fd.c ft_striteri.c \
 			get_next_line.c ft_printf.c ft_format_print.c ft_free_tab.c\
-			ft_isspace.c\
+			ft_isspace.c ft_strcmp.c\
 
 BONUS_SRCS	=   ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
 			ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c

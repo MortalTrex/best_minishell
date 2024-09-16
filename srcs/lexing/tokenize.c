@@ -6,21 +6,11 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:53:35 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/16 10:50:12 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
-}
 
 void	ft_detect_builtin(t_data *data)
 {
@@ -43,7 +33,7 @@ void	ft_detect_builtin(t_data *data)
 			else if (!ft_strcmp(current->value, "export"))
 			{
 				current->type = T_BUILTIN;
-				ft_env(data);
+				ft_export(data);
 			}
 			else if (!ft_strcmp(current->value, "unset"))
 				current->type = T_BUILTIN;
