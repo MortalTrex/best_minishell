@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/12 13:46:49 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/09/12 18:01:44 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 RM = rm -f
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g3
 LIBFTDIR = libft/
 OBJ_DIR = build/
 INC = -Iinc -Isrcs
@@ -24,7 +24,6 @@ LIBS = -L$(LIBFTDIR) -lft
 SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/utils/pipex.c \
 	srcs/utils/errors.c\
-	srcs/lexing/lexer.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\
