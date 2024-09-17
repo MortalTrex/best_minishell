@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/16 10:50:12 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/17 17:56:54 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	ft_detect_builtin(t_data *data)
 				ft_export(data);
 			}
 			else if (!ft_strcmp(current->value, "unset"))
+			{
 				current->type = T_BUILTIN;
+				ft_unset(data);
+			}
 			else if (!ft_strcmp(current->value, "env"))
 			{
 				current->type = T_BUILTIN;

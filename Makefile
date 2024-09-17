@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/12 18:01:44 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/09/17 17:56:08 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/lexing/grammar_check.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c\
+	srcs/builtins/unset.c\
 	srcs/parsing/parser.c\
 	srcs/parsing/ast.c\
 	srcs/builtins/export.c
