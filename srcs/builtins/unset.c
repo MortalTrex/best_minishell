@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/17 18:21:04 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/17 22:24:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void search_in_env(t_data *data, char *var)
 	while (tmp_env)
 	{
 		if (!ft_strcmp(var, tmp_env->line))
+		{
 			free(tmp_env->line);
+			//free(tmp_env);
+			//return;
+		}
 		tmp_env = tmp_env->next;
 	}
 }

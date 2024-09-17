@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:20:46 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/09/17 16:58:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/17 21:59:46 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <stdbool.h>
+# include <ctype.h>
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}			t_list;
 
 // libft functions
 
@@ -83,6 +90,17 @@ int		ft_put_nbr(long long int nb, int base, char *string);
 int		ft_put_str(char *s);
 int		ft_put_hexa(unsigned int nb, char c);
 int		ft_put_ptr(unsigned long long ptr);
+
+// bonus
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_list **alst, t_list *new);
+int		ft_lstsize(t_list *lst);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstadd_back(t_list **alst, t_list *new);
+void	ft_lstdelone(t_list *lst, void (*del)(void*));
+void	ft_lstclear(t_list **lst, void (*del)(void*));
+void	ft_lstiter(t_list *lst, void (*f)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void(*del)(void *));
 
 // new functions
 void	ft_free_tab(char **tab);
