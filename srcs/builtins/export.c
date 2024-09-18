@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/17 17:59:26 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/18 15:58:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_exp_env(t_data *data)
 void	ft_export(t_data *data)
 {
 	t_token	*tmp;
-	bool	after_export;
+	bool	exiafter_export;
 	int		i;
 
 	tmp = data->tok;
