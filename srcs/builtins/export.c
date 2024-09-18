@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/18 15:58:26 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/18 16:55:48 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_exp_env(t_data *data)
 	tmp = data->env;
 	while (tmp != NULL)
 	{
-		ft_printf("declare -x %s\n", tmp->line);
+		if (tmp->line)
+			ft_printf("declare -x %s\n", tmp->line);
 		tmp = tmp->next;
 	}
 }
@@ -61,7 +62,7 @@ void	ft_exp_env(t_data *data)
 void	ft_export(t_data *data)
 {
 	t_token	*tmp;
-	bool	exiafter_export;
+	bool	after_export;
 	int		i;
 
 	tmp = data->tok;

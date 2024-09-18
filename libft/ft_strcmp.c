@@ -6,12 +6,14 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:50:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/16 10:50:58 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/18 16:52:39 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
+	if (!s1 || !s2)
+		return(-1);
 	while (*s1 && *s2 && *s1 == *s2)
 	{
 		s1++;
