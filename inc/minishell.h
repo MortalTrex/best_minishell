@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/17 17:55:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/20 13:54:48 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		print_line(char *line, int start, int len);
 void		ft_pwd(void);
 
 //	unset.c
-void 		ft_unset(t_data *data);
+void		ft_unset(t_data *data);
 
 // LEXING
 

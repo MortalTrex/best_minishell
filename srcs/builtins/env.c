@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/18 16:36:41 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/20 13:53:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	copy_env(char **envp, t_data *data)
 		i++;
 	}
 }
+
 // this one is for env chgecking qnd does a malloc
 // - fodpsjfop
 void	ft_env(t_data *data)
