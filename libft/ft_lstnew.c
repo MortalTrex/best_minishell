@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/13 13:16:30 by rbalazs          ###   ########.fr       */
+/*   Created: 2023/12/13 11:12:40 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/05/09 10:10:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-void	ft_pwd(void)
+t_list	*ft_lstnew(void *content)
 {
-	char	*pwd;
+	t_list	*liste;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		perror("Error PWD");
-	else
+	liste = (void *)malloc(sizeof(t_list));
+	if (liste != NULL)
 	{
-		ft_printf("%s\n", pwd);
-		free(pwd);
+		(*liste).content = content;
+		(*liste).next = NULL;
 	}
+	return (liste);
 }

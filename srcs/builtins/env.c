@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/09 09:28:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/20 13:53:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	copy_env(char **envp, t_data *data)
 	}
 }
 
+// this one is for env chgecking qnd does a malloc
+// - fodpsjfop
 void	ft_env(t_data *data)
 {
 	t_env	*current;
@@ -59,7 +61,8 @@ void	ft_env(t_data *data)
 	current = data->env;
 	while (current != NULL)
 	{
-		ft_printf("%s\n", current->line);
+		if (current->line)
+			ft_printf("%s\n", current->line);
 		current = current->next;
 	}
 }

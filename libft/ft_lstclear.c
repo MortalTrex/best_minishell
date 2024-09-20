@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rbalazs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/13 13:16:30 by rbalazs          ###   ########.fr       */
+/*   Created: 2023/12/13 11:13:52 by rbalazs           #+#    #+#             */
+/*   Updated: 2023/12/13 11:13:55 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-void	ft_pwd(void)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	char	*pwd;
+	t_list	*tmp;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		perror("Error PWD");
-	else
+	if (!del || !lst)
+		return ;
+	while (*lst != NULL)
 	{
-		ft_printf("%s\n", pwd);
-		free(pwd);
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
 	}
 }

@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rbalazs <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/13 13:16:30 by rbalazs          ###   ########.fr       */
+/*   Created: 2023/12/13 11:10:42 by rbalazs           #+#    #+#             */
+/*   Updated: 2023/12/13 11:10:46 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-void	ft_pwd(void)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		perror("Error PWD");
-	else
+	while (lst != NULL)
 	{
-		ft_printf("%s\n", pwd);
-		free(pwd);
+		(*f)(lst->content);
+		lst = lst->next;
 	}
 }

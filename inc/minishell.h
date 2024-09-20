@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/17 19:38:00 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:19:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		push_node_to_env(t_data *data, char *line);
 void		ft_print_env(t_data *data);
 
 // export.c
-void		ft_export(t_data *data, char *line);
+void		ft_export(t_data *data);
 
 // echo.c
 void		ft_echo(char *line);
@@ -78,6 +78,9 @@ void		print_line(char *line, int start, int len);
 
 // pwd.c
 void		ft_pwd(void);
+
+//	unset.c
+void		ft_unset(t_data *data);
 
 // LEXING
 
