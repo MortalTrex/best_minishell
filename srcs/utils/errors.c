@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 17:10:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:50:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void ft_msg_free_exit(char *msg, t_data *data)
 
 void ft_free_all(t_data *data)
 {
-	if (data->tokens)
+	if (data->tokens != NULL)
 	{
 		ft_stackclear(&data->tokens);
 		data->tokens = NULL;
