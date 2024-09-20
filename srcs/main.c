@@ -3,42 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 13:49:31 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/20 16:50:08 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int		g_global_state = 0;
+int g_global_state = 0;
 
 // valgrind --leak-check=full ./minishell
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
 // valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --log-file=log_errors.txt ./minishell
 
-void	print_tokens(t_data *data)
+void print_tokens(t_data *data)
 {
-	while (data->tokens)
+	t_token *token = data->tokens;
+	while (token)
 	{
-		if (data->tokens->type == T_WORD)
-			printf("\033[1;32mT_WORD: %s\033[0m\n", data->tokens->value);
-		else if (data->tokens->type == T_OPERATOR)
-			printf("\033[1;34mT_OPERATOR: %s\033[0m\n", data->tokens->value);
-		else if (data->tokens->type == T_EOF)
-			printf("\033[1;31mT_EOF\033[0m\n");
-		else if (data->tokens->type == T_ENV_VAR)
-			printf("\033[1;33mT_ENV_VAR: %s\033[0m\n", data->tokens->value);
-		else if (data->tokens->type == T_BUILTIN)
-			printf("\033[1;35mT_BUILTIN: %s\033[0m\n", data->tokens->value);
-		data->tokens = data->tokens->next;
+		printf("Token: type=%d, value=%s\n", token->type, token->value);
+		token = token->next;
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
-	t_data		data;
+	t_data data;
 
 	(void)argc;
 	(void)argv;
@@ -49,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 		data.user_line = readline(PROMPT);
 		add_history(data.user_line);
 		if (!ft_tokenize(&data))
-			return (ft_stackclear(&data.tok), 0);
+			return (ft_free_all(&data), 0);
 		data.tokens = data.tok;
 		print_tokens(&data);
 		parse_tokens(&data);

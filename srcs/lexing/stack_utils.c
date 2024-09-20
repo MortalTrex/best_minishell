@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/17 19:22:28 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:22:14 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ void	ft_stackclear(t_token **stack)
 {
 	t_token	*tmp;
 
-	while (*stack)
+	while (*stack != NULL)
 	{
 		tmp = (*stack)->next;
-		free((*stack)->value);
-		free((*stack));
+		if ((*stack)->value)
+			free((*stack)->value);
+		if (*stack)
+			free(*stack);
 		*stack = tmp;
 	}
 	*stack = NULL;
