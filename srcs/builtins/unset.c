@@ -15,10 +15,8 @@
 void	search_in_env(t_data *data, char *var)
 {
 	t_env	*tmp_env;
-	t_env	*prev_env;
 
 	tmp_env = data->env;
-	prev_env = NULL;
 	while (tmp_env)
 	{
 		if (!ft_strcmp(var, tmp_env->line))
@@ -34,11 +32,9 @@ void	search_in_env(t_data *data, char *var)
 void	ft_unset(t_data *data)
 {
 	t_token	*tmp_tok;
-	t_env	*tmp_env;
 	bool	after_unset;
 
 	tmp_tok = data->tok;
-	tmp_env = data->env;
 	while (tmp_tok)
 	{
 		if (after_unset == true)

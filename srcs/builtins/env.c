@@ -17,7 +17,14 @@ t_env	*new_node_env(char *line)
 	t_env	*new_node;
 
 	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
 	new_node->line = ft_strdup(line);
+	if (!new_node->line)
+	{
+		free(new_node);
+		return (NULL);
+	}
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -28,6 +35,8 @@ void	push_node_to_env(t_data *data, char *env_line)
 	t_env	*current;
 
 	new_node = new_node_env(env_line);
+	if (!new_node)
+		return ;
 	current = data->env;
 	if (data->env == NULL)
 		data->env = new_node;

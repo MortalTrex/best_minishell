@@ -49,10 +49,13 @@ int	main(int argc, char **argv, char **envp)
 		data.user_line = readline(PROMPT);
 		add_history(data.user_line);
 		if (!ft_tokenize(&data))
+		{
+			free(data.user_line);
 			return (ft_stackclear(&data.tok), 0);
+		}
 		data.tokens = data.tok;
 		print_tokens(&data);
-		parse_tokens(&data);
+		parse_tokens(&data); 
 		ft_free_all(&data);
 	}
 	return (0);
