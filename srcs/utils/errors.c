@@ -6,13 +6,13 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/23 10:26:41 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/23 19:09:36 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_perror_msg(char *msg, int *fd)
+void	ft_perror(char *msg, int *fd)
 {
 	if (fd != NULL)
 	{
@@ -41,4 +41,6 @@ void	ft_free_all(t_data *data)
 		ft_stackclear(&data->tok);
 	if (data->ast)
 		free_ast(data->ast);
+	if (data->env)
+		ft_envclear(data->env);
 }

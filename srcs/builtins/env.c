@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/23 11:05:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/23 19:07:30 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	copy_env(char **envp, t_data *data)
 	while (envp[i])
 	{
 		if (!new_node_env(envp[i]))
-			return (ft_envclear(t_data->env))
+			
 		push_node_to_env(data, envp[i]);
 		i++;
 	}
