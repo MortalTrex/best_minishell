@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 13:49:31 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/23 10:26:35 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		data.user_line = readline(PROMPT);
-		add_history(data.user_line);
+		if (data.user_line != NULL)
+			add_history(data.user_line);
 		if (!ft_tokenize(&data))
 		{
 			free(data.user_line);
@@ -55,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		data.tokens = data.tok;
 		print_tokens(&data);
-		parse_tokens(&data); 
+		parse_tokens(&data);
 		ft_free_all(&data);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:47:34 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/23 10:26:41 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_msg_free_exit(char *msg, t_data *data)
 
 void	ft_free_all(t_data *data)
 {
+	rl_clear_history();
 	if (data->tokens)
 		ft_stackclear(&data->tokens);
 	if (data->user_line)

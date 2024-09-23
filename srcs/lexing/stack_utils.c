@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:55:15 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/23 10:35:02 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,17 @@ void	ft_stackclear(t_token **stack)
 		*stack = tmp;
 	}
 	*stack = NULL;
+}
+
+void ft_envclear(t_env *env)
+{
+	t_env *tmp;
+	
+	while(env)
+	{
+		tmp = env;
+		env = env->next;
+		free(tmp->line);
+		free(tmp);
+	}
 }
