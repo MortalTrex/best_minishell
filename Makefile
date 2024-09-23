@@ -33,7 +33,8 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/builtins/unset.c\
 	srcs/parsing/parser.c\
 	srcs/parsing/ast.c\
-	srcs/builtins/export.c
+	srcs/builtins/export.c\
+	srcs/builtins/exit.c\
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m

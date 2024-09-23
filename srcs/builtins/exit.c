@@ -12,5 +12,8 @@
 
 #include "minishell.h"
 
-/*        exit — cause the shell to exit
- */
+void	ft_exit(t_data *data)
+{
+	ft_free_all(data);
+	exit(EXIT_SUCCESS);
+}

@@ -57,6 +57,7 @@ int	main(int argc, char **argv, char **envp)
 		data.tokens = data.tok;
 		print_tokens(&data);
 		parse_tokens(&data);
+		ft_envclear(data.env);
 		ft_free_all(&data);
 	}
 	return (0);

@@ -44,14 +44,13 @@
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
 // Pipex
-char		*find_path(char *cmd, char **envp);
-void		exec(char *arg, char **envp);
-void		ft_process_infile(char **argv, int *fd, char **envp);
-void		ft_process_outfile(char **argv, int *fd, char **envp, int argc);
+char		*find_path(char *cmd, char **envp, t_data *data);
+void		exec(char *arg, char **envp, t_data *data);
+void		ft_process_infile(char **argv, char **envp, t_data *data);
+void		ft_process_outfile(char **argv, t_data *data, char **envp, int argc);
 
 // Errors
-void		ft_perror_msg(char *msg, int *fd);
-void		ft_msg_free_exit(char *msg, t_data *data);
+void		ft_error(t_data *data, char *msg);
 bool		ft_is_wordchar(char c);
 void		ft_free_all(t_data *data);
 
@@ -62,6 +61,7 @@ void		copy_env(char **envp, t_data *data);
 void		ft_env(t_data *data);
 void		push_node_to_env(t_data *data, char *line);
 void		ft_print_env(t_data *data);
+t_env		*new_node_env(char *line, t_data *data);
 
 // export.c
 void		ft_export(t_data *data);
@@ -75,6 +75,9 @@ void		ft_pwd(void);
 
 //	unset.c
 void		ft_unset(t_data *data);
+
+//	exit.c
+void		ft_exit(t_data *data);
 
 // LEXING
 
@@ -99,6 +102,7 @@ t_token		*ft_stacknew(int type, void *value);
 void		ft_stackadd_back(t_token **stack, t_token *new);
 t_token		*ft_stacklast(t_token *stack);
 void		ft_stackclear(t_token **stack);
+void 		ft_envclear(t_env *env);
 
 // PARSING
 

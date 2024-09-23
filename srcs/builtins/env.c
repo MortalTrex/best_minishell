@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_env	*new_node_env(char *line)
+t_env	*new_node_env(char *line, t_data *data)
 {
 	t_env	*new_node;
 
@@ -23,7 +23,7 @@ t_env	*new_node_env(char *line)
 	if (!new_node->line)
 	{
 		free(new_node);
-		return (NULL);
+		ft_error(data, "Malloc failed\n");
 	}
 	new_node->next = NULL;
 	return (new_node);
@@ -34,7 +34,7 @@ void	push_node_to_env(t_data *data, char *env_line)
 	t_env	*new_node;
 	t_env	*current;
 
-	new_node = new_node_env(env_line);
+	new_node = new_node_env(env_line, data);
 	if (!new_node)
 		return ;
 	current = data->env;
@@ -56,8 +56,6 @@ void	copy_env(char **envp, t_data *data)
 	i = 0;
 	while (envp[i])
 	{
-		if (!new_node_env(envp[i]))
-			
 		push_node_to_env(data, envp[i]);
 		i++;
 	}

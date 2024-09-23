@@ -12,27 +12,20 @@
 
 #include "minishell.h"
 
-void	ft_perror(char *msg, int *fd)
+void	ft_error(t_data *data, char *msg)
 {
-	if (fd != NULL)
-	{
-		close(fd[0]);
-		close(fd[1]);
-	}
-	perror(msg);
+	ft_free_all(data);
+	ft_putstr_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
-
-void	ft_msg_free_exit(char *msg, t_data *data)
-{
-	ft_stackclear(&data->tok);
-	perror(msg);
-	exit(EXIT_FAILURE);
-}
-
 void	ft_free_all(t_data *data)
 {
 	rl_clear_history();
+	if (data->fd != NULL)
+	{
+		close(data->fd[0]);
+		close(data->fd[1]);
+	}
 	if (data->tokens)
 		ft_stackclear(&data->tokens);
 	if (data->user_line)

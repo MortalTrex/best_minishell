@@ -51,6 +51,7 @@ typedef struct s_data
 	t_token			*tokens;
 	t_token			*tok;
 	char			*user_line;
+	int				*fd;
 	t_ast_node		*ast;
 	// t_struct	termios	term;
 }					t_data;

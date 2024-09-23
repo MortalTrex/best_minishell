@@ -46,7 +46,7 @@ void	ft_detect_builtin(t_data *data)
 				ft_env(data);
 			}
 			else if (!ft_strcmp(current->value, "exit"))
-				exit(0);
+			ft_exit(data);
 		}
 		current = current->next;
 	}
@@ -102,7 +102,7 @@ bool	ft_tokenize(t_data *data)
 		ft_append_word(data, token_buffer);
 	}
 	if (is_quotes == false)
-		return (ft_msg_free_exit("Error: Unclosed quotes\n", data), false);
+		return (ft_error(data, "Error: Unclosed quotes\n"), false);
 	ft_detect_builtin(data);
 	return (ft_stackadd_back(&data->tok, ft_stacknew(T_EOF, NULL)), true);
 }
