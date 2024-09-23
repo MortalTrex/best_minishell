@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 18:54:38 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:36:23 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,30 @@ int ft_strcmp(const char *s1, const char *s2)
 
 void ft_stackadd_back(t_token **stack, t_token *new)
 {
-	t_token *last;
+	t_token	*curr_node;
 
-	last = ft_stacklast(*stack);
-	if (!last)
+	if (!*stack)
+	{
 		*stack = new;
-	else
-		last->next = new;
+		return ;
+	}
+	curr_node = *stack;
+	while (curr_node && curr_node -> next)
+		curr_node = curr_node -> next;
+	curr_node -> next = new;
+	new -> prev = curr_node;
 }
 
-t_token *ft_stacknew(int type, void *value)
+t_token *ft_stacknew(int type, char *value)
 {
 	t_token *token;
 
-	token = malloc(sizeof(t_token));
+	token = (t_token *)ft_calloc(1, sizeof(t_token));
 
 	if (!token)
 		return (NULL);
 	token->type = type;
 	token->value = value;
-	token->next = NULL;
-	token->prev = NULL;
 	return (token);
 }
 
@@ -69,17 +72,14 @@ void ft_stackclear(t_token **stack)
 		return;
 
 	tmp = *stack;
-	while (tmp != NULL)
+	if (!tmp)
+		return ;
+	while (tmp)
 	{
+		free(tmp->value);
 		next = tmp->next;
-		if (tmp->value)
-		{
-			free(tmp->value);
-			tmp->value = NULL; // Ensure the value is not freed again
-		}
 		free(tmp);
 		tmp = next;
 	}
 	*stack = NULL;
 }
-

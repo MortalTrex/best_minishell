@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 17:30:11 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/23 16:13:28 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,20 @@ void	ft_append_operator(t_data *data, char *line, unsigned int *i)
 {
 	t_token	*new_token;
 
-	new_token = malloc(sizeof(t_token));
-	if (!new_token)
-		return ;
-	new_token->type = T_OPERATOR;
 	if (ft_is_multi_char_operator(&line[*i]))
 	{
+		new_token = ft_stacknew(T_OPERATOR, NULL);
 		new_token->value = strndup(&line[*i], 2);
 		(*i) += 2;
 	}
 	else
 	{
+		new_token = ft_stacknew(T_OPERATOR, NULL);
 		new_token->value = strndup(&line[*i], 1);
 		(*i)++;
 	}
-	new_token->next = NULL;
+	if (!new_token)
+		return ;
 	ft_stackadd_back(&data->tok, new_token);
 }
 
@@ -49,9 +48,10 @@ void	ft_word_to_token(t_data *data, char *line, unsigned int start, int len)
 	if (!new_token)
 	{
 		free(substr);
-		fprintf(stderr, "Error: ft_stacknew_token returned NULL\n");
+		fprintf(stderr, "Error: ft_stacknew returned NULL\n");
 		return ;
 	}
+	free(substr);
 	ft_stackadd_back(&data->tok, new_token);
 }
 
@@ -62,7 +62,7 @@ bool	ft_append_word(t_data *data, char *token_buffer)
 
 	if (!token_buffer || token_buffer[0] == '\0')
 		return (false);
-	word = strdup(token_buffer);
+	word = ft_strdup(token_buffer);
 	if (!word)
 	{
 		fprintf(stderr, "Error: strdup failed to allocate memory\n");
@@ -75,6 +75,7 @@ bool	ft_append_word(t_data *data, char *token_buffer)
 		fprintf(stderr, "Error: ft_stacknew_token returned NULL\n");
 		return (false);
 	}
+	ft_printf("Appending word: %s\n", token_buffer);
 	ft_stackadd_back(&data->tok, new_token);
 	return (true);
 }
@@ -119,9 +120,10 @@ void	ft_append_env_var(t_data *data, char *line, unsigned int *i)
 	if (!new_token)
 	{
 		free(env_var_name);
-		fprintf(stderr, "Error: ft_stacknew_token failed to allocate memory\n");
+		fprintf(stderr, "Error: ft_stacknew failed to allocate memory\n");
 		return ;
 	}
 	ft_stackadd_back(&data->tok, new_token);
+	free(env_var_name);
 	*i = start + len;
 }

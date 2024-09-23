@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:47 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 14:19:30 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:10:11 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ bool		ft_skip_quotes(char *line, unsigned int *i);
 
 // stack_utils.c
 int			ft_strcmp(const char *s1, const char *s2);
-t_token		*ft_stacknew(int type, void *value);
+t_token		*ft_stacknew(int type, char *value);
 void		ft_stackadd_back(t_token **stack, t_token *new);
 t_token		*ft_stacklast(t_token *stack);
 void		ft_stackclear(t_token **stack);

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 18:50:37 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:19:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,21 @@ void ft_msg_free_exit(char *msg, t_data *data)
 	perror(msg);
 	exit(EXIT_FAILURE);
 }
+void ft_free_env(t_env *env)
+{
+	t_env *tmp;
+
+	while (env)
+	{
+		tmp = env;
+		env = env->next;
+		free(tmp->line);
+		free(tmp);
+	}
+}
 
 void ft_free_all(t_data *data)
 {
-	if (data->tokens != NULL)
-	{
-		ft_stackclear(&data->tokens);
-		data->tokens = NULL;
-	}
 	if (data->user_line)
 	{
 		free(data->user_line);
@@ -51,6 +58,11 @@ void ft_free_all(t_data *data)
 	{
 		free_ast(data->ast);
 		data->ast = NULL;
+	}
+	if (data->env)
+	{
+		ft_free_env(data->env);
+		data->env = NULL;
 	}
 	printf("All should be free...\n");
 }

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 19:06:52 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:15:11 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,9 @@ bool	ft_tokenize(t_data *data)
 				return (false);
 		}
 		else
+		{
 			token_buffer[buffer_index++] = data->user_line[i++];
+		}
 	}
 	return (ft_finalize_tokenization(data, token_buffer, buffer_index, is_quotes));
 }
