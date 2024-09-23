@@ -63,15 +63,16 @@ void	ft_stackclear(t_token **stack)
 	*stack = NULL;
 }
 
-void ft_envclear(t_env *env)
+void	ft_envclear(t_env **env)
 {
-	t_env *tmp;
-	
-	while(env)
+	t_env	*temp;
+
+	while (*env)
 	{
-		tmp = env;
-		env = env->next;
-		free(tmp->line);
-		free(tmp);
+		temp = *env;
+		*env = (*env)->next;
+		free(temp->line);  // Libère la ligne dupliquée
+		free(temp);        // Libère le nœud lui-même
 	}
+	*env = NULL;  // S'assurer que le pointeur de liste est nul après la libération
 }

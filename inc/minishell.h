@@ -102,7 +102,7 @@ t_token		*ft_stacknew(int type, void *value);
 void		ft_stackadd_back(t_token **stack, t_token *new);
 t_token		*ft_stacklast(t_token *stack);
 void		ft_stackclear(t_token **stack);
-void 		ft_envclear(t_env *env);
+void 		ft_envclear(t_env **env);
 
 // PARSING
 

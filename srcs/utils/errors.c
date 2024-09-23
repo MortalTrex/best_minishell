@@ -35,5 +35,5 @@ void	ft_free_all(t_data *data)
 	if (data->ast)
 		free_ast(data->ast);
 	if (data->env)
-		ft_envclear(data->env);
+		ft_envclear(&data->env);
 }
