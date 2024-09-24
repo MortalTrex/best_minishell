@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/24 12:30:37 by rbalazs          ###   ########.fr       */
+=======
+/*   Updated: 2024/09/17 19:22:28 by mmiilpal         ###   ########.fr       */
+>>>>>>> mmiilpal
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
 
 void	ft_stackadd_back(t_token **stack, t_token *new)
 {
