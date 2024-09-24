@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/23 10:26:35 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:01:00 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int		g_global_state = 0;
 
-// valgrind --leak-check=full ./minishell
-// valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
-// valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --log-file=log_errors.txt ./minishell
+//valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
 void	print_tokens(t_data *data)
 {
