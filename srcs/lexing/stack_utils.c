@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 15:12:23 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/24 16:17:31 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ void ft_stackclear(t_token **stack)
 		return ;
 	while (tmp)
 	{
-		free(tmp->value);
+		if (tmp->value)
+			free(tmp->value);
+		tmp->value = NULL;
 		next = tmp->next;
 		free(tmp);
 		tmp = next;

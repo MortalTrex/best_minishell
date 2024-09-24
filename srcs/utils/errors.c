@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 15:57:08 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/24 16:16:04 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_error(t_data *data, char *msg)
 void	ft_free_all(t_data *data)
 {
 	rl_clear_history();
+	if (!data)
+		return ;
 	if (data->fd != NULL)
 	{
 		close(data->fd[0]);
