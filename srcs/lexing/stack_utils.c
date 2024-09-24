@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/23 10:35:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/24 12:30:37 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	ft_envclear(t_env **env)
 	{
 		temp = *env;
 		*env = (*env)->next;
-		free(temp->line);  // Libère la ligne dupliquée
-		free(temp);        // Libère le nœud lui-même
+		free(temp->line);
+		free(temp);
 	}
-	*env = NULL;  // S'assurer que le pointeur de liste est nul après la libération
+	*env = NULL;
 }
