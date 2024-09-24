@@ -121,7 +121,5 @@ void	ft_append_env_var(t_data *data, char *line, unsigned int *i)
 		ft_error(data, "Error:  ft_stacknew failed to allocate memory\n");
 	}
 	ft_stackadd_back(&data->tok, new_token);
-	free(data->tok->value);
-	data->tok->value = NULL;
 	*i = start + len;
 }
