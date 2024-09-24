@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 15:11:42 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:15:17 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index
 		ft_append_word(data, token_buffer);
 	}
 	if (is_quotes == false)
-		return (ft_msg_free_exit("Error: Unclosed quotes\n", data), false);
+		return (ft_error(data, "Error: Unclosed quotes\n"), false);
 	ft_detect_builtin(data);
 	ft_stackadd_back(&data->tok, ft_stacknew(T_EOF, NULL));
 	return (true);
