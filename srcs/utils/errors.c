@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 15:13:56 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/24 15:57:08 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ void	ft_free_all(t_data *data)
 	if (data->user_line)
 	{
 		free(data->user_line);
-		data->user_line = NULL;
 	}
 	if (data->tok)
 	{
 		ft_stackclear(&data->tok);
-		data->tok = NULL;
 	}
 	if (data->ast)
 		free_ast(data->ast);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/23 16:13:28 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:36:55 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,12 @@ void	ft_append_env_var(t_data *data, char *line, unsigned int *i)
 		len++;
 	env_var_name = ft_substr(line, start, len);
 	if (!env_var_name)
-	{
-		fprintf(stderr, "Error: ft_substr failed to allocate memory\n");
-		return ;
-	}
+		ft_error(data, "Error: ft_substr failed to allocate memory\n");
 	new_token = ft_stacknew(T_ENV_VAR, env_var_name);
 	if (!new_token)
 	{
 		free(env_var_name);
-		fprintf(stderr, "Error: ft_stacknew failed to allocate memory\n");
-		return ;
+		ft_error(data, "Error:  ft_stacknew failed to allocate memory\n");
 	}
 	ft_stackadd_back(&data->tok, new_token);
 	free(env_var_name);
