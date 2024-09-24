@@ -82,7 +82,7 @@ t_ast_node *parse_sequence(t_token **tokens)
 
 	left = parse_pipeline(tokens);
 	token = *tokens;
-	while (left && token && token->type == T_OPERATOR && strcmp(token->value, ";") == 0)
+	while (left && token && token->type == T_OPERATOR)
 	{
 		*tokens = token->next;
 		right = parse_pipeline(tokens);

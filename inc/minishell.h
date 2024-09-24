@@ -112,7 +112,7 @@ bool		ft_skip_quotes(char *line, unsigned int *i);
 
 // stack_utils.c
 int			ft_strcmp(const char *s1, const char *s2);
-t_token		*ft_stacknew(int type, void *value);
+t_token		*ft_stacknew(int type, char *value);
 void		ft_stackadd_back(t_token **stack, t_token *new);
 t_token		*ft_stacklast(t_token *stack);
 void		ft_stackclear(t_token **stack);

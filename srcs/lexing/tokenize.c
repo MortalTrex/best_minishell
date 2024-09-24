@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/09/17 17:56:54 by rbalazs          ###   ########.fr       */
-=======
-/*   Updated: 2024/09/17 19:22:13 by mmiilpal         ###   ########.fr       */
->>>>>>> mmiilpal
+/*   Updated: 2024/09/24 15:11:42 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +125,9 @@ bool	ft_tokenize(t_data *data)
 				return (false);
 		}
 		else
+		{
 			token_buffer[buffer_index++] = data->user_line[i++];
+		}
 	}
 	return (ft_finalize_tokenization(data, token_buffer, buffer_index, is_quotes));
 }

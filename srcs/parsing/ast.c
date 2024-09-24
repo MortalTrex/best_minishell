@@ -26,6 +26,7 @@ void free_ast(t_ast_node *root)
 	free_ast(root->left);
 	free_ast(root->right);
 	free(root);
+	root = NULL;
 }
 
 void print_ast(t_ast_node *root, int depth)
@@ -73,7 +74,6 @@ void ast_print_tokens(t_token *tokens)
 void parse_tokens(t_data *data)
 {
 	printf("Parsing tokens...\n");
-	print_tokens(&data); // Print tokens for debugging
 	ft_expand_env_vars(&data->tokens);
 	data->ast = parse_sequence(&data->tokens);
 	printf("AST constructed, printing...\n");

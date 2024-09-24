@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/09/24 12:30:37 by rbalazs          ###   ########.fr       */
-=======
-/*   Updated: 2024/09/17 19:22:28 by mmiilpal         ###   ########.fr       */
->>>>>>> mmiilpal
+/*   Updated: 2024/09/24 15:12:23 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int ft_strcmp(const char *s1, const char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
 	{
@@ -26,34 +22,38 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (*s1 - *s2);
 }
 
-void	ft_stackadd_back(t_token **stack, t_token *new)
+void ft_stackadd_back(t_token **stack, t_token *new)
 {
-	t_token	*last;
+	t_token	*curr_node;
 
-	last = ft_stacklast(*stack);
-	if (!last)
+	if (!*stack)
+	{
 		*stack = new;
-	else
-		last->next = new;
+		return ;
+	}
+	curr_node = *stack;
+	while (curr_node && curr_node -> next)
+		curr_node = curr_node -> next;
+	curr_node -> next = new;
+	new -> prev = curr_node;
 }
 
-t_token	*ft_stacknew(int type, void *value)
+t_token *ft_stacknew(int type, char *value)
 {
-	t_token	*token;
+	t_token *token;
 
-	token = malloc(sizeof(t_token));
+	token = (t_token *)ft_calloc(1, sizeof(t_token));
+
 	if (!token)
 		return (NULL);
 	token->type = type;
 	token->value = value;
-	token->next = NULL;
-	token->prev = NULL;
 	return (token);
 }
 
-t_token	*ft_stacklast(t_token *stack)
+t_token *ft_stacklast(t_token *stack)
 {
-	t_token	*tmp;
+	t_token *tmp;
 
 	if (!stack)
 		return (NULL);
@@ -63,16 +63,23 @@ t_token	*ft_stacklast(t_token *stack)
 	return (tmp);
 }
 
-void	ft_stackclear(t_token **stack)
+void ft_stackclear(t_token **stack)
 {
-	t_token	*tmp;
+	t_token *tmp;
+	t_token *next;
 
-	while (*stack)
+	if (stack == NULL || *stack == NULL)
+		return;
+
+	tmp = *stack;
+	if (!tmp)
+		return ;
+	while (tmp)
 	{
-		tmp = (*stack)->next;
-		free((*stack)->value);
-		free((*stack));
-		*stack = tmp;
+		free(tmp->value);
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
 	}
 	*stack = NULL;
 }
