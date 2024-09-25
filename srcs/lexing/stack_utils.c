@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 16:17:31 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/25 15:56:34 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
 	{
@@ -22,7 +22,7 @@ int ft_strcmp(const char *s1, const char *s2)
 	return (*s1 - *s2);
 }
 
-void ft_stackadd_back(t_token **stack, t_token *new)
+void	ft_stackadd_back(t_token **stack, t_token *new)
 {
 	t_token	*curr_node;
 
@@ -32,18 +32,17 @@ void ft_stackadd_back(t_token **stack, t_token *new)
 		return ;
 	}
 	curr_node = *stack;
-	while (curr_node && curr_node -> next)
-		curr_node = curr_node -> next;
-	curr_node -> next = new;
-	new -> prev = curr_node;
+	while (curr_node && curr_node->next)
+		curr_node = curr_node->next;
+	curr_node->next = new;
+	new->prev = curr_node;
 }
 
-t_token *ft_stacknew(int type, char *value)
+t_token	*ft_stacknew(int type, char *value)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = (t_token *)ft_calloc(1, sizeof(t_token));
-
 	if (!token)
 		return (NULL);
 	token->type = type;
@@ -51,26 +50,13 @@ t_token *ft_stacknew(int type, char *value)
 	return (token);
 }
 
-t_token *ft_stacklast(t_token *stack)
+void	ft_stackclear(t_token **stack)
 {
-	t_token *tmp;
-
-	if (!stack)
-		return (NULL);
-	tmp = stack;
-	while (tmp->next)
-		tmp = tmp->next;
-	return (tmp);
-}
-
-void ft_stackclear(t_token **stack)
-{
-	t_token *tmp;
-	t_token *next;
+	t_token	*tmp;
+	t_token	*next;
 
 	if (stack == NULL || *stack == NULL)
-		return;
-
+		return ;
 	tmp = *stack;
 	if (!tmp)
 		return ;

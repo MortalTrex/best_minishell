@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 16:21:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:59:05 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_token_type	ft_op_type(char *op)
+{
+	if (!ft_strcmp(op, "|"))
+		return (T_PIPE);
+	else if (!ft_strcmp(op, ">"))
+		return (T_REDIR_OUT);
+	else if (!ft_strcmp(op, ">>"))
+		return (T_REDIR_APPEND);
+	else if (!ft_strcmp(op, "<"))
+		return (T_REDIR_IN);
+	else if (!ft_strcmp(op, "<<"))
+		return (T_REDIR_HERE);
+	return (T_OPERATOR);
+}
 
 void	ft_append_operator(t_data *data, char *line, unsigned int *i)
 {
@@ -20,12 +35,14 @@ void	ft_append_operator(t_data *data, char *line, unsigned int *i)
 	{
 		new_token = ft_stacknew(T_OPERATOR, NULL);
 		new_token->value = strndup(&line[*i], 2);
+		new_token->type = ft_op_type(new_token->value);
 		(*i) += 2;
 	}
 	else
 	{
 		new_token = ft_stacknew(T_OPERATOR, NULL);
 		new_token->value = strndup(&line[*i], 1);
+		new_token->type = ft_op_type(new_token->value);
 		(*i)++;
 	}
 	if (!new_token)
@@ -75,7 +92,6 @@ bool	ft_append_word(t_data *data, char *token_buffer)
 		fprintf(stderr, "Error: ft_stacknew_token returned NULL\n");
 		return (false);
 	}
-	ft_printf("Appending word: %s\n", token_buffer);
 	ft_stackadd_back(&data->tok, new_token);
 	return (true);
 }

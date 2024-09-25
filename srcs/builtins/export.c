@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 17:20:16 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:08:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-bool check_double(t_data *data, char *var)
+bool	check_double(t_data *data, char *var)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = data->env;
-	while  (tmp)
+	while (tmp)
 	{
 		if (!ft_strcmp(tmp->line, var))
-			return(true);
+			return (true);
 		tmp = tmp->next;
 	}
 	return (false);
@@ -73,17 +73,17 @@ void	ft_exp_env(t_data *data)
 	}
 }
 
-void change_value (t_data *data, char *old, char *new)
+void	change_value(t_data *data, char *old, char *new)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = data->env;
-	while  (tmp)
+	while (tmp)
 	{
 		if (!ft_strcmp(tmp->line, old))
 		{
 			tmp->line = ft_strdup(new);
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 	}
@@ -91,26 +91,26 @@ void change_value (t_data *data, char *old, char *new)
 
 bool	check_change_value(t_data *data)
 {
-	t_token *tmp;
-	char *old_str;
-	char *new_str;
+	t_token	*tmp;
+	char	*old_str;
+	char	*new_str;
 
 	old_str = NULL;
 	new_str = NULL;
 	tmp = data->tok;
-	while(tmp)
+	while (tmp)
 	{
 		if (!ft_strcmp(tmp->value, "="))
 		{
 			tmp = tmp->next;
 			new_str = ft_strdup(tmp->value);
 			change_value(data, old_str, new_str);
-			return(free(old_str), free(new_str), true);
+			return (free(old_str), free(new_str), true);
 		}
 		old_str = ft_strdup(tmp->value);
 		tmp = tmp->next;
 	}
-	return(free(old_str), free(new_str), false);
+	return (free(old_str), free(new_str), false);
 }
 
 void	ft_export(t_data *data)

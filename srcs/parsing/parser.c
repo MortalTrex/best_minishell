@@ -2,50 +2,60 @@
 
 t_ast_node *parse_command(t_token **tokens)
 {
-	t_token *token = *tokens;
+	if (!*tokens || (*tokens)->type != T_WORD)
+		return (NULL);
 
-	// Handle T_WORD, T_BUILTIN, and T_ENV_VAR tokens as command nodes
-	if (token && (token->type == T_WORD || token->type == T_BUILTIN || token->type == T_ENV_VAR))
+	// Create a command node
+	t_ast_node *cmd_node = create_ast_node(NODE_COMMAND, (*tokens)->value);
+	(*tokens) = (*tokens)->next;
+
+	// Handle redirection operators like '>' or '<'
+	while (*tokens && ((*tokens)->type == T_REDIR_IN || (*tokens)->type == T_REDIR_OUT))
 	{
-		*tokens = token->next;
-		return create_ast_node(NODE_COMMAND, token->value);
+		t_ast_node *redir_node = create_ast_node((*tokens)->type == T_REDIR_IN ? NODE_REDIRECT_IN : NODE_REDIRECT_OUT, NULL);
+		(*tokens) = (*tokens)->next; // Move to the next token (should be the file for redirection)
+		if (!*tokens || (*tokens)->type != T_WORD)
+		{
+			free_ast(cmd_node);
+			free_ast(redir_node);
+			return (NULL); // Error: expected a file after redirection
+		}
+		redir_node->value = strdup((*tokens)->value); // Store the file name
+		(*tokens) = (*tokens)->next;
+
+		// Attach the redirection node to the command
+		if (!cmd_node->left)
+			cmd_node->left = redir_node;
+		else
+			cmd_node->right = redir_node;
 	}
-	return NULL;
+
+	return (cmd_node);
 }
 
 t_ast_node *parse_pipeline(t_token **tokens)
 {
-	t_ast_node *left = parse_command(tokens);
-	t_token *token = *tokens;
+	t_ast_node *left_cmd = parse_command(tokens);
+	if (!left_cmd)
+		return (NULL);
 
-	// Debugging
-	if (left)
-		printf("Parsed command: %s\n", left->value);
-	else
-		printf("No command parsed.\n");
-
-	while (left && token && token->type == T_OPERATOR)
+	// If we encounter a pipe after a command
+	if ((*tokens)->type == T_PIPE)
 	{
-		if (strcmp(token->value, "|") == 0)
+		(*tokens) = (*tokens)->next; // Move to the next token after the pipe
+		t_ast_node *right_cmd = parse_pipeline(tokens);
+		if (!right_cmd)
 		{
-			*tokens = token->next;
-			t_ast_node *right = parse_pipeline(tokens);
-			if (right)
-			{
-				t_ast_node *node = create_ast_node(NODE_PIPE, NULL);
-				node->left = left;
-				node->right = right;
-				left = node;
-			}
-			else
-			{
-				free_ast(left);
-				return NULL;
-			}
+			free_ast(left_cmd);
+			return (NULL);
 		}
-		token = *tokens;
+		t_ast_node *pipe_node = create_ast_node(NODE_PIPE, "|");
+		pipe_node->left = left_cmd;
+		pipe_node->right = right_cmd;
+		return (pipe_node);
 	}
-	return left;
+
+	return (left_cmd); // Return the single command if no pipe was found
 }
 
 void ft_expand_env_vars(t_token **tokens)
@@ -71,34 +81,4 @@ void ft_expand_env_vars(t_token **tokens)
 		}
 		current = current->next;
 	}
-}
-
-t_ast_node *parse_sequence(t_token **tokens)
-{
-	t_ast_node *left;
-	t_token *token;
-	t_ast_node *right;
-	t_ast_node *node;
-
-	left = parse_pipeline(tokens);
-	token = *tokens;
-	while (left && token && token->type == T_OPERATOR)
-	{
-		*tokens = token->next;
-		right = parse_pipeline(tokens);
-		if (right)
-		{
-			node = create_ast_node(NODE_SEQUENCE, NULL);
-			node->left = left;
-			node->right = right;
-			left = node;
-		}
-		else
-		{
-			free_ast(left);
-			return (NULL);
-		}
-		token = *tokens;
-	}
-	return (left);
 }

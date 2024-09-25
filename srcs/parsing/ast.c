@@ -1,7 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/25 15:58:00 by mmiilpal          #+#    #+#             */
+/*   Updated: 2024/09/25 16:17:56 by mmiilpal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 t_ast_node *create_ast_node(t_ast_node_type type, char *value)
 {
@@ -49,9 +58,6 @@ void print_ast(t_ast_node *root, int depth)
 	case NODE_REDIRECT:
 		printf("REDIRECT: %s\n", root->value);
 		break;
-	case NODE_SEQUENCE:
-		printf("SEQUENCE\n");
-		break;
 	default:
 		printf("UNKNOWN NODE TYPE\n");
 		break;
@@ -62,20 +68,16 @@ void print_ast(t_ast_node *root, int depth)
 		print_ast(root->right, depth + 1);
 }
 
-void ast_print_tokens(t_token *tokens)
+t_ast_node	*parse_input(t_token **tokens)
 {
-	while (tokens)
-	{
-		printf("Token: type=%d, value=%s\n", tokens->type, tokens->value);
-		tokens = tokens->next;
-	}
+	return (parse_pipeline(tokens));
 }
 
 void parse_tokens(t_data *data)
 {
 	printf("Parsing tokens...\n");
-	ft_expand_env_vars(&data->tokens);
-	data->ast = parse_sequence(&data->tokens);
+	ft_expand_env_vars(&data->tok);
+	data->ast = parse_pipeline(&data->tok);
 	printf("AST constructed, printing...\n");
 	print_ast(data->ast, 0);
 }

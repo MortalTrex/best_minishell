@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 15:13:36 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:03:19 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@
 // MAIN
 
 // main.c
-void	print_tokens(t_data *data);
-int		main(int argc, char **argv, char **envp);
+void		print_tokens(t_data *data);
+int			main(int argc, char **argv, char **envp);
 
 // Pipex
 char		*find_path(char *cmd, char **envp, t_data *data);
@@ -95,9 +95,9 @@ bool		ft_append_word_quotes(char *token_buffer, int *buffer_index,
 void		ft_append_env_var(t_data *data, char *line, unsigned int *i);
 
 // tokenize.c
-bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes);
-bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
-bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
+bool		ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes);
+bool		ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
+bool		ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
 bool		ft_tokenize(t_data *data);
 
 // grammar_check.c
@@ -110,14 +110,12 @@ bool		ft_skip_quotes(char *line, unsigned int *i);
 int			ft_strcmp(const char *s1, const char *s2);
 t_token		*ft_stacknew(int type, char *value);
 void		ft_stackadd_back(t_token **stack, t_token *new);
-t_token		*ft_stacklast(t_token *stack);
 void		ft_stackclear(t_token **stack);
-void 		ft_envclear(t_env **env);
+void		ft_envclear(t_env **env);
 
 // PARSING
 
 // ast.c
-void ast_print_tokens(t_token *tokens);
 t_ast_node	*create_ast_node(t_ast_node_type type, char *value);
 void		free_ast(t_ast_node *root);
 void		print_ast(t_ast_node *root, int depth);
