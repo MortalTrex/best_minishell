@@ -1,61 +1,74 @@
 #include "minishell.h"
 
-t_ast_node *parse_command(t_token **tokens)
+bool is_operator(t_token_type type)
 {
-	if (!*tokens || (*tokens)->type != T_WORD)
-		return (NULL);
-
-	// Create a command node
-	t_ast_node *cmd_node = create_ast_node(NODE_COMMAND, (*tokens)->value);
-	(*tokens) = (*tokens)->next;
-
-	// Handle redirection operators like '>' or '<'
-	while (*tokens && ((*tokens)->type == T_REDIR_IN || (*tokens)->type == T_REDIR_OUT))
-	{
-		t_ast_node *redir_node = create_ast_node((*tokens)->type == T_REDIR_IN ? NODE_REDIRECT_IN : NODE_REDIRECT_OUT, NULL);
-		(*tokens) = (*tokens)->next; // Move to the next token (should be the file for redirection)
-		if (!*tokens || (*tokens)->type != T_WORD)
-		{
-			free_ast(cmd_node);
-			free_ast(redir_node);
-			return (NULL); // Error: expected a file after redirection
-		}
-		redir_node->value = strdup((*tokens)->value); // Store the file name
-		(*tokens) = (*tokens)->next;
-
-		// Attach the redirection node to the command
-		if (!cmd_node->left)
-			cmd_node->left = redir_node;
-		else
-			cmd_node->right = redir_node;
-	}
-
-	return (cmd_node);
+	return (type == T_PIPE || type == T_REDIR_IN || type == T_REDIR_OUT ||
+			type == T_REDIR_APPEND || type == T_REDIR_HERE);
 }
 
-t_ast_node *parse_pipeline(t_token **tokens)
+t_ast_node *parse_expression(t_token **tokens)
 {
-	t_ast_node *left_cmd = parse_command(tokens);
-	if (!left_cmd)
-		return (NULL);
+	t_ast_node *left = parse_command(tokens);
 
-	// If we encounter a pipe after a command
-	if ((*tokens)->type == T_PIPE)
+	// If the current token is an operator (like pipe or redirection)
+	while (*tokens && is_operator((*tokens)->type))
 	{
-		(*tokens) = (*tokens)->next; // Move to the next token after the pipe
-		t_ast_node *right_cmd = parse_pipeline(tokens);
-		if (!right_cmd)
+		t_token *operator_token = *tokens;
+		*tokens = (*tokens)->next;
+
+		// Handle pipe operator
+		if (operator_token->type == T_PIPE)
 		{
-			free_ast(left_cmd);
-			return (NULL);
+			t_ast_node *right = parse_command(tokens);
+			left = create_pipe_node(left, right); // Create pipe node
 		}
-		t_ast_node *pipe_node = create_ast_node(NODE_PIPE, "|");
-		pipe_node->left = left_cmd;
-		pipe_node->right = right_cmd;
-		return (pipe_node);
+		else
+		{
+			// Handle redirection
+			left = parse_redirection(left, operator_token, tokens);
+		}
 	}
 
-	return (left_cmd); // Return the single command if no pipe was found
+	return left;
+}
+t_ast_node *parse_command(t_token **tokens)
+{
+	t_ast_node *node = create_command_node();
+
+	// Add arguments to the command
+	while (*tokens && ((*tokens)->type == T_WORD || (*tokens)->type == T_BUILTIN))
+	{
+		add_argument_to_command(node->cmd, (*tokens)->value);
+		*tokens = (*tokens)->next;
+	}
+
+	return node;
+}
+t_ast_node *parse_redirection(t_ast_node *command_node, t_token *operator_token, t_token **tokens)
+{
+	t_ast_node *redir_node = NULL;
+
+	if (*tokens && (*tokens)->type == T_WORD)
+	{
+		char *file = (*tokens)->value;
+		*tokens = (*tokens)->next;
+
+		if (operator_token->type == T_REDIR_IN)
+			redir_node = create_redirect_in_node(command_node, file);
+		else if (operator_token->type == T_REDIR_OUT)
+			redir_node = create_redirect_out_node(command_node, file);
+		else if (operator_token->type == T_REDIR_APPEND)
+			redir_node = create_redirect_append_node(command_node, file);
+		else if (operator_token->type == T_REDIR_HERE)
+			redir_node = create_heredoc_node(command_node, file);
+	}
+	else
+	{
+		// Handle syntax error: expected file after redirection operator
+		fprintf(stderr, "Syntax error: expected file after redirection\n");
+	}
+
+	return redir_node;
 }
 
 void ft_expand_env_vars(t_token **tokens)

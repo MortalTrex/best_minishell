@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 16:34:32 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:35:19 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 typedef enum e_token_type
 {
 	T_WORD,
-	T_IO_NUMBER,
 	T_OPERATOR,
 	T_PIPE,
 	T_REDIR_IN,

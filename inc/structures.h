@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 15:22:32 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/25 17:49:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <minishell.h>
 
-typedef enum e_redir_type
+/* typedef enum e_redir_type
 {
 	IN,
 	OUT,
@@ -36,7 +36,7 @@ typedef struct s_cmd
 	// pid_t			pid;
 	struct s_cmd	*next;
 	t_redir			*redir;
-}					t_cmd;
+}					t_cmd; */
 
 typedef struct s_env
 {
