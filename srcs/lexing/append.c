@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 16:21:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/25 11:11:35 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ bool	ft_append_word(t_data *data, char *token_buffer)
 bool	ft_append_word_quotes(char *token_buffer, int *buffer_index, char *line,
 		unsigned int *i)
 {
+
 	char	quote;
 
 	quote = line[*i];

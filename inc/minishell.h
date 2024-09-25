@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 15:13:36 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/25 19:33:03 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,7 @@ t_ast_node	*parse_command(t_token **tokens);
 t_ast_node	*parse_pipeline(t_token **tokens);
 t_ast_node	*parse_sequence(t_token **tokens);
 
+
+// SIGNALS
+void	signals(void);
 #endif
