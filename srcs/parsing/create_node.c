@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/09/25 18:04:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:00:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,34 @@ t_ast_node *create_redirect_in_node(t_ast_node *cmd_node, char *file)
 	redir_node->left = cmd_node; // Command that receives the input
 	redir_node->right = NULL;
 	redir_node->file = strdup(file); // File to be used for input
+	if (!redir_node->file)
+	{
+		perror("strdup");
+		free(redir_node);
+		return NULL;
+	}
+
+	// Initialize the cmd field
+	redir_node->cmd = malloc(sizeof(t_cmd));
+	if (!redir_node->cmd)
+	{
+		free(redir_node->file);
+		free(redir_node);
+		return NULL;
+	}
+	redir_node->cmd->argv = NULL;
+	redir_node->cmd->next = NULL;
+	redir_node->cmd->redir = malloc(sizeof(t_redir));
+	if (!redir_node->cmd->redir)
+	{
+		free(redir_node->cmd);
+		free(redir_node->file);
+		free(redir_node);
+		return NULL;
+	}
+	redir_node->cmd->redir->file = redir_node->file;
+	redir_node->cmd->redir->type = IN;
+	redir_node->cmd->redir->next = NULL;
 
 	return redir_node;
 }
@@ -35,7 +63,12 @@ t_ast_node *create_redirect_out_node(t_ast_node *cmd_node, char *file)
 	redir_node->left = cmd_node; // Command that writes to the output file
 	redir_node->right = NULL;
 	redir_node->file = strdup(file); // File to write the output to
-
+	if (!redir_node->file)
+	{
+		perror("strdup");
+		free(redir_node);
+		return NULL;
+	}
 	return redir_node;
 }
 
@@ -74,17 +107,15 @@ t_ast_node *create_command_node()
 	cmd_node->type = NODE_CMD;
 	cmd_node->left = NULL;
 	cmd_node->right = NULL;
-	cmd_node->file = NULL; // Command node won't have a file; it's for redirections
-
-	// Allocate space for argv (list of command arguments)
 	cmd_node->cmd = malloc(sizeof(t_cmd));
 	if (!cmd_node->cmd)
 	{
 		free(cmd_node);
 		return NULL;
 	}
-
-	cmd_node->cmd->argv = NULL; // We'll add arguments later
+	cmd_node->cmd->argv = NULL;
+	cmd_node->cmd->next = NULL;
+	cmd_node->cmd->redir = NULL;
 
 	return cmd_node;
 }

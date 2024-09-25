@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:58:00 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/09/25 18:09:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:51:10 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,22 @@ void print_ast(t_ast_node *node, int level)
 	{
 	case NODE_CMD:
 		printf("Command: ");
-		for (char **arg = node->cmd->argv; *arg; arg++)
+		if (node->cmd && node->cmd->argv)
 		{
-			printf("%s ", *arg);
+			for (char **arg = node->cmd->argv; *arg; arg++)
+			{
+				printf("%s ", *arg);
+			}
 		}
 		printf("\n");
-		print_redir(node->cmd->redir); // Print associated redirections
+		if (node->cmd)
+			print_redir(node->cmd->redir); // Print associated redirections
 		break;
 
 	case NODE_PIPE:
 		printf("Pipe Node\n");
+		print_ast(node->left, level + 1);
+		print_ast(node->right, level + 1);
 		break;
 
 	case NODE_REDIR_IN:
@@ -110,10 +116,31 @@ void free_ast(t_ast_node *root)
 {
 	if (!root)
 		return;
+
+	// Recursively free the left and right children
 	free_ast(root->left);
 	free_ast(root->right);
+
+	// Free the command node
+	if (root->type == NODE_CMD)
+	{
+		t_cmd *cmd = root->cmd;
+		if (cmd)
+		{
+			if (cmd->argv)
+			{
+				for (char **arg = cmd->argv; *arg; arg++)
+					free(*arg);
+				free(cmd->argv);
+			}
+			free(cmd);
+		}
+	}
+	// Free the redirection node
+	if (root->type == NODE_REDIR_IN || root->type == NODE_REDIR_OUT || root->type == NODE_REDIR_APPEND || root->type == NODE_HEREDOC)
+		free(root->file);
+	// Free the current node
 	free(root);
-	root = NULL;
 }
 
 t_ast_node *parse(t_token *tokens)
@@ -121,15 +148,14 @@ t_ast_node *parse(t_token *tokens)
 	t_ast_node *root = NULL;
 
 	while (tokens && tokens->type != T_EOF)
-	{
 		root = parse_expression(&tokens);
-	}
 	return root;
 }
 
 void parse_tokens(t_data *data)
 {
-	t_ast_node *root;
+	t_ast_node *root = NULL;
+
 	printf("Parsing tokens...\n");
 	ft_expand_env_vars(&data->tok);
 	data->ast = parse(data->tok);

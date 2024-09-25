@@ -94,4 +94,5 @@ void ft_expand_env_vars(t_token **tokens)
 		}
 		current = current->next;
 	}
+	printf("all good with expand env vars\n");
 }
