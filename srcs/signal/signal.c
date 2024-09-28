@@ -6,18 +6,19 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 19:31:46 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/09/26 13:37:54 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//Sert simplement à imprimer une nouvelle ligne
 void	sigint_handler_in_process(int sig)
 {
 	(void) sig;
-	printf("\n");
+	ft_printf("\n");
 }
-
+//Affiche quit
 void	sigquit_handler_in_process(int sig)
 {
 	(void) sig;
