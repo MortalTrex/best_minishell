@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/12 15:22:32 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/01 15:40:57 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_data
 	char			*user_line;
 	int				*fd;
 	t_ast_node		*ast;
-	// t_struct	termios	term;
 }					t_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 19:33:03 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/01 15:52:54 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ void		ft_stackclear(t_token **stack);
 void 		ft_envclear(t_env **env);
 
 // PARSING
-
 // ast.c
 void ast_print_tokens(t_token *tokens);
 t_ast_node	*create_ast_node(t_ast_node_type type, char *value);
@@ -127,6 +126,9 @@ t_ast_node	*parse_command(t_token **tokens);
 t_ast_node	*parse_pipeline(t_token **tokens);
 t_ast_node	*parse_sequence(t_token **tokens);
 
+// EXECUTION
+// exec_cmd.c
+void	exec_cmd(t_data *data);
 
 // SIGNALS
 void	signals(void);

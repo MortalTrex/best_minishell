@@ -38,6 +38,8 @@ void print_ast(t_ast_node *root, int depth)
 	}
 	for (int i = 0; i < depth; i++)
 		printf("  ");
+
+	//tableau de pointeur sur fonction
 	switch (root->type)
 	{
 	case NODE_COMMAND:

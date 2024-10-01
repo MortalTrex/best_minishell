@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/25 17:49:42 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/10/01 15:35:45 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/builtins/export.c\
 	srcs/builtins/exit.c\
 	srcs/signal/signal.c\
+	srcs/exec/exec_cmd.c\
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m
