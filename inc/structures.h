@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/01 15:40:57 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/02 10:27:43 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ typedef struct s_data
 {
 	t_cmd			*cmds;
 	t_env			*env;
-	t_token			*tokens;
 	t_token			*tok;
 	char			*user_line;
+	char 			**envc;
 	int				*fd;
 	t_ast_node		*ast;
 }					t_data;

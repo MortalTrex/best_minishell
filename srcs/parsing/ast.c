@@ -40,23 +40,27 @@ void print_ast(t_ast_node *root, int depth)
 		printf("  ");
 
 	//tableau de pointeur sur fonction
+	if (root->type == NODE_COMMAND)
+		printf("COMMAND: %s\n", root->value);
+	else if (root->type == NODE_PIPE)
+	
 	switch (root->type)
 	{
-	case NODE_COMMAND:
-		printf("COMMAND: %s\n", root->value);
-		break;
-	case NODE_PIPE:
-		printf("PIPE\n");
-		break;
-	case NODE_REDIRECT:
-		printf("REDIRECT: %s\n", root->value);
-		break;
-	case NODE_SEQUENCE:
-		printf("SEQUENCE\n");
-		break;
-	default:
-		printf("UNKNOWN NODE TYPE\n");
-		break;
+		case NODE_COMMAND:
+			printf("COMMAND: %s\n", root->value);
+			break;
+		case NODE_PIPE:
+			printf("PIPE\n");
+			break;
+		case NODE_REDIRECT:
+			printf("REDIRECT: %s\n", root->value);
+			break;
+		case NODE_SEQUENCE:
+			printf("SEQUENCE\n");
+			break;
+		default:
+			printf("UNKNOWN NODE TYPE\n");
+			break;
 	}
 	if (root->left)
 		print_ast(root->left, depth + 1);
@@ -75,9 +79,9 @@ void ast_print_tokens(t_token *tokens)
 
 void parse_tokens(t_data *data)
 {
-	printf("Parsing tokens...\n");
-	ft_expand_env_vars(&data->tokens);
-	data->ast = parse_sequence(&data->tokens);
-	printf("AST constructed, printing...\n");
-	print_ast(data->ast, 0);
+	//printf("Parsing tokens...\n");
+	ft_expand_env_vars(&data->tok);
+	data->ast = parse_sequence(&data->tok);
+	//printf("AST constructed, printing...\n");
+	//print_ast(data->ast, 0);
 }

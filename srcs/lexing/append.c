@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 11:11:35 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/03 16:05:11 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ bool	ft_append_word(t_data *data, char *token_buffer)
 		fprintf(stderr, "Error: ft_stacknew_token returned NULL\n");
 		return (false);
 	}
-	ft_printf("Appending word: %s\n", token_buffer);
 	ft_stackadd_back(&data->tok, new_token);
 	return (true);
 }

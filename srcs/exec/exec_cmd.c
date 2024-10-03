@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-char	*find_path(char *cmd, char **envp, t_data *data)
+char	*find_path(char *cmd, t_data *data)
 {
 	char	*path;
 	int		i;
@@ -8,9 +8,9 @@ char	*find_path(char *cmd, char **envp, t_data *data)
 	char	*join_path;
 
 	i = 0;
-	while (envp[i] && ft_strnstr(envp[i], "PATH", 4) == 0)
+	while (data->envc[i] && ft_strnstr(data->envc[i], "PATH", 4) == 0)
 		i++;
-	dir_path = ft_split(envp[i] + 5, ':');
+	dir_path = ft_split(data->envc[i] + 5, ':');
 	if (!dir_path)
 		ft_error(data, "Error: split failed");
 	i = -1;
@@ -27,18 +27,13 @@ char	*find_path(char *cmd, char **envp, t_data *data)
 	return (NULL);
 }
 
-void	exec_cmd(t_data *data)
+void	exec_cmd(t_data *data, char *cmd)
 {
-	char	**cmd;
 	char	*path;
 
-	cmd = ft_split(, 32);
 	if (!cmd || !cmd[0])
 		ft_error(data, "Error: empty command");
-	path = find_path(cmd[0], data->env, data);
-	if (!path || execve(path, cmd, data->env) == -1)
-	{
-		ft_free_tab(cmd);
+	path = find_path(cmd, data);
+	if (!path || execve(path, &cmd, data->envc) == -1)
 		ft_error(data, "Error: command not found");
-	}
 }

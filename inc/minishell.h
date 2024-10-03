@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/01 15:52:54 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/03 18:04:30 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	print_tokens(t_data *data);
 int		main(int argc, char **argv, char **envp);
 
 // Pipex
-char		*find_path(char *cmd, char **envp, t_data *data);
 void		exec(char *arg, char **envp, t_data *data);
 void		ft_process_infile(char **argv, char **envp, t_data *data);
 void		ft_process_outfile(char **argv, t_data *data, char **envp, int argc);
@@ -64,6 +63,7 @@ void		ft_free_all(t_data *data);
 
 // env.c
 void		copy_env(char **envp, t_data *data);
+void  		copy_env_char(char **envp, t_data *data);
 void		ft_env(t_data *data);
 void		push_node_to_env(t_data *data, char *line);
 void		ft_print_env(t_data *data);
@@ -128,7 +128,8 @@ t_ast_node	*parse_sequence(t_token **tokens);
 
 // EXECUTION
 // exec_cmd.c
-void	exec_cmd(t_data *data);
+void	exec_cmd(t_data *data, char *cmd);
+char	*find_path(char *cmd, t_data *data);
 
 // SIGNALS
 void	signals(void);

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/24 15:15:17 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/03 17:59:51 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	ft_detect_builtin(t_data *data)
 				ft_env(data);
 			}
 			else if (!ft_strcmp(current->value, "exit"))
-			ft_exit(data);
+				ft_exit(data);
+			else
+				exec_cmd(data, current->value);
+				
 		}
 		current = current->next;
 	}
@@ -57,7 +60,8 @@ bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index
 	if (buffer_index > 0)
 	{
 		token_buffer[buffer_index] = '\0';
-		ft_append_word(data, token_buffer);
+		if (ft_append_word(data, token_buffer) == false)
+			return(ft_error(data, "Append Failed"), false);
 	}
 	if (is_quotes == false)
 		return (ft_error(data, "Error: Unclosed quotes\n"), false);
@@ -91,8 +95,9 @@ bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, in
 		if (*buffer_index > 0)
 		{
 			token_buffer[*buffer_index] = '\0';
-			ft_append_word(data, token_buffer);
-			*buffer_index = 0;
+			if (ft_append_word (data, token_buffer) == false)
+				return(ft_error(data, "Append Failed"), false);
+			*buffer_index = 0;                   
 		}
 		(*i)++;
 		return (true);
