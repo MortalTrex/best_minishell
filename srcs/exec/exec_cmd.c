@@ -32,8 +32,8 @@ void	exec_cmd(t_data *data, char *cmd)
 	char	*path;
 
 	if (!cmd || !cmd[0])
-		ft_error(data, "Error: empty command");
+		return ;
 	path = find_path(cmd, data);
 	if (!path || execve(path, &cmd, data->envc) == -1)
-		ft_error(data, "Error: command not found");
+		return ;
 }

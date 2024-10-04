@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/03 18:11:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/04 15:01:27 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	ft_bzero(&data, sizeof(t_data));
-	//copy_env(envp, &data);
+	copy_env(envp, &data);
 	copy_env_char(envp, &data);
 	while (true)
 	{

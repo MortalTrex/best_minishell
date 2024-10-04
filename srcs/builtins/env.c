@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/03 18:09:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/04 12:36:48 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,19 @@ void	copy_env(char **envp, t_data *data)
 void  copy_env_char(char **envp, t_data *data)
 {
 	int i;
-	int env_count;
 
-	env_count = 0;
-	while (envp[env_count])
-		env_count++;
-
-	data->envc = malloc(sizeof(char *) * (env_count + 1));
+	i = 0;
+	while (envp[i])
+		i++;
+	data->envc = malloc(sizeof(char *) * (i + 1));
 	if (!data->envc)
-	{
 		ft_error(data, "Malloc failed\n");
-		return;
-	}
-
 	i = 0;
 	while (envp[i])
 	{
 		data->envc[i] = ft_strdup(envp[i]);
 		if (!data->envc[i])
-		{
 			ft_error(data, "Malloc failed\n");
-			return;
-		}
 		i++;
 	}
 	data->envc[i] = NULL;
