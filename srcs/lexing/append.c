@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/03 16:05:11 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/05 16:47:37 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,7 @@ void	ft_append_env_var(t_data *data, char *line, unsigned int *i)
 		ft_error(data, "Error: ft_substr failed to allocate memory\n");
 	new_token = ft_stacknew(T_ENV_VAR, env_var_name);
 	if (!new_token)
-	{
-		free(data->tok->value);
-		data->tok->value = NULL;
 		ft_error(data, "Error:  ft_stacknew failed to allocate memory\n");
-	}
 	ft_stackadd_back(&data->tok, new_token);
 	*i = start + len;
 }

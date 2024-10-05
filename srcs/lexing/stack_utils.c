@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/02 21:44:42 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/05 19:18:07 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,6 @@ t_token *ft_stacknew(int type, char *value)
 	token->prev = NULL;
 	return (token);
 }
-// t_token	*ft_stacknew(int type, void *value)
-// {
-// 	t_token	*token;
-
-// 	token = malloc(sizeof(t_token));
-// 	if (!token)
-// 		return (NULL);
-// 	token->type = type;
-// 	token->value = value;
-// 	token->next = NULL;
-// 	token->prev = NULL;
-// 	return (token);
-// }
 
 t_token *ft_stacklast(t_token *stack)
 {
