@@ -30,16 +30,19 @@ char	*find_path(char *cmd, t_data *data)
 void	exec_cmd(t_data *data, char *cmd)
 {
 	char	*path;
+	char	**cmd_split;
 
+	cmd_split = ft_split(cmd, ' ');
+	//printf("valeur split : %s\n", cmd_split[0]);
 	if (!cmd || !cmd[0])
 	{
 		ft_free_all(data);
 		return ;
 	}
 	path = find_path(cmd, data);
-	if (!path || execve(path, &cmd, data->envc) == -1)
+	if (!path || execve(path, cmd_split, data->envc) == -1)
 	{
-		ft_free_all(data);
+		//ft_free_all(data);
 		return ;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/03 18:04:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/07 15:09:31 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,8 @@ char	*find_path(char *cmd, t_data *data);
 
 // SIGNALS
 void	signals(void);
+
+// DEBUG
+void	print_tab(t_data *data);
+
 #endif

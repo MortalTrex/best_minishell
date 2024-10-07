@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/05 15:57:24 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:15:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,9 @@ void	ft_detect_builtin(t_data *data)
 			else
 				exec_cmd(data, current->value);
 		}
-		current = current->next;
+		if (current)
+			current = current->next;
 	}
-}
-
-bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes)
-{
-	if (buffer_index > 0)
-	{
-		token_buffer[buffer_index] = '\0';
-		if (ft_append_word(data, token_buffer) == false)
-			return(ft_error(data, "Append Failed"), false);
-	}
-	if (is_quotes == false)
-		return (ft_error(data, "Error: Unclosed quotes\n"), false);
-	ft_detect_builtin(data);
-	ft_stackadd_back(&data->tok, ft_stacknew(T_EOF, NULL));
-	return (true);
 }
 
 bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index)
@@ -103,7 +89,20 @@ bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, in
 	}
 	return (true);
 }
-
+bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes)
+{
+	if (buffer_index > 0)
+	{
+		token_buffer[buffer_index] = '\0';
+		if (ft_append_word(data, token_buffer) == false)
+			return(ft_error(data, "Append Failed"), false);
+	}
+	if (is_quotes == false)
+		return (ft_error(data, "Error: Unclosed quotes\n"), false);
+	ft_detect_builtin(data);
+	ft_stackadd_back(&data->tok, ft_stacknew(T_EOF, NULL));
+	return (true);
+}
 
 bool	ft_tokenize(t_data *data)
 {
@@ -129,9 +128,7 @@ bool	ft_tokenize(t_data *data)
 				return (false);
 		}
 		else
-		{
 			token_buffer[buffer_index++] = data->user_line[i++];
-		}
 	}
 	return (ft_finalize_tokenization(data, token_buffer, buffer_index, is_quotes));
 }
