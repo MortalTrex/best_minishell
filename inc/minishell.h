@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 18:01:34 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:39:53 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 ////////////////////////// DEFINITIONS ////////////////////////////
 
 # define PROMPT "minishell> "
+# define ERR_SYN "Syntax error:"
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
@@ -116,29 +117,18 @@ void		ft_envclear(t_env **env);
 // PARSING
 
 // ast.c
-void parse_tokens(t_data *data);
-t_ast_node *parse(t_token *tokens);
-void free_ast(t_ast_node *root);
-void print_ast(t_ast_node *node, int level);
-void print_redir(t_redir *redir);
-
-// parser.c
 // Function declarations for creating AST nodes
 
-t_ast_node	*create_redirect_in_node(t_ast_node *cmd_node, char *file);
-t_ast_node	*create_redirect_out_node(t_ast_node *cmd_node, char *file);
-t_ast_node	*create_redirect_append_node(t_ast_node *cmd_node, char *file);
-t_ast_node	*create_heredoc_node(t_ast_node *cmd_node, char *delim);
-t_ast_node	*create_pipe_node(t_ast_node *left, t_ast_node *right);
-t_ast_node	*create_command_node(void);
-void		add_argument_to_command(t_cmd *cmd, char *arg);
 
-// Function declarations for parsing redirections and commands
-bool is_operator(t_token_type type);
-t_ast_node *parse_expression(t_token **tokens);
-t_ast_node *parse_command(t_token **tokens);
-t_ast_node *parse_redirection(t_ast_node *command_node, t_token *operator_token, t_token **tokens);
+// parser.c
+void parse_tokens(t_data *data);
+void free_ast(t_ast_node *node);
+
+
+// syntax_check.c
+bool check_pipe_syntax(t_token *tokens);
 void ft_expand_env_vars(t_token **tokens);
+
 
 
 #endif

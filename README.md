@@ -33,6 +33,7 @@ https://medium.com/swlh/lets-build-a-linux-shell-part-ii-340ecf471028
 
 https://github.com/twagger/minishell
 
+https://minishell.org/check__exitcode_8c.html
 
 ```c
 git checkout feature/feature_b
@@ -64,7 +65,7 @@ minitalk can be used for ctrl + d and ctrl + c
      Parsing
         Parsing Validations: Ensure tokens follow the correct syntax rules.
         Handle Syntax Errors: Provide meaningful error messages.
-		
+
         Expand Variables: Replace $ tokens with their corresponding values.
 				Expand Variables: After tokenization, and while parsing, you should expand the variables. The order here is critical:
               Outside Quotes: If a variable appears outside of quotes, replace it with its value immediately.
