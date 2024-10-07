@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:58:00 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/09/25 18:51:10 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:37:15 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,6 @@ void print_ast(t_ast_node *node, int level)
 		printf("Unknown Node Type\n");
 		break;
 	}
-
-	// Print left and right children recursively
-	print_ast(node->left, level + 1);
-	print_ast(node->right, level + 1);
 }
 
 void free_ast(t_ast_node *root)
