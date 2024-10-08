@@ -34,15 +34,17 @@ void	exec_cmd(t_data *data, char *cmd)
 
 	cmd_split = ft_split(cmd, ' ');
 	//printf("valeur split : %s\n", cmd_split[0]);
-	if (!cmd || !cmd[0])
+	if (!cmd_split || !cmd_split[0])
 	{
-		ft_free_all(data);
-		return ;
+		ft_free_tab(cmd_split);
+		ft_error(data, "no cmd");
 	}
 	path = find_path(cmd, data);
-	if (!path || execve(path, cmd_split, data->envc) == -1)
+	ft_printf("path %s\n", path);
+	ft_printf("cmd %s\n", cmd);
+	if (execve(path, cmd_split, data->envc) == -1)
 	{
-		//ft_free_all(data);
-		return ;
+		ft_free_tab(cmd_split);
+		ft_error(data, "execve fail");
 	}
 }

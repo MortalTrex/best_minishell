@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/07 15:09:31 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:28:06 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,6 @@
 void	print_tokens(t_data *data);
 int		main(int argc, char **argv, char **envp);
 
-// Pipex
-void		exec(char *arg, char **envp, t_data *data);
-void		ft_process_infile(char **argv, char **envp, t_data *data);
-void		ft_process_outfile(char **argv, t_data *data, char **envp, int argc);
 
 // Errors
 void		ft_error(t_data *data, char *msg);
@@ -136,5 +132,6 @@ void	signals(void);
 
 // DEBUG
 void	print_tab(t_data *data);
+int	pipex_launch(int argc, char **argv, t_data *data);
 
 #endif
