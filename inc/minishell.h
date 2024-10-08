@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/07 15:39:53 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:54:23 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
-# include "ast.h"
 # include "lexer.h"
 # include "structures.h"
 # include <curses.h>
