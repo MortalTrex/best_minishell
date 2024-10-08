@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 15:57:23 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:47:23 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,8 @@ void	ft_free_all(t_data *data)
 		close(data->fd[0]);
 		close(data->fd[1]);
 	}
-	if (data->tokens)
-		ft_stackclear(&data->tokens);
 	if (data->user_line)
-	{
 		free(data->user_line);
-	}
 	if (data->tok)
 		ft_stackclear(&data->tok);
 	if (data->ast)

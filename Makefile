@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/10/07 15:40:43 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/10/08 15:39:51 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,11 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c\
 	srcs/builtins/unset.c\
-	srcs/parsing/parser.c\
+	srcs/parsing/parsing.c\
 	srcs/parsing/ast.c\
 	srcs/parsing/create_node.c\
-	srcs/parsing/syntax_check.c\
+	srcs/parsing/utils_parser.c\
+	srcs/parsing/add_to_struct.c\
 	srcs/builtins/export.c\
 	srcs/builtins/exit.c\
 

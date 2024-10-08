@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/08 13:54:32 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:23:47 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ typedef struct s_cmd
 typedef struct s_ast_node
 {
 	t_ast_node_type		type;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
 	char				*file;
 	t_cmd				*cmd;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
 }					t_ast_node;
 
 typedef struct s_env

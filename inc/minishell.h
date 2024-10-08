@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/08 14:54:23 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:11:58 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,29 @@ void		ft_envclear(t_env **env);
 
 // PARSING
 
+// add_to_struct.c
+void add_to_argv(t_cmd *cmd, char *arg);
+void add_redir_to_cmd(t_cmd *cmd, t_redir *redir);
+
 // ast.c
-// Function declarations for creating AST nodes
-
-
-// parser.c
 void parse_tokens(t_data *data);
-void free_ast(t_ast_node *node);
+void print_ast(t_ast_node *node, int level);
 
+// create_node.c
+t_ast_node *create_redir_node(t_ast_node_type type, char *file);
+t_ast_node *create_pipe_node(void);
+t_ast_node *create_cmd_node(void);
 
-// syntax_check.c
+// parsing.c
+t_ast_node *parse_command(t_data *data);
+t_redir *parse_redirection(t_data *data);
+t_ast_node *parse_pipe_sequence(t_data *data);
+
+// utils_parser.c
 bool check_pipe_syntax(t_token *tokens);
 void ft_expand_env_vars(t_token **tokens);
+bool	is_redirection(t_token *token);
+void free_ast(t_ast_node *node);
 
 
 
