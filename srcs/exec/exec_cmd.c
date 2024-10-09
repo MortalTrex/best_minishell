@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-char	*find_path(char *cmd, t_data *data)
+char	*ft_path(char *cmd, t_data *data)
 {
 	char	*path;
 	int		i;
@@ -27,24 +27,80 @@ char	*find_path(char *cmd, t_data *data)
 	return (NULL);
 }
 
-void	exec_cmd(t_data *data, char *cmd)
+void	exec(t_data *data, char *cmd)
 {
 	char	*path;
 	char	**cmd_split;
 
 	cmd_split = ft_split(cmd, ' ');
-	//printf("valeur split : %s\n", cmd_split[0]);
 	if (!cmd_split || !cmd_split[0])
 	{
 		ft_free_tab(cmd_split);
 		ft_error(data, "no cmd");
 	}
-	path = find_path(cmd, data);
-	ft_printf("path %s\n", path);
-	ft_printf("cmd %s\n", cmd);
+	path = ft_path(cmd_split[0], data);
+	if (!path)
+	{
+		ft_free_tab(cmd_split);
+		ft_error(data, "no path");
+	}
 	if (execve(path, cmd_split, data->envc) == -1)
 	{
 		ft_free_tab(cmd_split);
 		ft_error(data, "execve fail");
 	}
+}
+
+void	ft_process_infile(char *cmd, t_data *data)
+{
+	// int	fd_in;
+
+	// fd_in = open(argv[1], O_RDONLY);
+	// if (fd_in == -1)
+	// 	ft_error(data, "Error opening fd_in");
+	// if (dup2(data->fd[1], STDOUT_FILENO) == -1)
+	// 	ft_error(data, "Error redirecting stdout");
+	// if (dup2(fd_in, STDIN_FILENO) == -1)
+	// 	ft_error(data, "Error redirecting stdin");
+	// close(data->fd[0]);
+	// close(data->fd[1]);
+	// close(fd_in);
+	exec(data, cmd);
+	exit(EXIT_SUCCESS);
+}
+
+void	ft_process_outfile(char **argv, t_data *data, int argc)
+{
+	int	fd_out;
+
+	fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd_out == -1)
+		ft_error(data, "Error opening fd_out");
+	if (dup2(data->fd[0], STDIN_FILENO) == -1)
+		ft_error(data, "Error redirecting stdin");
+	if (dup2(fd_out, STDOUT_FILENO) == -1)
+		ft_error(data, "Error redirecting stdout");
+	close(data->fd[0]);
+	close(data->fd[1]);
+	close(fd_out);
+	exec(data, argv[3]);
+}
+
+int	exec_launch(char *cmd, t_data *data)
+{
+	pid_t	pid;
+
+	if (pipe(data->fd) == -1)
+		ft_error(data, "Error creating pipe");
+	pid = fork();
+	if (pid == -1)
+		ft_error(data, "Error forking");
+	if (pid == 0)
+		ft_process_infile(cmd, data);
+	// if (pid != 0)
+	// 	ft_process_outfile(argv, data, argc);
+	close(data->fd[0]);
+	close(data->fd[1]);
+	waitpid(pid, NULL, 0);
+	return (EXIT_SUCCESS);
 }

@@ -20,26 +20,23 @@ int main(int argc, char **argv, char **envp)
 {
 	t_data data;
 
-	// (void)argc;
-	// (void)argv;
+	(void)argc;
+	(void)argv;
 	ft_bzero(&data, sizeof(t_data));
-	// copy_env(envp, &data);
-	// while (true)
-	// {
-	copy_env_char(envp, &data);
-	// 	data.user_line = readline(PROMPT);
-	// 	if (data.user_line != NULL)
-	// 		add_history(data.user_line);
-	// 	//signals();
-	// 	if (!ft_tokenize(&data))
-	// 		ft_error(&data, "Tokenize Failed");
-	// 	//ast_print_tokens(data.tok);
-	// 	//parse_tokens(&data);
-	// 	//ft_free_all(&data);
-	// 	//print_tab(&data);
-	// 	ft_free_all(&data);
-	// }
-	// clear_history();
-	// return (0);
-	pipex_launch(argc, argv, &data);
+	copy_env(envp, &data);
+	while (true)
+	{
+		copy_env_char(envp, &data);
+		data.user_line = readline(PROMPT);
+		if (data.user_line != NULL)
+			add_history(data.user_line);
+		//signals();
+		if (!ft_tokenize(&data))
+			ft_error(&data, "Tokenize Failed");
+		// ast_print_tokens(data.tok);
+		// parse_tokens(&data);
+		ft_free_all(&data);
+	}
+	clear_history();
+	return (0);
 }

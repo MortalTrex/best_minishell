@@ -48,7 +48,7 @@ void	ft_detect_builtin(t_data *data)
 			else if (!ft_strcmp(current->value, "exit"))
 				ft_exit(data);
 			else
-				exec_cmd(data, current->value);
+				exec_launch(current->value, data);
 		}
 		if (current)
 			current = current->next;

@@ -124,8 +124,8 @@ t_ast_node	*parse_sequence(t_token **tokens);
 
 // EXECUTION
 // exec_cmd.c
-void	exec_cmd(t_data *data, char *cmd);
 char	*find_path(char *cmd, t_data *data);
+int		exec_launch(char *cmd, t_data *data);
 
 // SIGNALS
 void	signals(void);
