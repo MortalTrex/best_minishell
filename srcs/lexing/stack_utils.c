@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 15:56:34 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:24:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_stackadd_back(t_token **stack, t_token *new)
 	new->prev = curr_node;
 }
 
-t_token	*ft_stacknew(int type, char *value)
+t_token	*ft_stacknew(t_token_type type, char *value)
 {
 	t_token	*token;
 
@@ -55,16 +55,12 @@ void	ft_stackclear(t_token **stack)
 	t_token	*tmp;
 	t_token	*next;
 
-	if (stack == NULL || *stack == NULL)
-		return ;
 	tmp = *stack;
 	if (!tmp)
 		return ;
 	while (tmp)
 	{
-		if (tmp->value)
-			free(tmp->value);
-		tmp->value = NULL;
+		free(tmp->value);
 		next = tmp->next;
 		free(tmp);
 		tmp = next;

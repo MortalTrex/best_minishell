@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/25 15:56:52 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:26:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,23 @@ void	ft_detect_builtin(t_data *data)
 				ft_env(data);
 			}
 			else if (!ft_strcmp(current->value, "exit"))
-				ft_exit(data);
+				current->type = T_BUILTIN;
 		}
 		current = current->next;
 	}
 }
 
 bool	ft_finalize_tokenization(t_data *data, char *token_buffer, \
-							int buffer_index, bool is_quotes)
+							int *buffer_index, bool is_quotes)
 {
-	if (buffer_index > 0)
+	if (*buffer_index > 0)
 	{
-		token_buffer[buffer_index] = '\0';
-		ft_append_word(data, token_buffer);
+		token_buffer[*buffer_index] = '\0';
+		ft_append_word(data, token_buffer, buffer_index);
 	}
 	if (is_quotes == false)
 		return (ft_error(data, "Error: Unclosed quotes\n"), false);
 	ft_detect_builtin(data);
-	ft_stackadd_back(&data->tok, ft_stacknew(T_EOF, NULL));
 	return (true);
 }
 
@@ -73,7 +72,7 @@ bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, \
 	if (*buffer_index > 0)
 	{
 		token_buffer[*buffer_index] = '\0';
-		ft_append_word(data, token_buffer);
+		ft_append_word(data, token_buffer, buffer_index);
 		*buffer_index = 0;
 	}
 	ft_append_operator(data, data->user_line, i);
@@ -90,7 +89,7 @@ bool	ft_process_whitespace(t_data *data, unsigned int *i, \
 		if (*buffer_index > 0)
 		{
 			token_buffer[*buffer_index] = '\0';
-			ft_append_word(data, token_buffer);
+			ft_append_word(data, token_buffer, buffer_index);
 			*buffer_index = 0;
 		}
 		(*i)++;
@@ -103,7 +102,7 @@ bool	ft_tokenize(t_data *data)
 {
 	unsigned int	i;
 	bool			is_quotes;
-	char			token_buffer[256];
+	char			token_buffer[BUFF_SIZE];
 	int				buffer_index;
 
 	i = 0;
@@ -127,7 +126,7 @@ bool	ft_tokenize(t_data *data)
 			token_buffer[buffer_index++] = data->user_line[i++];
 	}
 	return (ft_finalize_tokenization(data, token_buffer, \
-			buffer_index, is_quotes));
+			&buffer_index, is_quotes));
 }
 
 /* bool	ft_tokenize(t_data *data)
