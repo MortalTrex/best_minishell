@@ -41,8 +41,9 @@ void	exec(t_data *data, char *cmd)
 	path = ft_path(cmd_split[0], data);
 	if (!path)
 	{
+		ft_printf("Command '%s'", cmd_split[0]);
 		ft_free_tab(cmd_split);
-		ft_error(data, "no path");
+		ft_error(data, " not found\n");
 	}
 	if (execve(path, cmd_split, data->envc) == -1)
 	{

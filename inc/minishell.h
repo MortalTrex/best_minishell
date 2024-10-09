@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/08 16:28:06 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:42:09 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ void		ft_unset(t_data *data);
 
 //	exit.c
 void		ft_exit(t_data *data);
+
+//	cd.c
+void	ft_cd(t_data *data);
 
 // LEXING
 

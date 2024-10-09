@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/08 16:02:17 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:37:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	push_node_to_env(t_data *data, char *env_line)
 
 	new_node = new_node_env(env_line, data);
 	if (!new_node)
-		return ;
+		return;
 	current = data->env;
 	if (data->env == NULL)
 		data->env = new_node;
