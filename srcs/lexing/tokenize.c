@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 18:03:54 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:08:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int 
 	}
 	ft_append_operator(data, data->user_line, i);
 	if (data->user_line[*i] != '\0' && ft_is_operator(data->user_line[*i]))
-	{
-		fprintf(stderr, "Error: Unexpected operator sequence\n");
-		return (false);
-	}
+		return (fprintf(stderr, "Error: Unexpected operator sequence\n"), false);
 	return (true);
 }
 
@@ -98,7 +95,6 @@ bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index
 	if (is_quotes == false)
 		return (ft_error(data, "Error: Unclosed quotes\n"), false);
 	ft_detect_builtin(data);
-	ft_stackadd_back(&data->tok, ft_stacknew(T_EOF, NULL));
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 18:02:28 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:11:24 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ bool ft_append_word(t_data *data, char *token_buffer, int *buffer_index)
 		ft_error(data, "Error: ft_stacknew failed to allocate memory\n");
 	}
 	ft_stackadd_back(&data->tok, new_token);
-	free(word);
 	return (true);
 }
 
@@ -100,7 +99,7 @@ bool ft_append_env_var(t_data *data, char *line, unsigned int *i)
 	if (!env_var_name)
 		return (ft_error(data, "Error: ft_substr failed to allocate memory\n"), false);
 	new_token = ft_stacknew(T_ENV_VAR, env_var_name);
-	free(env_var_name); // Free the memory allocated for 'env_var_name'
+	free(env_var_name);
 	if (!new_token)
 		return (ft_error(data, "Error: ft_stacknew failed to allocate memory\n"), false);
 	ft_stackadd_back(&data->tok, new_token);

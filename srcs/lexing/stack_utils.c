@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 17:07:14 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:07:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,7 @@ t_token *ft_stacknew(t_token_type type, char *value)
 	if (!token)
 		return (NULL);
 	token->type = type;
-	if (value)
-		token->value = ft_strdup(value); // Duplicate the value string
-	else
-		token->value = NULL;
-	if (value && !token->value)
-	{
-		free(token);
-		return (NULL);
-	}
+	token->value = value;
 	return (token);
 }
 
