@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 16:31:15 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:08:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool ft_append_word(t_data *data, char *token_buffer, int *buffer_index)
 	char *word;
 	t_token *new_token;
 
-	word = ft_substr(token_buffer, 0,*buffer_index);
+	word = ft_substr(token_buffer, 0, *buffer_index);
 	if (!word)
 		ft_error(data, "Error: ft_substr failed to allocate memory\n");
 	new_token = ft_stacknew(T_WORD, word);
@@ -65,6 +65,7 @@ bool ft_append_word(t_data *data, char *token_buffer, int *buffer_index)
 		ft_error(data, "Error: ft_stacknew failed to allocate memory\n");
 	}
 	ft_stackadd_back(&data->tok, new_token);
+	free(word);
 	return (true);
 }
 
@@ -84,7 +85,7 @@ bool ft_append_word_quotes(char *token_buffer, int *buffer_index, char *line,
 	return (true);
 }
 
-void ft_append_env_var(t_data *data, char *line, unsigned int *i)
+bool ft_append_env_var(t_data *data, char *line, unsigned int *i)
 {
 	unsigned int start;
 	unsigned int len;
@@ -97,14 +98,12 @@ void ft_append_env_var(t_data *data, char *line, unsigned int *i)
 		len++;
 	env_var_name = ft_substr(line, start, len);
 	if (!env_var_name)
-		ft_error(data, "Error: ft_substr failed to allocate memory\n");
+		return (ft_error(data, "Error: ft_substr failed to allocate memory\n"), false);
 	new_token = ft_stacknew(T_ENV_VAR, env_var_name);
+	free(env_var_name); // Free the memory allocated for 'env_var_name'
 	if (!new_token)
-	{
-		free(data->tok->value);
-		data->tok->value = NULL;
-		ft_error(data, "Error:  ft_stacknew failed to allocate memory\n");
-	}
+		return (ft_error(data, "Error: ft_stacknew failed to allocate memory\n"), false);
 	ft_stackadd_back(&data->tok, new_token);
 	*i = start + len;
+	return (true);
 }

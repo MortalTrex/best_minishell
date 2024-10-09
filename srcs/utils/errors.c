@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/08 17:47:23 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:13:18 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,11 @@ void	ft_error(t_data *data, char *msg)
 	ft_putstr_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
-
 void	ft_free_all(t_data *data)
 {
 	rl_clear_history();
 	if (!data)
 		return ;
-	if (data->fd != NULL)
-	{
-		close(data->fd[0]);
-		close(data->fd[1]);
-	}
 	if (data->user_line)
 		free(data->user_line);
 	if (data->tok)
@@ -37,4 +31,9 @@ void	ft_free_all(t_data *data)
 		free_ast(data->ast);
 	if (data->env)
 		ft_envclear(&data->env);
+	if (data->fd != NULL)
+	{
+		close(data->fd[0]);
+		close(data->fd[1]);
+	}
 }
