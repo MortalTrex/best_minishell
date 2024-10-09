@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 17:34:09 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:04:23 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,10 @@ void		ft_exit(t_data *data);
 
 // append.c
 void		ft_append_operator(t_data *data, char *line, unsigned int *i);
-bool		ft_append_word(t_data *data, char *token_buffer);
+bool		ft_append_word(t_data *data, char *token_buffer, int *buffer_index);
 bool		ft_append_word_quotes(char *token_buffer, int *buffer_index,
 				char *line, unsigned int *i);
-void	ft_append_env_var(t_data *data, char *line, unsigned int *i);
+bool		ft_append_env_var(t_data *data, char *line, unsigned int *i);
 
 // tokenize.c
 bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes);

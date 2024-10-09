@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 17:30:32 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:03:54 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int 
 	if (*buffer_index > 0)
 	{
 		token_buffer[*buffer_index] = '\0';
-		ft_append_word(data, token_buffer);
+		ft_append_word(data, token_buffer, buffer_index);
 		*buffer_index = 0;
 	}
 	ft_append_operator(data, data->user_line, i);
@@ -80,8 +80,7 @@ bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, in
 		if (*buffer_index > 0)
 		{
 			token_buffer[*buffer_index] = '\0';
-			if (ft_append_word (data, token_buffer) == false)
-				return(ft_error(data, "Append Failed"), false);
+			ft_append_word (data, token_buffer, buffer_index);
 			*buffer_index = 0;
 		}
 		(*i)++;
@@ -94,8 +93,7 @@ bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index
 	if (buffer_index > 0)
 	{
 		token_buffer[buffer_index] = '\0';
-		if (ft_append_word(data, token_buffer) == false)
-			return(ft_error(data, "Append Failed"), false);
+		ft_append_word(data, token_buffer, &buffer_index);
 	}
 	if (is_quotes == false)
 		return (ft_error(data, "Error: Unclosed quotes\n"), false);
