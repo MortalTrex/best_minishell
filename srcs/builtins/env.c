@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/10 16:30:18 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:10:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	push_node_to_env(t_data *data, char *env_line)
 
 	new_node = new_node_env(env_line, data);
 	if (!new_node)
-		return;
+		return ;
 	current = data->env;
 	if (data->env == NULL)
 		data->env = new_node;
@@ -61,9 +61,9 @@ void	copy_env(char **envp, t_data *data)
 	}
 }
 
-void  copy_env_char(char **envp, t_data *data)
+void	copy_env_char(char **envp, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
@@ -73,7 +73,7 @@ void  copy_env_char(char **envp, t_data *data)
 		ft_error(data, "Malloc failed\n");
 	i = 0;
 	while (envp[i])
-	{ 
+	{
 		data->envc[i] = ft_strdup(envp[i]);
 		if (!data->envc[i])
 			ft_error(data, "Malloc failed\n");
@@ -82,11 +82,13 @@ void  copy_env_char(char **envp, t_data *data)
 	data->envc[i] = NULL;
 }
 
-//debug function
+// debug function
 void	print_tab(t_data *data)
 {
-	int i = 0;
-	while(data->envc[i])
+	int	i;
+
+	i = 0;
+	while (data->envc[i])
 	{
 		printf("%s\n", data->envc[i]);
 		i++;

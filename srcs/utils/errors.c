@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/10 16:11:57 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:09:09 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_error(t_data *data, char *msg)
 	ft_putstr_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
+
 void	ft_free_all(t_data *data)
 {
 	if (!data)

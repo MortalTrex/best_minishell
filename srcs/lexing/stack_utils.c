@@ -6,13 +6,13 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/05 19:18:07 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:09:58 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	while (*s1 && *s2 && *s1 == *s2)
 	{
@@ -22,7 +22,7 @@ int ft_strcmp(const char *s1, const char *s2)
 	return (*s1 - *s2);
 }
 
-void ft_stackadd_back(t_token **stack, t_token *new)
+void	ft_stackadd_back(t_token **stack, t_token *new)
 {
 	t_token	*curr_node;
 
@@ -32,15 +32,15 @@ void ft_stackadd_back(t_token **stack, t_token *new)
 		return ;
 	}
 	curr_node = *stack;
-	while (curr_node && curr_node -> next)
-		curr_node = curr_node -> next;
-	curr_node -> next = new;
-	new -> prev = curr_node;
+	while (curr_node && curr_node->next)
+		curr_node = curr_node->next;
+	curr_node->next = new;
+	new->prev = curr_node;
 }
 
-t_token *ft_stacknew(int type, char *value)
+t_token	*ft_stacknew(int type, char *value)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
@@ -52,9 +52,9 @@ t_token *ft_stacknew(int type, char *value)
 	return (token);
 }
 
-t_token *ft_stacklast(t_token *stack)
+t_token	*ft_stacklast(t_token *stack)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!stack)
 		return (NULL);
@@ -64,14 +64,13 @@ t_token *ft_stacklast(t_token *stack)
 	return (tmp);
 }
 
-void ft_stackclear(t_token **stack)
+void	ft_stackclear(t_token **stack)
 {
-	t_token *tmp;
-	t_token *next;
+	t_token	*tmp;
+	t_token	*next;
 
 	if (stack == NULL || *stack == NULL)
-		return;
-
+		return ;
 	tmp = *stack;
 	if (!tmp)
 		return ;

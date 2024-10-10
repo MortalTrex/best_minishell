@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/03 17:25:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:09:23 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	sigint_handler_in_process(int sig)
 	(void) sig;
 	ft_printf("\n");
 }
+
 void	sigquit_handler_in_process(int sig)
 {
 	(void) sig;

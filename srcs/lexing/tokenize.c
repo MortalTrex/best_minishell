@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/10 16:12:39 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:14:15 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	ft_detect_builtin(t_data *data)
 	}
 }
 
-bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index)
+bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer,
+		int *buffer_index)
 {
 	if (*buffer_index > 0)
 	{
@@ -76,30 +77,32 @@ bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int 
 	return (true);
 }
 
-
-bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index)
+bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer,
+		int *buffer_index)
 {
 	if (ft_isspace(data->user_line[*i]))
 	{
 		if (*buffer_index > 0)
 		{
 			token_buffer[*buffer_index] = '\0';
-			if (ft_append_word (data, token_buffer) == false)
-				return(ft_error(data, "Append Failed"), false);
-			*buffer_index = 0;                   
+			if (ft_append_word(data, token_buffer) == false)
+				return (ft_error(data, "Append Failed"), false);
+			*buffer_index = 0;
 		}
 		(*i)++;
 		return (true);
 	}
 	return (true);
 }
-bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes)
+
+bool	ft_finalize_tokenization(t_data *data, char *token_buffer,
+		int buffer_index, bool is_quotes)
 {
 	if (buffer_index > 0)
 	{
 		token_buffer[buffer_index] = '\0';
 		if (ft_append_word(data, token_buffer) == false)
-			return(ft_error(data, "Append Failed"), false);
+			return (ft_error(data, "Append Failed"), false);
 	}
 	if (is_quotes == false)
 		return (ft_error(data, "Error: Unclosed quotes\n"), false);
@@ -123,7 +126,8 @@ bool	ft_tokenize(t_data *data)
 		if (!ft_process_whitespace(data, &i, token_buffer, &buffer_index))
 			return (false);
 		else if (ft_is_quote(data->user_line[i]))
-			is_quotes = ft_append_word_quotes(token_buffer, &buffer_index, data->user_line, &i);
+			is_quotes = ft_append_word_quotes(token_buffer, &buffer_index,
+					data->user_line, &i);
 		else if (data->user_line[i] == '$')
 			ft_append_env_var(data, data->user_line, &i);
 		else if (ft_is_operator(data->user_line[i]))
@@ -134,9 +138,9 @@ bool	ft_tokenize(t_data *data)
 		else
 			token_buffer[buffer_index++] = data->user_line[i++];
 	}
-	return (ft_finalize_tokenization(data, token_buffer, buffer_index, is_quotes));
+	return (ft_finalize_tokenization(data, token_buffer, buffer_index,
+			is_quotes));
 }
-
 
 /* bool	ft_tokenize(t_data *data)
 {

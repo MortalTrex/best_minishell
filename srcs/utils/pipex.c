@@ -6,14 +6,13 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:46 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/08 16:59:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:08:45 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Implementer multi pipe
-
 
 // tests : ./minishell infile "ls -l" "wc -l" outfile
 //  ./minishell infile "grep a1" "wc -w" outfile
