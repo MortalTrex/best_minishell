@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 18:09:52 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 16:12:39 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	ft_detect_builtin(t_data *data)
 			}
 			else if (!ft_strcmp(current->value, "exit"))
 				ft_exit(data);
-			// else
-			// 	exec_launch(current->value, data);
+			else
+				exec_launch(current->value, data);
 		}
 		if (current)
 			current = current->next;

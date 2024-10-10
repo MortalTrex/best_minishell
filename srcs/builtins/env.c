@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 13:37:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 16:30:18 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,7 @@ void	ft_env(t_data *data)
 	current = data->env;
 	while (current != NULL)
 	{
-		if (current->line)
-			ft_printf("%s\n", current->line);
+		ft_printf("%s\n", current->line);
 		current = current->next;
 	}
 }

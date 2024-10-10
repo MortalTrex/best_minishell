@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 18:12:27 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 16:11:57 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void	ft_close_fd(t_data *data, char *msg)
 {
-	if (data->fd != NULL)
-	{
-		close(data->fd[0]);
-		close(data->fd[1]);
-	}
+	close(data->fd[0]);
+	close(data->fd[1]);
 	ft_error(data, msg);
 }
 
