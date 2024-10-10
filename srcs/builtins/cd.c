@@ -18,7 +18,10 @@ void	ft_cd(t_data *data)
 
 	current = data->tok;
 	current = current->next;
-	if (current)
-		current = current->next;
-	
+	// if (current)
+	// 	current = current->next;
+	printf("current->value: %s\n", current->value);
+	// rl_on_new_line();
+	// rl_replace_line("current", 0);
+	// rl_redisplay();
 }

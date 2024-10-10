@@ -54,6 +54,7 @@ int		main(int argc, char **argv, char **envp);
 void		ft_error(t_data *data, char *msg);
 bool		ft_is_wordchar(char c);
 void		ft_free_all(t_data *data);
+void		ft_close_fd(t_data *data, char *msg);
 
 // BUILTINS
 

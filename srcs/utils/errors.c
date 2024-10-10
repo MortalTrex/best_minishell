@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+void	ft_close_fd(t_data *data, char *msg)
+{
+	if (data->fd != NULL)
+	{
+		close(data->fd[0]);
+		close(data->fd[1]);
+	}
+	ft_error(data, msg);
+}
+
 void	ft_error(t_data *data, char *msg)
 {
 	ft_free_all(data);
@@ -30,10 +40,4 @@ void	ft_free_all(t_data *data)
 		ft_envclear(&data->env);
 	if (data->envc)
 		ft_free_tab(data->envc);
-	//if (!(data->fd[0]) || !(data->fd[1]))
-	if (data->fd != NULL)
-	{
-		close(data->fd[0]);
-		close(data->fd[1]);
-	}
 }
