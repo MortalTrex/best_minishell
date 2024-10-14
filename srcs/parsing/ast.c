@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/14 17:41:00 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/14 19:39:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,8 @@ void print_ast(t_ast_node *node, int level)
 {
 	if (!node)
 		return;
-
-	// Print the current node with indentation
 	for (int i = 0; i < level; i++)
-		printf("  "); // Indentation for nested nodes
-
-	// Print node information based on its type
+		printf("  ");
 	switch (node->type)
 	{
 	case NODE_CMD:
@@ -32,20 +28,17 @@ void print_ast(t_ast_node *node, int level)
 			printf("%s ", node->cmd->argv[i]);
 		}
 		printf("\n");
-
-		// Print redirections
 		t_redir *redir = node->cmd->redir;
 		while (redir)
 		{
 			for (int i = 0; i < level; i++)
-				printf("  "); // Indentation
+				printf("  ");
 			printf("Redirection: %s %s\n", redir->file, redir->type == IN ? "<" : redir->type == OUT ? ">"
 																			  : redir->type == D_IN	 ? "<<"
 																									 : ">>");
 			redir = redir->next;
 		}
 		break;
-
 	case NODE_PIPE:
 		printf("Pipe\n");
 		break;
@@ -65,25 +58,21 @@ void print_ast(t_ast_node *node, int level)
 	case NODE_HEREDOC:
 		printf("Heredoc: %s\n", node->file);
 		break;
-
 	default:
 		printf("Unknown Node Type\n");
 		break;
 	}
-
-	// Recursively print left and right children (if any)
 	if (node->left)
 	{
 		for (int i = 0; i < level; i++)
-			printf("  "); // Indentation
+			printf("  ");
 		printf("Left Child:\n");
 		print_ast(node->left, level + 1);
 	}
-
 	if (node->right)
 	{
 		for (int i = 0; i < level; i++)
-			printf("  "); // Indentation
+			printf("  ");
 		printf("Right Child:\n");
 		print_ast(node->right, level + 1);
 	}
@@ -98,7 +87,6 @@ void parse_tokens(t_data *data)
 		return;
 	ft_expand_env_vars(&data->tok);
 	root = parse_pipe_sequence(data);
-	// data->ast = parse(data->tok);
 	data->ast = root;
 	if (data->ast != NULL)
 	{

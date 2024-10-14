@@ -3,48 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/08 17:06:57 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:26:17 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void free_cmd(t_cmd *cmd)
+{
+	printf("\033[1;31mFreeing command\033[0m\n");
+	t_redir *redir;
+	t_redir *tmp;
+	
+	redir = cmd->redir;
+	tmp = redir;
+	if (cmd->argv)
+	{
+		ft_free_tab(cmd->argv);
+		cmd->argv = NULL;
+	}
+	if (cmd->redir)
+	{
+		while (redir)
+		{
+			redir = redir->next;
+			if (tmp->file)
+			{
+				free(tmp->file);
+				tmp->file = NULL;
+			}
+			free(tmp);
+		}
+	}
+	free(cmd);
+	cmd = NULL;
+}
+
 void free_ast(t_ast_node *node)
 {
 	if (!node)
 		return;
-
 	if (node->cmd)
-	{
-		if (node->cmd->argv)
-		{
-			for (int i = 0; node->cmd->argv[i]; i++)
-			{
-				free(node->cmd->argv[i]);
-				node->cmd->argv[i] = NULL;
-			}
-			free(node->cmd->argv);
-			node->cmd->argv = NULL;
-		}
-
-		// Free the redirection list
-		if (node->cmd->redir)
-		{
-			if (node->cmd->redir->file)
-			{
-				free(node->cmd->redir->file);
-				node->cmd->redir->file = NULL;
-			}
-			free(node->cmd->redir);
-		}
-		free(node->cmd);
-		node->cmd = NULL;
-	}
-
-	// Free the file and node itself
+		free_cmd(node->cmd);
 	if (node->file)
 	{
 		free(node->file);
@@ -53,6 +56,7 @@ void free_ast(t_ast_node *node)
 	free(node);
 	node = NULL;
 }
+
 
 bool	is_redirection(t_token *token)
 {

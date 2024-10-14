@@ -3,49 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:58:00 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/08 16:36:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:08:29 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast_node *parse_command(t_data *data)
+t_ast_node	*parse_command(t_data *data)
 {
-	t_ast_node *cmd_node;
+	t_ast_node	*cmd_node;
+	t_token		*tmp;
+	t_redir		*redir;
 
-	// Allocate memory for a new AST node
+	tmp = data->tok;
 	cmd_node = create_cmd_node();
-
-	// Parse the command arguments (T_WORD tokens)
-	while (data->tok && (data->tok->type == T_WORD || data->tok->type == T_BUILTIN))
+	while (tmp && (tmp->type == T_WORD || tmp->type == T_BUILTIN))
 	{
-		add_to_argv(cmd_node->cmd, data->tok->value);
-		data->tok = data->tok->next;
+		printf("Parsing command: %s\n", tmp->value);
+		add_to_argv(cmd_node->cmd, tmp->value, data);
+		tmp = tmp->next;
 	}
-
-	// Parse any redirections
-	while (data->tok && is_redirection(data->tok))
+	while (tmp && is_redirection(tmp))
 	{
-		t_redir *redir = parse_redirection(data);
+		redir = parse_redirection(data);
 		add_redir_to_cmd(cmd_node->cmd, redir);
 	}
-
-	return cmd_node;
+	return (cmd_node);
 }
 
-t_redir *parse_redirection(t_data *data)
+t_redir	*parse_redirection(t_data *data)
 {
-	t_redir *redir = malloc(sizeof(t_redir));
+	t_redir	*redir;
+
+	redir = malloc(sizeof(t_redir));
 	if (!redir)
 	{
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-
-	// Check the type of redirection and set accordingly
 	if (data->tok->type == T_REDIR_IN)
 		redir->type = IN;
 	else if (data->tok->type == T_REDIR_OUT)
@@ -54,39 +52,26 @@ t_redir *parse_redirection(t_data *data)
 		redir->type = D_OUT;
 	else if (data->tok->type == T_REDIR_HERE)
 		redir->type = D_IN;
-
-	// Set the file from the next token (T_WORD)
-	data->tok = data->tok->next; // Move to the file name token
-	redir->file = ft_strdup(data->tok->value);
-
-	// Move to the next token after the redirection
 	data->tok = data->tok->next;
-
+	redir->file = ft_strdup(data->tok->value);
+	data->tok = data->tok->next;
 	redir->next = NULL;
-	return redir;
+	return (redir);
 }
 
-t_ast_node *parse_pipe_sequence(t_data *data)
+t_ast_node	*parse_pipe_sequence(t_data *data)
 {
-	t_ast_node *left = parse_command(data); // Parse the first command
+	t_ast_node	*left;
+	t_ast_node	*pipe_node;
 
+	left = parse_command(data);
 	while (data->tok && data->tok->type == T_PIPE)
 	{
-		// Create a new pipe node
-		t_ast_node *pipe_node = create_pipe_node();
-
-		// Set the left child to the previously parsed command
+		pipe_node = create_pipe_node();
 		pipe_node->left = left;
-
-		// Move to the next token after the pipe
 		data->tok = data->tok->next;
-
-		// Parse the command on the right side of the pipe
 		pipe_node->right = parse_command(data);
-
-		// Update left for the next pipe, if any
 		left = pipe_node;
 	}
-
-	return left; // Return the full AST with all pipes and commands
+	return (left);
 }

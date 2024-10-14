@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 17:41:08 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/14 18:31:23 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ void	ft_stackadd_back(t_token **stack, t_token *new)
 		return ;
 	}
 	curr_node = *stack;
-	while (curr_node && curr_node->next)
-		curr_node = curr_node->next;
-	curr_node->next = new;
-	new->prev = curr_node;
 	while (curr_node && curr_node->next)
 		curr_node = curr_node->next;
 	curr_node->next = new;

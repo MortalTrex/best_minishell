@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 17:42:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/14 19:14:32 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void		ft_envclear(t_env **env);
 // PARSING
 
 // add_to_struct.c
-void add_to_argv(t_cmd *cmd, char *arg);
+void add_to_argv(t_cmd *cmd, char *arg, t_data *data);
 void add_redir_to_cmd(t_cmd *cmd, t_redir *redir);
 
 // ast.c

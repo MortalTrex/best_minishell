@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 17:40:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/14 19:31:28 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,10 @@ typedef struct s_env
 
 typedef struct s_data
 {
-	t_cmd			*cmds;
 	t_env			*env;
+	char 			**envc;
 	t_token			*tok;
 	char			*user_line;
-	char 			**envc;
 	int				fd[2];
 	t_ast_node		*ast;
 }					t_data;
