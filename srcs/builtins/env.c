@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/23 19:07:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:10:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,40 @@ void	copy_env(char **envp, t_data *data)
 	}
 }
 
-// this one is for env chgecking qnd does a malloc
-// - fodpsjfop
+void	copy_env_char(char **envp, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	data->envc = malloc(sizeof(char *) * (i + 1));
+	if (!data->envc)
+		ft_error(data, "Malloc failed\n");
+	i = 0;
+	while (envp[i])
+	{
+		data->envc[i] = ft_strdup(envp[i]);
+		if (!data->envc[i])
+			ft_error(data, "Malloc failed\n");
+		i++;
+	}
+	data->envc[i] = NULL;
+}
+
+// debug function
+void	print_tab(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->envc[i])
+	{
+		printf("%s\n", data->envc[i]);
+		i++;
+	}
+}
+
 void	ft_env(t_data *data)
 {
 	t_env	*current;
@@ -70,8 +102,7 @@ void	ft_env(t_data *data)
 	current = data->env;
 	while (current != NULL)
 	{
-		if (current->line)
-			ft_printf("%s\n", current->line);
+		ft_printf("%s\n", current->line);
 		current = current->next;
 	}
 }

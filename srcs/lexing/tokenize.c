@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 18:08:57 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:51:48 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	ft_detect_builtin(t_data *data)
 		if (current->type == T_WORD)
 		{
 			if (!ft_strcmp(current->value, "cd"))
+			{
 				current->type = T_BUILTIN;
+				ft_cd(data);
+				return ;
+			}
 			else if (!ft_strcmp(current->value, "echo"))
 				current->type = T_BUILTIN;
 			else if (!ft_strcmp(current->value, "pwd"))
@@ -69,8 +73,8 @@ bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int 
 	return (true);
 }
 
-
-bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index)
+bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer,
+		int *buffer_index)
 {
 	if (ft_isspace(data->user_line[*i]))
 	{
@@ -113,7 +117,8 @@ bool	ft_tokenize(t_data *data)
 		if (!ft_process_whitespace(data, &i, token_buffer, &buffer_index))
 			return (false);
 		else if (ft_is_quote(data->user_line[i]))
-			is_quotes = ft_append_word_quotes(token_buffer, &buffer_index, data->user_line, &i);
+			is_quotes = ft_append_word_quotes(token_buffer, &buffer_index,
+					data->user_line, &i);
 		else if (data->user_line[i] == '$')
 			ft_append_env_var(data, data->user_line, &i);
 		else if (ft_is_operator(data->user_line[i]))
@@ -124,6 +129,7 @@ bool	ft_tokenize(t_data *data)
 		else
 			token_buffer[buffer_index++] = data->user_line[i++];
 	}
-	return (ft_finalize_tokenization(data, token_buffer, buffer_index, is_quotes));
+	return (ft_finalize_tokenization(data, token_buffer, buffer_index,
+			is_quotes));
 }
 

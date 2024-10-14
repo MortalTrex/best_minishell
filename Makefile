@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/10/08 15:39:51 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/10/14 17:42:48 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,9 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/parsing/add_to_struct.c\
 	srcs/builtins/export.c\
 	srcs/builtins/exit.c\
+	srcs/builtins/cd.c\
+	srcs/signal/signal.c\
+	srcs/exec/exec_cmd.c\
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m
@@ -81,6 +84,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean create_dirs re check
-
-
-

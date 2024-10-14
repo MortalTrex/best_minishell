@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/08 17:23:47 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:40:02 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ typedef struct s_data
 	t_env			*env;
 	t_token			*tok;
 	char			*user_line;
-	int				*fd;
+	char 			**envc;
+	int				fd[2];
 	t_ast_node		*ast;
-	// t_struct	termios	term;
 }					t_data;
 
 #endif

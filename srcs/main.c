@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 17:55:36 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:52:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_global_state = 0;
 
-//valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
+// valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
 void	print_tokens(t_data *data)
 {
@@ -56,13 +56,14 @@ int	main(int argc, char **argv, char **envp)
 	copy_env(envp, &data);
 	while (true)
 	{
+		copy_env_char(envp, &data);
 		data.user_line = readline(PROMPT);
 		if (data.user_line != NULL)
 			add_history(data.user_line);
 		if (!ft_tokenize(&data))
 			return (ft_free_all(&data), 0);
 		print_tokens(&data);
-		//parse_tokens(&data);
+		parse_tokens(&data);
 		ft_free_all(&data);
 	}
 	clear_history();

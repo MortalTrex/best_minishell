@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 14:22:48 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/08/25 14:14:36 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/07 15:17:57 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_free_tab(char **tab)
 	int	i;
 
 	i = 0;
+	if (tab == NULL)
+		return;
 	while (tab[i])
 	{
 		free(tab[i]);

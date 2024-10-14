@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/09 18:04:23 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:42:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,18 @@
 void		print_tokens(t_data *data);
 int			main(int argc, char **argv, char **envp);
 
-// Pipex
-char		*find_path(char *cmd, char **envp, t_data *data);
-void		exec(char *arg, char **envp, t_data *data);
-void		ft_process_infile(char **argv, char **envp, t_data *data);
-void		ft_process_outfile(char **argv, t_data *data, char **envp, int argc);
 
 // Errors
 void		ft_error(t_data *data, char *msg);
 bool		ft_is_wordchar(char c);
 void		ft_free_all(t_data *data);
+void		ft_close_fd(t_data *data, char *msg);
 
 // BUILTINS
 
 // env.c
 void		copy_env(char **envp, t_data *data);
+void  		copy_env_char(char **envp, t_data *data);
 void		ft_env(t_data *data);
 void		push_node_to_env(t_data *data, char *line);
 void		ft_print_env(t_data *data);
@@ -85,6 +82,9 @@ void		ft_unset(t_data *data);
 
 //	exit.c
 void		ft_exit(t_data *data);
+
+//	cd.c
+void	ft_cd(t_data *data);
 
 // LEXING
 
