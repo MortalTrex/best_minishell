@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 17:51:48 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/17 17:50:44 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,24 @@ bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index
 	ft_detect_builtin(data);
 	return (true);
 }
+
+// t_token *get_tokens(char *line)
+// {
+// 	t_token *tokens;
+
+// 	tokens = NULL;
+// 	while (*line)
+// 	{
+// 		while (ft_isspace(*line) && *line)
+// 			line++;
+// 		if (ft_is_operator(*line))
+// 			ft_process_operator(&line, &tokens);
+// 		else
+// 			ft_append_word(&line, &tokens);
+// 	}
+// 	return(tokens)
+// }
+
 
 bool	ft_tokenize(t_data *data)
 {

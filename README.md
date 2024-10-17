@@ -96,3 +96,13 @@ minitalk can be used for ctrl + d and ctrl + c
 **bash**
 pipes
 
+The order of expansions is: brace expansion; tilde expansion, parameter and variable expansion, arithmetic expansion, and command substitution (done in a left-to-right fashion); word splitting; and pathname expansion. .... After these expansions are performed, quote characters present in the original word are removed unless they have been quoted themselves (quote removal).
+
+https://git.kernel.org/pub/scm/utils/dash/dash.git/tree/src/parser.c
+https://www.oilshell.org/blog/2019/02/07.html
+https://www.oilshell.org/blog/2017/12/15.html
+
+https://eli.thegreenplace.net/2007/11/24/the-context-sensitivity-of-cs-grammar
+
+
+
