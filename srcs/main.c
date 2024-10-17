@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 17:19:23 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/17 18:21:32 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.free_value = 0;
 		data.user_line = readline(PROMPT);
-		if (signals(&data) == true)
-			break;
+		signal(SIGINT, sigint_handler);
 		if (data.user_line != NULL)
+			add_history(data.user_line);
+		if (data.user_line == NULL)
 			add_history(data.user_line);
 		if (!ft_tokenize(&data))
 			return (ft_free_all(&data), 0);
@@ -71,6 +72,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_all(&data);
 	}
 	data.free_value = 0;
+	printf("HEY");
 	ft_free_all(&data);
 	clear_history();
 	return (0);

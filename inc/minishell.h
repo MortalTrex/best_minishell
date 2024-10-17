@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 16:33:54 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/17 18:17:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,5 @@ void free_ast(t_ast_node *node);
 // SIGNALS
 
 bool	signals(t_data *data);
+void	sigint_handler(int sig);
 #endif
