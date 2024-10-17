@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 18:33:28 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:37:52 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		copy_env_char(envp, &data);
 		data.user_line = readline(PROMPT);
+		if (signals(&data) == true)
+			break;
 		if (data.user_line != NULL)
 			add_history(data.user_line);
 		if (!ft_tokenize(&data))

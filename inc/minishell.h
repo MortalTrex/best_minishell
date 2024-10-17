@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 19:14:32 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:38:06 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ void ft_expand_env_vars(t_token **tokens);
 bool	is_redirection(t_token *token);
 void free_ast(t_ast_node *node);
 
+// SIGNALS
 
+bool	signals(t_data *data);
 
 #endif
