@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 17:42:27 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:47:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,85 +27,57 @@ static t_token_type	ft_op_type(char *op)
 	return (T_OPERATOR);
 }
 
-void	ft_append_operator(t_data *data, char *line, unsigned int *i)
+bool	ft_append_operator(char **command, t_token **tokens)
 {
 	t_token	*new_token;
 
-	if (ft_is_multi_char_operator(&line[*i]))
+	if (ft_is_multi_char_operator(*command))
 	{
 		new_token = ft_stacknew(T_OPERATOR, NULL);
-		new_token->value = strndup(&line[*i], 2);
+		if (ft_strchr(*command, '<'))
+			new_token->value = ft_strdup("<<");
+		else
+			new_token->value = ft_strdup(">>");
 		new_token->type = ft_op_type(new_token->value);
-		(*i) += 2;
+		(*command) += 2;
 	}
 	else
 	{
 		new_token = ft_stacknew(T_OPERATOR, NULL);
-		new_token->value = strndup(&line[*i], 1);
+		new_token->value = strndup(*command, 1);
 		new_token->type = ft_op_type(new_token->value);
-		(*i)++;
+		(*command)++;
 	}
 	if (!new_token)
-		return ;
-	ft_stackadd_back(&data->tok, new_token);
-}
-
-bool	ft_append_word(t_data *data, char *token_buffer, int *buffer_index)
-{
-	char	*word;
-	t_token	*new_token;
-
-	word = ft_substr(token_buffer, 0, *buffer_index);
-	if (!word)
-		ft_error(data, "Error: ft_substr failed to allocate memory\n");
-	new_token = ft_stacknew(T_WORD, word);
-	if (!new_token)
-	{
-		free(word);
-		ft_error(data, "Error: ft_stacknew failed to allocate memory\n");
-	}
-	ft_stackadd_back(&data->tok, new_token);
-	return (true);
-}
-
-bool	ft_append_word_quotes(char *token_buffer, int *buffer_index, char *line,
-		unsigned int *i)
-{
-	char	quote;
-
-	quote = line[*i];
-	(*i)++;
-	while (line[*i] != quote && line[*i] != '\0')
-		token_buffer[(*buffer_index)++] = line[(*i)++];
-	if (line[*i] == quote)
-		(*i)++;
-	else
 		return (false);
-	return (true);
+	return (ft_stackadd_back(tokens, new_token), true);
 }
 
-bool	ft_append_env_var(t_data *data, char *line, unsigned int *i)
+bool	ft_append_word(char **command, t_token **tokens)
 {
-	unsigned int	start;
-	unsigned int	len;
-	char			*env_var_name;
-	t_token			*new_token;
+	char	*line;
+	char 	*value;
+	size_t		i;
+	t_token	*new_token;
 
-	start = *i;
-	len = 1;
-	while (line[start + len] && (ft_isalnum(line[start + len]) || line[start
-			+ len] == '_'))
-		len++;
-	env_var_name = ft_substr(line, start, len);
-	if (!env_var_name)
-		return (ft_error(data, "Error: ft_substr failed to allocate memory\n"),
-			false);
-	new_token = ft_stacknew(T_ENV_VAR, env_var_name);
-	free(env_var_name);
+	line = *command;
+	i = 0;
+	while (!ft_is_separator(line + i) && line[i])
+	{
+		if (ft_is_quote(line[i]))
+		{
+			if (!ft_skip_quotes(line, &i))
+				return (false);
+		}
+		else
+			i++;
+	}
+	value = ft_substr(line, 0, i);
+	if (!value)
+		return (false);
+	new_token = ft_stacknew(T_WORD, value);
 	if (!new_token)
-		return (ft_error(data,
-				"Error: ft_stacknew failed to allocate memory\n"), false);
-	ft_stackadd_back(&data->tok, new_token);
-	*i = start + len;
-	return (true);
+		return (free(value), false);
+	*command += i;
+	return (ft_stackadd_back(tokens, new_token), true);
 }

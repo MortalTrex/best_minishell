@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 17:53:41 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:17:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ void	print_tokens(t_data *data)
 			printf("\033[1;32mT_WORD: %s\033[0m\n", tmp->value);
 		else if (tmp->type == T_OPERATOR)
 			printf("\033[1;34mT_OPERATOR: %s\033[0m\n", tmp->value);
-		else if (tmp->type == T_EOF)
-			printf("\033[1;31mT_EOF\033[0m\n");
-		else if (tmp->type == T_ENV_VAR)
-			printf("\033[1;33mT_ENV_VAR: %s\033[0m\n", tmp->value);
 		else if (tmp->type == T_BUILTIN)
 			printf("\033[1;35mT_BUILTIN: %s\033[0m\n", tmp->value);
 		else if (tmp->type == T_REDIR_APPEND)
@@ -63,9 +59,9 @@ int	main(int argc, char **argv, char **envp)
 		if (data.user_line != NULL)
 			add_history(data.user_line);
 		if (!ft_tokenize(&data))
-			return (ft_free_all(&data), 0);
+			continue;
 		print_tokens(&data);
-		parse_tokens(&data);
+		//parse_tokens(&data);
 		ft_free_all(&data);
 	}
 	clear_history();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 13:38:06 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:27:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,23 +89,19 @@ void	ft_cd(t_data *data);
 // LEXING
 
 // append.c
-void		ft_append_operator(t_data *data, char *line, unsigned int *i);
-bool		ft_append_word(t_data *data, char *token_buffer, int *buffer_index);
-bool		ft_append_word_quotes(char *token_buffer, int *buffer_index,
-				char *line, unsigned int *i);
-bool		ft_append_env_var(t_data *data, char *line, unsigned int *i);
+bool	ft_append_operator(char **command, t_token **tokens);
+bool	ft_append_word(char **command, t_token **tokens);
 
 // tokenize.c
-bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes);
-bool		ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
-bool		ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
 bool		ft_tokenize(t_data *data);
+t_token		*get_tokens(char *command);
 
 // grammar_check.c
 bool		ft_is_operator(char c);
 bool		ft_is_multi_char_operator(const char *str);
 bool		ft_is_quote(char c);
-bool		ft_skip_quotes(char *line, unsigned int *i);
+bool		ft_skip_quotes(char *line, size_t *i);
+bool		ft_is_separator(char *s);
 
 // stack_utils.c
 int			ft_strcmp(const char *s1, const char *s2);

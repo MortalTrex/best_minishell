@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 16:57:31 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:13:47 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef enum e_token_type
 	T_REDIR_APPEND,
 	T_REDIR_HERE,
 	T_BUILTIN,
-	T_ENV_VAR
 }					t_token_type;
 
 typedef struct s_token
