@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:27:09 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:23:45 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,5 @@ bool	ft_is_separator(char *s)
 		return (true);
 	return (false);
 }
+
+

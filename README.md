@@ -106,5 +106,6 @@ https://eli.thegreenplace.net/2007/11/24/the-context-sensitivity-of-cs-grammar
 
 https://gallium.inria.fr/%7Efpottier/publis/jourdan-fpottier-2016.pdf
 
+https://tldp.org/LDP/abs/html/exitcodes.html
 
 

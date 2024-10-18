@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/14 19:26:17 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/18 18:59:50 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void free_cmd(t_cmd *cmd)
 	printf("\033[1;31mFreeing command\033[0m\n");
 	t_redir *redir;
 	t_redir *tmp;
-	
+
 	redir = cmd->redir;
 	tmp = redir;
 	if (cmd->argv)
@@ -94,7 +94,7 @@ void ft_expand_env_vars(t_token **tokens)
 
 	while (current)
 	{
-		if (current->type == T_ENV_VAR)
+		if (current->type == T_WORD && current->value[0] == '$')
 		{
 			char *env_value = getenv(current->value + 1); // Skip the '$'
 			if (env_value)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 19:31:28 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/18 18:26:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_data
 	char			*user_line;
 	int				fd[2];
 	t_ast_node		*ast;
+	int				exit_status;
 }					t_data;
 
 #endif

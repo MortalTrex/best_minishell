@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 20:09:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/18 19:08:24 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,11 @@ void	ft_free_all(t_data *data)
 		ft_free_tab(data->envc);
 	// if (data->ast)
 	// 	free_ast(data->ast);
+}
+
+void	ft_error_quote(t_data *data)
+{
+	ft_putstr_fd("minishell> unexpected EOF while looking for matching `", STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	data->exit_status = 2;
 }

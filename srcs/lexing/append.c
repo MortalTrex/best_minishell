@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:47:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:15:05 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	ft_append_operator(char **command, t_token **tokens)
 	else
 	{
 		new_token = ft_stacknew(T_OPERATOR, NULL);
-		new_token->value = strndup(*command, 1);
+		new_token->value = ft_substr(*command, 0, 1);
 		new_token->type = ft_op_type(new_token->value);
 		(*command)++;
 	}
@@ -53,7 +53,7 @@ bool	ft_append_operator(char **command, t_token **tokens)
 	return (ft_stackadd_back(tokens, new_token), true);
 }
 
-bool	ft_append_word(char **command, t_token **tokens)
+bool	ft_append_word(char **command, t_token **tokens, t_data *data)
 {
 	char	*line;
 	char 	*value;
@@ -67,7 +67,7 @@ bool	ft_append_word(char **command, t_token **tokens)
 		if (ft_is_quote(line[i]))
 		{
 			if (!ft_skip_quotes(line, &i))
-				return (false);
+				return (ft_error_quote(data), false);
 		}
 		else
 			i++;

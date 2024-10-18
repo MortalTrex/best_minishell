@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:27:42 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:06:12 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void		ft_error(t_data *data, char *msg);
 bool		ft_is_wordchar(char c);
 void		ft_free_all(t_data *data);
 void		ft_close_fd(t_data *data, char *msg);
+void		ft_error_quote(t_data *data);
 
 // BUILTINS
 
@@ -90,11 +91,11 @@ void	ft_cd(t_data *data);
 
 // append.c
 bool	ft_append_operator(char **command, t_token **tokens);
-bool	ft_append_word(char **command, t_token **tokens);
+bool	ft_append_word(char **command, t_token **tokens, t_data *data);
 
 // tokenize.c
 bool		ft_tokenize(t_data *data);
-t_token		*get_tokens(char *command);
+t_token		*get_tokens(char *command, t_data *data);
 
 // grammar_check.c
 bool		ft_is_operator(char c);
