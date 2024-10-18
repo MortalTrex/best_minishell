@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 17:05:16 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/18 17:20:23 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct s_ast_node
 typedef struct s_env
 {
 	char			*line;
+	char			*name;
+	char			*value;
 	struct s_env	*next;
 }					t_env;
 

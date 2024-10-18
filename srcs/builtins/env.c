@@ -6,11 +6,45 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/10 17:10:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/18 20:25:17 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*joinchar(char const *s1, char c)
+{
+	int		len;
+	int		i;
+	char	*res;
+
+	len = ft_strlen(s1) + 1;
+	res = malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (s1 && s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	res[i++] = c;
+	res[i] = '\0';
+	return (res);
+}
+char	*put_name(char *line)
+{
+	int i;
+	char *res;
+
+	i = 0;
+	while (line && line[i] != ' ')
+	{
+		res = joinchar(res, line[i]);
+		i++;
+	}
+	return(res);
+}
 
 t_env	*new_node_env(char *line, t_data *data)
 {
@@ -20,6 +54,8 @@ t_env	*new_node_env(char *line, t_data *data)
 	if (!new_node)
 		return (NULL);
 	new_node->line = ft_strdup(line);
+	new_node->name = ft_strdup(line);
+	printf("%s\n", new_node->name);
 	if (!new_node->line)
 	{
 		free(new_node);
