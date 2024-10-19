@@ -38,12 +38,43 @@ char	*put_name(char *line)
 	char *res;
 
 	i = 0;
-	while (line && line[i] != ' ')
+	while (line && line[i] != '=')
+		i++;
+	res = malloc(sizeof(char) * (i + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (line && line[i] != '=')
 	{
-		res = joinchar(res, line[i]);
+		res[i] = line[i];
 		i++;
 	}
+	res[i] = '\0';
 	return(res);
+}
+
+char *put_value(char *line)
+{
+	int i;
+	int j;
+	char *res;
+
+	i = 0;
+	j = 0;
+	while (line[i] && line[i] != '=')
+		i++;
+	res = malloc(sizeof(char) * (ft_strlen(line) - i));
+	if (!res)
+		return (NULL);
+	i++;
+	while (line[i])
+	{
+		res[j] = line[i];
+		i++;
+		j++;
+	}
+	res[j] = '\0';
+	return (res);
 }
 
 t_env	*new_node_env(char *line, t_data *data)
@@ -54,8 +85,8 @@ t_env	*new_node_env(char *line, t_data *data)
 	if (!new_node)
 		return (NULL);
 	new_node->line = ft_strdup(line);
-	new_node->name = ft_strdup(line);
-	printf("%s\n", new_node->name);
+	new_node->name = put_name(line);
+	new_node->value = put_value(line);
 	if (!new_node->line)
 	{
 		free(new_node);
@@ -139,6 +170,8 @@ void	ft_env(t_data *data)
 	while (current != NULL)
 	{
 		ft_printf("%s\n", current->line);
+		// printf("NOM : %s\n", current->name);
+		// printf("VALEUR : %s\n", current->value);
 		current = current->next;
 	}
 }

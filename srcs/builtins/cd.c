@@ -12,19 +12,40 @@
 
 #include "minishell.h"
 
-// void	set_env(char *new_pwd)
-// {
-	
-// }
+void	set_env(char *new_pwd, t_data *data)
+{
+	t_env	*current;
+	char	*new_line;
+	char	*old_pwd;
 
-void 	ft_move_directory(char *path)
+	current = data->env;
+	while (current)
+	{
+		if (ft_strncmp(current->name, "PWD", 3) == 0)
+		{
+			old_pwd = ft_strdup(current->value);
+			free(current->line);
+			free(current->value);
+			free(current->name);
+			new_line = ft_strjoin("PWD=", new_pwd);
+			current->line = new_line;
+			current->name = ft_strdup("PWD");
+			current->value = ft_strdup(new_pwd);
+			free(old_pwd);
+			break ;
+		}
+		current = current->next;
+	}
+}
+
+void 	ft_move_directory(char *path, t_data *data)
 {
 	char *new_pwd;
 
 	if (chdir(path) == 0)
 		ft_printf("Path not found\n");
 	new_pwd = getcwd(NULL, 0);
-	//set_env(new_pwd);
+	set_env(new_pwd, data);
 	printf("%s\n", new_pwd);
 	free(new_pwd);
 }
@@ -37,7 +58,6 @@ void	ft_cd(t_data *data)
 	if (current->next)
 	{
 	 	current = current->next;
-		ft_move_directory(current->value);
+		ft_move_directory(current->value, data);
 	}
-	//printf("current->value: %s\n", current->value);
 }

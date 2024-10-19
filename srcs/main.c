@@ -75,7 +75,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_all(&data);
 	}
 	data.free_value = 0;
-	printf("HEY");
 	ft_free_all(&data);
 	clear_history();
 	return (0);
