@@ -29,10 +29,15 @@ void	set_env(char *new_pwd, t_data *data)
 			free(current->name);
 			new_line = ft_strjoin("PWD=", new_pwd);
 			current->line = new_line;
-			current->name = ft_strdup("PWD");
 			current->value = ft_strdup(new_pwd);
+		}
+		if (ft_strncmp(current->name, "OLDPWD", 6) == 0)
+		{
+			printf("SALUTSALUT\n");
+			free(current->value);
+			free(current->name);
+			current->value = "SALUT";
 			free(old_pwd);
-			break ;
 		}
 		current = current->next;
 	}
@@ -50,6 +55,19 @@ void 	ft_move_directory(char *path, t_data *data)
 	free(new_pwd);
 }
 
+void	set_home(t_data *data)
+{
+	t_env	*current;
+
+	current = data->env;
+	while (current)
+	{
+		if (ft_strncmp(current->name, "HOME", 4) == 0)
+			ft_move_directory(current->value, data);
+		current = current->next;
+	}
+}
+
 void	ft_cd(t_data *data)
 {
 	t_token	*current;
@@ -60,4 +78,6 @@ void	ft_cd(t_data *data)
 	 	current = current->next;
 		ft_move_directory(current->value, data);
 	}
+	else if (current->next == NULL)
+		set_home(data);
 }

@@ -1,0 +1,9 @@
+bin
+inc
+libft
+Makefile
+output.txt
+README.md
+rlsupp.txt
+srcs
+test.txt
