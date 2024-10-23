@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/18 18:59:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,20 @@ void ft_expand_env_vars(t_token **tokens)
 			current->type = T_WORD;
 		}
 		current = current->next;
+	}
+}
+
+void ft_parsing_error(t_data *data)
+{
+	if (data->error_msg)
+	{
+		if (data->error_msg == ERR_SYN)
+		{
+			ft_putstr_fd("minishell> \n", 2);
+			ft_putstr_fd(data->error_msg, 2);
+			data->exit_status = 258;
+		}
+		ft_free_ast(&data.ast);
+		free(data->error_msg);
 	}
 }

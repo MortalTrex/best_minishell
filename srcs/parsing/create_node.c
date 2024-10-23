@@ -6,60 +6,68 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/08 15:25:09 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast_node *create_cmd_node(void)
+//ok
+t_ast_node *ft_create_pipe_node(t_token_type type, t_ast_node *left, t_ast_node *right)
 {
-	t_ast_node *node = malloc(sizeof(t_ast_node));
-	if (!node)
-	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
-	node->type = NODE_CMD;
-	node->left = NULL;
-	node->right = NULL;
-	node->file = NULL;
-	node->cmd = malloc(sizeof(t_cmd));
-	if (!node->cmd)
-	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
-	node->cmd->argv = malloc(sizeof(char *) * 2); // Initial space for argv (NULL-terminated array)
-	node->cmd->argv[0] = NULL;					  // For a valid NULL-terminated array
-	node->cmd->next = NULL;
-	node->cmd->redir = NULL;
-	return node;
-}
+	t_ast_node *pipe_node;
 
-t_ast_node *create_pipe_node(void)
-{
-	t_ast_node *pipe_node = malloc(sizeof(t_ast_node));
+	pipe_node = ft_create_node(NODE_PIPE);
 	if (!pipe_node)
-	{
-		perror("malloc");
-		exit(EXIT_FAILURE);
-	}
-	pipe_node->type = NODE_PIPE;
-	pipe_node->left = NULL;
-	pipe_node->right = NULL;
-	pipe_node->file = NULL;
-	pipe_node->cmd = NULL;
-	return pipe_node;
+		return (NULL); // add error message
+	pipe_node->left = left;
+	pipe_node->right = right;
+	return (pipe_node);
 }
 
-t_ast_node *create_redir_node(t_ast_node_type type, char *file)
+t_redir *ft_create_redir_node(t_token_type type, char *file)
 {
-	t_ast_node *node = malloc(sizeof(t_ast_node));
+	t_redir *redir;
+	
+	redir = (t_redir *)ft_calloc(sizeof(t_redir));
+	if (!redir)
+		return (NULL);
+	redir->file = ft_strdup(file);
+	if (!redir->file)
+		return (free(redir), NULL);
+	if (type == T_REDIR_IN)
+		redir->type = IN;
+	else if (type == T_REDIR_OUT)
+		redir->type = OUT;
+	else if (type == T_REDIR_APPEND)
+		redir->type = D_APPEND;
+	else if (type == T_REDIR_HEREDOC)
+		redir->type = D_HEREDOC;
+	return (redir);
+}
+
+t_ast_node *ft_create_node(t_ast_node_type type)
+{
+	t_ast_node *node;
+
+	node = (t_node *)ft_calloc(sizeof(t_ast_node));
+	if (!node)
+		return (NULL);
 	node->type = type;
-	node->left = NULL;
-	node->right = NULL;
-	node->cmd = NULL;
-	node->file = strdup(file); // Make a copy of the file name
-	return node;
+	return (node);
+}
+
+void ft_append_redir(t_cmd *cmd, t_redir *redir)
+{
+	t_redir *tmp;
+
+	if (!cmd->redir)
+	{
+		cmd->redir = redir;
+		return ;
+	}
+	tmp = cmd->redir;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = redir;
 }

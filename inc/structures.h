@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 18:26:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ typedef enum e_redir_type
 {
 	IN,
 	OUT,
-	D_IN,
-	D_OUT
+	D_APPEND,
+	D_HEREDOC
 }					t_redir_type;
 
 typedef enum e_ast_node_type
@@ -37,6 +37,7 @@ typedef struct s_redir
 {
 	char			*file;
 	t_redir_type	type;
+	struct s_redir	*prev;
 	struct s_redir	*next;
 }					t_redir;
 
@@ -68,9 +69,11 @@ typedef struct s_data
 	t_env			*env;
 	char 			**envc;
 	t_token			*tok;
+	t_token			*tmp_token;
 	char			*user_line;
 	int				fd[2];
 	t_ast_node		*ast;
+	char			*error_msg;
 	int				exit_status;
 }					t_data;
 

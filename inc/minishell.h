@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 19:06:12 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@
 ////////////////////////// DEFINITIONS ////////////////////////////
 
 # define PROMPT "minishell> "
-# define ERR_SYN "Syntax error:"
+# define ERR_SYN "syntax error near unexpected token"
+# define ERR_MEM "memory allocation error"
 # define BUFF_SIZE 4096
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////

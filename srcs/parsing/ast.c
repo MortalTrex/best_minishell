@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/14 19:39:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ void print_ast(t_ast_node *node, int level)
 void parse_tokens(t_data *data)
 {
 	t_ast_node *root;
+	t_token *temp_tok;
 
+	temp_tok = data->tok;
 	printf("Parsing tokens...\n");
 	if (!check_pipe_syntax(data->tok))
 		return;
