@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 18:17:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:27:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_tokenize(&data))
 			continue;
 		print_tokens(&data);
-		//parse_tokens(&data);
+		parse_tokens(&data);
 		ft_free_all(&data);
 	}
 	clear_history();

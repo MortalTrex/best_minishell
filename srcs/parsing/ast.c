@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:59:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void print_ast(t_ast_node *node, int level)
 			for (int i = 0; i < level; i++)
 				printf("  ");
 			printf("Redirection: %s %s\n", redir->file, redir->type == IN ? "<" : redir->type == OUT ? ">"
-																			  : redir->type == D_IN	 ? "<<"
+																			  : redir->type == D_APPEND	 ? "<<"
 																									 : ">>");
 			redir = redir->next;
 		}
@@ -81,14 +81,13 @@ void print_ast(t_ast_node *node, int level)
 void parse_tokens(t_data *data)
 {
 	t_ast_node *root;
-	t_token *temp_tok;
 
-	temp_tok = data->tok;
+	data->tmp_token = data->tok;
 	printf("Parsing tokens...\n");
-	if (!check_pipe_syntax(data->tok))
+	if (!check_pipe_syntax(data->tmp_token))
 		return;
-	ft_expand_env_vars(&data->tok);
-	root = parse_pipe_sequence(data);
+	ft_expand_env_vars(&data->tmp_token);
+	root = create_tree(data);
 	data->ast = root;
 	if (data->ast != NULL)
 	{

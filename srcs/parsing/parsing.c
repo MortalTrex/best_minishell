@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:58:00 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/14 20:08:29 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/24 17:09:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_ast_node	*parse_command(t_data *data)
+/* t_ast_node	*parse_command(t_data *data)
 {
 	t_ast_node	*cmd_node;
 	t_token		*tmp;
@@ -74,4 +74,4 @@ t_ast_node	*parse_pipe_sequence(t_data *data)
 		left = pipe_node;
 	}
 	return (left);
-}
+} */

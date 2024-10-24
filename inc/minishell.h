@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:17:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,18 @@ void parse_tokens(t_data *data);
 void print_ast(t_ast_node *node, int level);
 
 // create_node.c
-t_ast_node *create_redir_node(t_ast_node_type type, char *file);
-t_ast_node *create_pipe_node(void);
-t_ast_node *create_cmd_node(void);
+t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right);
+t_redir *ft_create_redir_node(t_token_type type, char *file);
+t_ast_node *ft_create_node(t_ast_node_type type);
+void ft_append_redir(t_cmd *cmd, t_redir *redir);
+
+// create_tree.c
+t_ast_node *create_tree(t_data *data);
+
+// parse_s_command.c
+bool    handle_redir(t_cmd *cmd, t_data *data);
+bool join_words(char **argv, t_data *data);
+t_ast_node *simple_command(t_data *data);
 
 // parsing.c
 t_ast_node *parse_command(t_data *data);
@@ -133,10 +142,12 @@ t_redir *parse_redirection(t_data *data);
 t_ast_node *parse_pipe_sequence(t_data *data);
 
 // utils_parser.c
+void free_cmd(t_cmd *cmd);
+void free_ast(t_ast_node *node);
+bool	is_redirection(t_token *token);
 bool check_pipe_syntax(t_token *tokens);
 void ft_expand_env_vars(t_token **tokens);
-bool	is_redirection(t_token *token);
-void free_ast(t_ast_node *node);
+void ft_parsing_error(t_data *data);
 
 // SIGNALS
 

@@ -6,14 +6,14 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/23 19:20:30 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:57:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //ok
-t_ast_node *ft_create_pipe_node(t_token_type type, t_ast_node *left, t_ast_node *right)
+t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right)
 {
 	t_ast_node *pipe_node;
 
@@ -29,7 +29,7 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 {
 	t_redir *redir;
 	
-	redir = (t_redir *)ft_calloc(sizeof(t_redir));
+	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
 		return (NULL);
 	redir->file = ft_strdup(file);
@@ -41,7 +41,7 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 		redir->type = OUT;
 	else if (type == T_REDIR_APPEND)
 		redir->type = D_APPEND;
-	else if (type == T_REDIR_HEREDOC)
+	else if (type == T_REDIR_HERE)
 		redir->type = D_HEREDOC;
 	return (redir);
 }
@@ -50,7 +50,7 @@ t_ast_node *ft_create_node(t_ast_node_type type)
 {
 	t_ast_node *node;
 
-	node = (t_node *)ft_calloc(sizeof(t_ast_node));
+	node = (t_ast_node *)ft_calloc(1, sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
 	node->type = type;

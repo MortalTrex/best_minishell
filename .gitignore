@@ -6,3 +6,4 @@ minishell
 infile
 outfile
 log_errors.txt
+vgcore.*

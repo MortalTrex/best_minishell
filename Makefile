@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/10/14 17:42:48 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/10/24 16:51:46 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,13 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c\
 	srcs/builtins/unset.c\
-	srcs/parsing/parsing.c\
+	srcs/parsing/add_to_struct.c\
 	srcs/parsing/ast.c\
 	srcs/parsing/create_node.c\
+	srcs/parsing/create_tree.c\
+	srcs/parsing/parsing.c\
+	srcs/parsing/parse_s_command.c\
 	srcs/parsing/utils_parser.c\
-	srcs/parsing/add_to_struct.c\
 	srcs/builtins/export.c\
 	srcs/builtins/exit.c\
 	srcs/builtins/cd.c\
