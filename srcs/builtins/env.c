@@ -12,30 +12,10 @@
 
 #include "minishell.h"
 
-char	*joinchar(char const *s1, char c)
-{
-	int		len;
-	int		i;
-	char	*res;
-
-	len = ft_strlen(s1) + 1;
-	res = malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (s1 && s1[i])
-	{
-		res[i] = s1[i];
-		i++;
-	}
-	res[i++] = c;
-	res[i] = '\0';
-	return (res);
-}
 char	*put_name(char *line)
 {
-	int i;
-	char *res;
+	int		i;
+	char	*res;
 
 	i = 0;
 	while (line && line[i] != '=')
@@ -50,14 +30,14 @@ char	*put_name(char *line)
 		i++;
 	}
 	res[i] = '\0';
-	return(res);
+	return (res);
 }
 
-char *put_value(char *line)
+char	*put_value(char *line)
 {
-	int i;
-	int j;
-	char *res;
+	int		i;
+	int		j;
+	char	*res;
 
 	i = 0;
 	j = 0;
@@ -116,52 +96,6 @@ void	push_node_to_env(t_data *data, char *env_line)
 	}
 }
 
-void	copy_env(char **envp, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		push_node_to_env(data, envp[i]);
-		i++;
-	}
-}
-
-void	copy_env_char(char **envp, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	data->envc = malloc(sizeof(char *) * (i + 1));
-	if (!data->envc)
-		ft_error(data, "Malloc failed\n");
-	i = 0;
-	while (envp[i])
-	{
-		data->envc[i] = ft_strdup(envp[i]);
-		if (!data->envc[i])
-			ft_error(data, "Malloc failed\n");
-		i++;
-	}
-	data->envc[i] = NULL;
-}
-
-// debug function
-void	print_tab(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->envc[i])
-	{
-		printf("%s\n", data->envc[i]);
-		i++;
-	}
-}
-
 void	ft_env(t_data *data)
 {
 	t_env	*current;
@@ -170,8 +104,6 @@ void	ft_env(t_data *data)
 	while (current != NULL)
 	{
 		ft_printf("%s\n", current->line);
-		// printf("NOM : %s\n", current->name);
-		// printf("VALEUR : %s\n", current->value);
 		current = current->next;
 	}
 }

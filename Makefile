@@ -39,6 +39,7 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/builtins/export.c\
 	srcs/builtins/exit.c\
 	srcs/builtins/cd.c\
+	srcs/builtins/builtins_utils.c\
 	srcs/signal/signal.c\
 	srcs/exec/exec_cmd.c\
 

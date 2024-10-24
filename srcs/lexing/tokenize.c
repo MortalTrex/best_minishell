@@ -15,7 +15,9 @@
 void	ft_detect_builtin(t_data *data)
 {
 	t_token	*current;
+	int i;
 
+	i = 0;
 	current = data->tok;
 	while (current)
 	{
@@ -27,8 +29,12 @@ void	ft_detect_builtin(t_data *data)
 				ft_cd(data);
 				return ;
 			}
-			else if (!ft_strcmp(current->value, "echo"))
+			else if (!ft_strcmp(current->value, "echo") && i == 0)
+			{
 				current->type = T_BUILTIN;
+				ft_echo(data);
+				return ;
+			}
 			else if (!ft_strcmp(current->value, "pwd"))
 			{
 				current->type = T_BUILTIN;
@@ -56,6 +62,7 @@ void	ft_detect_builtin(t_data *data)
 		}
 		if (current)
 			current = current->next;
+		i++;
 	}
 }
 

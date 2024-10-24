@@ -71,7 +71,7 @@ t_env		*new_node_env(char *line, t_data *data);
 void		ft_export(t_data *data);
 
 // echo.c
-void		ft_echo(char *line);
+void		ft_echo(t_data *data);
 void		print_line(char *line, int start, int len);
 
 // pwd.c
@@ -85,6 +85,11 @@ void		ft_exit(t_data *data);
 
 //	cd.c
 void	ft_cd(t_data *data);
+
+// builtins_utils.c
+void	ft_sort_env(t_env *env);
+void	ft_swap_env_lines(t_env *a, t_env *b);
+
 
 // LEXING
 

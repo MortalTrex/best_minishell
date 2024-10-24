@@ -12,7 +12,28 @@
 
 #include "minishell.h"
 
-void	set_env(char *new_pwd, t_data *data)
+void	set_env_oldpwd(char *old_pwd, t_data *data)
+{
+	t_env	*current;
+	char	*new_line;
+
+	current = data->env;
+	while (current)
+	{
+		if (ft_strncmp(current->name, "OLDPWD", 6) == 0)
+		{
+			free(current->line);
+			free(current->value);
+			free(current->name);
+			new_line = ft_strjoin("OLDPWD=", old_pwd);
+			current->line = new_line;
+			current->value = ft_strdup(old_pwd);
+		}
+		current = current->next;
+	}
+}
+
+void	set_env_pwd(char *new_pwd, t_data *data)
 {
 	t_env	*current;
 	char	*new_line;
@@ -31,26 +52,23 @@ void	set_env(char *new_pwd, t_data *data)
 			current->line = new_line;
 			current->value = ft_strdup(new_pwd);
 		}
-		if (ft_strncmp(current->name, "OLDPWD", 6) == 0)
-		{
-			printf("SALUTSALUT\n");
-			free(current->value);
-			free(current->name);
-			current->value = "SALUT";
-			free(old_pwd);
-		}
 		current = current->next;
+	}
+	if (old_pwd)
+	{
+		set_env_oldpwd(old_pwd, data);
+		free(old_pwd);
 	}
 }
 
-void 	ft_move_directory(char *path, t_data *data)
+void	ft_move_directory(char *path, t_data *data)
 {
-	char *new_pwd;
+	char	*new_pwd;
 
 	if (chdir(path) == 0)
 		ft_printf("Path not found\n");
 	new_pwd = getcwd(NULL, 0);
-	set_env(new_pwd, data);
+	set_env_pwd(new_pwd, data);
 	printf("%s\n", new_pwd);
 	free(new_pwd);
 }
@@ -60,6 +78,7 @@ void	set_home(t_data *data)
 	t_env	*current;
 
 	current = data->env;
+	printf("set_home\n");
 	while (current)
 	{
 		if (ft_strncmp(current->name, "HOME", 4) == 0)
@@ -75,7 +94,7 @@ void	ft_cd(t_data *data)
 	current = data->tok;
 	if (current->next)
 	{
-	 	current = current->next;
+		current = current->next;
 		ft_move_directory(current->value, data);
 	}
 	else if (current->next == NULL)

@@ -17,6 +17,8 @@ bool	ft_is_number(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -28,8 +30,10 @@ bool	ft_is_number(char *str)
 
 int	ft_value(int value)
 {
-	if (value > 255)
-		value = value % 256;
+	printf("LA VALEUR : %d\n", value);
+	if (value > 255 || value < 0)
+		value = (value % 256 + 256) % 256;
+	printf("LA VALEUR APRES : %d\n", value);
 	return (value);
 }
 
@@ -49,7 +53,6 @@ void	ft_exit(t_data *data)
 				value = ft_atoi(current->value);
 				value = ft_value(value);
 				ft_free_all(data);
-				//printf("current->value: %d\n", value);
 				exit(value);
 			}
 			else
