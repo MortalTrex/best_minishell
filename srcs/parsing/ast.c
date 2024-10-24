@@ -19,48 +19,55 @@ void print_ast(t_ast_node *node, int level)
 		return;
 	for (int i = 0; i < level; i++)
 		printf("  ");
-	switch (node->type)
+	while (node->type)
 	{
-	case NODE_CMD:
-		printf("Command: ");
-		for (int i = 0; node->cmd && node->cmd->argv[i]; i++)
+		if (node->type == NODE_CMD)
 		{
-			printf("%s ", node->cmd->argv[i]);
+			printf("Command: ");
+			printf("%s ", node->cmd->argv);
+			printf("\n");
+			t_redir *redir = node->cmd->redir;
+			while (redir)
+			{
+				for (int i = 0; i < level; i++)
+					printf("  ");
+				printf("Redirection: %s %s\n", redir->file, redir->type == IN ? "<" : redir->type == OUT ? ">"
+																				: redir->type == D_APPEND	 ? "<<"
+																										: ">>");
+				redir = redir->next;
+			}
+			break;
 		}
-		printf("\n");
-		t_redir *redir = node->cmd->redir;
-		while (redir)
+		else if (node->type == NODE_PIPE)
 		{
-			for (int i = 0; i < level; i++)
-				printf("  ");
-			printf("Redirection: %s %s\n", redir->file, redir->type == IN ? "<" : redir->type == OUT ? ">"
-																			  : redir->type == D_APPEND	 ? "<<"
-																									 : ">>");
-			redir = redir->next;
+			printf("Pipe\n");
+			break;
 		}
-		break;
-	case NODE_PIPE:
-		printf("Pipe\n");
-		break;
-
-	case NODE_REDIR_IN:
-		printf("Redirection In: %s\n", node->file);
-		break;
-
-	case NODE_REDIR_OUT:
-		printf("Redirection Out: %s\n", node->file);
-		break;
-
-	case NODE_REDIR_APPEND:
-		printf("Redirection Append: %s\n", node->file);
-		break;
-
-	case NODE_HEREDOC:
-		printf("Heredoc: %s\n", node->file);
-		break;
-	default:
-		printf("Unknown Node Type\n");
-		break;
+		else if (node->type ==NODE_REDIR_IN)
+		{
+			printf("Redirection In: %s\n", node->file);
+			break;
+		}
+		else if (node->type ==NODE_REDIR_OUT)
+		{
+			printf("Redirection Out: %s\n", node->file);
+			break;
+		}
+		else if (node->type ==NODE_REDIR_APPEND)
+		{
+			printf("Redirection Append: %s\n", node->file);
+			break;
+		}
+		else if (node->type ==NODE_HEREDOC)
+		{
+			printf("Heredoc: %s\n", node->file);
+			break;
+		}
+		else
+		{
+			printf("Unknown Node Type\n");
+			break;
+		}
 	}
 	if (node->left)
 	{
@@ -84,8 +91,8 @@ void parse_tokens(t_data *data)
 
 	data->tmp_token = data->tok;
 	printf("Parsing tokens...\n");
-	if (!check_pipe_syntax(data->tmp_token))
-		return;
+	// if (!check_pipe_syntax(data->tmp_token))
+	// 	return;
 	ft_expand_env_vars(&data->tmp_token);
 	root = create_tree(data);
 	data->ast = root;

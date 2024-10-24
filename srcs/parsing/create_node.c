@@ -18,10 +18,12 @@ t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right)
 	t_ast_node *pipe_node;
 
 	pipe_node = ft_create_node(NODE_PIPE);
+	
 	if (!pipe_node)
 		return (NULL); // add error message
 	pipe_node->left = left;
 	pipe_node->right = right;
+	printf("pipe node created");
 	return (pipe_node);
 }
 

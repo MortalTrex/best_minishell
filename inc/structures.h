@@ -43,7 +43,7 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
-	char			**argv;
+	char			*argv;
 	// pid_t			pid;
 	struct s_cmd	*next;
 	t_redir			*redir;
