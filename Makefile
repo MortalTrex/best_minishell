@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/10/24 16:51:46 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/10/25 18:00:55 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ LDLIBS = -lreadline
 LIBS = -L$(LIBFTDIR) -lft
 
 SRCS = srcs/main.c srcs/builtins/echo.c\
-	srcs/utils/pipex.c \
+	srcs/utils/pipex.c\
 	srcs/utils/errors.c\
+	srcs/utils/debug.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\
@@ -42,7 +43,7 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/builtins/exit.c\
 	srcs/builtins/cd.c\
 	srcs/signal/signal.c\
-	srcs/exec/exec_cmd.c\
+	srcs/exec/exec_cmd.c
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m

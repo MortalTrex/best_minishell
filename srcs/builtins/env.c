@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/10 17:10:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/25 17:55:32 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,6 @@ void	copy_env_char(char **envp, t_data *data)
 		i++;
 	}
 	data->envc[i] = NULL;
-}
-
-// debug function
-void	print_tab(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->envc[i])
-	{
-		printf("%s\n", data->envc[i]);
-		i++;
-	}
 }
 
 void	ft_env(t_data *data)

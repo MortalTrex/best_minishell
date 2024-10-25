@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/25 16:34:29 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/25 18:21:30 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,28 @@ bool    handle_redir(t_cmd *cmd, t_data *data)
 bool    join_words(char **argv, t_data *data)
 {
     printf("JE SUIS DANS JOIN WORDS\n");
-    char *tmp;
+    //char *tmp;
     t_token *current;
 
     if (data->error_msg)
         return (false);
-    if (!*argv)
-        *argv = ft_strdup("");
-    if (!*argv)
-        return (false);
+    // if (!*argv)
+    //     *argv = ft_strdup("");
+    // if (!*argv)
+    //     return (false);
     current = data->tok;
-    while(current->type == T_WORD)
-    {
-        tmp = *argv;
-        printf("%s\n", data->tok->value);
-        *argv = ft_strjoin(*argv, " ");
-        *argv = ft_strjoin(*argv, current->value);
-        if (!*argv)
-            return(free(tmp), false);
-        free(tmp);
-        current = current->next;
-    }
+    print_tab(argv);
+    // while(current->type == T_WORD)
+    // {
+    //     tmp = ft_strdup(*argv);
+    //     printf("%s\n", data->tok->value);
+    //     *argv = ft_strjoin(*argv, " ");
+    //     *argv = ft_strjoin(*argv, current->value);
+    //     if (!*argv)
+    //         return(free(tmp), false);
+    //     free(tmp);
+    //     current = current->next;
+    // }
     return (true);
 }
 // handle parsing errors!!!
@@ -80,22 +81,21 @@ t_ast_node  *simple_command(t_data *data)
     node = ft_create_node(NODE_CMD);
     if (!node)
         return (NULL); // add error message
-    printf("A CREE LE NOEUD\n");
-    while (current && (current->type == T_WORD  || is_redirection(data->tok)))
-    {
-        printf("PARCOURT LA BOUCLE\n");
-        if (current->type == T_WORD)
-        {
-            if (!join_words(&(node->cmd->argv), data))
-                return (NULL);
-        }
-        // else if (is_redirection(data->tok))
-        // {
-        //     if (!handle_redir(node->cmd, data))
-        //         return (free(node->cmd->argv), free(node), NULL);
-        // }
-        current = current->next;
-    }
+    print_tab(node->cmd->argv);
+    // while (current && (current->type == T_WORD  || is_redirection(data->tok)))
+    // {
+    //     if (current->type == T_WORD)
+    //     {
+    //         if (!join_words(&(node->cmd->argv), data))
+    //             return (NULL);
+    //     }
+    //     // else if (is_redirection(data->tok))
+    //     // {
+    //     //     if (!handle_redir(node->cmd, data))
+    //     //         return (free(node->cmd->argv), free(node), NULL);
+    //     // }
+    //     current = current->next;
+    // }
     printf("A PARCOURU LA BOUCLE\n");
     return (node);
 }
