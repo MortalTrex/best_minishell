@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/24 17:26:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/25 14:12:10 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void free_cmd(t_cmd *cmd)
 	tmp = redir;
 	if (cmd->argv)
 	{
-		ft_free_tab(cmd->argv);
+		ft_free_tab(&cmd->argv);
 		cmd->argv = NULL;
 	}
 	if (cmd->redir)
