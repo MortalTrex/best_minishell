@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/24 17:27:13 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/25 15:53:39 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		copy_env_char(envp, &data);
 		data.user_line = readline(PROMPT);
-		if (signals(&data) == true)
-			break;
+		// if (signals(&data) == true)
+		// 	break;
 		if (data.user_line != NULL)
 			add_history(data.user_line);
 		if (!ft_tokenize(&data))
