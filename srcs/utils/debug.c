@@ -17,7 +17,7 @@ void print_ast(t_ast_node *node, int level)
 			{
 				for (int i = 0; i < level; i++)
 					printf("  ");
-				printf("Redirection: %s %s\n", redir->value, redir->type == IN ? "<" : redir->type == OUT ? ">"
+				printf("Redirection: %s %s\n", redir->command, redir->type == IN ? "<" : redir->type == OUT ? ">"
 																				: redir->type == D_APPEND	 ? "<<"
 																										: ">>");
 				redir = redir->next;

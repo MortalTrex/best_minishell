@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 16:47:54 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:57:55 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_ast_node_type
 
 typedef struct s_redir
 {
-	char			*value;
+	char			*command;
 	t_redir_type	type;
 	struct s_redir	*prev;
 	struct s_redir	*next;
@@ -40,6 +40,7 @@ typedef struct s_redir
 typedef struct s_ast_node
 {
 	t_ast_node_type		type;
+	char				*command;
 	char				**argv;
 	// pid_t			pid;
 	t_redir				*redir;

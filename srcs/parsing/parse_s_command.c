@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 17:02:58 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:17:02 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,23 @@ bool handle_redir(t_ast_node *node, t_token *token, t_data *data)
 	return (true);
 }
 
-bool join_words(char **argv, t_token *token, t_data *data)
+bool join_words(t_ast_node *node, t_token *token, t_data *data)
 {
 	t_token *current;
 
 	if (data->error_msg)
 		return (false);
-	if (!*argv)
-		*argv = ft_strdup("");
-	if (!*argv)
+	if (!node->command)
+		node->command = ft_strdup("");
+	if (!node->command)
 		return (false);
 	current = token;
 	if (current->type == T_WORD)
 	{
-		if (*argv)
-			*argv = ft_strjoin(*argv, " ");
-		*argv = ft_strjoin(*argv, current->value);
-		if (!*argv)
+		if (node->command)
+			node->command = ft_strjoin(node->command, " ");
+		node->command = ft_strjoin(node->command, current->value);
+		if (!node->command)
 			return (false);
 	}
 	return (true);
@@ -68,7 +68,7 @@ t_ast_node *simple_command(t_data *data)
 	{
 		if (current->type == T_WORD)
 		{
-			if (!join_words(node->argv, current, data))
+			if (!join_words(node, current, data))
 				return (NULL);
 		}
 		else if (is_redirection(current))
@@ -78,7 +78,7 @@ t_ast_node *simple_command(t_data *data)
 		}
 		current = current->next;
 	}
-	printf("created cmd node %s\n", *node->argv);
+	printf("created cmd node %s\n", node->command);
 	data->tok = current;
 	return (node);
 }

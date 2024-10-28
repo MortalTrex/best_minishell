@@ -12,7 +12,7 @@ void	ft_free_command(t_ast_node *node)
 		return ;
 	while (curr_node)
 	{
-		free(curr_node->value);
+		free(curr_node->command);
 		next = curr_node->next;
 		free(curr_node);
 		curr_node = next;

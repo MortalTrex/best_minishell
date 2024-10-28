@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 17:00:32 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:08:34 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
 		return (NULL);
-	redir->value = ft_strdup(file);
-	if (!redir->value)
+	redir->command = ft_strdup(file);
+	if (!redir->command)
 		return (free(redir), NULL);
 	if (type == T_REDIR_IN)
 		redir->type = IN;

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 17:55:41 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:15:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	ft_expand_env_vars(t_token **tokens)
 {
 	t_token	*current;
 	char	*env_value;
-	int i;
 
 	current = *tokens;
+	env_value = NULL;
 	while (current)
 	{
 		if (current->type == T_WORD && current->value[0] == '$')
