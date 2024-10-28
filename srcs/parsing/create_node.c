@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 13:30:31 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:00:45 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 	return (redir);
 }
 
+static t_cmd *ft_create_cmd_node()
+{
+	t_cmd *cmd;
+
+	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	cmd->argv = (char **)ft_calloc(1, sizeof(char *));
+	return (cmd);
+}
 
 t_ast_node *ft_create_node(t_ast_node_type type)
 {
@@ -56,6 +66,8 @@ t_ast_node *ft_create_node(t_ast_node_type type)
 	node = ft_calloc(1, sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
+	node->cmd = ft_create_cmd_node();
+
 	node->type = type;
 	return (node);
 }
