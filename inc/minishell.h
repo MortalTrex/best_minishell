@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/25 17:56:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/28 14:10:53 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ t_ast_node *create_tree(t_data *data);
 
 // parse_s_command.c
 bool    handle_redir(t_cmd *cmd, t_data *data);
-bool join_words(char **argv, t_data *data);
+bool join_words(char **argv,t_token *token, t_data *data);
 t_ast_node *simple_command(t_data *data);
 
 // parsing.c

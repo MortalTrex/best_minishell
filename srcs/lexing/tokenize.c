@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 19:07:38 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:03:09 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	ft_tokenize(t_data *data)
 
 	command = data->user_line;
 	data->tok = get_tokens(command, data);
-	ft_detect_builtin(data);
+	//ft_detect_builtin(data);
 	return (true);
 }
 

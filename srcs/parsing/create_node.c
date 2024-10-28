@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/24 16:57:35 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:30:31 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right)
 	t_ast_node *pipe_node;
 
 	pipe_node = ft_create_node(NODE_PIPE);
-	
+
 	if (!pipe_node)
 		return (NULL); // add error message
 	pipe_node->left = left;
@@ -30,7 +30,7 @@ t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right)
 t_redir *ft_create_redir_node(t_token_type type, char *file)
 {
 	t_redir *redir;
-	
+
 	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
 		return (NULL);
@@ -47,6 +47,7 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 		redir->type = D_HEREDOC;
 	return (redir);
 }
+
 
 t_ast_node *ft_create_node(t_ast_node_type type)
 {
