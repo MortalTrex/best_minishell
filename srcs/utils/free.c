@@ -73,5 +73,5 @@ void	ft_free_all(t_data *data)
 	if (data->envc)
 		ft_free_tab(data->envc);
 	if (data->ast)
-		free_ast(data->ast);
+		free_ast(&data->ast);
 }
