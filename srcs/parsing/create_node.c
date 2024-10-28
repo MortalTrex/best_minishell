@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 13:30:31 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:35:56 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right)
 	pipe_node = ft_create_node(NODE_PIPE);
 
 	if (!pipe_node)
-		return (NULL); // add error message
+		return (NULL);
+		
 	pipe_node->left = left;
 	pipe_node->right = right;
 	printf("pipe node created");
@@ -67,7 +68,7 @@ void ft_append_redir(t_cmd *cmd, t_redir *redir)
 	if (!cmd->redir)
 	{
 		cmd->redir = redir;
-		return ;
+		return;
 	}
 	tmp = cmd->redir;
 	while (tmp->next)

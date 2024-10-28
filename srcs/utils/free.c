@@ -10,8 +10,8 @@
 	tmp = redir;
 	if (cmd->argv)
 	{
-		ft_free_tab(cmd->argv);
-		cmd->argv = NULL;
+		//ft_free_tab(cmd->argv);
+		//cmd->argv = NULL;
 	}
 	if (cmd->redir)
 	{

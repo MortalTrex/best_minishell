@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_s_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 14:14:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:07:58 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,9 @@ t_ast_node *simple_command(t_data *data)
 	current = data->tok;
 	node = ft_create_node(NODE_CMD);
 	if (!node)
-		return (NULL); // add error message
-	// Pourquoi une boucle pour une commande simple ?
+		return (NULL);
 	while (current && (current->type == T_WORD || is_redirection(current)))
 	{
-		printf("current token is: %s\n", current->value);
 		if (current->type == T_WORD)
 		{
 			if (!node->cmd)
@@ -94,11 +92,11 @@ t_ast_node *simple_command(t_data *data)
 			if (!join_words(node->cmd->argv, current, data))
 				return (NULL);
 		}
-		else if (is_redirection(data->tok))
-		{
-		    if (!handle_redir(node->cmd, data))
-		        return (free(node->cmd->argv), free(node), NULL);
-		}
+		// else if (is_redirection(data->tok))
+		// {
+		//     if (!handle_redir(node->cmd, data))
+		//         return (free(node->cmd->argv), free(node), NULL);
+		// }
 		current = current->next;
 	}
 	return (node);
