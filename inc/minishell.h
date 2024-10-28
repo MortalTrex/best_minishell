@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 18:15:04 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:38:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ t_ast_node *create_tree(t_data *data);
 // parse_s_command.c
 bool handle_redir(t_ast_node *node, t_token *token, t_data *data);
 bool join_words(t_ast_node *node, t_token *token, t_data *data);
-t_ast_node *simple_command(t_data *data);
+t_ast_node *simple_command(t_data *data, t_token *	current);
 
 // utils_parser.c
 void free_ast(t_ast_node *node);

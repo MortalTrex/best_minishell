@@ -7,6 +7,8 @@ void	ft_free_command(t_ast_node *node)
 
 	if (!node)
 		return ;
+	free(node->command);
+	node->command = NULL;
 	curr_node = node->redir;
 	if (!curr_node)
 		return ;

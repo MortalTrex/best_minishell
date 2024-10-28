@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 18:17:02 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:23:04 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ bool join_words(t_ast_node *node, t_token *token, t_data *data)
 	return (true);
 }
 // handle parsing errors!!!
-t_ast_node *simple_command(t_data *data)
+t_ast_node *simple_command(t_data *data, t_token *current)
 {
 	t_ast_node *node;
-	t_token *current;
 
 	if (data->error_msg)
 		return (NULL);
-	current = data->tok;
 	node = ft_create_node(NODE_CMD);
 	if (!node)
 		return (NULL); // add error message
@@ -78,7 +76,7 @@ t_ast_node *simple_command(t_data *data)
 		}
 		current = current->next;
 	}
-	printf("created cmd node %s\n", node->command);
 	data->tok = current;
+	printf("created cmd node %s\n", node->command);
 	return (node);
 }
