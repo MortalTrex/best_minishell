@@ -1,67 +1,44 @@
- #include "minishell.h"
+#include "minishell.h"
 
- void free_cmd(t_cmd *cmd)
+void	ft_free_command(t_ast_node *node)
 {
-	printf("\033[1;31mFreeing command\033[0m\n");
-	t_redir *redir;
-	t_redir *tmp;
+	t_redir	*curr_node;
+	t_redir	*next;
 
-	redir = cmd->redir;
-	tmp = redir;
-	if (cmd->argv)
+	if (!node)
+		return ;
+	curr_node = node->redir;
+	if (!curr_node)
+		return ;
+	while (curr_node)
 	{
-		ft_free_tab(cmd->argv);
-		cmd->argv = NULL;
+		free(curr_node->value);
+		next = curr_node->next;
+		free(curr_node);
+		curr_node = next;
 	}
-	if (cmd->redir)
-	{
-		while (redir)
-		{
-			redir = redir->next;
-			if (tmp->file)
-			{
-				free(tmp->file);
-				tmp->file = NULL;
-			}
-			free(tmp);
-		}
-	}
-	free(cmd);
-	cmd = NULL;
+	node->redir = NULL;
+	ft_free_tab(node->argv);
 }
-
 void free_ast(t_ast_node *node)
 {
-	if (!node)
-		return;
-	 if (node->left)
-    {
-        free_ast(node->left);
-        node->left = NULL;
-    }
-    if (node->right)
-    {
-        free_ast(node->right);
-        node->right = NULL;
-    }
-    if (node->cmd)
-    {
-        free_cmd(node->cmd);
-        node->cmd = NULL;
-    }
-    if (node->file)
-    {
-        free(node->file);
-        node->file = NULL;
-    }
-    free(node);
-    node = NULL;
+	if (node -> type == NODE_CMD)
+		ft_free_command(node);
+	else
+	{
+		if (node->left)
+			free_ast(node->left);
+		if (node->right)
+			free_ast(node->right);
+	}
+	free(node);
+	node = NULL;
 }
 
-void	ft_free_all(t_data *data)
+void ft_free_all(t_data *data)
 {
 	if (!data)
-		return ;
+		return;
 	if (data->user_line)
 		free(data->user_line);
 	if (data->tok)
@@ -73,5 +50,5 @@ void	ft_free_all(t_data *data)
 	if (data->envc)
 		ft_free_tab(data->envc);
 	if (data->ast)
-		free_ast(&data->ast);
+		free_ast(data->ast);
 }

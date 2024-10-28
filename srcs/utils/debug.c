@@ -11,9 +11,8 @@ void print_ast(t_ast_node *node, int level)
 		if (node->type == NODE_CMD)
 		{
 			printf("Command: ");
-			print_tab(node->cmd->argv);
-			printf("\n");
-			t_redir *redir = node->cmd->redir;
+			printf("%s\n", *node->argv);
+			t_redir *redir = node->redir;
 			while (redir)
 			{
 				for (int i = 0; i < level; i++)
@@ -28,26 +27,6 @@ void print_ast(t_ast_node *node, int level)
 		else if (node->type == NODE_PIPE)
 		{
 			printf("Pipe\n");
-			break;
-		}
-		else if (node->type ==NODE_REDIR_IN)
-		{
-			printf("Redirection In: %s\n", node->file);
-			break;
-		}
-		else if (node->type ==NODE_REDIR_OUT)
-		{
-			printf("Redirection Out: %s\n", node->file);
-			break;
-		}
-		else if (node->type ==NODE_REDIR_APPEND)
-		{
-			printf("Redirection Append: %s\n", node->file);
-			break;
-		}
-		else if (node->type ==NODE_HEREDOC)
-		{
-			printf("Heredoc: %s\n", node->file);
 			break;
 		}
 		else

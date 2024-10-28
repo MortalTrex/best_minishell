@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 14:28:14 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:01:11 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		ft_close_fd(t_data *data, char *msg);
 void		ft_error_quote(t_data *data);
 
 // free.c
-void		free_cmd(t_cmd *cmd);
+void		ft_free_command(t_ast_node *node);
 void		free_ast(t_ast_node *node);
 void		ft_free_all(t_data *data);
 
@@ -118,10 +118,6 @@ void		ft_envclear(t_env **env);
 
 // PARSING
 
-// add_to_struct.c
-void add_to_argv(t_cmd *cmd, char *arg, t_data *data);
-void add_redir_to_cmd(t_cmd *cmd, t_redir *redir);
-
 // ast.c
 void parse_tokens(t_data *data);
 void print_ast(t_ast_node *node, int level);
@@ -130,23 +126,17 @@ void print_ast(t_ast_node *node, int level);
 t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right);
 t_redir *ft_create_redir_node(t_token_type type, char *file);
 t_ast_node *ft_create_node(t_ast_node_type type);
-void ft_append_redir(t_cmd *cmd, t_redir *redir);
+void ft_append_redir(t_redir **rds, t_redir *redir);
 
 // create_tree.c
 t_ast_node *create_tree(t_data *data);
 
 // parse_s_command.c
-bool    handle_redir(t_cmd *cmd,t_token *token,t_data *data);
-bool join_words(char **argv,t_token *token, t_data *data);
+bool handle_redir(t_ast_node *node, t_token *token, t_data *data);
+bool join_words(char **argv, t_token *token, t_data *data);
 t_ast_node *simple_command(t_data *data);
 
-// parsing.c
-t_ast_node *parse_command(t_data *data);
-t_redir *parse_redirection(t_data *data);
-t_ast_node *parse_pipe_sequence(t_data *data);
-
 // utils_parser.c
-void free_cmd(t_cmd *cmd);
 void free_ast(t_ast_node *node);
 bool	is_redirection(t_token *token);
 bool check_pipe_syntax(t_token *tokens);

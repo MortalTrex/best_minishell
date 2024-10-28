@@ -6,25 +6,25 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 15:34:31 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:02:58 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool handle_redir(t_cmd *cmd, t_token *token, t_data *data)
+bool handle_redir(t_ast_node *node, t_token *token, t_data *data)
 {
 	t_redir *tmp;
 
 	while (is_redirection(token))
 	{
-		// token = token->next;
+		token = token->next;
 		if (!token || token->type != T_WORD)
 			return ((data->error_msg = ERR_SYN), false);
 		tmp = ft_create_redir_node(token->type, token->value);
 		if (!tmp)
 			return ((data->error_msg = ERR_MEM), false);
-		ft_append_redir(cmd, tmp);
+		ft_append_redir(&(node->redir), tmp);
 		token = token->next;
 	}
 	return (true);
@@ -68,17 +68,17 @@ t_ast_node *simple_command(t_data *data)
 	{
 		if (current->type == T_WORD)
 		{
-			if (!join_words(node->cmd->argv, current, data))
+			if (!join_words(node->argv, current, data))
 				return (NULL);
 		}
 		else if (is_redirection(current))
 		{
-			if (!handle_redir(node->cmd, current, data))
-				return (free(node->cmd->argv), free(node), NULL);
+			if (!handle_redir(node, current, data))
+				return (free(node->argv), free(node), NULL);
 		}
 		current = current->next;
 	}
-	printf("created cmd node %s\n", *node->cmd->argv);
+	printf("created cmd node %s\n", *node->argv);
 	data->tok = current;
 	return (node);
 }

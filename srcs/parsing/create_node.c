@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 15:00:45 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:00:32 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
 		return (NULL);
-	redir->file = ft_strdup(file);
-	if (!redir->file)
+	redir->value = ft_strdup(file);
+	if (!redir->value)
 		return (free(redir), NULL);
 	if (type == T_REDIR_IN)
 		redir->type = IN;
@@ -48,17 +48,6 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 	return (redir);
 }
 
-static t_cmd *ft_create_cmd_node()
-{
-	t_cmd *cmd;
-
-	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->argv = (char **)ft_calloc(1, sizeof(char *));
-	return (cmd);
-}
-
 t_ast_node *ft_create_node(t_ast_node_type type)
 {
 	t_ast_node *node;
@@ -66,22 +55,21 @@ t_ast_node *ft_create_node(t_ast_node_type type)
 	node = ft_calloc(1, sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
-	node->cmd = ft_create_cmd_node();
-
+	node->argv = (char **)ft_calloc(1, sizeof(char *));
 	node->type = type;
 	return (node);
 }
 
-void ft_append_redir(t_cmd *cmd, t_redir *redir)
+void ft_append_redir(t_redir **rds, t_redir *redir)
 {
 	t_redir *tmp;
 
-	if (!cmd->redir)
+	if (!rds)
 	{
-		cmd->redir = redir;
+		*rds = redir;
 		return ;
 	}
-	tmp = cmd->redir;
+	tmp = *rds;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = redir;

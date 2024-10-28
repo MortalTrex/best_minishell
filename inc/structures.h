@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 13:18:15 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:47:54 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,22 @@ typedef enum e_ast_node_type
 {
 	NODE_CMD,
 	NODE_PIPE,
-	NODE_REDIR_IN,
-	NODE_REDIR_OUT,
-	NODE_REDIR_APPEND,
-	NODE_HEREDOC
 }					t_ast_node_type;
 
 typedef struct s_redir
 {
-	char			*file;
+	char			*value;
 	t_redir_type	type;
 	struct s_redir	*prev;
 	struct s_redir	*next;
 }					t_redir;
 
-typedef struct s_cmd
-{
-	char			**argv;
-	// pid_t			pid;
-	struct s_cmd	*next;
-	t_redir			*redir;
-}					t_cmd;
-
 typedef struct s_ast_node
 {
 	t_ast_node_type		type;
-	char				*file;
-	t_cmd				*cmd;
+	char				**argv;
+	// pid_t			pid;
+	t_redir				*redir;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }					t_ast_node;
