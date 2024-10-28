@@ -21,7 +21,7 @@ void add_to_argv(t_cmd *cmd, char *arg, t_data *data)
 	cmd->argv = realloc(cmd->argv, sizeof(char *) * (i + 2));
 	if (!cmd->argv)
 		ft_error(data, "Error: realloc failed to allocate memory\n");
-	cmd->argv = ft_strdup(arg);
+	cmd->argv[i] = arg;
 }
 
 void add_redir_to_cmd(t_cmd *cmd, t_redir *redir)

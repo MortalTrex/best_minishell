@@ -25,6 +25,7 @@ SRCS = srcs/main.c srcs/builtins/echo.c\
 	srcs/utils/pipex.c\
 	srcs/utils/errors.c\
 	srcs/utils/debug.c\
+	srcs/utils/free.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\

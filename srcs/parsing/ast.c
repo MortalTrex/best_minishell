@@ -19,13 +19,16 @@ void parse_tokens(t_data *data)
 	// Vérifie l'emplacement des pipes pour savoir si tout est bon
 	// if (!check_pipe_syntax(data->tmp_token))
 	// 	return;
-	// Expand les variables d'environnement, ce qui veut dire ?
 	ft_expand_env_vars(&data->tok);
+	printf("Tokens expanded...\n");
 	// Crée l'arbre binaire
 	data->ast = create_tree(data);
+	printf("Tree created...\n");
 	if (data->ast != NULL)
 	{
 		printf("AST constructed, printing...\n");
 		print_ast(data->ast, 0);
+		free_ast(data->ast);
 	}
+
 }

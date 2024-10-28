@@ -11,7 +11,7 @@ void print_ast(t_ast_node *node, int level)
 		if (node->type == NODE_CMD)
 		{
 			printf("Command: ");
-			printf("%s ", node->cmd->argv);
+			print_tab(node->cmd->argv);
 			printf("\n");
 			t_redir *redir = node->cmd->redir;
 			while (redir)
@@ -74,6 +74,8 @@ void print_ast(t_ast_node *node, int level)
 
 void	print_tab(char **str)
 {
+	if (!str)
+		return;
 	int	i;
 
 	i = 0;

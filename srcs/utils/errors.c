@@ -26,24 +26,6 @@ void	ft_error(t_data *data, char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_free_all(t_data *data)
-{
-	if (!data)
-		return ;
-	if (data->user_line)
-		free(data->user_line);
-	if (data->tok)
-		ft_stackclear(&data->tok);
-	if (data->tmp_token)
-		ft_stackclear(&data->tmp_token);
-	if (data->env)
-		ft_envclear(&data->env);
-	if (data->envc)
-		ft_free_tab(data->envc);
-	if (data->ast)
-	 	free_ast(data->ast);
-}
-
 void	ft_error_quote(t_data *data)
 {
 	ft_putstr_fd("minishell> unexpected EOF while looking for matching `", STDERR_FILENO);

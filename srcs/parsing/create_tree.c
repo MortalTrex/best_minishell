@@ -18,15 +18,15 @@ t_ast_node    *create_tree(t_data *data)
 {
     //t_ast_node	*right;
     t_ast_node  *left;
-    t_token     *current;
+    //t_token     *current;
 
     if (!data->tok)
         return (NULL);
-    current = data->tok;
+    //current = data->tok;
     printf("RENTRE DANS LARBRE\n");
     left = simple_command(data);
-    // if (!left)
-    //     return (NULL);
+    if (!left)
+        return (NULL);
     // while (current && current->type == T_PIPE)
     // {
     //     current = current->next;

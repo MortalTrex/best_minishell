@@ -30,23 +30,11 @@ bool    handle_redir(t_cmd *cmd, t_data *data)
     return (true);
 }
 
-/**
- * @brief Joint des mots à partir d'une entrée tokenisée en une seule chaîne.
- *
- * Cette fonction concatène des mots à partir de l'entrée tokenisée (stockée dans `data->tok`)
- * en une seule chaîne, séparée par des espaces. La chaîne résultante est stockée dans `argv`.
- * Si `argv` est initialement NULL, il est défini sur une chaîne vide. La fonction gère
- * l'allocation de mémoire et s'assure que toute mémoire précédente est libérée de manière appropriée.
- *
- * @param argv Pointeur vers la chaîne où le résultat concaténé sera stocké.
- * @param data Pointeur vers la structure de données contenant l'entrée tokenisée et le message d'erreur.
- * @return true si l'opération réussit, false si une erreur se produit (par exemple, échec de l'allocation de mémoire).
- */
 bool    join_words(char **argv, t_data *data)
 {
     printf("JE SUIS DANS JOIN WORDS\n");
     //char *tmp;
-    t_token *current;
+    //t_token *current;
 
     if (data->error_msg)
         return (false);
@@ -54,7 +42,7 @@ bool    join_words(char **argv, t_data *data)
     //     *argv = ft_strdup("");
     // if (!*argv)
     //     return (false);
-    current = data->tok;
+    //current = data->tok;
     print_tab(argv);
     // while(current->type == T_WORD)
     // {
@@ -81,21 +69,20 @@ t_ast_node  *simple_command(t_data *data)
     node = ft_create_node(NODE_CMD);
     if (!node)
         return (NULL); // add error message
-    print_tab(node->cmd->argv);
-    // while (current && (current->type == T_WORD  || is_redirection(data->tok)))
-    // {
-    //     if (current->type == T_WORD)
-    //     {
-    //         if (!join_words(&(node->cmd->argv), data))
-    //             return (NULL);
-    //     }
-    //     // else if (is_redirection(data->tok))
-    //     // {
-    //     //     if (!handle_redir(node->cmd, data))
-    //     //         return (free(node->cmd->argv), free(node), NULL);
-    //     // }
-    //     current = current->next;
-    // }
-    printf("A PARCOURU LA BOUCLE\n");
+    // Pourquoi une boucle pour une commande simple ?
+    while (current && (current->type == T_WORD  || is_redirection(current)))
+    {
+        if (current->type == T_WORD)
+        {
+            if (!join_words(node->cmd->argv, data))
+                return (NULL);
+        }
+        // else if (is_redirection(data->tok))
+        // {
+        //     if (!handle_redir(node->cmd, data))
+        //         return (free(node->cmd->argv), free(node), NULL);
+        // }
+        //current = current->next;
+    }
     return (node);
 }

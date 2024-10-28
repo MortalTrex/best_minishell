@@ -55,9 +55,13 @@ int			main(int argc, char **argv, char **envp);
 // Errors
 void		ft_error(t_data *data, char *msg);
 bool		ft_is_wordchar(char c);
-void		ft_free_all(t_data *data);
 void		ft_close_fd(t_data *data, char *msg);
 void		ft_error_quote(t_data *data);
+
+// free.c
+void		free_cmd(t_cmd *cmd);
+void		free_ast(t_ast_node *node);
+void		ft_free_all(t_data *data);
 
 // BUILTINS
 

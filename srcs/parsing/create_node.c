@@ -52,7 +52,7 @@ t_ast_node *ft_create_node(t_ast_node_type type)
 {
 	t_ast_node *node;
 
-	node = (t_ast_node *)ft_calloc(1, sizeof(t_ast_node));
+	node = ft_calloc(1, sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
 	node->type = type;

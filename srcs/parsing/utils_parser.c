@@ -12,50 +12,7 @@
 
 #include "minishell.h"
 
-void free_cmd(t_cmd *cmd)
-{
-	printf("\033[1;31mFreeing command\033[0m\n");
-	t_redir *redir;
-	t_redir *tmp;
 
-	redir = cmd->redir;
-	tmp = redir;
-	if (cmd->argv)
-	{
-		ft_free_tab(&cmd->argv);
-		cmd->argv = NULL;
-	}
-	if (cmd->redir)
-	{
-		while (redir)
-		{
-			redir = redir->next;
-			if (tmp->file)
-			{
-				free(tmp->file);
-				tmp->file = NULL;
-			}
-			free(tmp);
-		}
-	}
-	free(cmd);
-	cmd = NULL;
-}
-
-void free_ast(t_ast_node *node)
-{
-	if (!node)
-		return;
-	if (node->cmd)
-		free_cmd(node->cmd);
-	if (node->file)
-	{
-		free(node->file);
-		node->file = NULL;
-	}
-	free(node);
-	node = NULL;
-}
 
 
 bool	is_redirection(t_token *token)
@@ -108,7 +65,6 @@ void ft_expand_env_vars(t_token **tokens)
 				printf("Environment variable %s not found.\n", current->value);
 				current->value = strdup(""); // Set to an empty string
 			}
-			current->type = T_WORD;
 		}
 		current = current->next;
 	}
