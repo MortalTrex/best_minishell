@@ -11,13 +11,13 @@ void print_ast(t_ast_node *node, int level)
 		if (node->type == NODE_CMD)
 		{
 			printf("Command: ");
-			printf("%s\n", *node->argv);
+			print_tab(node->argv);
 			t_redir *redir = node->redir;
 			while (redir)
 			{
 				for (int i = 0; i < level; i++)
 					printf("  ");
-				printf("Redirection: %s %s\n", redir->file, redir->type == IN ? "<" : redir->type == OUT ? ">"
+				printf("Redirection: %s %s\n", redir->value, redir->type == IN ? "<" : redir->type == OUT ? ">"
 																				: redir->type == D_APPEND	 ? "<<"
 																										: ">>");
 				redir = redir->next;

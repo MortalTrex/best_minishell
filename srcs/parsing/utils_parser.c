@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 16:21:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:55:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,24 @@ bool check_pipe_syntax(t_token *token)
 	return (true);
 }
 
-void ft_expand_env_vars(t_token **tokens)
+void	ft_expand_env_vars(t_token **tokens)
 {
-	t_token *current = *tokens;
+	t_token	*current;
+	char	*env_value;
+	int i;
 
+	current = *tokens;
 	while (current)
 	{
 		if (current->type == T_WORD && current->value[0] == '$')
 		{
-			char *env_value = getenv(current->value + 1); // Skip the '$'
 			if (env_value)
 			{
-				printf("Expanding %s to %s\n", current->value, env_value);
-				free(current->value);				// Free old value
-				current->value = strdup(env_value); // Replace with expanded value
+				free(current->value);
+				current->value = strdup(env_value);
 			}
 			else
-			{
-				printf("Environment variable %s not found.\n", current->value);
-				current->value = strdup(""); // Set to an empty string
-			}
+				current->value = strdup("");
 		}
 		current = current->next;
 	}

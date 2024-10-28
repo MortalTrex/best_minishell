@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 18:23:45 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:47:34 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,9 @@ bool	ft_skip_quotes(char *line, size_t *i)
 bool	ft_is_wordchar(char c)
 
 {
-	if (c == '~' || c == '-' || c == '.' || c == '/' || c == '*' || c == '?'
-		|| c == '=')
+	if (ft_isalnum(c) || c == '_')
 		return (true);
-	else if (ft_isalnum(c) || c == '_' || c == '$')
-		return (true);
-	else
-		return (false);
+	return (false);
 }
 
 bool	ft_is_separator(char *s)
