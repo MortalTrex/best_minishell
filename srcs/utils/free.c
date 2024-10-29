@@ -1,25 +1,28 @@
 #include "minishell.h"
+static	void	free_redir(t_redir **redir)
+{
+	t_redir	*next;
+	t_redir	*tmp;
+
+	if (!redir)
+		return ;
+	tmp = *redir;
+	while (tmp)
+	{
+		free(tmp->command);
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
+	}
+	*redir = NULL;
+}
 
 void	ft_free_command(t_ast_node *node)
 {
-	t_redir	*curr_node;
-	t_redir	*next;
-
 	if (!node)
 		return ;
+	free_redir(&node->redir);
 	free(node->command);
-	node->command = NULL;
-	curr_node = node->redir;
-	if (!curr_node)
-		return ;
-	while (curr_node)
-	{
-		free(curr_node->command);
-		next = curr_node->next;
-		free(curr_node);
-		curr_node = next;
-	}
-	node->redir = NULL;
 	ft_free_tab(node->argv);
 }
 

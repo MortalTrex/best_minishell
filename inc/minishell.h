@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/29 15:37:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/29 17:02:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,12 @@ t_ast_node *ft_create_node(t_ast_node_type type);
 void ft_append_redir(t_redir **rds, t_redir *redir);
 
 // create_tree.c
-t_ast_node *create_tree(t_data *data);
+t_ast_node *create_tree(t_token **current_token, t_data *data);
 
 // parse_s_command.c
-bool		handle_redir(t_redir **redir, t_token *token, t_data *data);
-bool		join_words(char **command, t_token *current, t_data *data);
-t_ast_node	*simple_command(t_data *data, t_token *current);
+bool		handle_redir(t_redir **redir, t_token **token, t_data *data);
+bool		join_words(char **command, t_token **current, t_data *data);
+t_ast_node	*simple_command(t_token **current_token, t_data *data);
 
 // utils_parser.c
 

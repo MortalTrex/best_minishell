@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 18:15:57 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:49:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void ft_parsing_error(t_data *data)
 			ft_putstr_fd(data->error_msg, 2);
 			data->exit_status = 258;
 		}
-		free_ast(data->ast);
+		free_ast(&data->ast, data);
 		free(data->error_msg);
 	}
 }
