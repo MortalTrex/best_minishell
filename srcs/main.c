@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:34:52 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/29 15:13:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,6 @@
 int	g_global_state = 0;
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
-
-void	change_shlvl(t_data *data)
-{
-	t_env	*current;
-	char	*new_line;
-	int		shlvl;
-
-	current = data->env;
-	while (current)
-	{
-		if (ft_strncmp(current->name, "SHLVL", 5) == 0)
-		{
-			printf("SHLVL: %s\n", current->value);
-			shlvl = ft_atoi(current->value);
-			shlvl++;
-			free(current->line);
-			free(current->value);
-			free(current->name);
-			new_line = ft_strjoin("SHLVL=", ft_itoa(shlvl));
-			current->line = new_line;
-			current->value = ft_itoa(shlvl);
-		}
-		current = current->next;
-	}
-}
 
 void	print_tokens(t_data *data)
 {

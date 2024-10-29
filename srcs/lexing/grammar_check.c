@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/17 18:34:52 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:47:34 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	ft_is_quote(char c)
 	return (false);
 }
 
-bool	ft_skip_quotes(char *line, unsigned int *i)
+bool	ft_skip_quotes(char *line, size_t *i)
 {
 	char	quote;
 
@@ -50,11 +50,17 @@ bool	ft_skip_quotes(char *line, unsigned int *i)
 bool	ft_is_wordchar(char c)
 
 {
-	if (c == '~' || c == '-' || c == '.' || c == '/' || c == '*' || c == '?'
-		|| c == '=')
+	if (ft_isalnum(c) || c == '_')
 		return (true);
-	else if (ft_isalnum(c) || c == '_' || c == '$')
-		return (true);
-	else
-		return (false);
+	return (false);
 }
+
+bool	ft_is_separator(char *s)
+{
+	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t'
+		|| *s == '<' || *s == '>' || *s == '|' || *s == '(' || *s == ')')
+		return (true);
+	return (false);
+}
+
+

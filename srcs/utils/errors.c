@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 17:07:15 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/29 15:13:04 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,9 @@ void	ft_error(t_data *data, char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_free_all(t_data *data)
+void	ft_error_quote(t_data *data)
 {
-	if (!data)
-		return ;
-	if (data->user_line)
-		free(data->user_line);
-	if (data->tok)
-		ft_stackclear(&data->tok);
-	if (data->free_value == 0)
-	{
-		if (data->env)
-			ft_envclear(&data->env);
-		if (data->envc)
-			ft_free_tab(data->envc);
-	}
-	// if (data->ast)
-	// 	free_ast(data->ast);
+	ft_putstr_fd("minishell> unexpected EOF while looking for matching ` or \"", STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	data->exit_status = 2;
 }

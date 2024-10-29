@@ -3,60 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/14 19:26:17 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/28 18:15:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void free_cmd(t_cmd *cmd)
-{
-	printf("\033[1;31mFreeing command\033[0m\n");
-	t_redir *redir;
-	t_redir *tmp;
-	
-	redir = cmd->redir;
-	tmp = redir;
-	if (cmd->argv)
-	{
-		ft_free_tab(cmd->argv);
-		cmd->argv = NULL;
-	}
-	if (cmd->redir)
-	{
-		while (redir)
-		{
-			redir = redir->next;
-			if (tmp->file)
-			{
-				free(tmp->file);
-				tmp->file = NULL;
-			}
-			free(tmp);
-		}
-	}
-	free(cmd);
-	cmd = NULL;
-}
-
-void free_ast(t_ast_node *node)
-{
-	if (!node)
-		return;
-	if (node->cmd)
-		free_cmd(node->cmd);
-	if (node->file)
-	{
-		free(node->file);
-		node->file = NULL;
-	}
-	free(node);
-	node = NULL;
-}
-
 
 bool	is_redirection(t_token *token)
 {
@@ -88,28 +42,40 @@ bool check_pipe_syntax(t_token *token)
 	return (true);
 }
 
-void ft_expand_env_vars(t_token **tokens)
+void	ft_expand_env_vars(t_token **tokens)
 {
-	t_token *current = *tokens;
+	t_token	*current;
+	char	*env_value;
 
+	current = *tokens;
+	env_value = NULL;
 	while (current)
 	{
-		if (current->type == T_ENV_VAR)
+		if (current->type == T_WORD && current->value[0] == '$')
 		{
-			char *env_value = getenv(current->value + 1); // Skip the '$'
 			if (env_value)
 			{
-				printf("Expanding %s to %s\n", current->value, env_value);
-				free(current->value);				// Free old value
-				current->value = strdup(env_value); // Replace with expanded value
+				free(current->value);
+				current->value = strdup(env_value);
 			}
 			else
-			{
-				printf("Environment variable %s not found.\n", current->value);
-				current->value = strdup(""); // Set to an empty string
-			}
-			current->type = T_WORD;
+				current->value = strdup("");
 		}
 		current = current->next;
+	}
+}
+
+void ft_parsing_error(t_data *data)
+{
+	if (data->error_msg)
+	{
+		if (ft_strcmp(data->error_msg, ERR_SYN))
+		{
+			ft_putstr_fd("minishell> \n", 2);
+			ft_putstr_fd(data->error_msg, 2);
+			data->exit_status = 258;
+		}
+		free_ast(data->ast);
+		free(data->error_msg);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 23:06:22 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/28 14:03:09 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	ft_detect_builtin(t_data *data)
 {
 	t_token	*current;
-	int i;
 
-	i = 0;
 	current = data->tok;
 	while (current)
 	{
@@ -29,12 +27,8 @@ void	ft_detect_builtin(t_data *data)
 				ft_cd(data);
 				return ;
 			}
-			else if (!ft_strcmp(current->value, "echo") && i == 0)
-			{
+			else if (!ft_strcmp(current->value, "echo"))
 				current->type = T_BUILTIN;
-				ft_echo(data);
-				return ;
-			}
 			else if (!ft_strcmp(current->value, "pwd"))
 			{
 				current->type = T_BUILTIN;
@@ -57,86 +51,43 @@ void	ft_detect_builtin(t_data *data)
 			}
 			else if (!ft_strcmp(current->value, "exit"))
 				ft_exit(data);
-			else
-				exec_launch(current->value, data);
+			// else
+			// 	exec_launch(current->value, data);
 		}
 		if (current)
 			current = current->next;
-		i++;
 	}
 }
 
-bool	ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index)
+t_token *get_tokens(char *command, t_data *data)
 {
-	if (*buffer_index > 0)
+	t_token	*tokens;
+	bool	ok;
+
+	ok = true;
+	tokens = NULL;
+	while (*command)
 	{
-		token_buffer[*buffer_index] = '\0';
-		ft_append_word(data, token_buffer, buffer_index);
-		*buffer_index = 0;
+		if (ok == false)
+			return (ft_stackclear(&tokens), NULL);
+		while (ft_isspace(*command) && *command)
+			command++;
+		if (ft_is_operator(*command))
+			ok = ft_append_operator(&command, &tokens);
+		else
+			ok = ft_append_word(&command, &tokens, data);
 	}
-	ft_append_operator(data, data->user_line, i);
-	if (data->user_line[*i] != '\0' && ft_is_operator(data->user_line[*i]))
-		return (fprintf(stderr, "Error: Unexpected operator sequence\n"), false);
-	return (true);
+	return (tokens);
 }
 
-bool	ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer,
-		int *buffer_index)
-{
-	if (ft_isspace(data->user_line[*i]))
-	{
-		if (*buffer_index > 0)
-		{
-			token_buffer[*buffer_index] = '\0';
-			ft_append_word (data, token_buffer, buffer_index);
-			*buffer_index = 0;
-		}
-		(*i)++;
-		return (true);
-	}
-	return (true);
-}
-bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes)
-{
-	if (buffer_index > 0)
-	{
-		token_buffer[buffer_index] = '\0';
-		ft_append_word(data, token_buffer, &buffer_index);
-	}
-	if (is_quotes == false)
-		return (ft_error(data, "Error: Unclosed quotes\n"), false);
-	ft_detect_builtin(data);
-	return (true);
-}
 
 bool	ft_tokenize(t_data *data)
 {
-	unsigned int	i;
-	bool			is_quotes;
-	char			token_buffer[256];
-	int				buffer_index;
+	char *command;
 
-	i = 0;
-	is_quotes = true;
-	buffer_index = 0;
-	while (data->user_line[i] != '\0')
-	{
-		if (!ft_process_whitespace(data, &i, token_buffer, &buffer_index))
-			return (false);
-		else if (ft_is_quote(data->user_line[i]))
-			is_quotes = ft_append_word_quotes(token_buffer, &buffer_index,
-					data->user_line, &i);
-		else if (data->user_line[i] == '$')
-			ft_append_env_var(data, data->user_line, &i);
-		else if (ft_is_operator(data->user_line[i]))
-		{
-			if (!ft_process_operator(data, &i, token_buffer, &buffer_index))
-				return (false);
-		}
-		else
-			token_buffer[buffer_index++] = data->user_line[i++];
-	}
-	return (ft_finalize_tokenization(data, token_buffer, buffer_index,
-			is_quotes));
+	command = data->user_line;
+	data->tok = get_tokens(command, data);
+	//ft_detect_builtin(data);
+	return (true);
 }
 

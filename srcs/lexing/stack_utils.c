@@ -78,8 +78,6 @@ void	ft_envclear(t_env **env)
 	{
 		temp = *env;
 		*env = (*env)->next;
-		free(temp->name);
-		free(temp->value);
 		free(temp->line);
 		free(temp);
 	}

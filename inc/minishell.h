@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/17 23:07:17 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/28 18:38:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@
 ////////////////////////// DEFINITIONS ////////////////////////////
 
 # define PROMPT "minishell> "
-# define ERR_SYN "Syntax error:"
+# define ERR_SYN "syntax error near unexpected token"
+# define ERR_MEM "memory allocation error"
 # define BUFF_SIZE 4096
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
@@ -54,8 +55,13 @@ int			main(int argc, char **argv, char **envp);
 // Errors
 void		ft_error(t_data *data, char *msg);
 bool		ft_is_wordchar(char c);
-void		ft_free_all(t_data *data);
 void		ft_close_fd(t_data *data, char *msg);
+void		ft_error_quote(t_data *data);
+
+// free.c
+void		ft_free_command(t_ast_node *node);
+void		free_ast(t_ast_node *node);
+void		ft_free_all(t_data *data);
 
 // BUILTINS
 
@@ -71,7 +77,7 @@ t_env		*new_node_env(char *line, t_data *data);
 void		ft_export(t_data *data);
 
 // echo.c
-void		ft_echo(t_data *data);
+void		ft_echo(char *line);
 void		print_line(char *line, int start, int len);
 
 // pwd.c
@@ -86,31 +92,22 @@ void		ft_exit(t_data *data);
 //	cd.c
 void	ft_cd(t_data *data);
 
-// builtins_utils.c
-void	ft_sort_env(t_env *env);
-void	ft_swap_env_lines(t_env *a, t_env *b);
-
-
 // LEXING
 
 // append.c
-void		ft_append_operator(t_data *data, char *line, unsigned int *i);
-bool		ft_append_word(t_data *data, char *token_buffer, int *buffer_index);
-bool		ft_append_word_quotes(char *token_buffer, int *buffer_index,
-				char *line, unsigned int *i);
-bool		ft_append_env_var(t_data *data, char *line, unsigned int *i);
+bool	ft_append_operator(char **command, t_token **tokens);
+bool	ft_append_word(char **command, t_token **tokens, t_data *data);
 
 // tokenize.c
-bool	ft_finalize_tokenization(t_data *data, char *token_buffer, int buffer_index, bool is_quotes);
-bool		ft_process_operator(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
-bool		ft_process_whitespace(t_data *data, unsigned int *i, char *token_buffer, int *buffer_index);
 bool		ft_tokenize(t_data *data);
+t_token		*get_tokens(char *command, t_data *data);
 
 // grammar_check.c
 bool		ft_is_operator(char c);
 bool		ft_is_multi_char_operator(const char *str);
 bool		ft_is_quote(char c);
-bool		ft_skip_quotes(char *line, unsigned int *i);
+bool		ft_skip_quotes(char *line, size_t *i);
+bool		ft_is_separator(char *s);
 
 // stack_utils.c
 int			ft_strcmp(const char *s1, const char *s2);
@@ -121,33 +118,35 @@ void		ft_envclear(t_env **env);
 
 // PARSING
 
-// add_to_struct.c
-void add_to_argv(t_cmd *cmd, char *arg, t_data *data);
-void add_redir_to_cmd(t_cmd *cmd, t_redir *redir);
-
 // ast.c
 void parse_tokens(t_data *data);
 void print_ast(t_ast_node *node, int level);
 
 // create_node.c
-t_ast_node *create_redir_node(t_ast_node_type type, char *file);
-t_ast_node *create_pipe_node(void);
-t_ast_node *create_cmd_node(void);
+t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right);
+t_redir *ft_create_redir_node(t_token_type type, char *file);
+t_ast_node *ft_create_node(t_ast_node_type type);
+void ft_append_redir(t_redir **rds, t_redir *redir);
 
-// parsing.c
-t_ast_node *parse_command(t_data *data);
-t_redir *parse_redirection(t_data *data);
-t_ast_node *parse_pipe_sequence(t_data *data);
+// create_tree.c
+t_ast_node *create_tree(t_data *data);
+
+// parse_s_command.c
+bool handle_redir(t_ast_node *node, t_token *token, t_data *data);
+bool join_words(t_ast_node *node, t_token *token, t_data *data);
+t_ast_node *simple_command(t_data *data, t_token *	current);
 
 // utils_parser.c
+void free_ast(t_ast_node *node);
+bool	is_redirection(t_token *token);
 bool check_pipe_syntax(t_token *tokens);
 void ft_expand_env_vars(t_token **tokens);
-bool	is_redirection(t_token *token);
-void free_ast(t_ast_node *node);
+void ft_parsing_error(t_data *data);
 
 // SIGNALS
 
 bool	signals(t_data *data);
-void	sigint_handler(int sig);
-int	exec_launch(char *cmd, t_data *data);
+
+void	print_tab(char **str);
+
 #endif
