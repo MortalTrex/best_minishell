@@ -22,19 +22,29 @@ void	ft_free_command(t_ast_node *node)
 	node->redir = NULL;
 	ft_free_tab(node->argv);
 }
-void free_ast(t_ast_node *node)
+
+void	free_node(t_ast_node *node)
 {
+	if (!node)
+		return ;
 	if (node -> type == NODE_CMD)
 		ft_free_command(node);
 	else
 	{
 		if (node->left)
-			free_ast(node->left);
+			free_node(node->left);
 		if (node->right)
-			free_ast(node->right);
+			free_node(node->right);
 	}
 	free(node);
-	node = NULL;
+
+}
+void free_ast(t_ast_node **node, t_data *data)
+{
+	free_node(*node);
+	*node = NULL;
+	if (data->tok)
+		ft_stackclear(&data->tok);
 }
 
 void ft_free_all(t_data *data)
@@ -52,5 +62,5 @@ void ft_free_all(t_data *data)
 	if (data->envc)
 		ft_free_tab(data->envc);
 	if (data->ast)
-		free_ast(data->ast);
+		free_ast(&(data->ast), data);
 }

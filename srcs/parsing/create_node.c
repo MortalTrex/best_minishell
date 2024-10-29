@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 18:08:34 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/29 14:54:50 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right)
 	pipe_node = ft_create_node(NODE_PIPE);
 
 	if (!pipe_node)
-		return (NULL); // add error message
+		return (NULL);
+
 	pipe_node->left = left;
 	pipe_node->right = right;
 	printf("pipe node created");
@@ -55,7 +56,6 @@ t_ast_node *ft_create_node(t_ast_node_type type)
 	node = ft_calloc(1, sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
-	node->argv = (char **)ft_calloc(1, sizeof(char *));
 	node->type = type;
 	return (node);
 }
@@ -70,7 +70,7 @@ void ft_append_redir(t_redir **rds, t_redir *redir)
 		return ;
 	}
 	tmp = *rds;
-	while (tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	tmp->next = redir;
 }

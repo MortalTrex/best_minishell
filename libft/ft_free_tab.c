@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 14:22:48 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 14:50:43 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:42:09 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	ft_free_tab(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	//free(tab);
+	free(tab);
 }

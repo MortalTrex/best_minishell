@@ -6,17 +6,17 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/28 19:23:04 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:47:15 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool handle_redir(t_ast_node *node, t_token *token, t_data *data)
+bool handle_redir(t_redir **redir, t_token *token, t_data *data)
 {
 	t_redir *tmp;
 
-	while (is_redirection(token))
+	if (is_redirection(token))
 	{
 		token = token->next;
 		if (!token || token->type != T_WORD)
@@ -24,30 +24,29 @@ bool handle_redir(t_ast_node *node, t_token *token, t_data *data)
 		tmp = ft_create_redir_node(token->type, token->value);
 		if (!tmp)
 			return ((data->error_msg = ERR_MEM), false);
-		ft_append_redir(&(node->redir), tmp);
-		token = token->next;
+		ft_append_redir(redir, tmp);
 	}
 	return (true);
 }
 
-bool join_words(t_ast_node *node, t_token *token, t_data *data)
+bool join_words(char **command, t_token *current, t_data *data)
 {
-	t_token *current;
+	char *tmp;
 
 	if (data->error_msg)
 		return (false);
-	if (!node->command)
-		node->command = ft_strdup("");
-	if (!node->command)
+	if (!*command)
+		*command = ft_strdup("");
+	if (!*command)
 		return (false);
-	current = token;
-	if (current->type == T_WORD)
+	if (current && current->type == T_WORD)
 	{
-		if (node->command)
-			node->command = ft_strjoin(node->command, " ");
-		node->command = ft_strjoin(node->command, current->value);
-		if (!node->command)
-			return (false);
+		tmp = current->value;
+		if (ft_strcmp(*command, ""))
+			tmp = ft_strjoin(" ", tmp);
+		*command = ft_strjoin(*command, tmp);
+		if (!*command)
+			return (free(tmp), false);
 	}
 	return (true);
 }
@@ -60,23 +59,21 @@ t_ast_node *simple_command(t_data *data, t_token *current)
 		return (NULL);
 	node = ft_create_node(NODE_CMD);
 	if (!node)
-		return (NULL); // add error message
-	// Pourquoi une boucle pour une commande simple ?
+		return (NULL);
 	while (current && (current->type == T_WORD || is_redirection(current)))
 	{
 		if (current->type == T_WORD)
 		{
-			if (!join_words(node, current, data))
-				return (NULL);
+			if (!join_words(&(node->command), current, data))
+				return (free_node(node), NULL);
 		}
 		else if (is_redirection(current))
 		{
-			if (!handle_redir(node, current, data))
-				return (free(node->argv), free(node), NULL);
+			if (!handle_redir(&(node->redir), current, data))
+				return (free(node->command), free(node), NULL);
 		}
 		current = current->next;
 	}
-	data->tok = current;
 	printf("created cmd node %s\n", node->command);
 	return (node);
 }
