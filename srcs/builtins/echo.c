@@ -12,48 +12,26 @@
 
 #include "../inc/minishell.h"
 
-void	print_line(char *line, int start, int len)
+void	ft_echo(t_data *data)
 {
-	char	*res;
-	int		i;
+	t_token	*current;
+	bool	n_flag;
 
-	res = malloc(sizeof(char) * len + 1);
-	i = 0;
-	while (line[start])
+	current = data->tok;
+	current = current->next;
+	n_flag = false;
+	if (!ft_strcmp(current->value, "-n"))
 	{
-		res[i] = line[start];
-		i++;
-		start++;
+		n_flag = true;
+		current = current->next;
 	}
-	res[i] = '\0';
-	ft_printf("%s\n", res);
-	free(res);
-}
-
-void	ft_echo(char *line)
-{
-	int		i;
-	int		len;
-	int		start;
-
-	i = 0;
-	len = 0;
-	start = 0;
-	if (line[i] == 'e' && line[i + 1] == 'c'
-		&& line[i + 2] == 'h' && line[i + 3] == 'o')
+	while (current)
 	{
-		i = 4;
-		start = 4;
-		while (line[i] == ' ')
-		{
-			i++;
-			start++;
-		}
-		while (line[i])
-		{
-			len++;
-			i++;
-		}
+		ft_printf("%s", current->value);
+		if (current->next)
+			ft_printf(" ");
+		current = current->next;
 	}
-	print_line(line, start, len);
+	if (n_flag == false)
+		ft_printf("\n");
 }

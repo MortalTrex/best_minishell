@@ -50,20 +50,21 @@ void free_ast(t_ast_node **node, t_data *data)
 		ft_stackclear(&data->tok);
 }
 
-void ft_free_all(t_data *data)
+void	ft_free_all(t_data *data)
 {
 	if (!data)
-		return;
+		return ;
 	if (data->user_line)
 		free(data->user_line);
 	if (data->tok)
 		ft_stackclear(&data->tok);
-	if (data->tmp_token)
-		ft_stackclear(&data->tmp_token);
-	if (data->env)
-		ft_envclear(&data->env);
-	if (data->envc)
-		ft_free_tab(data->envc);
+	if (data->free_value == 0)
+	{
+		if (data->env)
+			ft_envclear(&data->env);
+		if (data->envc)
+			ft_free_tab(data->envc);
+	}
 	if (data->ast)
-		free_ast(&(data->ast), data);
+	 	free_ast(&data->ast, data);
 }

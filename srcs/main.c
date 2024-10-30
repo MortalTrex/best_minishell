@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 15:04:11 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/30 16:30:11 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	print_tokens(t_data *data)
 		tmp = tmp->next;
 	}
 }
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -52,18 +51,26 @@ int	main(int argc, char **argv, char **envp)
 	copy_env(envp, &data);
 	while (true)
 	{
-		copy_env_char(envp, &data);
+		data.free_value = 0;
 		data.user_line = readline(PROMPT);
-		// if (signals(&data) == true)
-		// 	break;
-		if (data.user_line != NULL)
+		signal(SIGINT, sigint_handler);
+		if ((*data.user_line))
 			add_history(data.user_line);
+		if (data.user_line == NULL)
+		{
+			ft_printf("Exit\n");
+			break;
+		}
 		if (!ft_tokenize(&data))
 			continue;
 		print_tokens(&data);
 		parse_tokens(&data);
+		//ft_execution(&data);
+		data.free_value = 1;
 		ft_free_all(&data);
 	}
+	data.free_value = 0;
+	ft_free_all(&data);
 	clear_history();
 	return (0);
 }

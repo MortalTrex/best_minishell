@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/10/28 17:09:52 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/10/30 16:54:56 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,28 +21,31 @@ LDLIBS = -lreadline
 
 LIBS = -L$(LIBFTDIR) -lft
 
-SRCS = srcs/main.c srcs/builtins/echo.c\
-	srcs/utils/pipex.c\
-	srcs/utils/errors.c\
-	srcs/utils/debug.c\
-	srcs/utils/free.c\
+SRCS = srcs/main.c\
+	srcs/builtins/builtins_utils.c\
+	srcs/builtins/echo.c\
+	srcs/builtins/env.c\
+	srcs/builtins/pwd.c\
+	srcs/builtins/unset.c\
+	srcs/builtins/export.c\
+	srcs/builtins/exit.c\
+	srcs/builtins/cd.c\
+	srcs/exec/exec_cases.c\
+	srcs/exec/exec_core.c\
+	srcs/exec/exec_read.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\
 	srcs/lexing/grammar_check.c\
-	srcs/builtins/env.c\
-	srcs/builtins/pwd.c\
-	srcs/builtins/unset.c\
 	srcs/parsing/ast.c\
 	srcs/parsing/create_node.c\
 	srcs/parsing/create_tree.c\
 	srcs/parsing/parse_s_command.c\
 	srcs/parsing/utils_parser.c\
-	srcs/builtins/export.c\
-	srcs/builtins/exit.c\
-	srcs/builtins/cd.c\
 	srcs/signal/signal.c\
-	srcs/exec/exec_cmd.c
+	srcs/utils/errors.c\
+	srcs/utils/debug.c\
+	srcs/utils/free.c\
 
 INDI	=	\033[38;5;213m
 GREEN	=	\033[0;32m
