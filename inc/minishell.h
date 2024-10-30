@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/29 17:02:17 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:39:53 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 ////////////////////////// DEFINITIONS ////////////////////////////
 
 # define PROMPT "minishell> "
-# define ERR_SYN "syntax error near unexpected token"
-# define ERR_MEM "memory allocation error"
+# define ERR_SYN 1
+# define ERR_MEM 2
 # define BUFF_SIZE 4096
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
@@ -124,7 +124,7 @@ void parse_tokens(t_data *data);
 void print_ast(t_ast_node *node, int level);
 
 // create_node.c
-t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right);
+t_ast_node *ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right);
 t_redir *ft_create_redir_node(t_token_type type, char *file);
 t_ast_node *ft_create_node(t_ast_node_type type);
 void ft_append_redir(t_redir **rds, t_redir *redir);

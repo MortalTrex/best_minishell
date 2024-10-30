@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 17:57:55 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:24:18 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_data
 	char			*user_line;
 	int				fd[2];
 	t_ast_node		*ast;
-	char			*error_msg;
+	int				parsing_error;
 	int				exit_status;
 }					t_data;
 

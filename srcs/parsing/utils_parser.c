@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/29 15:49:41 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:42:07 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,14 @@ void	ft_expand_env_vars(t_token **tokens)
 
 void ft_parsing_error(t_data *data)
 {
-	if (data->error_msg)
+	if (data->parsing_error)
 	{
-		if (ft_strcmp(data->error_msg, ERR_SYN))
+		if (data->parsing_error == ERR_SYN)
 		{
-			ft_putstr_fd("minishell> \n", 2);
-			ft_putstr_fd(data->error_msg, 2);
+			ft_putstr_fd("minishell> syntax error near unexpected token\n", 2);
 			data->exit_status = 258;
 		}
 		free_ast(&data->ast, data);
-		free(data->error_msg);
+		data->parsing_error = 0;
 	}
 }

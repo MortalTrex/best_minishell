@@ -6,34 +6,32 @@ void print_ast(t_ast_node *node, int level)
 		return;
 	for (int i = 0; i < level; i++)
 		printf("  ");
-	if (node->type)
+
+	printf("Node Type: ");
+	switch (node->type)
 	{
-		printf("Node Type: ");
-		printf("%s\n", node->command);
-		if (node->type == NODE_CMD)
-		{
-			printf("Command: ");
-			printf("%s\n", node->command);
+		case NODE_CMD:
+			printf("Command\n");
+			printf("  Command: %s\n", node->command);
 			t_redir *redir = node->redir;
 			while (redir)
 			{
-				for (int i = 0; i < level; i++)
+				for (int i = 0; i < level + 1; i++)
 					printf("  ");
-				printf("Redirection: %s %s\n", redir->command, redir->type == IN ? "<" : redir->type == OUT ? ">"
-																				: redir->type == D_APPEND	 ? "<<"
-																										: ">>");
+				printf("Redirection: %s %s\n", redir->command, redir->type == IN ? "<" : redir->type == OUT	   ? ">"
+																					: redir->type == D_APPEND ? ">>"
+																											: "<<");
 				redir = redir->next;
 			}
-		}
-		else if (node->type == NODE_PIPE)
-		{
+			break;
+		case NODE_PIPE:
 			printf("Pipe\n");
-		}
-		else
-		{
-			printf("Unknown Node Type\n");
-		}
+			break;
+		default:
+			printf("Unknown\n");
+			break;
 	}
+
 	if (node->left)
 	{
 		for (int i = 0; i < level; i++)
@@ -50,11 +48,11 @@ void print_ast(t_ast_node *node, int level)
 	}
 }
 
-void	print_tab(char **str)
+void print_tab(char **str)
 {
 	if (!str)
 		return;
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])

@@ -6,25 +6,24 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/29 14:54:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:39:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //ok
-t_ast_node *ft_create_pipe_node(t_ast_node *left, t_ast_node *right)
+t_ast_node *ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right)
 {
 	t_ast_node *pipe_node;
 
-	pipe_node = ft_create_node(NODE_PIPE);
-
-	if (!pipe_node)
+	if (data->parsing_error)
 		return (NULL);
-
+	pipe_node = ft_create_node(NODE_PIPE);
+	if (!pipe_node)
+		return (data->parsing_error = ERR_MEM, NULL);
 	pipe_node->left = left;
 	pipe_node->right = right;
-	printf("pipe node created");
 	return (pipe_node);
 }
 
@@ -64,7 +63,7 @@ void ft_append_redir(t_redir **rds, t_redir *redir)
 {
 	t_redir *tmp;
 
-	if (!rds)
+	if (!*rds)
 	{
 		*rds = redir;
 		return ;
