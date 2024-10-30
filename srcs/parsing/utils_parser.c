@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 16:24:25 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:57:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,23 @@ bool check_pipe_syntax(t_token *token)
 	t_token *current = token;
 
 	if (current && current->type == T_PIPE)
-		return (fprintf(stderr, "Syntax error: unexpected pipe at the beginning\n"), false);
+		return (fprintf(stderr, "minishell> syntax error: unexpected pipe at the beginning\n"), false);
 	while (current)
 	{
 		if (current->type == T_PIPE)
 		{
 			if (!current->next)
-				return (fprintf(stderr, "Syntax error: unexpected pipe at the end\n"), false);
+				return (fprintf(stderr, "minishell> syntax error: unexpected pipe at the end\n"), false);
 			if (current->next && current->next->type == T_PIPE)
-				return (fprintf(stderr, "Syntax error: consecutive pipes\n"), false);
+				return (fprintf(stderr, "minishell> syntax error: consecutive pipes\n"), false);
 			if (current->next && current->next->type != T_WORD && current->next->type != T_BUILTIN)
-				return (fprintf(stderr, "Syntax error: pipe not followed by a command\n"), false);
+				return (fprintf(stderr, "minishell> syntax error: pipe not followed by a command\n"), false);
 		}
 		current = current->next;
 	}
 	return (true);
 }
+// change piipe syntax errors
 
 void ft_parsing_error(t_data *data)
 {
@@ -49,7 +50,7 @@ void ft_parsing_error(t_data *data)
 		if (data->parsing_error == ERR_SYN)
 		{
 			ft_putstr_fd("minishell> syntax error near unexpected token\n", 2);
-			data->exit_status = 258;
+			data->exit_status = 2;
 		}
 		free_ast(&data->ast, data);
 		data->parsing_error = 0;

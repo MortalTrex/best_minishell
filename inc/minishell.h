@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 17:44:08 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:08:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
-// MAIN
+///////////////// MAIN //////////////////
 
 // main.c
 void		print_tokens(t_data *data);
@@ -64,40 +64,70 @@ void		free_node(t_ast_node *node);
 void		free_ast(t_ast_node **node, t_data *data);
 void		ft_free_all(t_data *data);
 
-// BUILTINS
+
+/////////////// BUILTIN //////////////////
+
+// builtins_utils.c
+void		copy_env(char **envp, t_data *data);
+void		ft_sort_env(t_env *env);
+void		ft_swap_env_lines(t_env *a, t_env *b);
 
 // env.c
-void		copy_env(char **envp, t_data *data);
-void  		copy_env_char(char **envp, t_data *data);
-void		ft_env(t_data *data);
-void		push_node_to_env(t_data *data, char *line);
-void		ft_print_env(t_data *data);
+char		*put_name(char *line);
+char		*put_value(char *line);
 t_env		*new_node_env(char *line, t_data *data);
+void		push_node_to_env(t_data *data, char *line);
+void		ft_env(t_data *data);
 
 // export.c
+bool		check_double(t_data *data, char *line);
+void        ft_exp_env(t_data *data);
+void		change_value(t_data *data, char *old, char *new);
+bool		check_change_value(t_data *data);
 void		ft_export(t_data *data);
 
 // echo.c
-void		ft_echo(char *line);
-void		print_line(char *line, int start, int len);
+void		ft_echo(t_data *data);
 
 // pwd.c
 void		ft_pwd(void);
 
 //	unset.c
+void		search_in_env(t_data *data, char *var);
 void		ft_unset(t_data *data);
 
 //	exit.c
+bool		ft_is_number(char *str);
+int			ft_value(int value);
 void		ft_exit(t_data *data);
 
 //	cd.c
-void	ft_cd(t_data *data);
+void        set_env_oldpwd(char *old_pwd, t_data *data);
+void		set_env_pwd(char *new_pwd, t_data *data);
+void		ft_move_directory(char *path, t_data *data);
+void		set_home(t_data *data);
+void		ft_cd(t_data *data);
 
-// LEXING
+//////////////// EXECUTION ////////////////
+// exec_cases.c
+int			exec_pipe(char *cmd1, char *cmd2, t_data *data);
+int			exec_onecommand(char *cmd, t_data *data);
+
+// exec_core.c
+char 		*ft_path(char *cmd, t_data *data);
+void 		exec(t_data *data, char *cmd);
+void 		ft_process_infile(char *cmd, t_data *data, bool redir);
+void 		ft_process_outfile(char *cmd, t_data *data);
+
+
+// exec_read.c
+void		ft_execution(t_data *data);
+
+///////////// LEXING ///////////////
 
 // append.c
-bool	ft_append_operator(char **command, t_token **tokens);
-bool	ft_append_word(char **command, t_token **tokens, t_data *data);
+bool		ft_append_operator(char **command, t_token **tokens);
+bool		ft_append_word(char **command, t_token **tokens, t_data *data);
 
 // tokenize.c
 bool		ft_tokenize(t_data *data);
@@ -117,12 +147,11 @@ void		ft_stackadd_back(t_token **stack, t_token *new);
 void		ft_stackclear(t_token **stack);
 void		ft_envclear(t_env **env);
 
-// PARSING
+//////////////// PARSING //////////////////
 
 // ast.c
 t_ast_node	*create_tree(t_token **current_token, t_data *data);
 void		parse_tokens(t_data *data);
-void		print_ast(t_ast_node *node, int level);
 
 // create_node.c
 t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right);
@@ -130,9 +159,17 @@ t_redir		*ft_create_redir_node(t_token_type type, char *file);
 t_ast_node	*ft_create_node(t_ast_node_type type);
 void		ft_append_redir(t_redir **rds, t_redir *redir);
 
+// get_clean_argv.c
+char		**ft_ms_split(char const *str);
+
+// expand_and_clean.c
+char		**ft_expand_and_clean(char *str, t_data *data);
+
 // expand_env_vars.c
 char		*ft_get_env_value(char *var, t_data *data);
 char		*ft_expand_env_vars(char *word, size_t *i, t_data *data);
+
+
 
 // handle_quotes.c
 char		*ft_get_str(char *str, size_t *i);
@@ -146,6 +183,7 @@ bool		join_words(char **command, t_token **current, t_data *data);
 t_ast_node	*simple_command(t_token **current_token, t_data *data);
 
 // remove_quotes.c
+char		*ft_clean_empty_strs(char *str);
 char		*ft_remove_quotes(char *str);
 
 // utils_parser.c
@@ -154,10 +192,26 @@ bool		check_pipe_syntax(t_token *tokens);
 void		ft_parsing_error(t_data *data);
 char		*ft_strjoin_free(char *s1, char *s2);
 
-// SIGNALS
+///////////SIGNALS//////////////
 
-bool	signals(t_data *data);
+// signal.c
+void	sigint_handler(int sig);
 
+/////////////UTILS//////////////
+
+// debug.c
+void	print_ast(t_ast_node *node, int level);
 void	print_tab(char **str);
+
+// errors.c
+void	ft_error(t_data *data, char *msg);
+void	ft_close_fd(t_data *data, char *msg);
+void	ft_error_quote(t_data *data);
+
+// free.c
+void	ft_free_command(t_ast_node *node);
+void	free_node(t_ast_node *node);
+void	free_ast(t_ast_node **node, t_data *data);
+void	ft_free_all(t_data *data);
 
 #endif

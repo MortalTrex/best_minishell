@@ -6,11 +6,56 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/25 17:55:32 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/28 18:25:31 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*put_name(char *line)
+{
+	int		i;
+	char	*res;
+
+	i = 0;
+	while (line && line[i] != '=')
+		i++;
+	res = malloc(sizeof(char) * (i + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (line && line[i] != '=')
+	{
+		res[i] = line[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
+char	*put_value(char *line)
+{
+	int		i;
+	int		j;
+	char	*res;
+
+	i = 0;
+	j = 0;
+	while (line[i] && line[i] != '=')
+		i++;
+	res = malloc(sizeof(char) * (ft_strlen(line) - i));
+	if (!res)
+		return (NULL);
+	i++;
+	while (line[i])
+	{
+		res[j] = line[i];
+		i++;
+		j++;
+	}
+	res[j] = '\0';
+	return (res);
+}
 
 t_env	*new_node_env(char *line, t_data *data)
 {
@@ -20,6 +65,8 @@ t_env	*new_node_env(char *line, t_data *data)
 	if (!new_node)
 		return (NULL);
 	new_node->line = ft_strdup(line);
+	new_node->name = put_name(line);
+	new_node->value = put_value(line);
 	if (!new_node->line)
 	{
 		free(new_node);
@@ -47,39 +94,6 @@ void	push_node_to_env(t_data *data, char *env_line)
 			current = current->next;
 		current->next = new_node;
 	}
-}
-
-void	copy_env(char **envp, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		push_node_to_env(data, envp[i]);
-		i++;
-	}
-}
-
-void	copy_env_char(char **envp, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	data->envc = malloc(sizeof(char *) * (i + 1));
-	if (!data->envc)
-		ft_error(data, "Malloc failed\n");
-	i = 0;
-	while (envp[i])
-	{
-		data->envc[i] = ft_strdup(envp[i]);
-		if (!data->envc[i])
-			ft_error(data, "Malloc failed\n");
-		i++;
-	}
-	data->envc[i] = NULL;
 }
 
 void	ft_env(t_data *data)

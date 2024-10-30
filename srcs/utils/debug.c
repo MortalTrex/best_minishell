@@ -13,6 +13,13 @@ void print_ast(t_ast_node *node, int level)
 		case NODE_CMD:
 			printf("Command\n");
 			printf("  Command: %s\n", node->command);
+			printf("  Arguments:\n");
+			for (int i = 0; node->argv && node->argv[i]; i++)
+			{
+				for (int j = 0; j < level + 1; j++)
+					printf("  ");
+				printf("%s\n", node->argv[i]);
+			}
 			t_redir *redir = node->redir;
 			while (redir)
 			{

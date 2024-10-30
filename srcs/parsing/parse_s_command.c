@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 15:57:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:11:43 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ bool join_words(char **command, t_token **current, t_data *data)
 t_ast_node *simple_command(t_token **current_token, t_data *data)
 {
 	t_ast_node *node;
-
+	
 	node = ft_create_node(NODE_CMD);
 	if (!node)
 		return (data->parsing_error = ERR_MEM, NULL);
@@ -85,5 +85,6 @@ t_ast_node *simple_command(t_token **current_token, t_data *data)
 		else
 			*current_token = (*current_token)->next;
 	}
+	node->argv = ft_expand_and_clean(node->command, data);
 	return (node);
 }

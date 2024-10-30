@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 15:24:18 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:46:27 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_ast_node
 typedef struct s_env
 {
 	char			*line;
+	char			*name;
+	char			*value;
 	struct s_env	*next;
 }					t_env;
 
@@ -65,6 +67,7 @@ typedef struct s_data
 	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
+	int 			free_value;
 }					t_data;
 
 #endif

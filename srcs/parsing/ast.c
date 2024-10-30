@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 17:11:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:53:22 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ t_ast_node *create_tree(t_token **current_token, t_data *data)
 
 void parse_tokens(t_data *data)
 {
+	if (!check_pipe_syntax(data->tok))
+	{
+		data->parsing_error = ERR_SYN;
+		ft_parsing_error(data);
+		return ;
+	}
 	data->ast = create_tree(&data->tok, data);
 	if(data->parsing_error)
 		ft_parsing_error(data);
