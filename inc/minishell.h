@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 17:26:57 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:53:43 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,28 +151,47 @@ void		ft_envclear(t_env **env);
 //////////////// PARSING //////////////////
 
 // ast.c
-void parse_tokens(t_data *data);
-void print_ast(t_ast_node *node, int level);
+t_ast_node	*create_tree(t_token **current_token, t_data *data);
+void		parse_tokens(t_data *data);
 
 // create_node.c
-t_ast_node *ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right);
-t_redir *ft_create_redir_node(t_token_type type, char *file);
-t_ast_node *ft_create_node(t_ast_node_type type);
-void ft_append_redir(t_redir **rds, t_redir *redir);
+t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right);
+t_redir		*ft_create_redir_node(t_token_type type, char *file);
+t_ast_node	*ft_create_node(t_ast_node_type type);
+void		ft_append_redir(t_redir **rds, t_redir *redir);
 
-// create_tree.c
-t_ast_node *create_tree(t_token **current_token, t_data *data);
+// get_clean_argv.c
+char		**ft_ms_split(char const *str);
+
+// expand_and_clean.c
+char		**ft_expand_and_clean(char *str, t_data *data);
+
+// expand_env_vars.c
+char		*ft_get_env_value(char *var, t_data *data);
+char		*ft_expand_env_vars(char *word, size_t *i, t_data *data);
+
+
+
+// handle_quotes.c
+char		*ft_get_str(char *str, size_t *i);
+char		*ft_get_squote_string(char *str, size_t *i);
+char		*ft_handle_dquotes(char *str, size_t *i, t_data *data);
+char		*ft_clean_command(char *str, t_data *data);
 
 // parse_s_command.c
 bool		handle_redir(t_redir **redir, t_token **token, t_data *data);
 bool		join_words(char **command, t_token **current, t_data *data);
 t_ast_node	*simple_command(t_token **current_token, t_data *data);
 
+// remove_quotes.c
+char		*ft_clean_empty_strs(char *str);
+char		*ft_remove_quotes(char *str);
+
 // utils_parser.c
-bool	is_redirection(t_token *token);
-bool check_pipe_syntax(t_token *tokens);
-void ft_expand_env_vars(t_token **tokens);
-void ft_parsing_error(t_data *data);
+bool		is_redirection(t_token *token);
+bool		check_pipe_syntax(t_token *tokens);
+void		ft_parsing_error(t_data *data);
+char		*ft_strjoin_free(char *s1, char *s2);
 
 ///////////SIGNALS//////////////
 
