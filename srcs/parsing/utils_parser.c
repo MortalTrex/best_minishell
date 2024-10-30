@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 15:42:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:24:25 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,6 @@ bool check_pipe_syntax(t_token *token)
 	return (true);
 }
 
-void	ft_expand_env_vars(t_token **tokens)
-{
-	t_token	*current;
-	char	*env_value;
-
-	current = *tokens;
-	env_value = NULL;
-	while (current)
-	{
-		if (current->type == T_WORD && current->value[0] == '$')
-		{
-			if (env_value)
-			{
-				free(current->value);
-				current->value = strdup(env_value);
-			}
-			else
-				current->value = strdup("");
-		}
-		current = current->next;
-	}
-}
-
 void ft_parsing_error(t_data *data)
 {
 	if (data->parsing_error)
@@ -77,4 +54,30 @@ void ft_parsing_error(t_data *data)
 		free_ast(&data->ast, data);
 		data->parsing_error = 0;
 	}
+}
+
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*joined;
+	size_t	total_length;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	total_length = ft_strlen(s1) + ft_strlen(s2) + 1;
+	joined = ft_calloc(total_length, sizeof(char));
+	if (!joined)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		joined[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+		joined[i++] = s2[j++];
+	joined[i] = 0;
+	return (free(s1), free(s2), joined);
 }
