@@ -57,7 +57,7 @@ void print_tab(char **str)
 	i = 0;
 	while (str[i])
 	{
-		write(1, str[i], 1);
+		ft_printf("%s\n", str[i]);
 		i++;
 	}
 }

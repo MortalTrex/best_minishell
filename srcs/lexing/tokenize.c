@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 16:22:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:09:06 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_detect_builtin(t_data *data)
 	current = data->tok;
 	while (current)
 	{
+		printf("current->value: %s\n", current->value);
 		if (current->type == T_WORD)
 		{
 			if (!ft_strcmp(current->value, "cd"))
@@ -28,7 +29,10 @@ void	ft_detect_builtin(t_data *data)
 				return ;
 			}
 			else if (!ft_strcmp(current->value, "echo"))
+			{
 				current->type = T_BUILTIN;
+				ft_echo(data);
+			}
 			else if (!ft_strcmp(current->value, "pwd"))
 			{
 				current->type = T_BUILTIN;

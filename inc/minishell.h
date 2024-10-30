@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 16:52:31 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/30 17:26:57 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void		ft_free_all(t_data *data);
 
 // builtins_utils.c
 void		copy_env(char **envp, t_data *data);
+void		copy_env_char(t_data *data);
 void		ft_sort_env(t_env *env);
 void		ft_swap_env_lines(t_env *a, t_env *b);
 

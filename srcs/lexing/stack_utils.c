@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 18:31:23 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:01:00 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	ft_envclear(t_env **env)
 		temp = *env;
 		*env = (*env)->next;
 		free(temp->line);
+		free(temp->name);
+		free(temp->value);
 		free(temp);
 	}
 	*env = NULL;

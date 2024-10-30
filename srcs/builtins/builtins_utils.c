@@ -41,16 +41,33 @@ void	copy_env(char **envp, t_data *data)
 		push_node_to_env(data, envp[i]);
 		i++;
 	}
+}
+
+void   copy_env_char(t_data *data)
+{
+	t_env *tmp_count;
+	t_env *tmp;
+	int	i;
+
+	i = 0;
+	tmp_count = data->env;
+	tmp = data->env;
+	while (tmp_count)
+	{
+		i++;
+		tmp_count = tmp_count->next;
+	}
 	data->envc = malloc(sizeof(char *) * (i + 1));
 	if (!data->envc)
 		ft_error(data, "Malloc failed\n");
 	i = 0;
-	while (envp[i])
+	while (tmp)
 	{
-		data->envc[i] = ft_strdup(envp[i]);
+		data->envc[i] = ft_strdup(tmp->line);
 		if (!data->envc[i])
 			ft_error(data, "Malloc failed\n");
 		i++;
+		tmp = tmp->next;
 	}
 	data->envc[i] = NULL;
 }

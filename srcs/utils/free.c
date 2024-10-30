@@ -58,12 +58,12 @@ void	ft_free_all(t_data *data)
 		free(data->user_line);
 	if (data->tok)
 		ft_stackclear(&data->tok);
+	if (data->envc)
+		ft_free_tab(data->envc);
 	if (data->free_value == 0)
 	{
 		if (data->env)
 			ft_envclear(&data->env);
-		if (data->envc)
-			ft_free_tab(data->envc);
 	}
 	if (data->ast)
 	 	free_ast(&data->ast, data);
