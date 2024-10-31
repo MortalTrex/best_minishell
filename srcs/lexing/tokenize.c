@@ -12,50 +12,6 @@
 
 #include "minishell.h"
 
-void	ft_detect_builtin(t_data *data)
-{
-	t_token	*current;
-
-	current = data->tok;
-	while (current)
-	{
-		printf("current->value: %s\n", current->value);
-		if (current->type == T_WORD)
-		{
-			if (!ft_strcmp(current->value, "cd"))
-			{
-				ft_cd(data);
-				return ;
-			}
-			else if (!ft_strcmp(current->value, "echo"))
-			{
-				current->type = T_BUILTIN;
-				ft_echo(data);
-			}
-			else if (!ft_strcmp(current->value, "pwd"))
-			{
-				ft_pwd();
-			}
-			else if (!ft_strcmp(current->value, "export"))
-			{
-				ft_export(data);
-			}
-			else if (!ft_strcmp(current->value, "unset"))
-			{
-				ft_unset(data);
-			}
-			else if (!ft_strcmp(current->value, "env"))
-			{
-				ft_env(data);
-			}
-			else if (!ft_strcmp(current->value, "exit"))
-				ft_exit(data);
-		}
-		if (current)
-			current = current->next;
-	}
-}
-
 t_token	*get_tokens(char *command, t_data *data)
 {
 	t_token	*tokens;
@@ -83,6 +39,5 @@ bool	ft_tokenize(t_data *data)
 
 	command = data->user_line;
 	data->tok = get_tokens(command, data);
-	ft_detect_builtin(data);
 	return (true);
 }

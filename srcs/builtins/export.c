@@ -76,33 +76,41 @@ bool	check_change_value(t_data *data)
 			change_value(data, old_str, new_str);
 			return (free(old_str), free(new_str), true);
 		}
-		old_str = ft_strdup(tmp->value);
+		if (tmp->value)
+			old_str = ft_strdup(tmp->value);
 		tmp = tmp->next;
 	}
 	return (free(old_str), free(new_str), false);
 }
 
+bool check_ifvalue(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 void	ft_export(t_data *data)
 {
 	t_token	*tmp;
-	bool	after_export;
-	int		i;
 
 	tmp = data->tok;
-	after_export = false;
-	i = 0;
-	if (check_change_value(data) == true)
-		i = -1;
-	while (tmp && i >= 0)
+	if (tmp->next == NULL)
+		ft_exp_env(data);
+	else
+		tmp = tmp->next;
+	while (tmp)
 	{
-		if (after_export == true)
+		if (check_ifvalue(tmp->value) == true)
 			if (check_double(data, tmp->value) == false)
 				push_node_to_env(data, tmp->value);
-		if (!ft_strcmp(tmp->value, "export"))
-			after_export = true;
 		tmp = tmp->next;
-		i++;
 	}
-	if (i == 1 && after_export == true)
-		ft_exp_env(data);
 }

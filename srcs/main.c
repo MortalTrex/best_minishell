@@ -69,12 +69,12 @@ int	main(int argc, char **argv, char **envp)
 		data.free_value = 0;
 		ft_readline(&data);
 		copy_env_char(&data);
-		print_tab(data.envc);
 		if (!ft_tokenize(&data))
 			continue ;
+		//print_tab(data.envc);
 		print_tokens(&data);
-		parse_tokens(&data);
-		// ft_execution(&data);
+		ft_execution(&data);
+		//parse_tokens(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
 	}

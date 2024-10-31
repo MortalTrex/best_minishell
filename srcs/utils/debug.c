@@ -67,3 +67,4 @@ void	print_tab(char **str)
 		i++;
 	}
 }
+

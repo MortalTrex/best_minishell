@@ -66,6 +66,8 @@ void		ft_free_all(t_data *data);
 
 
 /////////////// BUILTIN //////////////////
+// builtins_launch.c
+void	ft_detect_builtin(t_data *data);
 
 // builtins_utils.c
 void		copy_env(char **envp, t_data *data);

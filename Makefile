@@ -22,6 +22,7 @@ LDLIBS = -lreadline
 LIBS = -L$(LIBFTDIR) -lft
 
 SRCS = srcs/main.c\
+	srcs/builtins/builtins_launch.c\
 	srcs/builtins/builtins_utils.c\
 	srcs/builtins/echo.c\
 	srcs/builtins/env.c\
