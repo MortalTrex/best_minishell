@@ -55,10 +55,8 @@ bool	ft_is_wordchar(char c)
 
 bool	ft_is_separator(char *s)
 {
-	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t'
-		|| *s == '<' || *s == '>' || *s == '|' || *s == '(' || *s == ')')
+	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t' || *s == '<'
+		|| *s == '>' || *s == '|' || *s == '(' || *s == ')')
 		return (true);
 	return (false);
 }
-
-

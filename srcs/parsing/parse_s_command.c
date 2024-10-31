@@ -12,10 +12,10 @@
 
 #include "minishell.h"
 
-bool handle_redir(t_redir **redir, t_token **token, t_data *data)
+bool	handle_redir(t_redir **redir, t_token **token, t_data *data)
 {
-	t_redir *tmp;
-	t_token_type type;
+	t_redir			*tmp;
+	t_token_type	type;
 
 	if (data->parsing_error)
 		return (false);
@@ -34,10 +34,10 @@ bool handle_redir(t_redir **redir, t_token **token, t_data *data)
 	return (true);
 }
 
-bool join_words(char **command, t_token **current, t_data *data)
+bool	join_words(char **command, t_token **current, t_data *data)
 {
-	char *tmp;
-	char *joined;
+	char	*tmp;
+	char	*joined;
 
 	if (data->parsing_error)
 		return (false);
@@ -63,10 +63,10 @@ bool join_words(char **command, t_token **current, t_data *data)
 	return (true);
 }
 
-t_ast_node *simple_command(t_token **current_token, t_data *data)
+t_ast_node	*simple_command(t_token **current_token, t_data *data)
 {
-	t_ast_node *node;
-	
+	t_ast_node	*node;
+
 	node = ft_create_node(NODE_CMD);
 	if (!node)
 		return (data->parsing_error = ERR_MEM, NULL);

@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static	void	ft_skip_word(char const *s, size_t	*i)

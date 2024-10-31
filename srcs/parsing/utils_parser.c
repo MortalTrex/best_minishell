@@ -14,28 +14,37 @@
 
 bool	is_redirection(t_token *token)
 {
-	if (token->type == T_REDIR_IN || token->type == T_REDIR_OUT \
-			||token->type == T_REDIR_HERE || token->type == T_REDIR_APPEND)
+	if (token->type == T_REDIR_IN || token->type == T_REDIR_OUT
+		|| token->type == T_REDIR_HERE || token->type == T_REDIR_APPEND)
 		return (true);
 	return (false);
 }
 
-bool check_pipe_syntax(t_token *token)
+bool	check_pipe_syntax(t_token *token)
 {
-	t_token *current = token;
+	t_token	*current;
 
+	current = token;
 	if (current && current->type == T_PIPE)
-		return (fprintf(stderr, "minishell> syntax error: unexpected pipe at the beginning\n"), false);
+		return (fprintf(stderr,
+				"minishell> syntax error: unexpected pipe at the beginning\n"),
+			false);
 	while (current)
 	{
 		if (current->type == T_PIPE)
 		{
 			if (!current->next)
-				return (fprintf(stderr, "minishell> syntax error: unexpected pipe at the end\n"), false);
+				return (fprintf(stderr,
+						"minishell> syntax error: unexpected pipe at the end\n"),
+					false);
 			if (current->next && current->next->type == T_PIPE)
-				return (fprintf(stderr, "minishell> syntax error: consecutive pipes\n"), false);
-			if (current->next && current->next->type != T_WORD && current->next->type != T_BUILTIN)
-				return (fprintf(stderr, "minishell> syntax error: pipe not followed by a command\n"), false);
+				return (fprintf(stderr,
+						"minishell> syntax error: consecutive pipes\n"), false);
+			if (current->next && current->next->type != T_WORD
+				&& current->next->type != T_BUILTIN)
+				return (fprintf(stderr,
+						"minishell> syntax error: pipe not followed by a command\n"),
+					false);
 		}
 		current = current->next;
 	}
@@ -43,7 +52,7 @@ bool check_pipe_syntax(t_token *token)
 }
 // change piipe syntax errors
 
-void ft_parsing_error(t_data *data)
+void	ft_parsing_error(t_data *data)
 {
 	if (data->parsing_error)
 	{

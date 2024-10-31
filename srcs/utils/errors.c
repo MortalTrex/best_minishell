@@ -28,7 +28,8 @@ void	ft_error(t_data *data, char *msg)
 
 void	ft_error_quote(t_data *data)
 {
-	ft_putstr_fd("minishell> unexpected EOF while looking for matching ` or \"", STDERR_FILENO);
+	ft_putstr_fd("minishell> unexpected EOF while looking for matching ` or \"",
+		STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 	data->exit_status = 2;
 }

@@ -8,16 +8,16 @@ char	*ft_clean_empty_strs(char *str)
 	char	*ret;
 	size_t	dstsize;
 
-	if ((str[0] == '\'' && str[1] == '\'' && !str[2])
-		|| (str[0] == '"' && str[1] == '"' && !str[2]))
+	if ((str[0] == '\'' && str[1] == '\'' && !str[2]) || (str[0] == '"'
+			&& str[1] == '"' && !str[2]))
 		return (str);
 	tmp = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		if ((str[i] == '\'' && str[i + 1] == '\'')
-			|| (str[i] == '"' && str[i + 1] == '"'))
+		if ((str[i] == '\'' && str[i + 1] == '\'') || (str[i] == '"' && str[i
+					+ 1] == '"'))
 			i += 2;
 		else
 			tmp[j++] = str[i++];
@@ -49,7 +49,7 @@ static size_t	ft_unquoted_strlen(char *str)
 				len += (i++ || 1);
 		}
 		else
-				len += (i++ || 1);
+			len += (i++ || 1);
 	}
 	return (len);
 }

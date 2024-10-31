@@ -12,9 +12,9 @@
 
 #include "../inc/minishell.h"
 
-bool verif_flag(char *str)
+bool	verif_flag(char *str)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (str[0] != '-')
@@ -30,14 +30,14 @@ bool verif_flag(char *str)
 
 void	ft_echo(t_data *data)
 {
-	printf("echo\n");
 	t_token	*current;
 	bool	n_flag;
 
+	printf("echo\n");
 	current = data->tok;
 	current = current->next;
 	n_flag = false;
-	if (verif_flag(current->value) == true) 
+	if (verif_flag(current->value) == true)
 	{
 		n_flag = true;
 		current = current->next;

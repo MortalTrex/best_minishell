@@ -13,12 +13,13 @@
 #include "minishell.h"
 #include <stdio.h>
 
-t_ast_node *create_tree(t_token **current_token, t_data *data)
+t_ast_node	*create_tree(t_token **current_token, t_data *data)
 {
-	t_ast_node *left;
-	t_ast_node *right;
-	t_token *current = *current_token;
+	t_ast_node	*left;
+	t_ast_node	*right;
+	t_token		*current;
 
+	current = *current_token;
 	if (!current)
 		return (NULL);
 	left = simple_command(&current, data);
@@ -39,7 +40,7 @@ t_ast_node *create_tree(t_token **current_token, t_data *data)
 	return (left);
 }
 
-void parse_tokens(t_data *data)
+void	parse_tokens(t_data *data)
 {
 	if (!check_pipe_syntax(data->tok))
 	{
@@ -48,7 +49,7 @@ void parse_tokens(t_data *data)
 		return ;
 	}
 	data->ast = create_tree(&data->tok, data);
-	if(data->parsing_error)
+	if (data->parsing_error)
 		ft_parsing_error(data);
 	printf("Tree created...\n");
 	if (data->ast != NULL)

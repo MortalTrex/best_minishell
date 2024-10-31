@@ -48,4 +48,3 @@ char	*ft_expand_env_vars(char *word, size_t *i, t_data *data)
 		return (free(var), ft_strdup(""));
 	return (free(var), ft_strdup(env_value));
 }
-

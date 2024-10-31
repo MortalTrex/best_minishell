@@ -26,6 +26,7 @@ char	**ft_expand_and_clean(char *str, t_data *data)
 	clean = ft_ms_split(str);
 	if (!clean)
 		return (NULL);
+	free(str);
 	i = 0;
 	while (clean[i])
 	{
@@ -34,4 +35,3 @@ char	**ft_expand_and_clean(char *str, t_data *data)
 	}
 	return (clean);
 }
-

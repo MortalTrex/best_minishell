@@ -55,10 +55,10 @@ bool	ft_append_operator(char **command, t_token **tokens)
 
 bool	ft_append_word(char **command, t_token **tokens, t_data *data)
 {
-	char	*line;
-	char 	*value;
+	char		*line;
+	char		*value;
 	size_t		i;
-	t_token	*new_token;
+	t_token		*new_token;
 
 	line = *command;
 	i = 0;

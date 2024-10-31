@@ -13,9 +13,9 @@
 #include "minishell.h"
 
 //ok
-t_ast_node *ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right)
+t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right)
 {
-	t_ast_node *pipe_node;
+	t_ast_node	*pipe_node;
 
 	if (data->parsing_error)
 		return (NULL);
@@ -27,9 +27,9 @@ t_ast_node *ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *righ
 	return (pipe_node);
 }
 
-t_redir *ft_create_redir_node(t_token_type type, char *file)
+t_redir	*ft_create_redir_node(t_token_type type, char *file)
 {
-	t_redir *redir;
+	t_redir	*redir;
 
 	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
@@ -48,9 +48,9 @@ t_redir *ft_create_redir_node(t_token_type type, char *file)
 	return (redir);
 }
 
-t_ast_node *ft_create_node(t_ast_node_type type)
+t_ast_node	*ft_create_node(t_ast_node_type type)
 {
-	t_ast_node *node;
+	t_ast_node	*node;
 
 	node = ft_calloc(1, sizeof(t_ast_node));
 	if (!node)
@@ -59,9 +59,9 @@ t_ast_node *ft_create_node(t_ast_node_type type)
 	return (node);
 }
 
-void ft_append_redir(t_redir **rds, t_redir *redir)
+void	ft_append_redir(t_redir **rds, t_redir *redir)
 {
-	t_redir *tmp;
+	t_redir	*tmp;
 
 	if (!*rds)
 	{

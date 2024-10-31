@@ -56,7 +56,7 @@ void	ft_detect_builtin(t_data *data)
 	}
 }
 
-t_token *get_tokens(char *command, t_data *data)
+t_token	*get_tokens(char *command, t_data *data)
 {
 	t_token	*tokens;
 	bool	ok;
@@ -77,14 +77,12 @@ t_token *get_tokens(char *command, t_data *data)
 	return (tokens);
 }
 
-
 bool	ft_tokenize(t_data *data)
 {
-	char *command;
+	char	*command;
 
 	command = data->user_line;
 	data->tok = get_tokens(command, data);
 	ft_detect_builtin(data);
 	return (true);
 }
-
