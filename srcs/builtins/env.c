@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 18:25:31 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/31 18:10:54 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ void	push_node_to_env(t_data *data, char *env_line)
 	}
 }
 
-void	ft_env(t_data *data)
-{
-	t_env	*current;
+// void	ft_env(char **argv, t_data *data)
+// {
+// 	t_env	*current;
 
-	current = data->env;
-	while (current != NULL)
-	{
-		ft_printf("%s\n", current->line);
-		current = current->next;
-	}
-}
+// 	current = data->env;
+// 	while (current != NULL)
+// 	{
+// 		ft_printf("%s\n", current->line);
+// 		current = current->next;
+// 	}
+// }

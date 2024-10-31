@@ -3,51 +3,56 @@
 void	print_ast(t_ast_node *node, int level)
 {
 	t_redir	*redir;
+	int		i;
+	int		j;
 
 	if (!node)
 		return ;
-	for (int i = 0; i < level; i++)
+	i = -1;
+	while (++i < level)
 		printf("  ");
 	printf("Node Type: ");
-	switch (node->type)
+	if (node->type == NODE_CMD)
 	{
-	case NODE_CMD:
 		printf("Command\n");
-		printf("  Command: %s\n", node->command);
-		printf("  Arguments:\n");
-		for (int i = 0; node->argv && node->argv[i]; i++)
+		printf("Command: %s\n", node->command);
+		printf("Arguments:\n");
+		i = -1;
+		while (node->argv && node->argv[++i])
 		{
-			for (int j = 0; j < level + 1; j++)
+			j = -1;
+			while (++j < level + 1)
 				printf("  ");
 			printf("%s\n", node->argv[i]);
 		}
 		redir = node->redir;
 		while (redir)
 		{
-			for (int i = 0; i < level + 1; i++)
+			i = -1;
+			while (++i < level + 1)
 				printf("  ");
 			printf("Redirection: %s %s\n", redir->command,
-				redir->type == IN ? "<" : redir->type == OUT ? ">" : redir->type == D_APPEND ? ">>" : "<<");
+				redir->type == IN ? "<" : redir->type == OUT ? ">" :
+				redir->type == D_APPEND ? ">>" : "<<");
 			redir = redir->next;
 		}
-		break ;
-	case NODE_PIPE:
-		printf("Pipe\n");
-		break ;
-	default:
-		printf("Unknown\n");
-		break ;
 	}
+	else if (node->type == NODE_PIPE)
+		printf("Pipe\n");
+	else
+		printf("Unknown\n");
 	if (node->left)
 	{
-		for (int i = 0; i < level; i++)
+		i = -1;
+		while (++i < level)
 			printf("  ");
 		printf("Left Child:\n");
 		print_ast(node->left, level + 1);
 	}
 	if (node->right)
 	{
-		for (int i = 0; i < level; i++)
+		i = -1;
+		while (++i < level)
 			printf("  ");
 		printf("Right Child:\n");
 		print_ast(node->right, level + 1);

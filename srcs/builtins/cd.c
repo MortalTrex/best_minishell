@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:13:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/31 18:11:02 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,16 @@ void	set_home(t_data *data)
 	}
 }
 
-void	ft_cd(t_data *data)
-{
-	t_token	*current;
+// void	ft_cd(char **argv, t_data *data)
+// {
+// 	t_token	*current;
 
-	current = data->tok;
-	if (current->next)
-	{
-		current = current->next;
-		ft_move_directory(current->value, data);
-	}
-	else if (current->next == NULL)
-		set_home(data);
-}
+// 	current = data->tok;
+// 	if (current->next)
+// 	{
+// 		current = current->next;
+// 		ft_move_directory(current->value, data);
+// 	}
+// 	else if (current->next == NULL)
+// 		set_home(data);
+// }

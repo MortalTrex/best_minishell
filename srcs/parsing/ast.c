@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 19:53:22 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:13:52 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,4 @@ void	parse_tokens(t_data *data)
 	if (data->parsing_error)
 		ft_parsing_error(data);
 	printf("Tree created...\n");
-	if (data->ast != NULL)
-	{
-		printf("AST constructed, printing...\n");
-		print_ast(data->ast, 0);
-		free_ast(&data->ast, data);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 20:53:43 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/31 18:22:04 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		ft_free_all(t_data *data);
 
 /////////////// BUILTIN //////////////////
 // builtins_launch.c
-void	ft_detect_builtin(t_data *data);
+bool		ft_detect_builtin(char **argv, t_data *data);
 
 // builtins_utils.c
 void		copy_env(char **envp, t_data *data);
@@ -80,36 +80,36 @@ char		*put_name(char *line);
 char		*put_value(char *line);
 t_env		*new_node_env(char *line, t_data *data);
 void		push_node_to_env(t_data *data, char *line);
-void		ft_env(t_data *data);
+void		ft_env(char **argv, t_data *data);
 
 // export.c
 bool		check_double(t_data *data, char *line);
 void        ft_exp_env(t_data *data);
 void		change_value(t_data *data, char *old, char *new);
 bool		check_change_value(t_data *data);
-void		ft_export(t_data *data);
+void		ft_export(char **argv, t_data *data);
 
 // echo.c
-void		ft_echo(t_data *data);
+void		ft_echo(char **argv, t_data *data);
 
 // pwd.c
 void		ft_pwd(void);
 
 //	unset.c
 void		search_in_env(t_data *data, char *var);
-void		ft_unset(t_data *data);
+void		ft_unset(char **argv, t_data *data);
 
 //	exit.c
 bool		ft_is_number(char *str);
 int			ft_value(int value);
-void		ft_exit(t_data *data);
+void		ft_exit(char **argv, t_data *data);
 
 //	cd.c
 void        set_env_oldpwd(char *old_pwd, t_data *data);
 void		set_env_pwd(char *new_pwd, t_data *data);
 void		ft_move_directory(char *path, t_data *data);
 void		set_home(t_data *data);
-void		ft_cd(t_data *data);
+void		ft_cd(char **argv, t_data *data);
 
 //////////////// EXECUTION ////////////////
 // exec_cases.c
@@ -121,7 +121,6 @@ char 		*ft_path(char *cmd, t_data *data);
 void 		exec(t_data *data, char *cmd);
 void 		ft_process_infile(char *cmd, t_data *data, bool redir);
 void 		ft_process_outfile(char *cmd, t_data *data);
-
 
 // exec_read.c
 void		ft_execution(t_data *data);

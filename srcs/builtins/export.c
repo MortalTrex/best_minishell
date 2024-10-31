@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 17:40:37 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/31 18:10:31 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,20 @@ bool check_ifvalue(char *str)
 	return (false);
 }
 
-void	ft_export(t_data *data)
-{
-	t_token	*tmp;
+// void	ft_export(char **argv, t_data *data)
+// {
+// 	t_token	*tmp;
 
-	tmp = data->tok;
-	if (tmp->next == NULL)
-		ft_exp_env(data);
-	else
-		tmp = tmp->next;
-	while (tmp)
-	{
-		if (check_ifvalue(tmp->value) == true)
-			if (check_double(data, tmp->value) == false)
-				push_node_to_env(data, tmp->value);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = data->tok;
+// 	if (tmp->next == NULL)
+// 		ft_exp_env(data);
+// 	else
+// 		tmp = tmp->next;
+// 	while (tmp)
+// 	{
+// 		if (check_ifvalue(tmp->value) == true)
+// 			if (check_double(data, tmp->value) == false)
+// 				push_node_to_env(data, tmp->value);
+// 		tmp = tmp->next;
+// 	}
+// }
