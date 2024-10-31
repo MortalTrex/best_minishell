@@ -6,16 +6,16 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:51:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 15:57:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:11:43 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool handle_redir(t_redir **redir, t_token **token, t_data *data)
+bool	handle_redir(t_redir **redir, t_token **token, t_data *data)
 {
-	t_redir *tmp;
-	t_token_type type;
+	t_redir			*tmp;
+	t_token_type	type;
 
 	if (data->parsing_error)
 		return (false);
@@ -34,10 +34,10 @@ bool handle_redir(t_redir **redir, t_token **token, t_data *data)
 	return (true);
 }
 
-bool join_words(char **command, t_token **current, t_data *data)
+bool	join_words(char **command, t_token **current, t_data *data)
 {
-	char *tmp;
-	char *joined;
+	char	*tmp;
+	char	*joined;
 
 	if (data->parsing_error)
 		return (false);
@@ -63,9 +63,9 @@ bool join_words(char **command, t_token **current, t_data *data)
 	return (true);
 }
 
-t_ast_node *simple_command(t_token **current_token, t_data *data)
+t_ast_node	*simple_command(t_token **current_token, t_data *data)
 {
-	t_ast_node *node;
+	t_ast_node	*node;
 
 	node = ft_create_node(NODE_CMD);
 	if (!node)
@@ -85,5 +85,6 @@ t_ast_node *simple_command(t_token **current_token, t_data *data)
 		else
 			*current_token = (*current_token)->next;
 	}
+	node->argv = ft_expand_and_clean(node->command, data);
 	return (node);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/10/30 16:54:56 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/10/30 19:09:35 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LDLIBS = -lreadline
 LIBS = -L$(LIBFTDIR) -lft
 
 SRCS = srcs/main.c\
+	srcs/builtins/builtins_launch.c\
 	srcs/builtins/builtins_utils.c\
 	srcs/builtins/echo.c\
 	srcs/builtins/env.c\
@@ -39,8 +40,12 @@ SRCS = srcs/main.c\
 	srcs/lexing/grammar_check.c\
 	srcs/parsing/ast.c\
 	srcs/parsing/create_node.c\
-	srcs/parsing/create_tree.c\
+	srcs/parsing/expand_and_clean.c\
+	srcs/parsing/expand_env_var.c\
+	srcs/parsing/get_clean_argv.c\
+	srcs/parsing/handle_quotes.c\
 	srcs/parsing/parse_s_command.c\
+	srcs/parsing/remove_quotes.c\
 	srcs/parsing/utils_parser.c\
 	srcs/signal/signal.c\
 	srcs/utils/errors.c\

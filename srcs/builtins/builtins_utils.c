@@ -43,11 +43,11 @@ void	copy_env(char **envp, t_data *data)
 	}
 }
 
-void   copy_env_char(t_data *data)
+void	copy_env_char(t_data *data)
 {
-	t_env *tmp_count;
-	t_env *tmp;
-	int	i;
+	t_env	*tmp_count;
+	t_env	*tmp;
+	int		i;
 
 	i = 0;
 	tmp_count = data->env;

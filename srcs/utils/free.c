@@ -1,4 +1,5 @@
 #include "minishell.h"
+
 static	void	free_redir(t_redir **redir)
 {
 	t_redir	*next;
@@ -40,9 +41,9 @@ void	free_node(t_ast_node *node)
 			free_node(node->right);
 	}
 	free(node);
-
 }
-void free_ast(t_ast_node **node, t_data *data)
+
+void	free_ast(t_ast_node **node, t_data *data)
 {
 	free_node(*node);
 	*node = NULL;
@@ -66,5 +67,5 @@ void	ft_free_all(t_data *data)
 			ft_envclear(&data->env);
 	}
 	if (data->ast)
-	 	free_ast(&data->ast, data);
+		free_ast(&data->ast, data);
 }

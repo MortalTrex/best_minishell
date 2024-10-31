@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 17:47:34 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:15:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 bool	ft_is_operator(char c)
 {
-	return (c == '|' || c == '(' || c == '>' || c == '<' || c == ')'
-		|| c == '&');
+	return (c == '|' || c == '>' || c == '<');
 }
 
 bool	ft_is_multi_char_operator(const char *str)
 {
-	return (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0
-		|| ft_strncmp(str, "&&", 2) == 0 || ft_strncmp(str, "||", 2) == 0);
+	return (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0);
 }
 
 bool	ft_is_quote(char c)
@@ -57,10 +55,8 @@ bool	ft_is_wordchar(char c)
 
 bool	ft_is_separator(char *s)
 {
-	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t'
-		|| *s == '<' || *s == '>' || *s == '|' || *s == '(' || *s == ')')
+	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t' || *s == '<'
+		|| *s == '>' || *s == '|' || *s == '(' || *s == ')')
 		return (true);
 	return (false);
 }
-
-

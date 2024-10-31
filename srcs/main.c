@@ -6,20 +6,21 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 20:49:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:56:28 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	g_global_state = 0;
+int		g_global_state = 0;
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
 void	print_tokens(t_data *data)
 {
-	t_token	*tmp = data->tok;
+	t_token	*tmp;
 
+	tmp = data->tok;
 	while (tmp)
 	{
 		if (tmp->type == T_WORD)
@@ -41,6 +42,20 @@ void	print_tokens(t_data *data)
 		tmp = tmp->next;
 	}
 }
+
+void	ft_readline(t_data *data)
+{
+	data->user_line = readline(PROMPT);
+	signal(SIGINT, sigint_handler);
+	if ((*data->user_line))
+		add_history(data->user_line);
+	if (data->user_line == NULL)
+	{
+		ft_printf("Exit\n");
+		exit(0);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -52,21 +67,14 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		data.free_value = 0;
-		data.user_line = readline(PROMPT);
-		signal(SIGINT, sigint_handler);
-		if ((*data.user_line))
-			add_history(data.user_line);
-		if (data.user_line == NULL)
-		{
-			ft_printf("Exit\n");
-			break;
-		}
+		ft_readline(&data);
+		copy_env_char(&data);
 		if (!ft_tokenize(&data))
-			continue;
-		//copy_env_char(&data);
+			continue ;
+		//print_tab(data.envc);
 		print_tokens(&data);
-		parse_tokens(&data);
-		//ft_execution(&data);
+		ft_execution(&data);
+		//parse_tokens(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
 	}

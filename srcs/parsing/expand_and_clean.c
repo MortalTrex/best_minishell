@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   expand_and_clean.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 19:46:25 by mmiilpal         ###   ########.fr       */
+/*   Created: 2024/10/30 17:18:37 by mmiilpal          #+#    #+#             */
+/*   Updated: 2024/10/30 19:27:14 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_close_fd(t_data *data, char *msg)
+char	**ft_expand_and_clean(char *str, t_data *data)
 {
-	close(data->fd[0]);
-	close(data->fd[1]);
-	ft_error(data, msg);
-}
+	char	**clean;
+	size_t	i;
 
-void	ft_error(t_data *data, char *msg)
-{
-	ft_free_all(data);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
-
-void	ft_error_quote(t_data *data)
-{
-	ft_putstr_fd("minishell> unexpected EOF while looking for matching ` or \"",
-		STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	data->exit_status = 2;
+	str = ft_clean_command(str, data);
+	if (!str)
+		return (NULL);
+	str = ft_clean_empty_strs(str);
+	if (!str)
+		return (NULL);
+	clean = ft_ms_split(str);
+	if (!clean)
+		return (NULL);
+	free(str);
+	i = 0;
+	while (clean[i])
+	{
+		clean[i] = ft_remove_quotes(clean[i]);
+		i++;
+	}
+	return (clean);
 }

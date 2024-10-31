@@ -6,62 +6,13 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 20:09:06 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/30 20:54:15 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_detect_builtin(t_data *data)
-{
-	t_token	*current;
-
-	current = data->tok;
-	while (current)
-	{
-		printf("current->value: %s\n", current->value);
-		if (current->type == T_WORD)
-		{
-			if (!ft_strcmp(current->value, "cd"))
-			{
-				current->type = T_BUILTIN;
-				ft_cd(data);
-				return ;
-			}
-			else if (!ft_strcmp(current->value, "echo"))
-			{
-				current->type = T_BUILTIN;
-				ft_echo(data);
-			}
-			else if (!ft_strcmp(current->value, "pwd"))
-			{
-				current->type = T_BUILTIN;
-				ft_pwd();
-			}
-			else if (!ft_strcmp(current->value, "export"))
-			{
-				current->type = T_BUILTIN;
-				ft_export(data);
-			}
-			else if (!ft_strcmp(current->value, "unset"))
-			{
-				current->type = T_BUILTIN;
-				ft_unset(data);
-			}
-			else if (!ft_strcmp(current->value, "env"))
-			{
-				current->type = T_BUILTIN;
-				ft_env(data);
-			}
-			else if (!ft_strcmp(current->value, "exit"))
-				ft_exit(data);
-		}
-		if (current)
-			current = current->next;
-	}
-}
-
-t_token *get_tokens(char *command, t_data *data)
+t_token	*get_tokens(char *command, t_data *data)
 {
 	t_token	*tokens;
 	bool	ok;
@@ -82,14 +33,11 @@ t_token *get_tokens(char *command, t_data *data)
 	return (tokens);
 }
 
-
 bool	ft_tokenize(t_data *data)
 {
-	char *command;
+	char	*command;
 
 	command = data->user_line;
 	data->tok = get_tokens(command, data);
-	ft_detect_builtin(data);
 	return (true);
 }
-
