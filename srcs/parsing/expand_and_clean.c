@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:18:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 19:27:14 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 18:04:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,3 @@ char	**ft_expand_and_clean(char *str, t_data *data)
 	}
 	return (clean);
 }
-

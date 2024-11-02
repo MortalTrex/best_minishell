@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 16:30:11 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/02 18:50:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	print_tokens(t_data *data)
 		tmp = tmp->next;
 	}
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -59,12 +60,17 @@ int	main(int argc, char **argv, char **envp)
 		if (data.user_line == NULL)
 		{
 			ft_printf("Exit\n");
-			break;
+			break ;
 		}
 		if (!ft_tokenize(&data))
-			continue;
+			continue ;
 		print_tokens(&data);
 		parse_tokens(&data);
+		if (data.parsing_error)
+		{
+			ft_parsing_error(&data);
+			continue ;
+		}
 		//ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 16:46:27 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/02 19:06:11 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef enum e_ast_node_type
 typedef struct s_redir
 {
 	char			*command;
+	char			**argv;
 	t_redir_type	type;
 	struct s_redir	*prev;
 	struct s_redir	*next;
@@ -59,7 +60,7 @@ typedef struct s_env
 typedef struct s_data
 {
 	t_env			*env;
-	char 			**envc;
+	char			**envc;
 	t_token			*tok;
 	t_token			*tmp_token;
 	char			*user_line;
@@ -67,7 +68,7 @@ typedef struct s_data
 	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
-	int 			free_value;
+	int				free_value;
 }					t_data;
 
 #endif

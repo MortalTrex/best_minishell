@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:39:59 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 17:46:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 18:04:46 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,3 @@ char	*ft_expand_env_vars(char *word, size_t *i, t_data *data)
 		return (free(var), ft_strdup(""));
 	return (free(var), ft_strdup(env_value));
 }
-

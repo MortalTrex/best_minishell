@@ -6,19 +6,20 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 19:53:22 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 19:11:46 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-t_ast_node *create_tree(t_token **current_token, t_data *data)
+t_ast_node	*create_tree(t_token **current_token, t_data *data)
 {
-	t_ast_node *left;
-	t_ast_node *right;
-	t_token *current = *current_token;
+	t_ast_node	*left;
+	t_ast_node	*right;
+	t_token		*current;
 
+	current = *current_token;
 	if (!current)
 		return (NULL);
 	left = simple_command(&current, data);
@@ -39,18 +40,13 @@ t_ast_node *create_tree(t_token **current_token, t_data *data)
 	return (left);
 }
 
-void parse_tokens(t_data *data)
+void	parse_tokens(t_data *data)
 {
-	if (!check_pipe_syntax(data->tok))
-	{
-		data->parsing_error = ERR_SYN;
+	if (!check_pipe_syntax(data->tok, data))
 		ft_parsing_error(data);
-		return ;
-	}
 	data->ast = create_tree(&data->tok, data);
-	if(data->parsing_error)
+	if (data->parsing_error)
 		ft_parsing_error(data);
-	printf("Tree created...\n");
 	if (data->ast != NULL)
 	{
 		printf("AST constructed, printing...\n");

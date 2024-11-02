@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_quotes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/02 18:05:38 by mmiilpal          #+#    #+#             */
+/*   Updated: 2024/11/02 18:57:41 by mmiilpal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_get_str(char *str, size_t *i)
@@ -5,7 +17,7 @@ char	*ft_get_str(char *str, size_t *i)
 	size_t	start;
 
 	start = *i;
-	while (str[*i] && str[*i] != '\'' && str[*i] != '"' && str[*i] != '$')
+	while (str[*i] && !ft_is_quote(str[*i]) && str[*i] != '$')
 		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }
@@ -61,9 +73,11 @@ char	*ft_clean_command(char *str, t_data *data)
 		if (str[i] == '\'')
 			command = ft_strjoin_free(command, ft_get_squote_string(str, &i));
 		else if (str[i] == '"')
-			command = ft_strjoin_free(command, ft_handle_dquotes(str, &i, data));
+			command = ft_strjoin_free(command, \
+						ft_handle_dquotes(str, &i, data));
 		else if (str[i] == '$')
-			command = ft_strjoin_free(command, ft_expand_env_vars(str, &i, data));
+			command = ft_strjoin_free(command, \
+						ft_expand_env_vars(str, &i, data));
 		else
 			command = ft_strjoin_free(command, ft_get_str(str, &i));
 	}

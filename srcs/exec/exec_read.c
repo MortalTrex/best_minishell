@@ -2,9 +2,9 @@
 
 void	ft_execution(t_data *data)
 {
-	t_token *current;
-	char *cmd;
-	int	i;
+	t_token	*current;
+	char	*cmd;
+	int		i;
 
 	i = 0;
 	current = data->tok;

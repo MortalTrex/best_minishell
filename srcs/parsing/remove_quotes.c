@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remove_quotes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/02 18:07:21 by mmiilpal          #+#    #+#             */
+/*   Updated: 2024/11/02 18:26:38 by mmiilpal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_clean_empty_strs(char *str)
@@ -39,7 +51,7 @@ static size_t	ft_unquoted_strlen(char *str)
 	quotes = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '"')
+		if (ft_is_quote(str[i]))
 		{
 			if (!quotes)
 				quotes = str[i++];
@@ -49,7 +61,7 @@ static size_t	ft_unquoted_strlen(char *str)
 				len += (i++ || 1);
 		}
 		else
-				len += (i++ || 1);
+			len += (i++ || 1);
 	}
 	return (len);
 }
@@ -68,7 +80,7 @@ char	*ft_remove_quotes(char *str)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if (ft_is_quote(str[i]))
 		{
 			quote = str[i++];
 			while (str[i] != quote)

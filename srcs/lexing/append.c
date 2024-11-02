@@ -6,11 +6,16 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 19:16:11 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 18:52:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	ft_is_multi_char_operator(const char *str)
+{
+	return (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0);
+}
 
 static t_token_type	ft_op_type(char *op)
 {
@@ -24,7 +29,7 @@ static t_token_type	ft_op_type(char *op)
 		return (T_REDIR_IN);
 	else if (!ft_strcmp(op, "<<"))
 		return (T_REDIR_HERE);
-	return (T_OPERATOR);
+	return (T_WORD);
 }
 
 bool	ft_append_operator(char **command, t_token **tokens)
@@ -55,10 +60,10 @@ bool	ft_append_operator(char **command, t_token **tokens)
 
 bool	ft_append_word(char **command, t_token **tokens, t_data *data)
 {
-	char	*line;
-	char 	*value;
+	char		*line;
+	char		*value;
 	size_t		i;
-	t_token	*new_token;
+	t_token		*new_token;
 
 	line = *command;
 	i = 0;

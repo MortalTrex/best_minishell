@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 19:20:13 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 18:34:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_detect_builtin(t_data *data)
 	}
 }
 
-t_token *get_tokens(char *command, t_data *data)
+t_token	*get_tokens(char *command, t_data *data)
 {
 	t_token	*tokens;
 	bool	ok;
@@ -73,14 +73,12 @@ t_token *get_tokens(char *command, t_data *data)
 	return (tokens);
 }
 
-
 bool	ft_tokenize(t_data *data)
 {
-	char *command;
+	char	*command;
 
 	command = data->user_line;
 	data->tok = get_tokens(command, data);
 	ft_detect_builtin(data);
 	return (true);
 }
-

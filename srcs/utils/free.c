@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/02 18:46:18 by mmiilpal          #+#    #+#             */
+/*   Updated: 2024/11/02 19:06:18 by mmiilpal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
 static	void	free_redir(t_redir **redir)
 {
 	t_redir	*next;
@@ -9,6 +22,8 @@ static	void	free_redir(t_redir **redir)
 	tmp = *redir;
 	while (tmp)
 	{
+		if (tmp->argv)
+			ft_free_tab(tmp->argv);
 		free(tmp->command);
 		next = tmp->next;
 		free(tmp);
@@ -40,9 +55,9 @@ void	free_node(t_ast_node *node)
 			free_node(node->right);
 	}
 	free(node);
-
 }
-void free_ast(t_ast_node **node, t_data *data)
+
+void	free_ast(t_ast_node **node, t_data *data)
 {
 	free_node(*node);
 	*node = NULL;
@@ -66,5 +81,5 @@ void	ft_free_all(t_data *data)
 			ft_free_tab(data->envc);
 	}
 	if (data->ast)
-	 	free_ast(&data->ast, data);
+		free_ast(&data->ast, data);
 }

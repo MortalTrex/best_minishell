@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/31 18:04:19 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 18:32:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 bool	ft_is_operator(char c)
 {
 	return (c == '|' || c == '>' || c == '<');
-}
-
-bool	ft_is_multi_char_operator(const char *str)
-{
-	return (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0);
 }
 
 bool	ft_is_quote(char c)
@@ -60,5 +55,3 @@ bool	ft_is_separator(char *s)
 		return (true);
 	return (false);
 }
-
-
