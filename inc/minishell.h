@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/02 18:24:05 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 23:35:24 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,7 @@ char		*ft_strjoin_free(char *s1, char *s2);
 
 // signal.c
 void		sigint_handler(int sig);
+void		signals(void);
 
 /////////////UTILS//////////////
 

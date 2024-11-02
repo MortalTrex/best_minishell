@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/02 19:06:11 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 00:00:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ typedef struct s_data
 	t_env			*env;
 	char			**envc;
 	t_token			*tok;
-	t_token			*tmp_token;
 	char			*user_line;
 	int				fd[2];
 	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
+	bool			child_status;
 	int				free_value;
 }					t_data;
 

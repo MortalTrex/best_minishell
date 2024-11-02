@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   exec_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 00:15:11 by mmiilpal         ###   ########.fr       */
+/*   Created: 2024/11/03 00:04:45 by mmiilpal          #+#    #+#             */
+/*   Updated: 2024/11/03 00:14:07 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sigint_handler(int sig, t_data *data)
-{
-	(void)sig;
-	ft_free_all(data);
-	exit(SIGINT);
-}
 
-// Launch CONTROL C
-static void	sigint_handler(int sig)
+void	ft_process_heredoc(t_redir *redir, t_data *data)
 {
-	(void) sig;
-	ft_printf("\n");
-	rl_on_new_line();
-	//rl_replace_line("", 0);
-	rl_redisplay();
-}
+	int			fd[2];
+	pid_t		pid;
 
-void	signals(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	pipe(fd);
+	data->child_status = true;
+	pid = (signal(SIGQUIT, SIG_IGN), fork());
+	if (!pid)
+	{
+		signal(SIGINT, );
+	}
 }

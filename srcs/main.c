@@ -6,13 +6,11 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/02 21:54:37 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 23:39:31 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int	g_global_state = 0;
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
@@ -20,9 +18,8 @@ static void	init_minishell(t_data *data, char **envp)
 {
 	ft_bzero(data, sizeof(t_data));
 	data->exit_status = 0;
-	data->fd[0] = 0;
-	data->fd[1] = 1;
-	data->fd[2] = 2;
+	data->fd[0] = -1;
+	data->fd[1] = -1;
 	copy_env(envp, data);
 }
 
@@ -35,9 +32,9 @@ int	main(int argc, char **argv, char **envp)
 	init_minishell(&data, envp);
 	while (true)
 	{
+		signals();
 		data.free_value = 0;
 		data.user_line = readline(PROMPT);
-		signal(SIGINT, sigint_handler);
 		if ((*data.user_line))
 			add_history(data.user_line);
 		if (data.user_line == NULL)
