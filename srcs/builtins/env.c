@@ -96,14 +96,19 @@ void	push_node_to_env(t_data *data, char *env_line)
 	}
 }
 
-// void	ft_env(char **argv, t_data *data)
-// {
-// 	t_env	*current;
+void	ft_env(char **argv, t_data *data)
+{
+	t_env	*current;
 
-// 	current = data->env;
-// 	while (current != NULL)
-// 	{
-// 		ft_printf("%s\n", current->line);
-// 		current = current->next;
-// 	}
-// }
+	current = data->env;
+	if (argv[1] != NULL)
+	{
+		ft_printf("env: too many arguments\n");
+		return ;
+	}
+	while (current != NULL)
+	{
+		ft_printf("%s\n", current->line);
+		current = current->next;
+	}
+}

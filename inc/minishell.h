@@ -90,7 +90,7 @@ bool		check_change_value(t_data *data);
 void		ft_export(char **argv, t_data *data);
 
 // echo.c
-void		ft_echo(char **argv, t_data *data);
+void		ft_echo(char **argv);
 
 // pwd.c
 void		ft_pwd(void);
@@ -114,16 +114,16 @@ void		ft_cd(char **argv, t_data *data);
 //////////////// EXECUTION ////////////////
 // exec_cases.c
 int			exec_pipe(char *cmd1, char *cmd2, t_data *data);
-int			exec_onecommand(char *cmd, t_data *data);
+int			exec_onecommand(char **cmd, t_data *data);
 
 // exec_core.c
 char 		*ft_path(char *cmd, t_data *data);
-void 		exec(t_data *data, char *cmd);
-void 		ft_process_infile(char *cmd, t_data *data, bool redir);
+void 		exec(t_data *data, char **cmd);
+void 		ft_process_infile(char **cmd, t_data *data, bool redir);
 void 		ft_process_outfile(char *cmd, t_data *data);
 
 // exec_read.c
-void		ft_execution(t_data *data);
+void	read_ast(t_ast_node *node, int level, int count, t_data *data);
 
 ///////////// LEXING ///////////////
 

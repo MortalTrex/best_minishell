@@ -97,20 +97,27 @@ bool check_ifvalue(char *str)
 	return (false);
 }
 
-// void	ft_export(char **argv, t_data *data)
-// {
-// 	t_token	*tmp;
+void	ft_export(char **argv, t_data *data)
+{
+	int i;
 
-// 	tmp = data->tok;
-// 	if (tmp->next == NULL)
-// 		ft_exp_env(data);
-// 	else
-// 		tmp = tmp->next;
-// 	while (tmp)
-// 	{
-// 		if (check_ifvalue(tmp->value) == true)
-// 			if (check_double(data, tmp->value) == false)
-// 				push_node_to_env(data, tmp->value);
-// 		tmp = tmp->next;
-// 	}
-// }
+	i = 1;
+	if (!argv[i])
+	{
+		ft_exp_env(data);
+		return ;
+	}
+	while (argv[i])
+	{
+		if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0]))
+		{
+			ft_printf("export: not a valid identifier\n");
+			return ;
+		}
+		if (check_double(data, argv[i]) == true)
+			change_value(data, argv[i], argv[i]);
+		else
+			push_node_to_env(data, argv[i]);
+		i++;
+	}
+}

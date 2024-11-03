@@ -39,38 +39,29 @@ char	*ft_path(char *cmd, t_data *data)
 	return (NULL);
 }
 
-void	exec(t_data *data, char *cmd)
+void	exec(t_data *data, char **cmd)
 {
 	char	*path;
-	char	**cmd_split;
 
-	cmd_split = ft_split(cmd, ' ');
-	if (!cmd_split || !cmd_split[0])
-	{
-		ft_free_tab(cmd_split);
-		ft_close_fd(data, "no cmd");
-	}
-	path = ft_path(cmd_split[0], data);
+	if (!cmd || !cmd[0])
+		ft_close_fd(data, "Error: no command\n");
+	path = ft_path(cmd[0], data);
 	if (!path)
 	{
-		ft_printf("Command '%s'", cmd_split[0]);
-		ft_free_tab(cmd_split);
+		ft_printf("Command '%s'", cmd[0]);
 		ft_close_fd(data, " not found\n");
 	}
-	if (execve(path, cmd_split, data->envc) == -1)
-	{
-		ft_free_tab(cmd_split);
+	if (execve(path, cmd, data->envc) == -1)
 		ft_close_fd(data, "execve fail\n");
-	}
 }
 
-void	ft_process_infile(char *cmd, t_data *data, bool redir)
+void	ft_process_infile(char **cmd, t_data *data, bool redir)
 {
 	int	fd_in;
 
 	if (redir == true)
 	{
-		fd_in = open(cmd, O_RDONLY);
+		fd_in = open(cmd[0], O_RDONLY);
 		if (fd_in == -1)
 			ft_close_fd(data, "Error opening fd_in");
 		if (dup2(data->fd[1], STDOUT_FILENO) == -1)
@@ -85,19 +76,19 @@ void	ft_process_infile(char *cmd, t_data *data, bool redir)
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_process_outfile(char *cmd, t_data *data)
-{
-	int	fd_out;
+// void	ft_process_outfile(char *cmd, t_data *data)
+// {
+// 	int	fd_out;
 
-	fd_out = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd_out == -1)
-		ft_close_fd(data, "Error opening fd_out\n");
-	if (dup2(data->fd[0], STDIN_FILENO) == -1)
-		ft_close_fd(data, "Error redirecting stdin\n");
-	if (dup2(fd_out, STDOUT_FILENO) == -1)
-		ft_close_fd(data, "Error redirecting stdout\n");
-	close(data->fd[0]);
-	close(data->fd[1]);
-	close(fd_out);
-	exec(data, cmd);
-}
+// 	fd_out = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	if (fd_out == -1)
+// 		ft_close_fd(data, "Error opening fd_out\n");
+// 	if (dup2(data->fd[0], STDIN_FILENO) == -1)
+// 		ft_close_fd(data, "Error redirecting stdin\n");
+// 	if (dup2(fd_out, STDOUT_FILENO) == -1)
+// 		ft_close_fd(data, "Error redirecting stdout\n");
+// 	close(data->fd[0]);
+// 	close(data->fd[1]);
+// 	close(fd_out);
+// 	exec(data, cmd);
+// }

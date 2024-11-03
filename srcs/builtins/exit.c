@@ -37,30 +37,25 @@ int	ft_value(int value)
 	return (value);
 }
 
-// void	ft_exit(char **argv, t_data *data)
-// {
-// 	t_token	*current;
-// 	int		value;
+void	ft_exit(char **argv, t_data *data)
+{
+	int		value;
 
-// 	current = data->tok;
-// 	if (current->next)
-// 	{
-// 		current = current->next;
-// 		if (current->type == T_WORD)
-// 		{
-// 			if (ft_is_number(current->value))
-// 			{
-// 				value = ft_atoi(current->value);
-// 				value = ft_value(value);
-// 				ft_free_all(data);
-// 				exit(value);
-// 			}
-// 			else
-// 				ft_error(data, "exit: numeric argument required\n");
-// 		}
-// 		else
-// 			ft_error(data, "exit: numeric argument required\n");
-// 	}
-// 	ft_free_all(data);
-// 	exit(0);
-// }
+	if (argv[1])
+	{
+		if (ft_is_number(argv[1]))
+		{
+			value = ft_atoi(argv[1]);
+			value = ft_value(value);
+			ft_free_all(data);
+			exit(value);
+		}
+		else
+			ft_error(data, "exit: numeric argument required\n");
+	}
+	else
+	{
+		ft_free_all(data);
+		exit(0);
+	}
+}

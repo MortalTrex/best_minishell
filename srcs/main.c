@@ -25,6 +25,7 @@ void	ft_readline(t_data *data)
 	if (data->user_line == NULL)
 	{
 		ft_printf("Exit\n");
+		ft_free_all(data);
 		exit(0);
 	}
 }
@@ -44,10 +45,8 @@ int	main(int argc, char **argv, char **envp)
 		copy_env_char(&data);
 		if (!ft_tokenize(&data))
 			continue ;
-		//print_tab(data.envc);
-		ft_detect_builtin(&data);
 		parse_tokens(&data);
-		ft_execution(&data);
+		read_ast(data.ast, 0, 0, &data);
 		data.free_value = 1;
 		ft_free_all(&data);
 	}

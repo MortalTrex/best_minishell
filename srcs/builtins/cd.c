@@ -78,7 +78,6 @@ void	set_home(t_data *data)
 	t_env	*current;
 
 	current = data->env;
-	printf("set_home\n");
 	while (current)
 	{
 		if (ft_strncmp(current->name, "HOME", 4) == 0)
@@ -87,16 +86,13 @@ void	set_home(t_data *data)
 	}
 }
 
-// void	ft_cd(char **argv, t_data *data)
-// {
-// 	t_token	*current;
-
-// 	current = data->tok;
-// 	if (current->next)
-// 	{
-// 		current = current->next;
-// 		ft_move_directory(current->value, data);
-// 	}
-// 	else if (current->next == NULL)
-// 		set_home(data);
-// }
+void	ft_cd(char **argv, t_data *data)
+{
+	if (argv[1] == NULL)
+		set_home(data);
+	else if (argv[1] != NULL && argv[2] == NULL)
+		ft_move_directory(argv[1], data);
+	else
+		ft_printf("cd: too many arguments\n");
+	// ATTENTION ERREUR A AJOUTER
+}

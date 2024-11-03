@@ -29,18 +29,19 @@ void	search_in_env(t_data *data, char *var)
 	}
 }
 
-// void	ft_unset(char **argv, t_data *data)
-// {
-// 	t_token	*tmp_tok;
-// 	bool	after_unset;
+void	ft_unset(char **argv, t_data *data)
+{
+	int i;
 
-// 	tmp_tok = data->tok;
-// 	while (tmp_tok)
-// 	{
-// 		if (after_unset == true)
-// 			search_in_env(data, tmp_tok->value);
-// 		if (!ft_strcmp(tmp_tok->value, "unset"))
-// 			after_unset = true;
-// 		tmp_tok = tmp_tok->next;
-// 	}
-// }
+	i = 1;
+	while (argv[i])
+	{
+		if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0]))
+		{
+			ft_printf("unset: not a valid identifier\n");
+			return ;
+		}
+		search_in_env(data, argv[i]);
+		i++;
+	}
+}
