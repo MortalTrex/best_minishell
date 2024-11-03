@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 00:00:37 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 17:20:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_redir
 	char			*command;
 	char			**argv;
 	t_redir_type	type;
+	int				hd_fd;
 	struct s_redir	*prev;
 	struct s_redir	*next;
 }					t_redir;
@@ -67,8 +68,10 @@ typedef struct s_data
 	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
-	bool			child_status;
+	bool			child_signal;
+	bool			heredoc_signal;
 	int				free_value;
+	struct termios	terminal;
 }					t_data;
 
 #endif

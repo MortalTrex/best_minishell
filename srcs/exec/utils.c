@@ -1,5 +1,27 @@
 #include "minishell.h"
 
+bool	ft_is_delimiter(char *delimiter, char *str)
+{
+	while (*str)
+	{
+		if (*delimiter == '"' || *delimiter == '\'')
+		{
+			delimiter++;
+			continue ;
+		}
+		else if (*str == *delimiter)
+		{
+			str++;
+			delimiter++;
+		}
+		else
+			return (false);
+	}
+	while (*delimiter == '"' || *delimiter == '\'')
+		delimiter++;
+	return (!*delimiter);
+}
+
 // char		*get_env(t_data *data)
 // {
 // 	ssize_t i;

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 18:46:18 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 21:51:14 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 17:22:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ void	ft_free_all(t_data *data)
 	}
 	if (data->ast)
 		free_ast(&data->ast, data);
-	data->parsing_error = 0;
+	tcsetattr(STDIN_FILENO, TCSANOW, &data->terminal);
+}
 }
