@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 15:16:37 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/03 20:47:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_ast_node
 	int 				nb_levels;
 	char				*command;
 	char				**argv;
-	// pid_t			pid;
 	t_redir				*redir;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
@@ -70,6 +69,7 @@ typedef struct s_data
 	int				parsing_error;
 	int				exit_status;
 	int 			free_value;
+	int 			nb_levels;
 }					t_data;
 
 #endif
