@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 19:11:46 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 18:54:36 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	parse_tokens(t_data *data)
 	data->ast = create_tree(&data->tok, data);
 	if (data->parsing_error)
 		ft_parsing_error(data);
-	if (data->ast != NULL)
-	{
-		printf("AST constructed, printing...\n");
-		print_ast(data->ast, 0);
-		free_ast(&data->ast, data);
-	}
+	// if (data->ast != NULL)
+	// {
+	// 	printf("AST constructed, printing...\n");
+	// 	print_ast(data->ast, 0);
+	// 	free_ast(&data->ast, data);
+	// }
 }

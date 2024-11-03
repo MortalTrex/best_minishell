@@ -6,21 +6,24 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/02 23:39:31 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:09:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
+
+t_signals	g_signals;
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
 static void	init_minishell(t_data *data, char **envp)
 {
-	ft_bzero(data, sizeof(t_data));
-	data->exit_status = 0;
-	data->fd[0] = -1;
-	data->fd[1] = -1;
+	ft_memset(data, 0, sizeof(t_data));
 	copy_env(envp, data);
+	data->exit_status = 0;
+	data->fd[0] = dup(STDIN_FILENO);
+	data->fd[1] = dup(STDOUT_FILENO);
+	tcgetattr(STDIN_FILENO, &data->terminal);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -32,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	init_minishell(&data, envp);
 	while (true)
 	{
-		signals();
+		signals(&data);
 		data.free_value = 0;
 		data.user_line = readline(PROMPT);
 		if ((*data.user_line))
@@ -44,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (!ft_tokenize(&data))
 			continue ;
-		print_tokens(&data);
+		//print_tokens(&data);
 		parse_tokens(&data);
 		if (data.parsing_error)
 		{
@@ -57,6 +60,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	data.free_value = 0;
 	ft_free_all(&data);
-	clear_history();
-	return (0);
+	return (data.exit_status);
 }

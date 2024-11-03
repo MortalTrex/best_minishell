@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/11/02 19:05:31 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/11/03 18:39:20 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,9 @@ SRCS = srcs/main.c\
 	srcs/builtins/cd.c\
 	srcs/exec/exec_cases.c\
 	srcs/exec/exec_core.c\
+	srcs/exec/exec_heredoc.c\
 	srcs/exec/exec_read.c\
+	srcs/exec/utils.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\

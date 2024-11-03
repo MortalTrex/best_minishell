@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/02 23:35:24 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:03:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@
 # include <termios.h>
 # include <unistd.h>
 
+
 ////////////////////////// DEFINITIONS ////////////////////////////
 
 # define PROMPT "minishell> "
 # define ERR_SYN 1
 # define ERR_MEM 2
 # define ERR_PIPE 3
-# define BUFF_SIZE 4096
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
@@ -118,8 +118,14 @@ void		exec(t_data *data, char *cmd);
 void		ft_process_infile(char *cmd, t_data *data, bool redir);
 void		ft_process_outfile(char *cmd, t_data *data);
 
+// exec_heredoc.c
+void		ft_process_heredoc(t_redir *redir, t_data *data);
+
 // exec_read.c
 void		ft_execution(t_data *data);
+
+// utils.c
+bool		ft_is_delimiter(char *delimiter, char *str);
 
 ///////////// LEXING ///////////////
 
@@ -192,8 +198,10 @@ char		*ft_strjoin_free(char *s1, char *s2);
 ///////////SIGNALS//////////////
 
 // signal.c
+void		heredoc_sigint_handler(int sig);
+void		sigquit_handler(int sig);
 void		sigint_handler(int sig);
-void		signals(void);
+void		signals(t_data *data);
 
 /////////////UTILS//////////////
 

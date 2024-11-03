@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 17:20:41 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:06:52 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define STRUCTURES_H
 
 # include <minishell.h>
+# include <termios.h>
 
 typedef enum e_redir_type
 {
@@ -68,10 +69,17 @@ typedef struct s_data
 	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
-	bool			child_signal;
-	bool			heredoc_signal;
 	int				free_value;
 	struct termios	terminal;
 }					t_data;
+
+typedef struct s_signals
+{
+	bool			child_signal;
+	bool			heredoc_signal;
+	t_data			**data_pointer;
+}					t_signals;
+
+extern t_signals	g_signals;
 
 #endif
