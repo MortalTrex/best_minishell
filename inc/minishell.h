@@ -114,8 +114,8 @@ void		ft_cd(char **argv, t_data *data);
 //////////////// EXECUTION ////////////////
 // exec_cases.c
 int			exec_pipe(char *cmd1, char *cmd2, t_data *data);
-//int			exec_onecommand(char **cmd, t_data *data);
-int			exec_onecommand(char **cmd, pid_t pid, t_data *data);
+//    			exec_onecommand(char **cmd, t_data *data);
+int			exec_onecommand(char **cmd, t_data *data);
 void 		no_pipe(char **argv, t_data *data);
 
 

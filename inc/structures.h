@@ -37,10 +37,21 @@ typedef struct s_redir
 	struct s_redir	*next;
 }					t_redir;
 
+// while (redir)
+// checker type
+// si un type est IN
+// tu dois continuer la boucle pour verifier si c le seul
+// si cest pas le cas tu dois prendre le dernier infile en param dans lexec
+// here_doc char **arguments
+// > ....
+// > ....
+// > ....
+// > le mot delimitateur
+// char **here_doc
+
 typedef struct s_ast_node
 {
 	t_ast_node_type		type;
-	int 				nb_levels;
 	char				*command;
 	char				**argv;
 	t_redir				*redir;

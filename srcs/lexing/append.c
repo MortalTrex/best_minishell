@@ -80,35 +80,33 @@ char	*ft_waiting_for_quote(char *line, t_data *data)
 
 bool	ft_append_word(char **command, t_token **tokens, t_data *data)
 {
-	char	*line;
-	char	*value;
-	size_t	i;
-	t_token	*new_token;
-
-	line = *command;
-	i = 0;
-	while (!ft_is_separator(line + i) && line[i])
-	{
-		if (ft_is_quote(line[i]))
-		{
-			if (!ft_skip_quotes(line, &i))
-			{
-				line = ft_waiting_for_quote(line, data);
-				if (!line)
-					return (false);
-				i = 0;
-			}
-		}
-		else
-			i++;
-	}
-	value = ft_substr(line, 0, i);
-	if (!value)
-		return (false);
-	//free(line);
-	new_token = ft_stacknew(T_WORD, value);
-	if (!new_token)
-		return (free(value), false);
-	*command += i;
-	return (ft_stackadd_back(tokens, new_token), true);
+    char	*line;
+    char	*value;
+    size_t	i;
+    t_token	*new_token;
+    line = *command;
+    i = 0;
+    while (!ft_is_separator(line + i) && line[i])
+    {
+        if (ft_is_quote(line[i]))
+        {
+            if (!ft_skip_quotes(line, &i))
+            {
+                line = ft_waiting_for_quote(line, data);
+                if (!line)
+                    return (false);
+                i = 0;
+            }
+        }
+        else
+            i++;
+    }
+    value = ft_substr(line, 0, i);
+    if (!value)
+        return (false);
+    new_token = ft_stacknew(T_WORD, value);
+    if (!new_token)
+        return (free(value), false);
+    *command += i;
+    return (ft_stackadd_back(tokens, new_token), true);
 }
