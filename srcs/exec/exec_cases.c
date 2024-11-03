@@ -6,15 +6,19 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 23:37:28 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 23:37:29 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:29:29 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_pipe(char *cmd1, char *cmd2, t_data *data)
+int	exec_pipe(t_ast_node *node, t_data *data)
 {
 	pid_t	pid;
+	int		left;
+	int		right;
+
+	g_signals.child_signal = true;
 
 	if (pipe(data->fd) == -1)
 		ft_close_fd(data, "Error creating pipe\n");
@@ -31,7 +35,7 @@ int	exec_pipe(char *cmd1, char *cmd2, t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-int	exec_onecommand(char *cmd, t_data *data)
+int	exec_onecommand(t_ast_node *node, t_data *data)
 {
 	pid_t	pid;
 
@@ -47,3 +51,15 @@ int	exec_onecommand(char *cmd, t_data *data)
 	waitpid(pid, NULL, 0);
 	return (EXIT_SUCCESS);
 }
+
+int	execute_node(t_ast_node *node, t_data *data)
+{
+	if (!node)
+		return (EXIT_FAILURE);
+	if (node->type == NODE_PIPE)
+		return (exec_pipe(node, node->right->command, data));
+	else
+		return (exec_onecommand(node, data));
+	return (ENOMEM);
+}
+

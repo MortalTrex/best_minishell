@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 18:07:21 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 18:26:38 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:24:10 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char	*ft_clean_empty_strs(char *str)
 	}
 	free(str);
 	dstsize = ft_strlen(tmp) + 1;
-	ret = ft_calloc(dstsize, sizeof(char));
+	if (!(ret = ft_calloc(dstsize, sizeof(char))))
+		return (free(tmp), NULL);
 	return (ft_strlcpy(ret, tmp, dstsize), free(tmp), ret);
 }
 

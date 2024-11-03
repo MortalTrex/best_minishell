@@ -22,6 +22,12 @@ bool	ft_is_delimiter(char *delimiter, char *str)
 	return (!*delimiter);
 }
 
+void	ft_fds_dup2(t_data *data)
+{
+	dup2(data->fd[0], 0);
+	dup2(data->fd[1], 1);
+}
+
 // char		*get_env(t_data *data)
 // {
 // 	ssize_t i;
