@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/31 17:13:52 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/03 14:59:49 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,4 @@ void	parse_tokens(t_data *data)
 	data->ast = create_tree(&data->tok, data);
 	if (data->parsing_error)
 		ft_parsing_error(data);
-	printf("Tree created...\n");
 }

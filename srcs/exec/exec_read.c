@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+void	count_levels(t_ast_node *node, int level)
+{
+	if (!node)
+		return ;
+	node->nb_levels = level;
+	if (node->left)
+		count_levels(node->left, level + 1);
+	if (node->right)
+		count_levels(node->right, level + 1);
+}
+
 void	read_ast(t_ast_node *node, int level, int count, t_data *data)
 {
 	int	i;
@@ -14,12 +25,10 @@ void	read_ast(t_ast_node *node, int level, int count, t_data *data)
 			return ;
 		else
 		{
-			exec_onecommand(node->argv, data);
-			while (node->argv && node->argv[i])
-			{
-				printf("\033[0;32m%s\033[0m\n", node->argv[i]);
-				i++;
-			}
+			if (count == 0)
+				exec_onecommand(node->argv, data);
+			if (count > 0)
+				printf("Plein de pipes\n");
 		}
 	}
 	if (node->left)
