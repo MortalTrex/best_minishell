@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   exec_core.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/10 17:07:34 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/04 19:14:20 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,23 @@ void	exec(t_data *data, char **cmd)
 		ft_close_fd(data, "execve fail\n");
 }
 
-void	ft_process_infile(char **cmd, t_data *data, bool redir)
-{
-	int	fd_in;
+// void	ft_process_infile(char **cmd, t_data *data)
+// {
+// 	int	fd_in;
 
-	if (redir == true)
-	{
-		fd_in = open(cmd[0], O_RDONLY);
-		if (fd_in == -1)
-			ft_close_fd(data, "Error opening fd_in");
-		if (dup2(data->fd[1], STDOUT_FILENO) == -1)
-			ft_close_fd(data, "Error redirecting stdout");
-		if (dup2(fd_in, STDIN_FILENO) == -1)
-			ft_close_fd(data, "Error redirecting stdin");
-		close(data->fd[0]);
-		close(data->fd[1]);
-		close(fd_in);
-	}
-	exec(data, cmd);
-	exit(EXIT_SUCCESS);
-}
+// 	fd_in = open(cmd[0], O_RDONLY);
+// 	if (fd_in == -1)
+// 		ft_close_fd(data, "Error opening fd_in");
+// 	if (dup2(data->fd[1], STDOUT_FILENO) == -1)
+// 		ft_close_fd(data, "Error redirecting stdout");
+// 	if (dup2(fd_in, STDIN_FILENO) == -1)
+// 		ft_close_fd(data, "Error redirecting stdin");
+// 	close(data->fd[0]);
+// 	close(data->fd[1]);
+// 	close(fd_in);
+// 	exec(data, cmd);
+// 	exit(EXIT_SUCCESS);
+// }
 
 // void	ft_process_outfile(char *cmd, t_data *data)
 // {

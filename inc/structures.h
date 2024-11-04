@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 20:47:24 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/04 15:34:21 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ typedef enum e_ast_node_type
 
 typedef struct s_redir
 {
-	char			*command;
+	char			*file;
+	char			**argv;
 	t_redir_type	type;
-	struct s_redir	*prev;
+	int				hd_fd;
 	struct s_redir	*next;
+	struct s_redir	*prev;
 }					t_redir;
 
 // while (redir)
@@ -71,12 +73,12 @@ typedef struct s_env
 typedef struct s_data
 {
 	t_env			*env;
-	char 			**envc;
+	t_ast_node		*ast;
 	t_token			*tok;
 	t_token			*tmp_token;
+	char 			**envc;
 	char			*user_line;
 	int				fd[2];
-	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
 	int 			free_value;

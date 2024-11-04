@@ -6,13 +6,11 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 20:48:37 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/04 17:15:01 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-int		g_global_state = 0;
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
@@ -47,6 +45,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		parse_tokens(&data);
 		ft_execution(&data);
+		//print_ast(data.ast, 0);
 		data.free_value = 1;
 		ft_free_all(&data);
 	}

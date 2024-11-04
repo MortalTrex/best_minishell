@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/10/30 19:09:35 by mmiilpal         ###   ########.fr        #
+#    Updated: 2024/11/04 11:55:16 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ SRCS = srcs/main.c\
 	srcs/exec/exec_cases.c\
 	srcs/exec/exec_core.c\
 	srcs/exec/exec_read.c\
+	srcs/exec/exec_heredoc.c\
+	srcs/exec/exec_redirs.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\

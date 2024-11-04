@@ -10,7 +10,7 @@ static	void	free_redir(t_redir **redir)
 	tmp = *redir;
 	while (tmp)
 	{
-		free(tmp->command);
+		free(tmp->file);
 		next = tmp->next;
 		free(tmp);
 		tmp = next;

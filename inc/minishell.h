@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 21:16:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/04 19:20:32 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,15 @@ void		ft_cd(char **argv, t_data *data);
 int			exec_pipe(char *cmd1, char *cmd2, t_data *data);
 //    			exec_onecommand(char **cmd, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
-void 		no_pipe(char **argv, t_data *data);
+void 		no_pipe(t_ast_node *node, t_data *data);
 
+// exec_redirs.c
+int 		ft_process_redirections(t_ast_node *node, t_data *data);
 
 // exec_core.c
 char 		*ft_path(char *cmd, t_data *data);
 void 		exec(t_data *data, char **cmd);
-void 		ft_process_infile(char **cmd, t_data *data, bool redir);
+void 		ft_process_infile(char **cmd, t_data *data);
 void 		ft_process_outfile(char *cmd, t_data *data);
 
 // exec_read.c
