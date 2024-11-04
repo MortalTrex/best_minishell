@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 18:39:57 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:12:48 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_path(char *cmd, t_data *data)
 	return (NULL);
 }
 
-/* void	exec(t_ast_node *node, t_data *data)
+void	exec(t_ast_node *node, t_data *data)
 {
 	char	*path;
 	char	**cmd_split;
@@ -54,4 +54,4 @@ char	*ft_path(char *cmd, t_data *data)
 	{
 		ft_close_fd(data, "execve fail\n");
 	}
-} */
+}
