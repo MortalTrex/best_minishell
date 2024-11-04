@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 23:42:47 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/03 18:38:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/04 17:35:00 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	read_command(t_ast_node *node, t_data *data)
 		if (redirs->type == D_HEREDOC)
 			ft_process_heredoc(redirs, data);
 		else
-			redirs->argv = ft_expand_and_clean(redirs->command, data);
+			redirs->argv = ft_expand_and_clean(redirs->file, data);
 		redirs = redirs->next;
 	}
 }
@@ -34,7 +34,7 @@ static void	read_ast(t_ast_node *node, t_data *data)
 	if (node->type == NODE_PIPE)
 	{
 		read_ast(node->left, data);
-			if (!g_signals.heredoc_signal)
+			if (!data->heredoc)
 				read_ast(node->right, data);
 	}
 	else
@@ -42,16 +42,3 @@ static void	read_ast(t_ast_node *node, t_data *data)
 
 }
 
-void	ft_execution(t_data *data)
-{
-	signal(SIGQUIT, sigquit_handler);
-	read_ast(data->ast, data);
-	if (g_signals.heredoc_signal)
-	{
-		free_ast(&data->ast, data);
-		g_signals.heredoc_signal = false;
-	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &data->terminal);
-	//data->exit_status = ft_execute_ast(data->ast, data);
-	free_ast(&data->ast, data);
-}

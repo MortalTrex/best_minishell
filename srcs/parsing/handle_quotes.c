@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 18:05:38 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 18:57:41 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:06:54 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*ft_handle_dquotes(char *str, size_t *i, t_data *data)
 	char	*tmp;
 
 	tmp = ft_strdup("\"");
+	if (!tmp)
+		return (NULL);
 	(*i)++;
 	while (str[*i] != '"')
 	{
@@ -68,6 +70,8 @@ char	*ft_clean_command(char *str, t_data *data)
 
 	command = ft_strdup("");
 	i = 0;
+	if (!command || !str)
+		return (NULL);
 	while (str[i])
 	{
 		if (str[i] == '\'')

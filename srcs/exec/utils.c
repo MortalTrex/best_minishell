@@ -28,6 +28,17 @@ void	ft_fds_dup2(t_data *data)
 	dup2(data->fd[1], 1);
 }
 
+bool	is_builtin(char *command)
+{
+	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "cd")
+		|| !ft_strcmp(command, "pwd") || !ft_strcmp(command, "export")
+		|| !ft_strcmp(command, "unset") || !ft_strcmp(command, "env")
+		|| !ft_strcmp(command, "exit"))
+		return (true);
+	return (false);
+}
+
+
 // char		*get_env(t_data *data)
 // {
 // 	ssize_t i;

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 21:10:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:39:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,19 @@ char	*ft_path(char *cmd, t_data *data)
 	return (NULL);
 }
 
-void	exec(t_data *data, char *cmd)
+/* void	exec(t_ast_node *node, t_data *data)
 {
 	char	*path;
 	char	**cmd_split;
 
-	cmd_split = ft_split(cmd, ' ');
-	if (!cmd_split || !cmd_split[0])
-	{
-		ft_free_tab(cmd_split);
-		ft_close_fd(data, "no cmd");
-	}
-	path = ft_path(cmd_split[0], data);
+	path = ft_path(node->argv[0], data);
 	if (!path)
 	{
-		ft_printf("Command '%s'", cmd_split[0]);
-		ft_free_tab(cmd_split);
+		ft_printf("Command '%s'", node->argv[0]);
 		ft_close_fd(data, " not found\n");
 	}
-	if (execve(path, cmd_split, data->envc) == -1)
+	if (execve(path, node->argv[0], data->envc) == -1)
 	{
-		ft_free_tab(cmd_split);
 		ft_close_fd(data, "execve fail\n");
 	}
-}
+} */

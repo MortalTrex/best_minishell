@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 19:06:52 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:16:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum e_ast_node_type
 
 typedef struct s_redir
 {
-	char			*command;
+	char			*file;
 	char			**argv;
 	t_redir_type	type;
 	int				hd_fd;
@@ -45,7 +45,7 @@ typedef struct s_ast_node
 	t_ast_node_type		type;
 	char				*command;
 	char				**argv;
-	// pid_t			pid;
+	pid_t				pid;
 	t_redir				*redir;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
@@ -69,17 +69,13 @@ typedef struct s_data
 	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
+	int				last_pid;
+	int				wstatus;
+	int				heredoc;
 	int				free_value;
 	struct termios	terminal;
 }					t_data;
 
-typedef struct s_signals
-{
-	bool			child_signal;
-	bool			heredoc_signal;
-	t_data			**data_pointer;
-}					t_signals;
-
-extern t_signals	g_signals;
+extern int			g_exit_status;
 
 #endif

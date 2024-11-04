@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/02 18:52:41 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:20:45 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	ft_append_operator(char **command, t_token **tokens)
 
 	if (ft_is_multi_char_operator(*command))
 	{
-		new_token = ft_stacknew(T_OPERATOR, NULL);
+		new_token = ft_stacknew(T_WORD, NULL);
 		if (ft_strchr(*command, '<'))
 			new_token->value = ft_strdup("<<");
 		else
@@ -48,7 +48,7 @@ bool	ft_append_operator(char **command, t_token **tokens)
 	}
 	else
 	{
-		new_token = ft_stacknew(T_OPERATOR, NULL);
+		new_token = ft_stacknew(T_WORD, NULL);
 		new_token->value = ft_substr(*command, 0, 1);
 		new_token->type = ft_op_type(new_token->value);
 		(*command)++;
