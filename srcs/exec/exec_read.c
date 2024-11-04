@@ -1,14 +1,14 @@
 #include "minishell.h"
 
-void	count_levels(t_ast_node *node, int level)
+void	count_levels(t_ast_node *node, int level, t_data *data)
 {
 	if (!node)
 		return ;
-	node->nb_levels = level;
+	data->nb_levels = level;
 	if (node->left)
-		count_levels(node->left, level + 1);
+		count_levels(node->left, level + 1, data);
 	if (node->right)
-		count_levels(node->right, level + 1);
+		count_levels(node->right, level + 1, data);
 }
 
 // void	read_ast(t_ast_node *node, int level, int count, t_data *data)
@@ -51,7 +51,7 @@ void	count_levels(t_ast_node *node, int level)
 // }
 void	ft_execution(t_data *data)
 {
-	count_levels(data->ast, 0);
+	count_levels(data->ast, 0, data);
 	if (data->nb_levels == 0)
 		no_pipe(data->ast->argv, data);
 	//read_ast(data->ast, 0, 0, data);

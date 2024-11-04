@@ -127,7 +127,7 @@ void 		ft_process_outfile(char *cmd, t_data *data);
 
 // exec_read.c
 void		ft_execution(t_data *data);
-void		count_levels(t_ast_node *node, int level);
+void		count_levels(t_ast_node *node, int level, t_data *data);
 void		read_ast(t_ast_node *node, int level, int count, t_data *data);
 
 ///////////// LEXING ///////////////
