@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 14:26:20 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:17:49 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **envp)
 		parse_tokens(&data);
 		ft_execution(&data);
 		//print_ast(data.ast, 0);
+		printf("salut");
 		data.free_value = 1;
 		ft_free_all(&data);
 	}
