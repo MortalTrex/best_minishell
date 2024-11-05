@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 18:46:18 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/03 20:07:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:32:04 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static	void	free_redir(t_redir **redir)
 	{
 		if (tmp->argv)
 			ft_free_tab(tmp->argv);
-		free(tmp->command);
+		free(tmp->file);
 		next = tmp->next;
 		free(tmp);
 		tmp = next;
@@ -82,6 +82,12 @@ void	ft_free_all(t_data *data)
 	}
 	if (data->ast)
 		free_ast(&data->ast, data);
+}
+
+void	ft_free_exit(t_data *data)
+{
+	ft_free_all(data);
 	rl_clear_history();
 	tcsetattr(STDIN_FILENO, TCSANOW, &data->terminal);
+	exit(data->exit_status);
 }

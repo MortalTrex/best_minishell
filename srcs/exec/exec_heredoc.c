@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 00:04:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/04 15:44:04 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:23:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	create_filename(t_redir *redir)
 {
 	char	*temp_file;
-	int		fd;
 	char	*temp_num;
 
 	temp_num = ft_itoa(getpid() + 1);
@@ -27,15 +26,12 @@ static void	create_filename(t_redir *redir)
 		free(temp_file);
 		return ;
 	}
-	fd = open(temp_file, O_RDWR | O_CREAT | O_TRUNC, 0666);
-	if (fd == -1)
+	if (access(temp_file, F_OK) == -1)
 	{
-		free(temp_file);
-		perror("open");
+		redir->file = temp_file;
 		return ;
 	}
-	close(fd);
-	redir->file = temp_file;
+	free(temp_file);
 }
 
 static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
@@ -82,7 +78,7 @@ static void close_hd(t_redir *redir, t_data *data)
 	close(data->fd[0]);
 }
 
-static void	ft_read_heredoc(t_redir *redir, int *fd, t_data *data)
+static void	ft_read_heredoc(t_redir *redir, t_data *data)
 {
 	char	*line;
 	char	*read;
@@ -116,6 +112,6 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 	data->fd[0] = dup(STDIN_FILENO);
 	if (redir->file == NULL)
 		create_filename(redir);
-	signal(SIGINT, heredoc_sigint_handler);
-	ft_read_heredoc(redir, data->fd, data);
+	ft_read_heredoc(redir, data);
+	data->heredoc = true;
 }

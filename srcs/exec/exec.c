@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:05:12 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/04 16:39:22 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:55:28 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,13 @@ void	ft_execution(t_data *data)
 {
 	signal(SIGQUIT, sigquit_handler);
 	read_ast(data->ast, data);
-	if (data->heredoc)
-	{
-		free_ast(&data->ast, data);
-		data->heredoc = false;
-	}
-	data->exit_status = ft_execute_node(data->ast, data);
+	// print_ast(data->ast, 0);
+	// if (data->heredoc)
+	// {
+	// 	free_ast(&data->ast, data);
+	// 	data->heredoc = false;
+	// }
+	data->exit_status = exec_onecommand(data->ast, data, true);
 	free_ast(&data->ast, data);
+	wait_commands(data);
 }

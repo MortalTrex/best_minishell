@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 19:12:48 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:29:31 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*ft_path(char *cmd, t_data *data)
 void	exec(t_ast_node *node, t_data *data)
 {
 	char	*path;
-	char	**cmd_split;
 
 	path = ft_path(node->argv[0], data);
 	if (!path)
@@ -50,7 +49,7 @@ void	exec(t_ast_node *node, t_data *data)
 		ft_printf("Command '%s'", node->argv[0]);
 		ft_close_fd(data, " not found\n");
 	}
-	if (execve(path, node->argv[0], data->envc) == -1)
+	if (execve(path, &node->argv[0], data->envc) == -1)
 	{
 		ft_close_fd(data, "execve fail\n");
 	}

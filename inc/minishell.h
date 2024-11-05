@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 18:25:00 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:51:02 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,27 +108,30 @@ void		set_home(t_data *data);
 void		ft_cd(t_data *data);
 
 //////////////// EXECUTION ////////////////
+
 // exec_cases.c
 int			exec_pipe(char *cmd1, char *cmd2, t_data *data);
-int			exec_onecommand(char *cmd, t_data *data);
+int			exec_onecommand(t_ast_node *node, t_data *data, bool ispipe);
 
 // exec_core.c
 char		*ft_path(char *cmd, t_data *data);
-void		exec(t_data *data, char *cmd);
-int			ft_process_infile(char *cmd, t_data *data, bool redir);
-int			ft_process_outfile(char *cmd, t_data *data);
+int			ft_process_append(t_redir *redir);
+int			ft_process_infile(t_redir *redir);
+int			ft_process_outfile(t_redir *redir);
+int			ft_process_redirs(t_ast_node *node);
 
 // exec_heredoc.c
 void		ft_process_heredoc(t_redir *redir, t_data *data);
 
 // exec_read.c
+void		read_ast(t_ast_node *node, t_data *data);
+
+// exec.c
 void		ft_execution(t_data *data);
 
 // utils.c
 bool		ft_is_delimiter(char *delimiter, char *str);
-
-// test.c
-void execute_ast(t_ast_node *ast, t_data *data);
+bool		is_builtin(char *command);
 
 ///////////// LEXING ///////////////
 

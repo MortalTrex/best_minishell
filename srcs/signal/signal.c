@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 14:47:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:47:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	heredoc_sigint_handler(int sig)
 	(void)sig;
 	g_exit_status = 130;
 	ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_replace_line("", STDIN_FILENO);
-	rl_redisplay();
+	close(STDIN_FILENO);
 }
 
 void	sigquit_handler(int sig)
@@ -46,7 +45,7 @@ void	signals(t_data *data)
 	terminal = data->terminal;
 	terminal.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
-	data->heredoc = false;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
 }

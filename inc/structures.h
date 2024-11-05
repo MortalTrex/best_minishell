@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 16:16:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:32:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_data
 	int				exit_status;
 	int				last_pid;
 	int				wstatus;
-	int				heredoc;
+	bool			heredoc;
 	int				free_value;
 	struct termios	terminal;
 }					t_data;

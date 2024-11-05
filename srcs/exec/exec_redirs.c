@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 20:44:32 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/04 17:13:34 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:47:28 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ int	ft_process_outfile(t_redir *redir)
 	return (0);
 }
 
-int	ft_process_redirections(t_ast_node *node)
+int	ft_process_redirs(t_ast_node *node)
 {
 	t_redir	*redirs;
-	int		status;
 
 	redirs = node->redir;
 	while(redirs)

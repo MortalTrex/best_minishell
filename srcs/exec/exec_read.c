@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 23:42:47 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/04 17:35:00 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:12:28 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	read_command(t_ast_node *node, t_data *data)
 	}
 }
 
-static void	read_ast(t_ast_node *node, t_data *data)
+void	read_ast(t_ast_node *node, t_data *data)
 {
 	if (!node)
 		return ;
