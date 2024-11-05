@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:52:35 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/05 16:08:18 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:01:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,13 @@ int	exec_onecommand(t_ast_node *node, t_data *data, bool ispipe)
 
 	ispipe = true;
 	if (!(node->argv))
-		return (EXIT_SUCCESS);
+	{
+		status = ft_process_redirs(node);
+		return (status);
+	}
 	else if (is_builtin(node->argv[0]))
 	{
+		status = ft_process_redirs(node);
 		status = ft_exec_builtin(node->argv[0], data);
 		return (status);
 	}
