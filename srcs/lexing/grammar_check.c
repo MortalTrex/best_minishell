@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 14:21:12 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:33:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ bool	ft_is_wordchar(char c)
 
 bool	ft_is_separator(char *s)
 {
-	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t'
-		|| *s == '<' || *s == '>' || *s == '|' || *s == '(' || *s == ')')
+	if (*s == ' ' || *s == '\t'
+		|| *s == '<' || *s == '>' || *s == '|' )
 		return (true);
 	return (false);
 }

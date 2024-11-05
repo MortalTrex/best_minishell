@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 16:16:22 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:36:26 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static void	init_minishell(t_data *data, char **envp)
 	ft_memset(data, 0, sizeof(t_data));
 	copy_env(envp, data);
 	data->exit_status = 0;
+	data->fd[0] = dup(STDIN_FILENO);
+	data->fd[1] = dup(STDOUT_FILENO);
 	data->heredoc = false;
 	tcgetattr(STDIN_FILENO, &data->terminal);
 }
@@ -54,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		//ft_execution(&data);
-		ft_execution(&data);
+		//ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
 	}
