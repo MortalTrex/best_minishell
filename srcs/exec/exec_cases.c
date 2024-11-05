@@ -1,28 +1,31 @@
 #include "minishell.h"
 
-int	exec_onecommand(char **cmd, t_data *data)
+void	read_outfile(t_ast_node *node, t_data *data)
 {
-	pid_t	pid;
-
-	if (pipe(data->fd) == -1)
-		ft_close_fd(data, "Error creating pipe\n");
-	pid = fork();
-	if (pid == -1)
- 		ft_close_fd(data, "Error forking\n");
-	if (pid == 0)
-		exec(data, cmd);
-	close(data->fd[0]);
-	close(data->fd[1]);
-	waitpid(pid, NULL, 0);
-	return (EXIT_SUCCESS);
-}
-
-void no_pipe(t_ast_node *node, t_data *data)
-{
-	int fd_in;
+	int	fd_out;
 
 	node = data->ast;
-	while(node->redir)
+	while (node->redir->type == OUT)
+	{
+		fd_out = open(node->redir->file, O_WRONLY | O_CREAT | O_TRUNC,
+				0644);
+		if (fd_out == -1)
+			ft_close_fd(data, "Error opening fd_out");
+		if (dup2(fd_out, STDOUT_FILENO) == -1)
+			ft_close_fd(data, "Error redirecting stdout");
+		close(data->fd[0]);
+		close(data->fd[1]);
+		close(fd_out);
+		node->redir = node->redir->next;
+	}
+}
+
+void	read_infile(t_ast_node *node, t_data *data)
+{
+	int	fd_in;
+
+	node = data->ast;
+	while (node->redir)
 	{
 		if (node->redir->type == IN)
 		{
@@ -34,30 +37,38 @@ void no_pipe(t_ast_node *node, t_data *data)
 			close(data->fd[0]);
 			close(data->fd[1]);
 			close(fd_in);
+			
 		}
 		node->redir = node->redir->next;
 	}
+}
+
+void	no_pipe(t_ast_node *node, t_data *data)
+{
+	pid_t	pid;
+
 	if (ft_detect_builtin(node->argv, data) == true)
 		return ;
 	else
-		exec_onecommand(node->argv, data);
+	{
+		if (pipe(data->fd) == -1)
+			ft_error(data, "Error creating pipe");
+		pid = fork();
+		if (pid == -1)
+			ft_error(data, "Error forking");
+		if (pid == 0)
+		{
+			read_infile(node, data);
+			exec(data, node->argv);
+		}
+		// if (pid != 0)
+		// {
+		// 	read_outfile(node, data);
+		// }			
+		
+		close(data->fd[0]);
+		close(data->fd[1]);
+
+		waitpid(pid, NULL, 0);
+	}
 }
-
-// int	exec_pipe(char *cmd1, char *cmd2, t_data *data)
-// {
-// 	pid_t	pid;
-
-// 	if (pipe(data->fd) == -1)
-// 		ft_close_fd(data, "Error creating pipe\n");
-// 	pid = fork();
-// 	if (pid == -1)
-// 		ft_close_fd(data, "Error forking\n");
-// 	if (pid == 0)
-// 		ft_process_infile(cmd1, data, true);
-// 	if (pid != 0)
-// 		ft_process_outfile(cmd2, data);
-// 	close(data->fd[0]);
-// 	close(data->fd[1]);
-// 	waitpid(pid, NULL, 0);
-// 	return (EXIT_SUCCESS);
-// }

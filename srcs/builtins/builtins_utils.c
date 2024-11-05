@@ -36,6 +36,8 @@ void	copy_env(char **envp, t_data *data)
 	int	i;
 
 	i = 0;
+	if (!envp)
+		return ;
 	while (envp[i])
 	{
 		push_node_to_env(data, envp[i]);
@@ -50,6 +52,8 @@ void	copy_env_char(t_data *data)
 	int		i;
 
 	i = 0;
+	if (!data->env)
+		return ;
 	tmp_count = data->env;
 	tmp = data->env;
 	while (tmp_count)
