@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   create_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/04 14:47:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:38:18 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//ok
-t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right)
+t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left, \
+													t_ast_node *right)
 {
 	t_ast_node	*pipe_node;
 

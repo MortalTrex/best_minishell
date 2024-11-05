@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remove_quotes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/02 18:07:21 by mmiilpal          #+#    #+#             */
+/*   Updated: 2024/11/03 20:24:10 by mmiilpal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_clean_empty_strs(char *str)
@@ -8,23 +20,24 @@ char	*ft_clean_empty_strs(char *str)
 	char	*ret;
 	size_t	dstsize;
 
-	if ((str[0] == '\'' && str[1] == '\'' && !str[2]) || (str[0] == '"'
-			&& str[1] == '"' && !str[2]))
+	if ((str[0] == '\'' && str[1] == '\'' && !str[2])
+		|| (str[0] == '"' && str[1] == '"' && !str[2]))
 		return (str);
 	tmp = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		if ((str[i] == '\'' && str[i + 1] == '\'') || (str[i] == '"' && str[i
-					+ 1] == '"'))
+		if ((str[i] == '\'' && str[i + 1] == '\'')
+			|| (str[i] == '"' && str[i + 1] == '"'))
 			i += 2;
 		else
 			tmp[j++] = str[i++];
 	}
 	free(str);
 	dstsize = ft_strlen(tmp) + 1;
-	ret = ft_calloc(dstsize, sizeof(char));
+	if (!(ret = ft_calloc(dstsize, sizeof(char))))
+		return (free(tmp), NULL);
 	return (ft_strlcpy(ret, tmp, dstsize), free(tmp), ret);
 }
 
@@ -39,7 +52,7 @@ static size_t	ft_unquoted_strlen(char *str)
 	quotes = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '"')
+		if (ft_is_quote(str[i]))
 		{
 			if (!quotes)
 				quotes = str[i++];
@@ -68,7 +81,7 @@ char	*ft_remove_quotes(char *str)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if (ft_is_quote(str[i]))
 		{
 			quote = str[i++];
 			while (str[i] != quote)

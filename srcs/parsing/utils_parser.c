@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/10/30 19:57:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/02 19:11:06 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,29 @@
 
 bool	is_redirection(t_token *token)
 {
-	if (token->type == T_REDIR_IN || token->type == T_REDIR_OUT
-		|| token->type == T_REDIR_HERE || token->type == T_REDIR_APPEND)
+	if (token->type == T_REDIR_IN || token->type == T_REDIR_OUT \
+			||token->type == T_REDIR_HERE || token->type == T_REDIR_APPEND)
 		return (true);
 	return (false);
 }
 
-bool	check_pipe_syntax(t_token *token)
+bool	check_pipe_syntax(t_token *token, t_data *data)
 {
 	t_token	*current;
 
 	current = token;
 	if (current && current->type == T_PIPE)
-		return (fprintf(stderr,
-				"minishell> syntax error: unexpected pipe at the beginning\n"),
-			false);
+		return (data->parsing_error = ERR_SYN, false);
 	while (current)
 	{
 		if (current->type == T_PIPE)
 		{
 			if (!current->next)
-				return (fprintf(stderr,
-						"minishell> syntax error: unexpected pipe at the end\n"),
-					false);
+				return (data->parsing_error = ERR_SYN, false);
 			if (current->next && current->next->type == T_PIPE)
-				return (fprintf(stderr,
-						"minishell> syntax error: consecutive pipes\n"), false);
-			if (current->next && current->next->type != T_WORD
-				&& current->next->type != T_BUILTIN)
-				return (fprintf(stderr,
-						"minishell> syntax error: pipe not followed by a command\n"),
-					false);
+				return (data->parsing_error = ERR_SYN, false);
+			if (current->next && current->next->type != T_WORD)
+				return (data->parsing_error = ERR_SYN, false);
 		}
 		current = current->next;
 	}
