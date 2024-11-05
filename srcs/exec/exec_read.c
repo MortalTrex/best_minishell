@@ -15,6 +15,7 @@ void	ft_execution(t_data *data)
 {
 	if (!data->ast)
 		return ;
+	printf("JE SUIS LA");
 	count_levels(data->ast, 0, data);
 	
 	if (data->nb_levels == 0)

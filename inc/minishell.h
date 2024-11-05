@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 19:20:32 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/05 17:04:54 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ char		*ft_remove_quotes(char *str);
 
 // utils_parser.c
 bool		is_redirection(t_token *token);
-bool		check_pipe_syntax(t_token *tokens);
+bool		check_pipe_syntax(t_token *tokens, t_data *data);
 void		ft_parsing_error(t_data *data);
 char		*ft_strjoin_free(char *s1, char *s2);
 

@@ -45,30 +45,28 @@ void	read_infile(t_ast_node *node, t_data *data)
 
 void	no_pipe(t_ast_node *node, t_data *data)
 {
-	pid_t	pid;
-
+	//pid_t	pid;
 	if (ft_detect_builtin(node->argv, data) == true)
 		return ;
-	else
-	{
-		if (pipe(data->fd) == -1)
-			ft_error(data, "Error creating pipe");
-		pid = fork();
-		if (pid == -1)
-			ft_error(data, "Error forking");
-		if (pid == 0)
-		{
-			read_infile(node, data);
-			exec(data, node->argv);
-		}
-		// if (pid != 0)
-		// {
-		// 	read_outfile(node, data);
-		// }			
-		
-		close(data->fd[0]);
-		close(data->fd[1]);
-
-		waitpid(pid, NULL, 0);
-	}
+	// else
+	// {
+	// 	if (pipe(data->fd) == -1)
+	// 		ft_error(data, "Error creating pipe");
+	// 	pid = fork();
+	// 	if (pid == -1)
+	// 		ft_error(data, "Error forking");
+	// 	if (pid == 0)
+	// 	{
+	// 		read_infile(node, data);
+	// 		exec(data, node->argv);
+	// 		read_outfile(node, data);
+	// 	}
+	// 	// if (pid != 0)
+	// 	// {
+	// 	// 	read_outfile(node, data);
+	// 	// }			
+	// 	close(data->fd[0]);
+	// 	close(data->fd[1]);
+	// 	waitpid(pid, NULL, 0);
+	// }
 }
