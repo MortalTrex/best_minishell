@@ -6,51 +6,11 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/03 20:18:46 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:10:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_detect_builtin(t_data *data)
-{
-	t_token	*current;
-
-	current = data->tok;
-	while (current)
-	{
-		if (current->type == T_WORD)
-		{
-			if (!ft_strcmp(current->value, "cd"))
-			{
-				ft_cd(data);
-				return ;
-			}
-			// else if (!ft_strcmp(current->value, "echo"))
-			// 	current->type = T_BUILTIN;
-			else if (!ft_strcmp(current->value, "pwd"))
-			{
-				ft_pwd();
-			}
-			else if (!ft_strcmp(current->value, "export"))
-			{
-				ft_export(data);
-			}
-			else if (!ft_strcmp(current->value, "unset"))
-			{
-				ft_unset(data);
-			}
-			else if (!ft_strcmp(current->value, "env"))
-			{
-				ft_env(data);
-			}
-			else if (!ft_strcmp(current->value, "exit"))
-				ft_exit(data);
-		}
-		if (current)
-			current = current->next;
-	}
-}
 
 t_token	*get_tokens(char *command, t_data *data)
 {

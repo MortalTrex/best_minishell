@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:13:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/04 19:18:53 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	set_home(t_data *data)
 	t_env	*current;
 
 	current = data->env;
-	printf("set_home\n");
 	while (current)
 	{
 		if (ft_strncmp(current->name, "HOME", 4) == 0)
@@ -87,16 +86,13 @@ void	set_home(t_data *data)
 	}
 }
 
-void	ft_cd(t_data *data)
+void	ft_cd(char **argv, t_data *data)
 {
-	t_token	*current;
-
-	current = data->tok;
-	if (current->next)
-	{
-		current = current->next;
-		ft_move_directory(current->value, data);
-	}
-	else if (current->next == NULL)
+	if (argv[1] == NULL)
 		set_home(data);
+	else if (argv[1] != NULL && argv[2] == NULL)
+		ft_move_directory(argv[1], data);
+	else
+		ft_printf("cd: too many arguments\n");
+	// ATTENTION ERREUR A AJOUTER
 }

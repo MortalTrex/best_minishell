@@ -6,27 +6,27 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:52:35 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/05 17:01:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:16:23 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"minishell.h"
 
-static int	ft_exec_builtin(char *cmd, t_data *data)
+static int	ft_exec_builtin(char **cmd, t_data *data)
 {
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (ft_echo(data), 0);
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (ft_cd(data), 0);
-	if (ft_strcmp(cmd, "env") == 0)
-		return (ft_env(data), 0);
-	if (ft_strcmp(cmd, "pwd") == 0)
+	if (ft_strcmp(cmd[0], "echo") == 0)
+		return (ft_echo(cmd), 0);
+	if (ft_strcmp(cmd[0], "cd") == 0)
+		return (ft_cd(cmd, data), 0);
+	if (ft_strcmp(cmd[0], "env") == 0)
+		return (ft_env(cmd, data), 0);
+	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (ft_pwd(), 0);
-	if (ft_strcmp(cmd, "export") == 0)
-		return (ft_export(data), 0);
-	if (ft_strcmp(cmd, "unset") == 0)
-		return (ft_unset(data), 0);
-	ft_exit(data);
+	if (ft_strcmp(cmd[0], "export") == 0)
+		return (ft_export(cmd, data), 0);
+	if (ft_strcmp(cmd[0], "unset") == 0)
+		return (ft_unset(cmd, data), 0);
+	ft_exit(cmd, data);
 	return (1);
 }
 
@@ -81,7 +81,7 @@ int	exec_onecommand(t_ast_node *node, t_data *data, bool ispipe)
 	else if (is_builtin(node->argv[0]))
 	{
 		status = ft_process_redirs(node);
-		status = ft_exec_builtin(node->argv[0], data);
+		status = ft_exec_builtin(node->argv, data);
 		return (status);
 	}
 	else

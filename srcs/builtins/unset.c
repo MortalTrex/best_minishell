@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/20 13:53:37 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/31 18:10:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,19 @@ void	search_in_env(t_data *data, char *var)
 	}
 }
 
-void	ft_unset(t_data *data)
+void	ft_unset(char **argv, t_data *data)
 {
-	t_token	*tmp_tok;
-	bool	after_unset;
+	int i;
 
-	tmp_tok = data->tok;
-	while (tmp_tok)
+	i = 1;
+	while (argv[i])
 	{
-		if (after_unset == true)
-			search_in_env(data, tmp_tok->value);
-		if (!ft_strcmp(tmp_tok->value, "unset"))
-			after_unset = true;
-		tmp_tok = tmp_tok->next;
+		if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0]))
+		{
+			ft_printf("unset: not a valid identifier\n");
+			return ;
+		}
+		search_in_env(data, argv[i]);
+		i++;
 	}
 }

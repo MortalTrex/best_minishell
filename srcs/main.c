@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 16:51:25 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:18:29 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,9 @@ int	main(int argc, char **argv, char **envp)
 		//print_tokens(&data);
 		parse_tokens(&data);
 		if (data.parsing_error)
-		{
 			ft_parsing_error(&data);
-			continue ;
-		}
-		ft_execution(&data);
+		else
+			ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
 	}

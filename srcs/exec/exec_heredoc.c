@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 00:04:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/05 14:23:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:26:31 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ static void	ft_read_heredoc(t_redir *redir, t_data *data)
 
 void	ft_process_heredoc(t_redir *redir, t_data *data)
 {
-	data->fd[0] = dup(STDIN_FILENO);
 	if (redir->file == NULL)
 		create_filename(redir);
 	ft_read_heredoc(redir, data);

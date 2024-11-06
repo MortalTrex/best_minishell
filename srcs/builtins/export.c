@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/14 17:40:37 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/10/31 18:10:31 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,33 +76,48 @@ bool	check_change_value(t_data *data)
 			change_value(data, old_str, new_str);
 			return (free(old_str), free(new_str), true);
 		}
-		old_str = ft_strdup(tmp->value);
+		if (tmp->value)
+			old_str = ft_strdup(tmp->value);
 		tmp = tmp->next;
 	}
 	return (free(old_str), free(new_str), false);
 }
 
-void	ft_export(t_data *data)
+bool check_ifvalue(char *str)
 {
-	t_token	*tmp;
-	bool	after_export;
-	int		i;
+	int	i;
 
-	tmp = data->tok;
-	after_export = false;
 	i = 0;
-	if (check_change_value(data) == true)
-		i = -1;
-	while (tmp && i >= 0)
+	while (str[i])
 	{
-		if (after_export == true)
-			if (check_double(data, tmp->value) == false)
-				push_node_to_env(data, tmp->value);
-		if (!ft_strcmp(tmp->value, "export"))
-			after_export = true;
-		tmp = tmp->next;
+		if (str[i] == '=')
+			return (true);
 		i++;
 	}
-	if (i == 1 && after_export == true)
+	return (false);
+}
+
+void	ft_export(char **argv, t_data *data)
+{
+	int i;
+
+	i = 1;
+	if (!argv[i])
+	{
 		ft_exp_env(data);
+		return ;
+	}
+	while (argv[i])
+	{
+		if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0]))
+		{
+			ft_printf("export: not a valid identifier\n");
+			return ;
+		}
+		if (check_double(data, argv[i]) == true)
+			change_value(data, argv[i], argv[i]);
+		else
+			push_node_to_env(data, argv[i]);
+		i++;
+	}
 }
