@@ -15,6 +15,9 @@
 
 # include <minishell.h>
 
+# include <minishell.h>
+# include <termios.h>
+
 typedef enum e_redir_type
 {
 	IN,
@@ -35,27 +38,16 @@ typedef struct s_redir
 	char			**argv;
 	t_redir_type	type;
 	int				hd_fd;
-	struct s_redir	*next;
 	struct s_redir	*prev;
+	struct s_redir	*next;
 }					t_redir;
-
-// while (redir)
-// checker type
-// si un type est IN
-// tu dois continuer la boucle pour verifier si c le seul
-// si cest pas le cas tu dois prendre le dernier infile en param dans lexec
-// here_doc char **arguments
-// > ....
-// > ....
-// > ....
-// > le mot delimitateur
-// char **here_doc
 
 typedef struct s_ast_node
 {
 	t_ast_node_type		type;
 	char				*command;
 	char				**argv;
+	pid_t				pid;
 	t_redir				*redir;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
@@ -69,20 +61,24 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-
 typedef struct s_data
 {
 	t_env			*env;
-	t_ast_node		*ast;
+	char			**envc;
 	t_token			*tok;
-	t_token			*tmp_token;
-	char 			**envc;
 	char			*user_line;
 	int				fd[2];
+	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;
-	int 			free_value;
-	int 			nb_levels;
+	int				last_pid;
+	int				wstatus;
+	bool			heredoc;
+	int				free_value;
+	int             nb_levels;
+	struct termios	terminal;
 }					t_data;
+
+extern int			g_exit_status;
 
 #endif

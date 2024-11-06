@@ -13,6 +13,7 @@
 #include "../inc/minishell.h"
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
+int		g_exit_status;
 
 void	ft_readline(t_data *data)
 {
@@ -36,6 +37,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
+	tcgetattr(STDIN_FILENO, &data.terminal);
+	// data->fd[0] = dup(STDIN_FILENO);
+	// data->fd[1] = dup(STDOUT_FILENO);
 	while (true)
 	{
 		data.free_value = 0;
@@ -45,12 +49,16 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		parse_tokens(&data);
 		ft_execution(&data);
-		//print_ast(data.ast, 0);
+		if (data.parsing_error)
+		{
+			ft_parsing_error(&data);
+			continue ;
+		}
 		data.free_value = 1;
 		ft_free_all(&data);
 	}
 	data.free_value = 0;
 	ft_free_all(&data);
 	clear_history();
-	return (0);
+	return (data.exit_status);
 }

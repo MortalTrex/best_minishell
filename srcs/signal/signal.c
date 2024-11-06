@@ -12,12 +12,40 @@
 
 #include "minishell.h"
 
+void	heredoc_sigint_handler(int sig)
+{
+	(void)sig;
+	g_exit_status = 130;
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	close(STDIN_FILENO);
+}
+
+void	sigquit_handler(int sig)
+{
+	(void)sig;
+	g_exit_status = 131;
+	ft_putstr_fd("Quit: 3\n", 1);
+}
+
 // Launch CONTROL C
 void	sigint_handler(int sig)
 {
-	(void) sig;
-	ft_printf("\n");
+	(void)sig;
+	g_exit_status = 130;
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	rl_replace_line("", STDIN_FILENO);
 	rl_on_new_line();
-	rl_replace_line("", 0);
 	rl_redisplay();
+}
+
+void	signals(t_data *data)
+{
+	struct termios	terminal;
+
+	terminal = data->terminal;
+	terminal.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
 }

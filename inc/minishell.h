@@ -51,7 +51,6 @@
 void		print_tokens(t_data *data);
 int			main(int argc, char **argv, char **envp);
 
-
 // Errors
 void		ft_error(t_data *data, char *msg);
 bool		ft_is_wordchar(char c);
@@ -63,7 +62,6 @@ void		ft_free_command(t_ast_node *node);
 void		free_node(t_ast_node *node);
 void		free_ast(t_ast_node **node, t_data *data);
 void		ft_free_all(t_data *data);
-
 
 /////////////// BUILTIN //////////////////
 // builtins_launch.c
@@ -84,7 +82,7 @@ void		ft_env(char **argv, t_data *data);
 
 // export.c
 bool		check_double(t_data *data, char *line);
-void        ft_exp_env(t_data *data);
+void		ft_exp_env(t_data *data);
 void		change_value(t_data *data, char *old, char *new);
 bool		check_change_value(t_data *data);
 void		ft_export(char **argv, t_data *data);
@@ -105,7 +103,7 @@ int			ft_value(int value);
 void		ft_exit(char **argv, t_data *data);
 
 //	cd.c
-void        set_env_oldpwd(char *old_pwd, t_data *data);
+void		set_env_oldpwd(char *old_pwd, t_data *data);
 void		set_env_pwd(char *new_pwd, t_data *data);
 void		ft_move_directory(char *path, t_data *data);
 void		set_home(t_data *data);
@@ -113,24 +111,34 @@ void		ft_cd(char **argv, t_data *data);
 
 //////////////// EXECUTION ////////////////
 // exec_cases.c
-int			exec_pipe(char *cmd1, char *cmd2, t_data *data);
-//    			exec_onecommand(char **cmd, t_data *data);
+int			exec_pipe(t_ast_node *node, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
-void 		no_pipe(t_ast_node *node, t_data *data);
+void		no_pipe(t_ast_node *node, t_data *data);
+int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
+
 
 // exec_redirs.c
-int 		ft_process_redirections(t_ast_node *node, t_data *data);
+int			ft_process_redirections(t_ast_node *node, t_data *data);
 
 // exec_core.c
-char 		*ft_path(char *cmd, t_data *data);
-void 		exec(t_data *data, char **cmd);
-void 		ft_process_infile(char **cmd, t_data *data);
-void 		ft_process_outfile(char *cmd, t_data *data);
+char		*ft_path(char *cmd, t_data *data);
+void		exec(t_data *data, char **cmd);
+void		ft_process_infile(char **cmd, t_data *data);
+void		ft_process_outfile(char *cmd, t_data *data);
 
 // exec_read.c
 void		ft_execution(t_data *data);
 void		count_levels(t_ast_node *node, int level, t_data *data);
 void		read_ast(t_ast_node *node, int level, int count, t_data *data);
+
+// exec_utils.c
+bool		ft_is_delimiter(char *delimiter, char *str);
+void		ft_fds_dup2(t_data *data);
+bool		is_builtin(char *command);
+void 	  	wait_commands(t_data *data);
+
+// exec_heredoc.c
+void		ft_process_heredoc(t_redir *redir, t_data *data);
 
 ///////////// LEXING ///////////////
 
@@ -163,7 +171,8 @@ t_ast_node	*create_tree(t_token **current_token, t_data *data);
 void		parse_tokens(t_data *data);
 
 // create_node.c
-t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left, t_ast_node *right);
+t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left,
+				t_ast_node *right);
 t_redir		*ft_create_redir_node(t_token_type type, char *file);
 t_ast_node	*ft_create_node(t_ast_node_type type);
 void		ft_append_redir(t_redir **rds, t_redir *redir);
@@ -202,23 +211,26 @@ char		*ft_strjoin_free(char *s1, char *s2);
 ///////////SIGNALS//////////////
 
 // signal.c
-void	sigint_handler(int sig);
+void		heredoc_sigint_handler(int sig);
+void		sigquit_handler(int sig);
+void		sigint_handler(int sig);
+void		signals(t_data *data);
 
 /////////////UTILS//////////////
 
 // debug.c
-void	print_ast(t_ast_node *node, int level);
-void	print_tab(char **str);
+void		print_ast(t_ast_node *node, int level);
+void		print_tab(char **str);
 
 // errors.c
-void	ft_error(t_data *data, char *msg);
-void	ft_close_fd(t_data *data, char *msg);
-void	ft_error_quote(t_data *data);
+void		ft_error(t_data *data, char *msg);
+void		ft_close_fd(t_data *data, char *msg);
+void		ft_error_quote(t_data *data);
 
 // free.c
-void	ft_free_command(t_ast_node *node);
-void	free_node(t_ast_node *node);
-void	free_ast(t_ast_node **node, t_data *data);
-void	ft_free_all(t_data *data);
+void		ft_free_command(t_ast_node *node);
+void		free_node(t_ast_node *node);
+void		free_ast(t_ast_node **node, t_data *data);
+void		ft_free_all(t_data *data);
 
 #endif

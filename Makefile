@@ -36,6 +36,7 @@ SRCS = srcs/main.c\
 	srcs/exec/exec_read.c\
 	srcs/exec/exec_heredoc.c\
 	srcs/exec/exec_redirs.c\
+	srcs/exec/utils.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
 	srcs/lexing/stack_utils.c\

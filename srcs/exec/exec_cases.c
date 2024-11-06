@@ -1,5 +1,70 @@
 #include "minishell.h"
 
+// static void ft_exec_pipe_child(t_ast_node *node, int pfds[2], bool isleft, t_data *data)
+// {
+// 	int	status;
+
+// 	if (isleft)
+// 	{
+// 		close(pfds[0]);
+// 		dup2(pfds[1], STDOUT_FILENO);
+// 		close(pfds[1]);
+// 	}
+// 	else
+// 	{
+// 		close(pfds[1]);
+// 		dup2(pfds[0], STDIN_FILENO);
+// 		close(pfds[0]);
+// 	}
+// 	status = exec_node(node, data, true);
+// 	(ft_free_all(&data), exit(status));
+// }
+
+// int	exec_pipe(t_ast_node *node, t_data *data)
+// {
+// 	int		fds[2];
+// 	int		left;
+// 	int		right;
+// 	int		status;
+
+// 	pipe(fds);
+// 	left = fork();
+// 	if (left == -1)
+// 		(perror("fork"), exit(EXIT_FAILURE));
+// 	data->last_pid = left;
+// 	if (!left)
+// 		ft_exec_pipe_child(node->left, data, fds, true);
+// 	else
+// 	{
+// 		right = fork();
+// 		if (right == -1)
+// 			(perror("fork"), exit(EXIT_FAILURE));
+// 		data->last_pid = right;
+// 		if (!right)
+// 			ft_exec_pipe_child(node->right, data, fds, false);
+// 		else
+// 		{
+// 			close(fds[0]);
+// 			close(fds[1]);
+// 			waitpid(left, &status, 0);
+// 			waitpid(right, &status, 0);
+// 			return(status);
+// 		}
+// 	}
+// 	return (ERRGEN);
+// }
+
+// int	exec_node(t_ast_node *node, t_data *data, bool ispipe)
+// {
+// 	if (!node)
+// 		return (EXIT_FAILURE);
+// 	if (node->type == NODE_PIPE)
+// 		return (exec_pipe(node, data));
+// 	else
+// 		return (exec_onecommand(node, data, ispipe));
+// 	return (ERRGEN);
+// }
+
 void	read_outfile(t_ast_node *node, t_data *data)
 {
 	int	fd_out;
@@ -45,28 +110,28 @@ void	read_infile(t_ast_node *node, t_data *data)
 
 void	no_pipe(t_ast_node *node, t_data *data)
 {
-	//pid_t	pid;
+	pid_t	pid;
 	if (ft_detect_builtin(node->argv, data) == true)
 		return ;
-	// else
-	// {
-	// 	if (pipe(data->fd) == -1)
-	// 		ft_error(data, "Error creating pipe");
-	// 	pid = fork();
-	// 	if (pid == -1)
-	// 		ft_error(data, "Error forking");
-	// 	if (pid == 0)
-	// 	{
-	// 		read_infile(node, data);
-	// 		exec(data, node->argv);
-	// 		read_outfile(node, data);
-	// 	}
-	// 	// if (pid != 0)
-	// 	// {
-	// 	// 	read_outfile(node, data);
-	// 	// }			
-	// 	close(data->fd[0]);
-	// 	close(data->fd[1]);
-	// 	waitpid(pid, NULL, 0);
-	// }
+	else
+	{
+		if (pipe(data->fd) == -1)
+			ft_error(data, "Error creating pipe");
+		pid = fork();
+		if (pid == -1)
+			ft_error(data, "Error forking");
+		if (pid == 0)
+		{
+			read_infile(node, data);
+			exec(data, node->argv);
+			read_outfile(node, data);
+		}
+		// if (pid != 0)
+		// {
+		// 	read_outfile(node, data);
+		// }			
+		close(data->fd[0]);
+		close(data->fd[1]);
+		waitpid(pid, NULL, 0);
+	}
 }
