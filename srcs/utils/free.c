@@ -63,6 +63,8 @@ void	ft_free_all(t_data *data)
 		ft_free_tab(data->envc);
 	if (data->free_value == 0)
 	{
+		close(data->fd[0]);
+		close(data->fd[1]);
 		if (data->env)
 			ft_envclear(&data->env);
 	}

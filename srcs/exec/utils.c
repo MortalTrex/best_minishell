@@ -1,5 +1,19 @@
 #include "minishell.h"
 
+bool	check_infile(t_ast_node *node, t_data *data)
+{
+	node = data->ast;
+	while (node->redir)
+	{
+		if (node->redir->type == IN)
+		{
+			
+		}
+		node->redir = node->redir->next;
+	}
+	return (false);
+}
+
 void	wait_commands(t_data *data)
 {
 	signal(SIGINT, SIG_IGN);

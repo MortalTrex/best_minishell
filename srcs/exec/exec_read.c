@@ -45,11 +45,11 @@ void	ft_execution(t_data *data)
 {
 	if (!data->ast)
 		return ;
-	signal(SIGQUIT, sigquit_handler);
+	//signal(SIGQUIT, sigquit_handler);
 	count_levels(data->ast, 0, data);
 	
 	if (data->nb_levels == 0)
 		no_pipe(data->ast, data);
 	//read_ast(data->ast, 0, 0, data);
-	wait_commands(data);	
+	//wait_commands(data);	
 }

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/31 18:10:54 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/07 17:34:37 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*put_name(char *line)
 	char	*res;
 
 	i = 0;
-	while (line && line[i] != '=')
+	while (line[i] && line[i] != '=')
 		i++;
 	res = malloc(sizeof(char) * (i + 1));
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (line && line[i] != '=')
+	while (line[i] && line[i] != '=')
 	{
 		res[i] = line[i];
 		i++;
@@ -43,6 +43,8 @@ char	*put_value(char *line)
 	j = 0;
 	while (line[i] && line[i] != '=')
 		i++;
+	if (!line[i])
+		return (NULL);
 	res = malloc(sizeof(char) * (ft_strlen(line) - i));
 	if (!res)
 		return (NULL);
@@ -61,6 +63,8 @@ t_env	*new_node_env(char *line, t_data *data)
 {
 	t_env	*new_node;
 
+	if (!line)
+		return (NULL);
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
@@ -108,7 +112,8 @@ void	ft_env(char **argv, t_data *data)
 	}
 	while (current != NULL)
 	{
-		ft_printf("%s\n", current->line);
+		if (current->value)
+			ft_printf("%s=%s\n", current->name, current->value);
 		current = current->next;
 	}
 }

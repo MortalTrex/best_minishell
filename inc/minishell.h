@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 17:04:54 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/06 16:06:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int			exec_pipe(t_ast_node *node, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
 void		no_pipe(t_ast_node *node, t_data *data);
 int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
+void        read_outfile(t_ast_node *node, t_data *data);
+void        read_infile(t_ast_node *node, t_data *data);
 
 
 // exec_redirs.c
