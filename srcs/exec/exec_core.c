@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 15:07:14 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/08 15:47:11 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	exec(t_data *data, char **cmd)
 
 	if (!cmd || !cmd[0])
 		ft_close_fd(data, "Error: no command\n");
+	if (!data->envc)
+		ft_close_fd(data, "Error: no env\n");
 	path = ft_path(cmd[0], data);
 	if (!path)
 	{
