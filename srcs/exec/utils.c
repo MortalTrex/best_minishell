@@ -1,5 +1,16 @@
 #include "minishell.h"
 
+void	count_levels(t_ast_node *node, int level, t_data *data)
+{
+	if (!node)
+		return ;
+	data->nb_levels = level;
+	if (node->left)
+		count_levels(node->left, level + 1, data);
+	if (node->right)
+		count_levels(node->right, level + 1, data);
+}
+
 bool	check_infile(t_ast_node *node, t_data *data)
 {
 	node = data->ast;

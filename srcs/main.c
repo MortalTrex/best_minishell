@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/08 15:48:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/11 17:52:38 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_readline(t_data *data)
 {
 	data->user_line = readline(PROMPT);
 	signal(SIGINT, sigint_handler);
-	if ((*data->user_line))
+	if (!data->user_line)
 		add_history(data->user_line);
 	if (data->user_line == NULL)
 	{
@@ -38,14 +38,13 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
 	//tcgetattr(STDIN_FILENO, &data.terminal);
-	// data.fd[0] = dup(STDIN_FILENO);
-	// data.fd[1] = dup(STDOUT_FILENO);
+	//data.fd[0] = dup(STDIN_FILENO);
+	//data.fd[1] = dup(STDOUT_FILENO);
 	while (true)
 	{
 		data.free_value = 0;
 		ft_readline(&data);
 		copy_env_char(&data);
-		//print_tab(data.envc);
 		if (!ft_tokenize(&data))
 			continue ;
 		parse_tokens(&data);

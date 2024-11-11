@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/08 17:02:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/11 15:00:53 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,11 @@ void		ft_cd(char **argv, t_data *data);
 // exec_cases.c
 int			exec_pipe(t_ast_node *node, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
+void		one_pipe(t_ast_node *node, t_data *data);
 void		no_pipe(t_ast_node *node, t_data *data);
 int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
 void        read_outfile(t_ast_node *node, t_data *data, bool inout);
 void        read_infile(t_ast_node *node, t_data *data, bool inout);
-
 
 // exec_redirs.c
 int			ft_process_redirections(t_ast_node *node, t_data *data);
@@ -131,7 +131,7 @@ void		ft_process_outfile(char *cmd, t_data *data);
 // exec_read.c
 void		ft_execution(t_data *data);
 void		count_levels(t_ast_node *node, int level, t_data *data);
-void		read_ast(t_ast_node *node, int level, int count, t_data *data);
+void		read_ast(t_ast_node *node, t_data *data);
 
 // exec_utils.c
 bool		ft_is_delimiter(char *delimiter, char *str);
@@ -141,6 +141,10 @@ void 	  	wait_commands(t_data *data);
 
 // exec_heredoc.c
 void		ft_process_heredoc(t_redir *redir, t_data *data);
+
+// exec_redirs.c
+void        read_infile(t_ast_node *node, t_data *data, bool inout);
+void        read_outfile(t_ast_node *node, t_data *data, bool inout);
 
 ///////////// LEXING ///////////////
 
