@@ -37,7 +37,12 @@ void	copy_env(char **envp, t_data *data)
 
 	i = 0;
 	if (!envp)
-		return ;
+	{
+		printf("No env\n");
+		push_node_to_env(data, "PWD=/home/rbalazs/Desktop/minishell_fixed");
+		push_node_to_env(data, "SHLVL=0");
+		push_node_to_env(data, "_=/usr/bin/env");
+	}
 	while (envp[i])
 	{
 		push_node_to_env(data, envp[i]);

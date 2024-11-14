@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/11 17:52:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/14 18:22:36 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
 	//tcgetattr(STDIN_FILENO, &data.terminal);
-	//data.fd[0] = dup(STDIN_FILENO);
-	//data.fd[1] = dup(STDOUT_FILENO);
 	while (true)
 	{
 		data.free_value = 0;

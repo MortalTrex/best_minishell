@@ -15,17 +15,17 @@
 // 	}
 // }
 
-void	read_ast(t_ast_node *node, t_data *data)
+void	read_pipe(t_ast_node *node, t_data *data, int i)
 {
 	if (!node)
 		return ;
 	if (node->argv)
-		no_pipe(node, data);
+		multi_pipe(node, data, i);
 	if (node->type == NODE_PIPE)
 	{
-		read_ast(node->left, data);
+		read_pipe(node->left, data, i++);
 		if (!data->heredoc)
-			read_ast(node->right, data);
+			read_pipe(node->right, data, i);
 	}
 }
 
@@ -34,10 +34,12 @@ void	ft_execution(t_data *data)
 	if (!data->ast)
 		return ;
 	count_levels(data->ast, 0, data);
+	if (pipe(data->fd) == -1)
+		ft_error(data, "Error creating pipe");
 	if (data->nb_levels == 0)
 		no_pipe(data->ast, data);
 	if (data->nb_levels == 1)
 		one_pipe(data->ast, data);
-	if (data->nb_levels > 1)
-		one_pipe(data->ast, data);
+	if (data->nb_levels == 2)
+		read_pipe(data->ast, data, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/11 15:00:53 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/14 17:08:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,14 +113,16 @@ void		ft_cd(char **argv, t_data *data);
 // exec_cases.c
 int			exec_pipe(t_ast_node *node, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
+void    	multi_pipe(t_ast_node *node, t_data *data, int i);
 void		one_pipe(t_ast_node *node, t_data *data);
 void		no_pipe(t_ast_node *node, t_data *data);
+void		read_pipe(t_ast_node *node, t_data *data, int i);
 int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
-void        read_outfile(t_ast_node *node, t_data *data, bool inout);
-void        read_infile(t_ast_node *node, t_data *data, bool inout);
 
 // exec_redirs.c
 int			ft_process_redirections(t_ast_node *node, t_data *data);
+void        read_outfile(t_ast_node *node, t_data *data, bool inout);
+void        read_infile(t_ast_node *node, t_data *data, bool inout);
 
 // exec_core.c
 char		*ft_path(char *cmd, t_data *data);
