@@ -34,19 +34,29 @@ void	ft_sort_env(t_env *env)
 void	copy_env(char **envp, t_data *data)
 {
 	int	i;
+	int len;
+	char *pwd;
 
 	i = 0;
-	if (!envp)
+	len = 0;
+	while (envp[len])
+		len++;
+	if (!len)
 	{
+		pwd = ft_strjoin("PWD=", getcwd(NULL, 0));
 		printf("No env\n");
-		push_node_to_env(data, "PWD=/home/rbalazs/Desktop/minishell_fixed");
+		push_node_to_env(data, pwd);
+		free(pwd);
 		push_node_to_env(data, "SHLVL=0");
 		push_node_to_env(data, "_=/usr/bin/env");
 	}
-	while (envp[i])
+	else
 	{
-		push_node_to_env(data, envp[i]);
-		i++;
+		while (envp[i])
+		{
+			push_node_to_env(data, envp[i]);
+			i++;
+		}
 	}
 }
 

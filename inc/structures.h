@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 15:34:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/15 21:29:51 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ typedef struct s_env
 
 typedef struct s_data
 {
+	t_token			*tok;
 	t_env			*env;
 	char			**envc;
-	t_token			*tok;
 	char			*user_line;
 	int				fd[2];
 	t_ast_node		*ast;
@@ -73,10 +73,12 @@ typedef struct s_data
 	int				exit_status;
 	int				last_pid;
 	int				wstatus;
-	bool			heredoc;
 	int				free_value;
 	int             nb_levels;
 	struct termios	terminal;
+	bool			isheredoc;
+	bool            isoutfile;
+	bool			isinfile;
 }					t_data;
 
 extern int			g_exit_status;

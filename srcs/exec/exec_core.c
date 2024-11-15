@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/08 15:47:11 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/15 20:30:40 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,25 @@ char	*ft_path(char *cmd, t_data *data)
 	int		i;
 	char	**dir_path;
 	char	*join_path;
+	char 	*path_to_find;
 
 	i = 0;
-	while (data->envc[i] && ft_strnstr(data->envc[i], "PATH", 4) == 0)
+	int len = 0;
+	while (data->envc[len])
+		len++;
+	if (len <= 3)
+		path_to_find = ft_strdup("_");
+	else
+		path_to_find = ft_strdup("PATH");
+	while (data->envc[i] && ft_strnstr(data->envc[i], path_to_find, 4) == 0)
 		i++;
-	dir_path = ft_split(data->envc[i] + 5, ':');
+	if (len <= 3)
+	{
+		char *path2 = ft_strdup("/usr/bin/");
+		dir_path = ft_split(path2, ':');
+	}
+	else
+		dir_path = ft_split(data->envc[i] + 5, ':');
 	if (!dir_path)
 		ft_close_fd(data, "Error: split failed\n");
 	i = -1;

@@ -21,7 +21,7 @@
 // 	return (1); // handle error statuses
 // }
 
-void	read_outfile(t_ast_node *node, t_data *data, bool inout)
+void	read_outfile(t_ast_node *node, t_data *data)
 {
 	int	fd_out;
 
@@ -36,17 +36,18 @@ void	read_outfile(t_ast_node *node, t_data *data, bool inout)
 				ft_close_fd(data, "Error opening fd_out");
 			if (dup2(fd_out, STDOUT_FILENO) == -1)
 				ft_close_fd(data, "Error redirecting stdout");
-			if (inout == true)
+			if (data->isinfile == true)
 				dup2(data->fd[0], STDIN_FILENO);
 			close(data->fd[0]);
 			close(data->fd[1]);
 			close(fd_out);
+			data->isoutfile = true;
 		}
 		node->redir = node->redir->next;
 	}
 }
 
-void	read_infile(t_ast_node *node, t_data *data, bool inout)
+void	read_infile(t_ast_node *node, t_data *data)
 {
 	t_ast_node	*current;
 	int	fd_in;
@@ -61,11 +62,12 @@ void	read_infile(t_ast_node *node, t_data *data, bool inout)
 				ft_close_fd(data, "Error opening fd_in");
 			if (dup2(fd_in, STDIN_FILENO) == -1)
 				ft_close_fd(data, "Error redirecting stdin");
-			if (inout == true)
+			if (data->isoutfile == true)
 				dup2(data->fd[1], STDOUT_FILENO);
 			close(data->fd[0]);
 			close(data->fd[1]);
 			close(fd_in);
+			data->isinfile = true;
 		}
 		current->redir = current->redir->next;
 	}

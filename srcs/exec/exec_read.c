@@ -24,7 +24,7 @@ void	read_pipe(t_ast_node *node, t_data *data, int i)
 	if (node->type == NODE_PIPE)
 	{
 		read_pipe(node->left, data, i++);
-		if (!data->heredoc)
+		if (data->isheredoc == false)
 			read_pipe(node->right, data, i);
 	}
 }
@@ -40,6 +40,6 @@ void	ft_execution(t_data *data)
 		no_pipe(data->ast, data);
 	if (data->nb_levels == 1)
 		one_pipe(data->ast, data);
-	if (data->nb_levels == 2)
+	if (data->nb_levels > 1)
 		read_pipe(data->ast, data, 0);
 }

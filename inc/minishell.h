@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/14 17:08:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/15 21:48:25 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,9 @@ void		no_pipe(t_ast_node *node, t_data *data);
 void		read_pipe(t_ast_node *node, t_data *data, int i);
 int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
 
-// exec_redirs.c
-int			ft_process_redirections(t_ast_node *node, t_data *data);
-void        read_outfile(t_ast_node *node, t_data *data, bool inout);
-void        read_infile(t_ast_node *node, t_data *data, bool inout);
-
 // exec_core.c
 char		*ft_path(char *cmd, t_data *data);
 void		exec(t_data *data, char **cmd);
-void		ft_process_infile(char **cmd, t_data *data);
-void		ft_process_outfile(char *cmd, t_data *data);
 
 // exec_read.c
 void		ft_execution(t_data *data);
@@ -145,8 +138,8 @@ void 	  	wait_commands(t_data *data);
 void		ft_process_heredoc(t_redir *redir, t_data *data);
 
 // exec_redirs.c
-void        read_infile(t_ast_node *node, t_data *data, bool inout);
-void        read_outfile(t_ast_node *node, t_data *data, bool inout);
+void        read_infile(t_ast_node *node, t_data *data);
+void        read_outfile(t_ast_node *node, t_data *data);
 
 ///////////// LEXING ///////////////
 
