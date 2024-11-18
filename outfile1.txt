@@ -1,5 +1,1 @@
-[?2004hminishell> exitexitexitexitexitexit^C[?2004l
-minishell> [?2004hxit^C[?2004l
-minishell> [?2004h^C[?2004l
-minishell> [?2004h[?2004l
-Exit
+coucou fhjksd
