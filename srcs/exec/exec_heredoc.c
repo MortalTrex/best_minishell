@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 static void	create_filename(t_redir *redir)
 {
 	char	*temp_file;
@@ -102,5 +101,5 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 	if (redir->file == NULL)
 		create_filename(redir);
 	ft_read_heredoc(redir, data);
-	data->heredoc = true;
+	data->isheredoc = true;
 }

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/14 18:22:36 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:27:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ int		g_exit_status;
 
 void	ft_readline(t_data *data)
 {
+	data->isheredoc = 0;
+	data->isinfile = 0;
+	data->isoutfile = 0;
 	data->user_line = readline(PROMPT);
 	signal(SIGINT, sigint_handler);
-	if (!data->user_line)
+	if (data->user_line)
 		add_history(data->user_line);
 	if (data->user_line == NULL)
 	{

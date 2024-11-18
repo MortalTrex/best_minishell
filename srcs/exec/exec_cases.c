@@ -68,7 +68,6 @@ void	one_pipe(t_ast_node *node, t_data *data)
 	}
 	waitpid(node->pid, NULL, WNOHANG);
 	close(data->fd[1]);
-	
 	node->pid = fork();
 	if (node->pid == -1)
 		ft_error(data, "Error forking");
@@ -86,25 +85,22 @@ void	one_pipe(t_ast_node *node, t_data *data)
 
 void	no_pipe(t_ast_node *node, t_data *data)
 {
-	bool 	isoutandin;
-
-	if (ft_detect_builtin(node->argv, data) == true)
-		return ;
-	else
+	if (ft_detect_builtin(node->argv, data) == false)
 	{
 		node->pid = fork();
 		if (node->pid == -1)
 			ft_error(data, "Error forking");
 		if (node->pid == 0)
 		{
-			isoutandin = false;
-			read_infile(node, data);
-			read_outfile(node, data);
+			// if (data->isinfile == true)
+			// 	read_infile(node, data);
+			// if (data->isoutfile == true)
+			// 	read_outfile(node, data);
 			exec(data, node->argv);
 			exit(0);
 		}
-		close(data->fd[0]);
-		close(data->fd[1]);
-		waitpid(node->pid, NULL, 0);
 	}
+	waitpid(node->pid, NULL, 0);
+	close(data->fd[0]);
+	close(data->fd[1]);
 }

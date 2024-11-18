@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/15 21:48:25 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:29:56 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void		ft_process_heredoc(t_redir *redir, t_data *data);
 // exec_redirs.c
 void        read_infile(t_ast_node *node, t_data *data);
 void        read_outfile(t_ast_node *node, t_data *data);
+void  		read_redirs(t_ast_node *node, t_data *data);
 
 ///////////// LEXING ///////////////
 

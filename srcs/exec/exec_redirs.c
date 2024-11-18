@@ -23,14 +23,15 @@
 
 void	read_outfile(t_ast_node *node, t_data *data)
 {
+	t_ast_node	*current;
 	int	fd_out;
 
-	node = data->ast;
-	while (node->redir)
+	current = node;
+	while (current->redir)
 	{
-		if (node->redir->type == OUT)
+		if (current->redir->type == OUT)
 		{
-			fd_out = open(node->redir->file, O_WRONLY | O_CREAT | O_TRUNC,
+			fd_out = open(current->redir->file, O_WRONLY | O_CREAT | O_TRUNC,
 					0644);
 			if (fd_out == -1)
 				ft_close_fd(data, "Error opening fd_out");
@@ -41,9 +42,8 @@ void	read_outfile(t_ast_node *node, t_data *data)
 			close(data->fd[0]);
 			close(data->fd[1]);
 			close(fd_out);
-			data->isoutfile = true;
 		}
-		node->redir = node->redir->next;
+		current->redir = current->redir->next;
 	}
 }
 
@@ -67,7 +67,44 @@ void	read_infile(t_ast_node *node, t_data *data)
 			close(data->fd[0]);
 			close(data->fd[1]);
 			close(fd_in);
+		}
+		current->redir = current->redir->next;
+	}
+}
+
+void	read_redirs(t_ast_node *node, t_data *data)
+{
+	t_ast_node	*current;
+
+	current = node;
+	printf("Fonction Redir\n");
+	if (!current)
+		printf("No current\n");
+	while (current->redir)
+	{
+		printf ("REDIR\n");
+		if (current->redir->type == IN)
+		{
+			printf ("IN\n");
+			printf ("%s\n", current->redir->file);
 			data->isinfile = true;
+		}
+		if (current->redir->type == OUT)
+		{
+			printf ("OUT\n");
+			printf ("%s\n", current->redir->file);
+			data->isoutfile = true;
+		}
+		if (current->redir->type == D_APPEND)
+		{
+			printf ("APPEND\n");
+			printf ("%s\n", current->redir->file);
+		}
+		if (current->redir->type == D_HEREDOC)
+		{
+			printf ("D_HEREDOC\n");
+			printf ("%s\n", current->redir->file);
+			data->isheredoc = true;
 		}
 		current->redir = current->redir->next;
 	}

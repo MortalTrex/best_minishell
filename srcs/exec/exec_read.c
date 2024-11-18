@@ -34,6 +34,11 @@ void	ft_execution(t_data *data)
 	if (!data->ast)
 		return ;
 	count_levels(data->ast, 0, data);
+	read_redirs(data->ast, data);
+	read_redirs(data->ast, data);
+	printf("\033[0;31misinfile: %d\n\033[0m", data->isinfile);
+	printf("\033[0;31misoutfile: %d\n\033[0m", data->isoutfile);
+	printf("\033[0;31misheredoc: %d\n\033[0m", data->isheredoc);
 	if (pipe(data->fd) == -1)
 		ft_error(data, "Error creating pipe");
 	if (data->nb_levels == 0)

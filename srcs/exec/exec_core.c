@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/15 20:30:40 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/18 14:28:32 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*ft_path(char *cmd, t_data *data)
 		path_to_find = ft_strdup("PATH");
 	while (data->envc[i] && ft_strnstr(data->envc[i], path_to_find, 4) == 0)
 		i++;
+	free(path_to_find);
 	if (len <= 3)
 	{
 		char *path2 = ft_strdup("/usr/bin/");
@@ -46,7 +47,7 @@ char	*ft_path(char *cmd, t_data *data)
 		path = ft_strjoin(join_path, cmd);
 		free(join_path);
 		if (access(path, F_OK) == 0)
-			return (path);
+			return (ft_free_tab(dir_path), path);
 		free(path);
 	}
 	ft_free_tab(dir_path);
@@ -56,7 +57,6 @@ char	*ft_path(char *cmd, t_data *data)
 void	exec(t_data *data, char **cmd)
 {
 	char	*path;
-
 	if (!cmd || !cmd[0])
 		ft_close_fd(data, "Error: no command\n");
 	if (!data->envc)
