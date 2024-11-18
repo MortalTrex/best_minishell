@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/15 21:29:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/18 17:58:44 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_redir
 	char			**argv;
 	t_redir_type	type;
 	int				hd_fd;
+	int				in_fd;
+	int 		   	out_fd;
 	struct s_redir	*prev;
 	struct s_redir	*next;
 }					t_redir;

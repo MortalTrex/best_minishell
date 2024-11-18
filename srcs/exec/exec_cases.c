@@ -92,10 +92,10 @@ void	no_pipe(t_ast_node *node, t_data *data)
 			ft_error(data, "Error forking");
 		if (node->pid == 0)
 		{
-			// if (data->isinfile == true)
-			// 	read_infile(node, data);
-			// if (data->isoutfile == true)
-			// 	read_outfile(node, data);
+			if (data->isinfile == true)
+				read_infile(node, data);
+			if (data->isoutfile == true)
+				read_outfile(node, data);
 			exec(data, node->argv);
 			exit(0);
 		}

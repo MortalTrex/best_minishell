@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/09/13 13:16:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/18 18:03:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_pwd(void)
 		perror("Error PWD");
 	else
 	{
-		ft_printf("%s\n", pwd);
+		printf("%s\n", pwd);
 		free(pwd);
 	}
 }

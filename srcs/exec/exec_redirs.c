@@ -74,38 +74,17 @@ void	read_infile(t_ast_node *node, t_data *data)
 
 void	read_redirs(t_ast_node *node, t_data *data)
 {
-	t_ast_node	*current;
+	t_redir		*current;
 
-	current = node;
-	printf("Fonction Redir\n");
-	if (!current)
-		printf("No current\n");
-	while (current->redir)
+	current = node->redir;
+	while (current)
 	{
-		printf ("REDIR\n");
-		if (current->redir->type == IN)
-		{
-			printf ("IN\n");
-			printf ("%s\n", current->redir->file);
+		if (current->type == IN)
 			data->isinfile = true;
-		}
-		if (current->redir->type == OUT)
-		{
-			printf ("OUT\n");
-			printf ("%s\n", current->redir->file);
+		if (current->type == OUT)
 			data->isoutfile = true;
-		}
-		if (current->redir->type == D_APPEND)
-		{
-			printf ("APPEND\n");
-			printf ("%s\n", current->redir->file);
-		}
-		if (current->redir->type == D_HEREDOC)
-		{
-			printf ("D_HEREDOC\n");
-			printf ("%s\n", current->redir->file);
+		if (current->type == D_HEREDOC)
 			data->isheredoc = true;
-		}
-		current->redir = current->redir->next;
+		current = current->next;
 	}
 }
