@@ -1,13 +1,13 @@
 #include "minishell.h"
 #include <unistd.h>
 
-void    multi_pipe(t_ast_node *node, t_data *data, int i)
+void	multi_pipe(t_ast_node *node, t_data *data, int i)
 {
 	if (i == 0)
 	{
 		node->pid = fork();
 		if (node->pid == -1)
-		ft_error(data, "Error forking");
+			ft_error(data, "Error forking");
 		if (node->pid == 0)
 		{
 			dup2(data->fd[1], STDOUT_FILENO);
@@ -39,7 +39,7 @@ void    multi_pipe(t_ast_node *node, t_data *data, int i)
 		close(data->fd[1]);
 		node->pid = fork();
 		if (node->pid == -1)
-		ft_error(data, "Error forking");
+			ft_error(data, "Error forking");
 		if (node->pid == 0)
 		{
 			dup2(data->fd[0], STDIN_FILENO);
@@ -85,22 +85,43 @@ void	one_pipe(t_ast_node *node, t_data *data)
 
 void	no_pipe(t_ast_node *node, t_data *data)
 {
-	if (ft_detect_builtin(node->argv, data) == false)
-	{
-		node->pid = fork();
-		if (node->pid == -1)
-			ft_error(data, "Error forking");
-		if (node->pid == 0)
-		{
-			if (data->isinfile == true)
-				read_infile(node, data);
-			if (data->isoutfile == true)
-				read_outfile(node, data);
-			exec(data, node->argv);
-			exit(0);
-		}
-	}
-	waitpid(node->pid, NULL, 0);
-	close(data->fd[0]);
-	close(data->fd[1]);
+    int stdin_backup;
+    int stdout_backup;
+
+    stdin_backup = dup(STDIN_FILENO);
+    stdout_backup = dup(STDOUT_FILENO);
+
+    if (stdin_backup == -1 || stdout_backup == -1)
+        ft_error(data, "Error backing up stdin/stdout");
+    if (data->isinfile)
+        read_infile(node, data);
+    if (data->isoutfile)
+        read_outfile(node, data);
+    if (is_builtin(node->argv[0]))
+    {
+        ft_detect_builtin(node->argv, data);
+    }
+    else
+    {
+        node->pid = fork();
+        if (node->pid == -1)
+            ft_error(data, "Error forking");
+        if (node->pid == 0)
+        {
+            close(data->fd[0]);
+            close(data->fd[1]);
+            close(stdin_backup);
+            close(stdout_backup);
+            exec(data, node->argv);
+            exit(1);
+        }
+        waitpid(node->pid, NULL, 0);
+    }
+    if (dup2(stdin_backup, STDIN_FILENO) == -1 || dup2(stdout_backup,
+            STDOUT_FILENO) == -1)
+        ft_error(data, "Error restoring stdin/stdout");
+    close(data->fd[0]);
+    close(data->fd[1]);
+    close(stdin_backup);
+    close(stdout_backup);
 }

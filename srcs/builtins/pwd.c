@@ -21,7 +21,8 @@ void	ft_pwd(void)
 		perror("Error PWD");
 	else
 	{
-		printf("%s\n", pwd);
+		ft_putstr_fd(pwd, 1);
+		ft_putstr_fd("\n", 1);
 		free(pwd);
 	}
 }

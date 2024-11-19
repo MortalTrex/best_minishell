@@ -37,7 +37,7 @@ void	ft_echo(char **argv)
 	n_flag = false;
 	if (argv[i] == NULL)
 	{
-		ft_printf("\n");
+		ft_putstr_fd("\n", 1);
 		return ;
 	}
 	if (verif_flag(argv[i]) == true)
@@ -47,12 +47,12 @@ void	ft_echo(char **argv)
 	}
 	while (argv[i])
 	{
-		ft_printf("%s", argv[i]);
+		ft_putstr_fd(argv[i], 1);
 		if (argv[i + 1] != NULL)
-			ft_printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (n_flag == false)
-		ft_printf("\n");
+		ft_putstr_fd("\n", 1);
 }
 

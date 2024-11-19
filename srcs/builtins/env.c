@@ -107,13 +107,18 @@ void	ft_env(char **argv, t_data *data)
 	current = data->env;
 	if (argv[1] != NULL)
 	{
-		ft_printf("env: too many arguments\n");
+		ft_putstr_fd("env: too many arguments\n", 1);
 		return ;
 	}
 	while (current != NULL)
 	{
 		if (current->value)
-			ft_printf("%s=%s\n", current->name, current->value);
+		{
+			ft_putstr_fd(current->name, 1);
+			ft_putstr_fd("=", 1);
+			ft_putstr_fd(current->value, 1);
+			ft_putstr_fd("\n", 1);
+		}
 		current = current->next;
 	}
 }

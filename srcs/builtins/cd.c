@@ -93,6 +93,6 @@ void	ft_cd(char **argv, t_data *data)
 	else if (argv[1] != NULL && argv[2] == NULL)
 		ft_move_directory(argv[1], data);
 	else
-		ft_printf("cd: too many arguments\n");
+		ft_putstr_fd("cd: too many arguments\n", 1);
 	// ATTENTION ERREUR A AJOUTER
 }
