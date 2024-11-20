@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/28 19:46:25 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/20 15:34:00 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_error(t_data *data, char *msg)
 {
 	ft_free_all(data);
 	ft_putstr_fd(msg, STDERR_FILENO);
-	exit(EXIT_FAILURE);
 }
 
 void	ft_error_quote(t_data *data)

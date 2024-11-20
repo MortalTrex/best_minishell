@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/07 16:39:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/19 18:22:08 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,15 @@ void	ft_export(char **argv, t_data *data)
 	while (argv[i])
 	{
 		if (check_ifvalue(argv[i]) == false)
+		{
+			data->exit_status = 0;
 			return ;
+		}
 		if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0]) || ft_is_separator(argv[i])
 			|| argv[i][0] == '=')
 		{
 			ft_printf("export: not a valid identifier\n");
+			data->exit_status = 1;
 			return ;
 		}
 		if (check_double(data, argv[i]) == true)
@@ -124,4 +128,5 @@ void	ft_export(char **argv, t_data *data)
 			push_node_to_env(data, argv[i]);
 		i++;
 	}
+	data->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:10 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 17:47:01 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:41:27 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	verif_flag(char *str)
 	return (true);
 }
 
-void	ft_echo(char **argv)
+void	ft_echo(char **argv, t_data *data)
 {
 	bool	n_flag;
 	int 	i;
@@ -54,5 +54,6 @@ void	ft_echo(char **argv)
 	}
 	if (n_flag == false)
 		ft_putstr_fd("\n", 1);
+	data->exit_status = 0;
 }
 

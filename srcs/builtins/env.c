@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/07 17:34:37 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/19 17:47:21 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	ft_env(char **argv, t_data *data)
 	if (argv[1] != NULL)
 	{
 		ft_putstr_fd("env: too many arguments\n", 1);
+		data->exit_status = 1;
 		return ;
 	}
 	while (current != NULL)
@@ -121,4 +122,5 @@ void	ft_env(char **argv, t_data *data)
 		}
 		current = current->next;
 	}
+	data->exit_status = 0;
 }

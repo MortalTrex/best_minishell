@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/18 15:29:56 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/20 18:00:10 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ bool		check_change_value(t_data *data);
 void		ft_export(char **argv, t_data *data);
 
 // echo.c
-void		ft_echo(char **argv);
+void		ft_echo(char **argv, t_data *data);
 
 // pwd.c
-void		ft_pwd(void);
+void		ft_pwd(t_data *data);
 
 //	unset.c
 void		search_in_env(t_data *data, char *var);

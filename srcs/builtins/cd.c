@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/31 18:11:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/19 17:15:49 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ void	ft_cd(char **argv, t_data *data)
 	else if (argv[1] != NULL && argv[2] == NULL)
 		ft_move_directory(argv[1], data);
 	else
+	{
 		ft_putstr_fd("cd: too many arguments\n", 1);
-	// ATTENTION ERREUR A AJOUTER
+		data->exit_status = 1;
+	}
+	ft_putstr_fd("cd: too many arguments\n", 1);
+	data->exit_status = 0;
 }
