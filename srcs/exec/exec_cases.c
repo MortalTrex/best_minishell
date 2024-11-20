@@ -91,16 +91,14 @@ void	no_pipe(t_ast_node *node, t_data *data)
     stdin_backup = dup(STDIN_FILENO);
     stdout_backup = dup(STDOUT_FILENO);
 
-    if (stdin_backup == -1 || stdout_backup == -1)
-        ft_error(data, "Error backing up stdin/stdout");
+    // if (stdin_backup == -1 || stdout_backup == -1)
+    //     ft_error(data, "Error backing up stdin/stdout");
     if (data->isinfile)
         read_infile(node, data);
     if (data->isoutfile)
         read_outfile(node, data);
     if (is_builtin(node->argv[0]))
-    {
         ft_detect_builtin(node->argv, data);
-    }
     else
     {
         node->pid = fork();

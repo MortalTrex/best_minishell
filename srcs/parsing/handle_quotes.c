@@ -69,9 +69,9 @@ char	*ft_clean_command(char *str, t_data *data)
 	size_t	i;
 
 	command = ft_strdup("");
-	i = 0;
 	if (!command || !str)
 		return (NULL);
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'')

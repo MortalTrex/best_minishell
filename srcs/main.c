@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv; 
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
-	//tcgetattr(STDIN_FILENO, &data.terminal);
+	tcgetattr(STDIN_FILENO, &data.terminal);
 	while (true)
 	{
 		data.free_value = 0;

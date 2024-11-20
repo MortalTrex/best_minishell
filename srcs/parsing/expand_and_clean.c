@@ -25,7 +25,7 @@ char	**ft_expand_and_clean(char *str, t_data *data)
 		return (NULL);
 	clean = ft_ms_split(str);
 	if (!clean)
-		return (NULL);
+		return (free(str), NULL);
 	free(str);
 	i = 0;
 	while (clean[i])

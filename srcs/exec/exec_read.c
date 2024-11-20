@@ -37,8 +37,11 @@ void	ft_execution(t_data *data)
 	read_redirs(data->ast, data);
 	if (pipe(data->fd) == -1)
 		ft_error(data, "Error creating pipe");
-	if (data->nb_levels == 0)
-		no_pipe(data->ast, data);
+	if (data->isheredoc)
+		read_heredoc(data->ast, data);
+	if (data->isheredoc == false)
+		if (data->nb_levels == 0)
+			no_pipe(data->ast, data);
 	if (data->nb_levels == 1)
 		one_pipe(data->ast, data);
 	if (data->nb_levels > 1)

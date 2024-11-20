@@ -138,6 +138,7 @@ void 	  	wait_commands(t_data *data);
 void		ft_process_heredoc(t_redir *redir, t_data *data);
 
 // exec_redirs.c
+void        read_heredoc(t_ast_node *node, t_data *data);
 void        read_infile(t_ast_node *node, t_data *data);
 void        read_outfile(t_ast_node *node, t_data *data);
 void  		read_redirs(t_ast_node *node, t_data *data);

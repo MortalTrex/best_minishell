@@ -21,6 +21,19 @@
 // 	return (1); // handle error statuses
 // }
 
+void    read_heredoc(t_ast_node *node, t_data *data)
+{
+	t_redir *current;
+
+	current = node->redir;
+	while (current)
+	{
+		if (current->type == D_HEREDOC)
+			ft_process_heredoc(current, data);
+		current = current->next;
+	}
+}
+
 void	read_outfile(t_ast_node *node, t_data *data)
 {
 	t_redir *current;
@@ -29,9 +42,13 @@ void	read_outfile(t_ast_node *node, t_data *data)
 	current = node->redir;
 	while (current)
 	{
-		if (current->type == OUT)
+		if (current->type == OUT || current->type == D_APPEND)
 		{
-			fd_out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC,
+			if (current->type == D_APPEND)
+				fd_out = open(current->file, O_WRONLY | O_CREAT | O_APPEND,
+					0644);
+			if (current->type == OUT)
+				fd_out = open(current->file, O_WRONLY | O_CREAT | O_TRUNC,
 					0644);
 			if (fd_out == -1)
 				ft_close_fd(data, "Error opening fd_out");
@@ -77,7 +94,7 @@ void	read_redirs(t_ast_node *node, t_data *data)
 	{
 		if (current->type == IN)
 			data->isinfile = true;
-		if (current->type == OUT)
+		if (current->type == OUT || current->type == D_APPEND)
 			data->isoutfile = true;
 		if (current->type == D_HEREDOC)
 			data->isheredoc = true;
