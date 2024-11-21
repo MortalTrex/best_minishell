@@ -35,6 +35,10 @@ void	ft_execution(t_data *data)
 		return ;
 	count_levels(data->ast, 0, data);
 	read_redirs(data->ast, data);
+	data->stdin_backup = dup(STDIN_FILENO);
+    data->stdout_backup = dup(STDOUT_FILENO);
+	if (data->stdin_backup == -1 || data->stdout_backup == -1)
+    	ft_error(data, "Error backing up stdin/stdout");
 	if (pipe(data->fd) == -1)
 		ft_error(data, "Error creating pipe");
 	if (data->isheredoc)
@@ -46,4 +50,6 @@ void	ft_execution(t_data *data)
 		one_pipe(data->ast, data);
 	if (data->nb_levels > 1)
 		read_pipe(data->ast, data, 0);
+	close(data->stdin_backup);
+    close(data->stdout_backup);
 }

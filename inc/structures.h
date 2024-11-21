@@ -70,6 +70,8 @@ typedef struct s_data
 	char			**envc;
 	char			*user_line;
 	int				fd[2];
+	int             stdin_backup;
+	int             stdout_backup;
 	t_ast_node		*ast;
 	int				parsing_error;
 	int				exit_status;

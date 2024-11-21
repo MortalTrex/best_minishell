@@ -88,7 +88,6 @@ void	read_infile(t_ast_node *node, t_data *data)
 void	read_redirs(t_ast_node *node, t_data *data)
 {
 	t_redir		*current;
-	//oui
 
 	current = node->redir;
 	while (current)
