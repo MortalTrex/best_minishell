@@ -1,15 +1,3 @@
-bin
-build
-inc
-infile1.txt
-infile2.txt
-libft
-Makefile
-minishell
-oui
-outfile1.txt
-outfile2.txt
-README.md
-rlsupp.txt
-srcs
-tlmjkdfglm.c
+coucou fhjksd
+coucou fhjksd
+cava c'est un test pour savoir

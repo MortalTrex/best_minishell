@@ -50,7 +50,6 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 // 		waitpid(node->pid, NULL, 1);
 // 	}
 
-
 // 	if (i > 0 && i < data->nb_levels)
 // 	{
 // 		node->pid = fork();
@@ -67,7 +66,6 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 // 		}
 // 		waitpid(node->pid, NULL, 0);
 // 	}
-
 
 // 	if (i == data->nb_levels)
 // 	{
@@ -87,6 +85,7 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 // 		waitpid(node->pid, NULL, 0);
 // 	}
 // }
+
 void	one_pipe(t_ast_node *node, t_data *data)
 {
 	int i;
@@ -119,10 +118,8 @@ void	one_pipe(t_ast_node *node, t_data *data)
 
 void	no_pipe(t_ast_node *node, t_data *data)
 {
-    if (data->isinfile)
-        read_infile(node, data);
-    if (data->isoutfile)
-        read_outfile(node, data);
+    read_infile(node, data);
+    read_outfile(node, data);
     if (is_builtin(node->argv[0]))
         ft_detect_builtin(node->argv, data);
     else

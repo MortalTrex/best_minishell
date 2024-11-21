@@ -40,7 +40,6 @@ static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
 		free(var);
 	}
 	return (i);
-
 }
 
 static void	ft_expand_heredoc(char *command,int fd, t_data *data)
