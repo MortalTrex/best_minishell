@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/19 18:22:08 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/25 08:05:03 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,29 @@
 bool	check_double(t_data *data, char *var)
 {
 	t_env	*tmp;
+	char	*name;
+	int		i;
 
+	i = 0;
+	if (!data->env)
+		return (false);
 	tmp = data->env;
+	while (var[i] && var[i] != '=')
+		i++;
+	name = ft_substr(var, 0, i);
+	if (!name)
+		return (false);
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->line, var))
-			return (true);
+		if (!ft_strcmp(tmp->name, name))
+		{
+			free(tmp->value);
+			tmp->value = put_value(var);
+			return (free(name), true);
+		}
 		tmp = tmp->next;
 	}
-	return (false);
+	return (free(name), false);
 }
 
 void	ft_exp_env(t_data *data)
@@ -42,48 +56,7 @@ void	ft_exp_env(t_data *data)
 	}
 }
 
-void	change_value(t_data *data, char *old, char *new)
-{
-	t_env	*tmp;
-
-	tmp = data->env;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->line, old))
-		{
-			tmp->line = ft_strdup(new);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-}
-
-bool	check_change_value(t_data *data)
-{
-	t_token	*tmp;
-	char	*old_str;
-	char	*new_str;
-
-	old_str = NULL;
-	new_str = NULL;
-	tmp = data->tok;
-	while (tmp)
-	{
-		if (!ft_strcmp(tmp->value, "="))
-		{
-			tmp = tmp->next;
-			new_str = ft_strdup(tmp->value);
-			change_value(data, old_str, new_str);
-			return (free(old_str), free(new_str), true);
-		}
-		if (tmp->value)
-			old_str = ft_strdup(tmp->value);
-		tmp = tmp->next;
-	}
-	return (free(old_str), free(new_str), false);
-}
-
-bool check_ifvalue(char *str)
+bool	check_ifvalue(char *str)
 {
 	int	i;
 
@@ -99,34 +72,31 @@ bool check_ifvalue(char *str)
 
 void	ft_export(char **argv, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!argv[i])
-	{
 		ft_exp_env(data);
-		return ;
-	}
-	while (argv[i])
+	else
 	{
-		if (check_ifvalue(argv[i]) == false)
+		while (argv[i])
 		{
-			data->exit_status = 0;
-			return ;
+			if (check_ifvalue(argv[i]) == false)
+			{
+				data->exit_status = 0;
+				return ;
+			}
+			if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0])
+				|| ft_is_separator(argv[i]) || argv[i][0] == '=')
+			{
+				ft_putstr_fd("export: not a valid identifier\n", 2);
+				data->exit_status = 1;
+				return ;
+			}
+			if (check_double(data, argv[i]) == false)
+				push_node_to_env(data, argv[i]);
+			i++;
 		}
-		if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0]) || ft_is_separator(argv[i])
-			|| argv[i][0] == '=')
-		{
-			ft_printf("export: not a valid identifier\n");
-			data->exit_status = 1;
-			return ;
-		}
-		if (check_double(data, argv[i]) == true)
-			// change_value(data, argv[i], argv[i]);
-			printf("change value\n");
-		else
-			push_node_to_env(data, argv[i]);
-		i++;
 	}
 	data->exit_status = 0;
 }

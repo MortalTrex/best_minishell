@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/20 18:00:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/25 08:06:14 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void		ft_env(char **argv, t_data *data);
 // export.c
 bool		check_double(t_data *data, char *line);
 void		ft_exp_env(t_data *data);
-void		change_value(t_data *data, char *old, char *new);
 bool		check_change_value(t_data *data);
 void		ft_export(char **argv, t_data *data);
 

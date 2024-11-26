@@ -20,7 +20,11 @@ void	read_pipe(t_ast_node *node, t_data *data, int i)
 	if (!node)
 		return ;
 	if (node->argv)
+	{
 		multi_pipe(node, data, i);
+		// close(data->stdin_backup);
+    	// close(data->stdout_backup);
+	}
 	if (node->type == NODE_PIPE)
 	{
 		read_pipe(node->left, data, i++);
@@ -46,9 +50,9 @@ void	ft_execution(t_data *data)
 	if (data->isheredoc == false)
 		if (data->nb_levels == 0)
 			no_pipe(data->ast, data);
-	if (data->nb_levels == 1)
-		one_pipe(data->ast, data);
-	if (data->nb_levels > 1)
+	// if (data->nb_levels == 1)
+	// 	one_pipe(data->ast, data);
+	if (data->nb_levels >= 1)
 		read_pipe(data->ast, data, 0);
 	close(data->stdin_backup);
     close(data->stdout_backup);
