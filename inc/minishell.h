@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/25 08:06:14 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/27 20:20:02 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@
 # define ERR_SYN 1
 # define ERR_MEM 2
 # define BUFF_SIZE 4096
+# define FD_IMPAIR_0 10
+# define FD_IMPAIR_MIDDLE 11
+# define FD_IMPAIR_END 12
+# define FD_PAIR_MIDDLE 13
+# define FD_PAIR_END 14
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
@@ -112,7 +117,7 @@ void		ft_cd(char **argv, t_data *data);
 // exec_cases.c
 int			exec_pipe(t_ast_node *node, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
-void    	multi_pipe(t_ast_node *node, t_data *data, int i);
+void    	multi_pipe(t_ast_node *node, t_data *data, int i, int pipes[2]);
 void		one_pipe(t_ast_node *node, t_data *data);
 void		no_pipe(t_ast_node *node, t_data *data);
 void		read_pipe(t_ast_node *node, t_data *data, int i);

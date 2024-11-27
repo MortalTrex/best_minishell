@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/03 18:54:36 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:43:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	parse_tokens(t_data *data)
 {
 	if (!check_pipe_syntax(data->tok, data))
 		ft_parsing_error(data);
+
+	ft_bzero(&data->ast, sizeof(t_ast_node));
 	data->ast = create_tree(&data->tok, data);
 	if (data->parsing_error)
 		ft_parsing_error(data);

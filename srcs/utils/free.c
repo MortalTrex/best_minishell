@@ -41,6 +41,7 @@ void	free_node(t_ast_node *node)
 			free_node(node->right);
 	}
 	free(node);
+	node = NULL;
 }
 
 void	free_ast(t_ast_node **node, t_data *data)

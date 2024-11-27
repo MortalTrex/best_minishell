@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/18 17:58:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/27 20:55:58 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_ast_node
 	t_redir				*redir;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
+	struct s_ast_node   *prev;
 }					t_ast_node;
 
 typedef struct s_env
@@ -67,12 +68,18 @@ typedef struct s_data
 {
 	t_token			*tok;
 	t_env			*env;
+	int				count;
 	char			**envc;
 	char			*user_line;
 	int				fd[2];
+	int				fd_pair[2];
+	int				fd_impair[2];
+	int				fd_next[2];
+	int 			fd_prev[2];
 	int             stdin_backup;
 	int             stdout_backup;
 	t_ast_node		*ast;
+	t_ast_node		*new_ast;
 	int				parsing_error;
 	int				exit_status;
 	int				last_pid;
