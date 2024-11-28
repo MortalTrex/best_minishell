@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/28 18:48:26 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:16:48 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,10 +241,13 @@ void	parsing_tokens(t_data *data)
 
 	print_tokens(data->tok);
 
+
 	
 	
 	
 }
+
+
 // if (!check_pipe_syntax(data->tok, data))
 	// 	ft_parsing_error(data);
 	// data->ast = create_tree(&data->tok, data);
