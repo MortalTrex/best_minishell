@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 01:37:28 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:01:06 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,9 +268,13 @@ void print_tokens(t_token *tokens)
 	t_token *current = tokens;
 	while (current)
 	{
-		printf("value: %s\n", current->value);
+		printf("value: %s - ", current->value);
 		char *type_str = choose_type(current->type);
-		printf("type: %s\n", type_str);
+		printf("type: %s - ", type_str);
+        if (current->to_expand)
+            printf("to_expand: true\n");
+        else
+            printf("to_expand: false\n");
 		current = current->next;
 	}
 }
@@ -350,7 +354,7 @@ bool	ft_found_token_in_argv(t_data *data)
 	data->tok = fill_list_tokens(prompt, data);
 	
 	
-	print_tokens(data->tok);
+	// print_tokens(data->tok);
 	
 	if (!data->tok)
 	{

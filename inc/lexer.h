@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 01:26:21 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:51:40 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	bool			to_expand;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;

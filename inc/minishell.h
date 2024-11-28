@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 00:39:02 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:22:15 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void		ft_pwd(t_data *data);
 //	unset.c
 void		search_in_env(t_data *data, char *var);
 void		ft_unset(char **argv, t_data *data);
+char 		*ft_strndup(const char *s, size_t n);
 
 //	exit.c
 bool		ft_is_number(char *str);
@@ -151,6 +152,8 @@ void  		read_redirs(t_ast_node *node, t_data *data);
 // tokenize.c
 bool		ft_found_token_in_argv(t_data *data);
 t_token		*fill_list_tokens(char *command, t_data *data);
+void print_tokens(t_token *tokens);
+char *ft_strncpy(char *dest, const char *src, size_t n);
 
 // grammar_check.c
 bool		ft_is_operator(char c);
@@ -173,7 +176,7 @@ void		ft_envclear(t_env **env);
 
 // ast.c
 t_ast_node	*create_tree(t_token **current_token, t_data *data);
-void		parse_tokens(t_data *data);
+void		parsing_tokens(t_data *data);
 
 // create_node.c
 t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left,
