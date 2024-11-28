@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 14:13:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/28 17:11:49 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	exec(t_data *data, char **cmd)
 	char	*path;
 	char	*pwd_path;
 	char	*cmd_minishell;
+
 
 	pwd_path = getcwd(NULL, 0);
 	cmd_minishell = ft_strjoin(pwd_path, "/minishell");
