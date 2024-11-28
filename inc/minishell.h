@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/25 08:06:14 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/28 00:39:02 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 ///////////////// MAIN //////////////////
 
 // main.c
-void		print_tokens(t_data *data);
+// void		print_tokens(t_data *data);
 int			main(int argc, char **argv, char **envp);
 
 // Errors
@@ -145,12 +145,12 @@ void  		read_redirs(t_ast_node *node, t_data *data);
 ///////////// LEXING ///////////////
 
 // append.c
-bool		ft_append_operator(char **command, t_token **tokens);
-bool		ft_append_word(char **command, t_token **tokens, t_data *data);
+// bool		ft_append_operator(char **command, t_token **tokens);
+// bool		ft_append_word(char **command, t_token **tokens, t_data *data);
 
 // tokenize.c
-bool		ft_tokenize(t_data *data);
-t_token		*get_tokens(char *command, t_data *data);
+bool		ft_found_token_in_argv(t_data *data);
+t_token		*fill_list_tokens(char *command, t_data *data);
 
 // grammar_check.c
 bool		ft_is_operator(char c);
@@ -161,8 +161,11 @@ bool		ft_is_separator(char *s);
 
 // stack_utils.c
 int			ft_strcmp(const char *s1, const char *s2);
-t_token		*ft_stacknew(t_token_type type, char *value);
-void		ft_stackadd_back(t_token **stack, t_token *new);
+t_token 	*ft_create_new_token(char *value, t_token_type type);
+void 		ft_add_node_token(t_token *token, char *value, t_token_type type);
+
+// t_token		*ft_stacknew(t_token_type type, char *value);
+// void		ft_stackadd_back(t_token **stack, t_token *new);
 void		ft_stackclear(t_token **stack);
 void		ft_envclear(t_env **env);
 

@@ -3,26 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:13:47 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/28 00:56:42 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
+// typedef enum e_token_type
+// {
+// 	T_CMD,
+// 	T_ARG,
+// 	T_OPERATOR,
+// 	T_PIPE,
+// 	T_REDIR_IN,
+// 	T_INFILE,
+// 	T_REDIR_OUT,
+// 	T_OUTFILE,
+// 	T_REDIR_APPEND,
+// 	T_APPENDFILE,
+// 	T_REDIR_HERE,
+// 	T_BUILTIN,
+// 	T_WORD,
+// }					t_token_type;
+
 typedef enum e_token_type
 {
-	T_WORD,
-	T_OPERATOR,
+	T_CMD,
+	T_ARG,
 	T_PIPE,
+	T_ASSIGN,
+	T_VARIABLE,	
 	T_REDIR_IN,
+	T_INFILE,
 	T_REDIR_OUT,
+	T_OUTFILE,
 	T_REDIR_APPEND,
+	T_APPENDFILE,
 	T_REDIR_HERE,
-	T_BUILTIN,
+	T_DELIMITER,
+	T_WORD,
 }					t_token_type;
 
 typedef struct s_token

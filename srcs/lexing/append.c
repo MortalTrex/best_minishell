@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/04 14:20:45 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/11/28 00:23:23 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,72 +17,72 @@ bool	ft_is_multi_char_operator(const char *str)
 	return (ft_strncmp(str, ">>", 2) == 0 || ft_strncmp(str, "<<", 2) == 0);
 }
 
-static t_token_type	ft_op_type(char *op)
-{
-	if (!ft_strcmp(op, "|"))
-		return (T_PIPE);
-	else if (!ft_strcmp(op, ">"))
-		return (T_REDIR_OUT);
-	else if (!ft_strcmp(op, ">>"))
-		return (T_REDIR_APPEND);
-	else if (!ft_strcmp(op, "<"))
-		return (T_REDIR_IN);
-	else if (!ft_strcmp(op, "<<"))
-		return (T_REDIR_HERE);
-	return (T_WORD);
-}
+// static t_token_type	ft_op_type(char *op)
+// {
+// 	if (!ft_strcmp(op, "|"))
+// 		return (T_PIPE);
+// 	else if (!ft_strcmp(op, ">"))
+// 		return (T_REDIR_OUT);
+// 	else if (!ft_strcmp(op, ">>"))
+// 		return (T_REDIR_APPEND);
+// 	else if (!ft_strcmp(op, "<"))
+// 		return (T_REDIR_IN);
+// 	else if (!ft_strcmp(op, "<<"))
+// 		return (T_REDIR_HERE);
+// 	return (T_WORD);
+// }
 
-bool	ft_append_operator(char **command, t_token **tokens)
-{
-	t_token	*new_token;
+// bool	ft_append_operator(char **command, t_token **tokens)
+// {
+// 	t_token	*new_token;
 
-	if (ft_is_multi_char_operator(*command))
-	{
-		new_token = ft_stacknew(T_WORD, NULL);
-		if (ft_strchr(*command, '<'))
-			new_token->value = ft_strdup("<<");
-		else
-			new_token->value = ft_strdup(">>");
-		new_token->type = ft_op_type(new_token->value);
-		(*command) += 2;
-	}
-	else
-	{
-		new_token = ft_stacknew(T_WORD, NULL);
-		new_token->value = ft_substr(*command, 0, 1);
-		new_token->type = ft_op_type(new_token->value);
-		(*command)++;
-	}
-	if (!new_token)
-		return (false);
-	return (ft_stackadd_back(tokens, new_token), true);
-}
+// 	if (ft_is_multi_char_operator(*command))
+// 	{
+// 		new_token = ft_stacknew(T_WORD, NULL);
+// 		if (ft_strchr(*command, '<'))
+// 			new_token->value = ft_strdup("<<");
+// 		else
+// 			new_token->value = ft_strdup(">>");
+// 		new_token->type = ft_op_type(new_token->value);
+// 		(*command) += 2;
+// 	}
+// 	else
+// 	{
+// 		new_token = ft_stacknew(T_WORD, NULL);
+// 		new_token->value = ft_substr(*command, 0, 1);
+// 		new_token->type = ft_op_type(new_token->value);
+// 		(*command)++;
+// 	}
+// 	if (!new_token)
+// 		return (false);
+// 	return (ft_stackadd_back(tokens, new_token), true);
+// }
 
-bool	ft_append_word(char **command, t_token **tokens, t_data *data)
-{
-	char		*line;
-	char		*value;
-	size_t		i;
-	t_token		*new_token;
+// bool	ft_append_word(char **command, t_token **tokens, t_data *data)
+// {
+// 	char		*line;
+// 	char		*value;
+// 	size_t		i;
+// 	t_token		*new_token;
 
-	line = *command;
-	i = 0;
-	while (!ft_is_separator(line + i) && line[i])
-	{
-		if (ft_is_quote(line[i]))
-		{
-			if (!ft_skip_quotes(line, &i))
-				return (ft_error_quote(data), false);
-		}
-		else
-			i++;
-	}
-	value = ft_substr(line, 0, i);
-	if (!value)
-		return (false);
-	new_token = ft_stacknew(T_WORD, value);
-	if (!new_token)
-		return (free(value), false);
-	*command += i;
-	return (ft_stackadd_back(tokens, new_token), true);
-}
+// 	line = *command;
+// 	i = 0;
+// 	while (!ft_is_separator(line + i) && line[i])
+// 	{
+// 		if (ft_is_quote(line[i]))
+// 		{
+// 			if (!ft_skip_quotes(line, &i))
+// 				return (ft_error_quote(data), false);
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	value = ft_substr(line, 0, i);
+// 	if (!value)
+// 		return (false);
+// 	new_token = ft_stacknew(T_WORD, value);
+// 	if (!new_token)
+// 		return (free(value), false);
+// 	*command += i;
+// 	return (ft_stackadd_back(tokens, new_token), true);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/25 16:00:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/28 00:29:32 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ int	main(int argc, char **argv, char **envp)
 		data.free_value = 0;
 		ft_readline(&data);
 		copy_env_char(&data);
-		if (!ft_tokenize(&data))
+		if (!ft_found_token_in_argv(&data))
 			continue ;
+		exit(0);
 		parse_tokens(&data);
+		
 		ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
