@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/27 20:20:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/28 15:22:10 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int			exec_onecommand(char **cmd, t_data *data);
 void    	multi_pipe(t_ast_node *node, t_data *data, int i, int pipes[2]);
 void		one_pipe(t_ast_node *node, t_data *data);
 void		no_pipe(t_ast_node *node, t_data *data);
-void		read_pipe(t_ast_node *node, t_data *data, int i);
+void		read_pipe(t_ast_node *node, t_data *data);
 int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
 
 // exec_core.c
@@ -131,6 +131,7 @@ void		exec(t_data *data, char **cmd);
 void		ft_execution(t_data *data);
 void		count_levels(t_ast_node *node, int level, t_data *data);
 void		read_ast(t_ast_node *node, t_data *data);
+void		transform_ast(t_ast_node *node, t_data *data);
 
 // exec_utils.c
 bool		ft_is_delimiter(char *delimiter, char *str);

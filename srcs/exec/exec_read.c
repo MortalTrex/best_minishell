@@ -15,41 +15,39 @@
 // 	}
 // }
 
-void	read_pipe(t_ast_node *node, t_data *data, int i)
+void    read_commands(t_ast_node *node, t_data *data)
 {
-	// if (!node)
-	// 	return ;
-	// if (node->argv)
-	// {
-		
-				
-	// 	multi_pipe(node, data, i);
-	// 	// close(data->stdin_backup);
-	// 	// close(data->stdout_backup);
-	// }
-	// if (node->type == NODE_PIPE)
-	// {
-	// 	read_pipe(node->left, data, i++);
-	// 	if (data->isheredoc == false)
-	// 		read_pipe(node->right, data, i);
-	// }
-
-	(void)node;
-	(void)data;
-	(void)i;
-
-	t_ast_node *current_left = NULL;
-	// t_ast_node *current_right = NULL;
-	t_ast_node *current = NULL;
-
-	
-	t_ast_node *new_tree = NULL;
-	t_ast_node *new_tree_head = NULL;
+	t_ast_node *current;
 
 	current = node;
+	(void)data;
+	while (current)
+	{
+		//printf("Command: %s\n", current->command);
+		if (current->prev)
+			printf("Command: %s\n", current->prev->command);
+		current = current->right;
+	}
+}
 
-	int count = 0;
+void	transform_ast(t_ast_node *node, t_data *data)
+{
+	(void)node;
+	(void)data;
+	int i;
+	int count;
 
+	t_ast_node *current_left;
+	t_ast_node *current;
+	t_ast_node *new_tree;
+	t_ast_node *new_tree_head;
+
+	current_left = NULL;
+	current = node;
+	new_tree = NULL;
+	new_tree_head = NULL;
+	count = 0;
+	i = 0;
 	while(current)
 	{
 		if (count == 0)
@@ -63,11 +61,9 @@ void	read_pipe(t_ast_node *node, t_data *data, int i)
 			ft_memcpy(new_tree, current, sizeof(t_ast_node));
 			new_tree_head = new_tree;
 		}
-
 		current_left = current->left;
 		if (current_left && current_left->command != NULL)
 		{
-			// printf("Left: %s\n", current_left->command);
 			new_tree->right = malloc(sizeof(t_ast_node));
 			if (!new_tree->right)
 			{
@@ -79,7 +75,6 @@ void	read_pipe(t_ast_node *node, t_data *data, int i)
 		}
 		if (current && current->command != NULL)
 		{
-			// printf("Current: %s\n", current->command);
 			new_tree->right = malloc(sizeof(t_ast_node));
 			if (!new_tree->right)
 			{
@@ -92,7 +87,6 @@ void	read_pipe(t_ast_node *node, t_data *data, int i)
 		current = current->right;
 		count++;
 	}
-
 	new_tree_head = new_tree_head->right;
 	current = new_tree_head;
 	while (current)
@@ -110,20 +104,16 @@ void	read_pipe(t_ast_node *node, t_data *data, int i)
 		current = current->right;
 	}
 
-
 	current = new_tree_head;
 
 	data->new_ast = new_tree_head;
-	while (current)
-	{
-		printf("Command: %s\n", current->command);
-		if (current->prev)
-			printf("Command prev: %s\n", current->prev->command);
-		current = current->right;
-	}
-
-
-	printf("Count: %d\n", count);
+	// while (current)
+	// {
+	// 	printf("Command: %s\n", current->command);
+	// 	if (current->prev)
+	// 		printf("Command: %s\n", current->prev->command);
+	// 	current = current->right;
+	// }
 }
 
 void	ft_execution(t_data *data)
@@ -136,19 +126,15 @@ void	ft_execution(t_data *data)
     data->stdout_backup = dup(STDOUT_FILENO);
 	if (data->stdin_backup == -1 || data->stdout_backup == -1)
     	ft_error(data, "Error backing up stdin/stdout");
-	
-	if (data->isheredoc)
-		read_heredoc(data->ast, data);
+	if (data->isheredoc == true)
+		ft_process_heredoc(data->ast->redir, data);
 	if (data->isheredoc == false)
 		if (data->nb_levels == 0)
 			no_pipe(data->ast, data);
-	// if (data->nb_levels == 1)
-	// 	one_pipe(data->ast, data);
+	transform_ast(data->ast, data);
 	data->count = 0;
 	if (data->nb_levels >= 1)
-		read_pipe(data->ast, data, 0);
-	
-	printf("Count: %d\n", data->count);
+		read_commands(data->new_ast, data);
 	close(data->stdin_backup);
     close(data->stdout_backup);
 }

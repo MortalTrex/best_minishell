@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/27 20:55:58 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/28 12:04:54 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum e_ast_node_type
 {
 	NODE_CMD,
 	NODE_PIPE,
-}					t_ast_node_type;
+}			t_ast_node_type;
 
 typedef struct s_redir
 {
@@ -68,6 +68,9 @@ typedef struct s_data
 {
 	t_token			*tok;
 	t_env			*env;
+	t_ast_node		*ast;
+	t_ast_node		*new_ast;
+	struct termios	terminal;
 	int				count;
 	char			**envc;
 	char			*user_line;
@@ -78,15 +81,12 @@ typedef struct s_data
 	int 			fd_prev[2];
 	int             stdin_backup;
 	int             stdout_backup;
-	t_ast_node		*ast;
-	t_ast_node		*new_ast;
 	int				parsing_error;
 	int				exit_status;
 	int				last_pid;
 	int				wstatus;
 	int				free_value;
 	int             nb_levels;
-	struct termios	terminal;
 	bool			isheredoc;
 	bool            isoutfile;
 	bool			isinfile;
