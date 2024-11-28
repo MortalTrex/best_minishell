@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/28 18:25:21 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:48:26 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,16 +210,38 @@ void expand_values_in_tokens(t_data *data)
 	}
 }
 
+void restore_spaces_in_words(t_data *data)
+{
+	t_token *current = data->tok;
+
+	while (current)
+	{
+		
+		for (size_t i = 0; current->value[i]; i++)
+		{
+			if (current->value[i] == '\x01') 
+				current->value[i] = ' ';    
+		}
+
+		
+		current = current->next;
+	}
+}
+
 
 
 void	parsing_tokens(t_data *data)
 {
+	
+	restore_spaces_in_words(data);
 	
 	check_if_expand_values(data);
 
 	expand_values_in_tokens(data);
 
 	print_tokens(data->tok);
+
+	
 	
 	
 }

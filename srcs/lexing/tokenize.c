@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 18:01:06 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:47:18 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,56 @@ t_token_type identify_type_of_word(char *word)
     return (T_ARG);
 }
 
+
+
+char *replace_spaces_in_quotes(const char *prompt)
+{
+    char *result = ft_strdup(prompt); 
+    if (!result)
+        return NULL;
+
+    bool in_single_quotes = false;
+    bool in_double_quotes = false;
+
+    for (size_t i = 0; result[i]; i++)
+    {
+        if (result[i] == '\'' && !in_double_quotes)
+        {
+            in_single_quotes = !in_single_quotes;
+        }
+        else if (result[i] == '"' && !in_single_quotes)
+        {
+            in_double_quotes = !in_double_quotes;
+        }
+        else if ((in_single_quotes || in_double_quotes) && result[i] == ' ')
+        {
+            result[i] = '\x01'; 
+        }
+    }
+
+    
+    if (in_single_quotes || in_double_quotes)
+    {
+        
+        for (size_t i = 0; result[i]; i++)
+        {
+            if (result[i] == '\x01')
+                result[i] = ' ';
+        }
+    }
+
+    return result;
+}
+
+
+
 t_token *fill_list_tokens(char *prompt, t_data *data)
 {
     (void)data;
     t_token *tokens = NULL;
     t_token *last_token = NULL;
+
+    prompt = replace_spaces_in_quotes(prompt);
 
     char **words = ft_split(prompt, ' ');
     if (!words)
