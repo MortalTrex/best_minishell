@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 01:30:59 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:37:28 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_token_type identify_type_of_word(char *word)
 {
     if (ft_strcmp(word, "|") == 0)
         return (T_PIPE);
-    else if (ft_strcmp(word, "=") == 0)
-        return (T_ASSIGN);
+    // else if (ft_strcmp(word, "=") == 0)
+    //     return (T_ASSIGN);
     else if (ft_strcmp(word, "<") == 0)
         return (T_REDIR_IN);
     else if (ft_strcmp(word, ">") == 0)
@@ -82,50 +82,50 @@ t_token *fill_list_tokens(char *prompt, t_data *data)
         }
 
         
-        if (type == T_ASSIGN)
-        {
+        // if (type == T_ASSIGN)
+        // {
             
-            if (i > 0)
-            {
-                last_token->type = T_VARIABLE; 
-            }
+        //     if (i > 0)
+        //     {
+        //         last_token->type = T_VARIABLE; 
+        //     }
 
             
-            if (words[i + 1])
-            {
-                i++;
-                t_token *extra_token = ft_create_new_token(words[i], T_VALUE_VAR);
-                if (!extra_token)
-                {
-                    free(new_token->value);
-                    free(new_token);
-                    for (int j = 0; words[j]; j++)
-                        free(words[j]);
-                    free(words);
-                    while (tokens)
-                    {
-                        t_token *temp = tokens;
-                        tokens = tokens->next;
-                        free(temp->value);
-                        free(temp);
-                    }
-                    return (NULL);
-                }
+        //     if (words[i + 1])
+        //     {
+        //         i++;
+        //         t_token *extra_token = ft_create_new_token(words[i], T_VALUE_VAR);
+        //         if (!extra_token)
+        //         {
+        //             free(new_token->value);
+        //             free(new_token);
+        //             for (int j = 0; words[j]; j++)
+        //                 free(words[j]);
+        //             free(words);
+        //             while (tokens)
+        //             {
+        //                 t_token *temp = tokens;
+        //                 tokens = tokens->next;
+        //                 free(temp->value);
+        //                 free(temp);
+        //             }
+        //             return (NULL);
+        //         }
 
-                new_token->next = extra_token;
-                extra_token->prev = new_token;
+        //         new_token->next = extra_token;
+        //         extra_token->prev = new_token;
 
-                if (!tokens)
-                    tokens = new_token;
-                else
-                {
-                    last_token->next = new_token;
-                    new_token->prev = last_token;
-                }
-                last_token = extra_token;
-                continue;
-            }
-        }
+        //         if (!tokens)
+        //             tokens = new_token;
+        //         else
+        //         {
+        //             last_token->next = new_token;
+        //             new_token->prev = last_token;
+        //         }
+        //         last_token = extra_token;
+        //         continue;
+        //     }
+        // }
 
         
         if (type == T_REDIR_IN || type == T_REDIR_OUT || type == T_REDIR_APPEND || type == T_REDIR_HERE)
