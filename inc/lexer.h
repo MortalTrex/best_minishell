@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 00:56:42 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:26:21 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef enum e_token_type
 	T_ARG,
 	T_PIPE,
 	T_ASSIGN,
-	T_VARIABLE,	
+	T_VARIABLE,
+	T_VALUE_VAR,
 	T_REDIR_IN,
 	T_INFILE,
 	T_REDIR_OUT,

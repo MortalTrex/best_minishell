@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 01:14:47 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:30:59 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,21 @@ t_token *fill_list_tokens(char *prompt, t_data *data)
         }
 
         
-        if (type == T_ASSIGN || type == T_REDIR_IN || type == T_REDIR_OUT ||
-            type == T_REDIR_APPEND || type == T_REDIR_HERE)
+        if (type == T_ASSIGN)
         {
-            if (words[i + 1]) 
+            
+            if (i > 0)
+            {
+                last_token->type = T_VARIABLE; 
+            }
+
+            
+            if (words[i + 1])
             {
                 i++;
-                t_token_type subtype = T_ARG;
-                if (type == T_ASSIGN)
-                    subtype = T_VARIABLE;
-                else if (type == T_REDIR_IN)
-                    subtype = T_INFILE;
-                else if (type == T_REDIR_OUT)
-                    subtype = T_OUTFILE;
-                else if (type == T_REDIR_APPEND)
-                    subtype = T_APPENDFILE;
-                else if (type == T_REDIR_HERE)
-                    subtype = T_DELIMITER;
-
-                t_token *extra_token = ft_create_new_token(words[i], subtype);
+                t_token *extra_token = ft_create_new_token(words[i], T_VALUE_VAR);
                 if (!extra_token)
                 {
-                    
                     free(new_token->value);
                     free(new_token);
                     for (int j = 0; words[j]; j++)
@@ -129,10 +122,60 @@ t_token *fill_list_tokens(char *prompt, t_data *data)
                     last_token->next = new_token;
                     new_token->prev = last_token;
                 }
-                last_token = extra_token; // Extra token devient le dernier
+                last_token = extra_token;
                 continue;
             }
         }
+
+        
+        if (type == T_REDIR_IN || type == T_REDIR_OUT || type == T_REDIR_APPEND || type == T_REDIR_HERE)
+        {
+            if (words[i + 1])
+            {
+                i++;
+                t_token_type subtype = T_ARG;
+                if (type == T_REDIR_IN)
+                    subtype = T_INFILE;
+                else if (type == T_REDIR_OUT)
+                    subtype = T_OUTFILE;
+                else if (type == T_REDIR_APPEND)
+                    subtype = T_APPENDFILE;
+                else if (type == T_REDIR_HERE)
+                    subtype = T_DELIMITER;
+
+                t_token *extra_token = ft_create_new_token(words[i], subtype);
+                if (!extra_token)
+                {
+                    free(new_token->value);
+                    free(new_token);
+                    for (int j = 0; words[j]; j++)
+                        free(words[j]);
+                    free(words);
+                    while (tokens)
+                    {
+                        t_token *temp = tokens;
+                        tokens = tokens->next;
+                        free(temp->value);
+                        free(temp);
+                    }
+                    return (NULL);
+                }
+
+                new_token->next = extra_token;
+                extra_token->prev = new_token;
+
+                if (!tokens)
+                    tokens = new_token;
+                else
+                {
+                    last_token->next = new_token;
+                    new_token->prev = last_token;
+                }
+                last_token = extra_token;
+                continue;
+            }
+        }
+
         
         if (!tokens)
             tokens = new_token;
@@ -168,6 +211,7 @@ t_token *fill_list_tokens(char *prompt, t_data *data)
 }
 
 
+
 void remove_all_quotes(char **str)
 {
 	char *src = *str;
@@ -197,6 +241,8 @@ char *choose_type(t_token_type type)
 		return "T_ASSIGN";
 	else if (type == T_VARIABLE)
 		return "T_VARIABLE";
+    else if (type == T_VALUE_VAR)
+        return "T_VALUE_VAR";
 	else if (type == T_REDIR_IN)
 		return "T_REDIR_IN";
 	else if (type == T_INFILE)
@@ -247,8 +293,8 @@ char *ft_strncpy(char *dest, const char *src, size_t n)
 
 char *add_spaces_around_tokens(const char *prompt)
 {
-    const char *tokens[] = { "<<", ">>", "<", ">", "|", NULL }; // Prioriser les tokens doubles
-    char *new_prompt = malloc(ft_strlen(prompt) * 2 + 1); // Allouer suffisamment de mémoire
+    const char *tokens[] = { "=", "<<", ">>", "<", ">", "|", NULL }; 
+    char *new_prompt = malloc(ft_strlen(prompt) * 2 + 1);
     if (!new_prompt)
         return (NULL);
 
