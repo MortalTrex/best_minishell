@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 01:12:42 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/28 01:14:47 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,9 +303,14 @@ bool	ft_found_token_in_argv(t_data *data)
 
 	data->tok = fill_list_tokens(prompt, data);
 	
-
+	
 	print_tokens(data->tok);
 	
+	if (!data->tok)
+	{
+		free(prompt);
+		return (false);
+	}
 
 	free(prompt);
 	return (true);
