@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 18:47:18 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:07:01 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_token *fill_list_tokens(char *prompt, t_data *data)
     t_token *tokens = NULL;
     t_token *last_token = NULL;
 
-    prompt = replace_spaces_in_quotes(prompt);
+   
 
     char **words = ft_split(prompt, ' ');
     if (!words)
@@ -385,15 +385,113 @@ char *add_spaces_around_tokens(const char *prompt)
     return (new_prompt);
 }
 
+
+
+// bool check_single_quotes(const char *line) {
+//     bool single_quote_open = false;
+
+//     for (int i = 0; line[i] != '\0'; i++) {
+//         if (line[i] == '\'') {
+//             single_quote_open = !single_quote_open; // Alterne l'état
+//         }
+//     }
+
+//     return !single_quote_open; // Retourne true si tous les guillemets simples sont fermés
+// }
+
+// bool check_double_quotes(const char *line) {
+//     bool double_quote_open = false;
+
+//     for (int i = 0; line[i] != '\0'; i++) {
+//         if (line[i] == '"') {
+//             double_quote_open = !double_quote_open; // Alterne l'état
+//         }
+//     }
+
+//     return !double_quote_open; // Retourne true si tous les guillemets doubles sont fermés
+// }
+
+// bool ft_check_if_quotes_closes(t_data *data) {
+//     if (!data || !data->user_line)
+//         return false;
+
+//     char *line = data->user_line;
+
+//     // Vérifie séparément les guillemets simples et doubles
+//     bool single_quotes_closed = check_single_quotes(line);
+//     bool double_quotes_closed = check_double_quotes(line);
+
+//     // Débogage pour voir les résultats intermédiaires
+//     printf("DEBUG: single_quotes_closed=%d, double_quotes_closed=%d\n",
+//            single_quotes_closed, double_quotes_closed);
+
+//     // Retourne true seulement si les deux types de guillemets sont bien fermés
+//     return single_quotes_closed && double_quotes_closed;
+// }
+
+
+bool ft_check_if_quotes_closes(t_data *data) 
+{
+    if (!data || !data->user_line)
+        return false;
+
+    char *line = data->user_line;
+    bool single_quote_open = false;
+    bool double_quote_open = false;
+
+    for (int i = 0; line[i] != '\0'; i++) {
+        if (line[i] == '\\' && double_quote_open && line[i + 1] != '\0') 
+        {
+            
+            i++;
+        } 
+        else if (line[i] == '\'' && !double_quote_open) 
+        {
+            
+            single_quote_open = !single_quote_open;
+        } 
+        else if (line[i] == '"' && !single_quote_open) 
+        {
+            
+            double_quote_open = !double_quote_open;
+        }
+
+        
+        
+    }
+
+    
+    if (single_quote_open || double_quote_open) 
+    {
+        
+        return false;
+    }
+
+    return true; 
+}
+
+
+
 bool	ft_found_token_in_argv(t_data *data)
 {
 	char *prompt;
+
+    printf("data->user_line: %s\n", data->user_line);
+
+    if (ft_check_if_quotes_closes(data) == false)
+    {
+        ft_error_quote(data);
+        return (false);
+        
+    }
 
 	prompt = ft_strdup(data->user_line);
 	// remove_all_quotes(&prompt);
 
 	prompt = add_spaces_around_tokens(prompt);
 
+    
+    prompt = replace_spaces_in_quotes(prompt);
 	printf("Prompt: %s\n", prompt);
 
 	data->tok = fill_list_tokens(prompt, data);

@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/28 20:16:48 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:50:08 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,27 @@ void restore_spaces_in_words(t_data *data)
 
 
 
+
+
+
+void ft_fill_shell_list(t_data *data)
+{
+	(void)data;
+	t_token *current = data->tok;
+
+	while (current)
+	{
+		if (current->type == T_PIPE)
+			break;
+		
+		
+		
+		current = current->next;
+	}
+	
+}
+
+
 void	parsing_tokens(t_data *data)
 {
 	
@@ -241,8 +262,8 @@ void	parsing_tokens(t_data *data)
 
 	print_tokens(data->tok);
 
-
 	
+	ft_fill_shell_list(data);
 	
 	
 }

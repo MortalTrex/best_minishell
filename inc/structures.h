@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/18 17:58:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/11/29 13:29:43 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <minishell.h>
 # include <termios.h>
 
+
 typedef enum e_redir_type
 {
 	IN,
@@ -26,11 +27,6 @@ typedef enum e_redir_type
 	D_HEREDOC
 }					t_redir_type;
 
-typedef enum e_ast_node_type
-{
-	NODE_CMD,
-	NODE_PIPE,
-}					t_ast_node_type;
 
 typedef struct s_redir
 {
@@ -44,6 +40,24 @@ typedef struct s_redir
 	struct s_redir	*next;
 }					t_redir;
 
+
+typedef struct s_shell_list
+{
+	char				*command;
+	char				**argv;
+	pid_t				pid;
+	t_redir				*redir;
+	struct s_shell_list		*prev;
+	struct s_shell_list		*next;
+}					t_shell_list;
+
+typedef enum e_ast_node_type
+{
+	NODE_CMD,
+	NODE_PIPE,
+}					t_ast_node_type;
+
+
 typedef struct s_ast_node
 {
 	t_ast_node_type		type;
@@ -54,6 +68,7 @@ typedef struct s_ast_node
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 }					t_ast_node;
+
 
 typedef struct s_env
 {
@@ -67,6 +82,7 @@ typedef struct s_data
 {
 	t_token			*tok;
 	t_env			*env;
+	t_shell_list	*shell_list;
 	char			**envc;
 	char			*user_line;
 	int				fd[2];
