@@ -77,7 +77,7 @@ static void	ft_read_heredoc(t_redir *redir, t_data *data)
 	signal(SIGINT, heredoc_sigint_handler);
 	while (*read && !ft_is_quote(*read))
 		read++;
-	while (g_exit_status != 130)
+	while (1)//(g_exit_status != 130)
 	{
 		line = readline("> ");
 		if (!line)

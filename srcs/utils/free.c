@@ -71,6 +71,10 @@ void	ft_free_all(t_data *data)
 	}
 	if (data->ast)
 		free_ast(&data->ast, data);
+	// if (data->stdin_backup != -1)
+	// 	close(data->stdin_backup);
+	// if (data->stdout_backup != -1)
+	// 	close(data->stdout_backup);
 	// if (data->new_ast)
 	// 	free_ast(&data->new_ast, data);
 }

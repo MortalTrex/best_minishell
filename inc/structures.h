@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 12:04:54 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/02 14:19:59 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,11 @@ typedef struct s_data
 	char			**envc;
 	char			*user_line;
 	int				fd[2];
-	int				fd_pair[2];
-	int				fd_impair[2];
-	int				fd_next[2];
-	int 			fd_prev[2];
+	int 		    pipe_fd[2];
+	// int				fd_pair[2];
+	// int				fd_impair[2];
+	// int				fd_next[2];
+	// int 			fd_prev[2];
 	int             stdin_backup;
 	int             stdout_backup;
 	int				parsing_error;

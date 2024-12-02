@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/20 15:34:00 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/02 15:32:50 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_error(t_data *data, char *msg)
 {
 	ft_free_all(data);
 	ft_putstr_fd(msg, STDERR_FILENO);
+	exit(1);
 }
 
 void	ft_error_quote(t_data *data)

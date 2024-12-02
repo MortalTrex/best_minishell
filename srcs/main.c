@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/27 19:56:51 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/02 18:01:20 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void	ft_readline(t_data *data)
 	data->isheredoc = 0;
 	data->isinfile = 0;
 	data->isoutfile = 0;
-	data->user_line = readline(PROMPT);
 	signal(SIGINT, sigint_handler);
+	data->user_line = readline(PROMPT);
 	if (data->user_line)
 		add_history(data->user_line);
-	if (data->user_line == NULL)
-	{
-		ft_printf("Exit\n");
-		ft_free_all(data);
-		exit(0);
-	}
+	// if (data->user_line == NULL)
+	// {
+	// 	ft_printf("Exit\n");
+	// 	ft_free_all(data);
+	// 	exit(0);
+	// }
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -50,12 +50,12 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_tokenize(&data))
 			continue ;
 		parse_tokens(&data);
+		if (data.parsing_error)
+			ft_parsing_error(&data);
 		ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
 	}
-	data.free_value = 0;
-	ft_free_all(&data);
 	clear_history();
 	return (data.exit_status);
 }

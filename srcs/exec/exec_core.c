@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 17:11:49 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/02 13:07:53 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void	exec(t_data *data, char **cmd)
 	path = ft_path(cmd[0], data);
 	if (!path)
 	{
-		ft_printf("Command '%s'", cmd[0]);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd[0], 2);
 		ft_close_fd(data, " not found\n");
 	}
 	if (execve(path, cmd, data->envc) == -1)
