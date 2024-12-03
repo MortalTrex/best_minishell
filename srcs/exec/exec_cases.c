@@ -2,26 +2,25 @@
 #include <unistd.h>
 
 
-int	choose_case_of_dup(int *i, t_data *data)
-{
-	if (*i == 1 && *i % 2 != 0)
-		return (FD_IMPAIR_0);
-	if (*i > 1 && *i < data->nb_levels + 1 && *i % 2 != 0)
-		return (FD_IMPAIR_MIDDLE);
-	if (*i == data->nb_levels && *i % 2 != 0)
-		return (FD_IMPAIR_END);
-	if (*i > 1 && *i < data->nb_levels + 1 && *i % 2 == 0)
-		return (FD_PAIR_MIDDLE);
-	if (*i == data->nb_levels + 1 && *i % 2 == 0)
-		return (FD_PAIR_END);
-	return (0);
-}
+// int	choose_case_of_dup(int *i, t_data *data)
+// {
+// 	if (*i == 1 && *i % 2 != 0)
+// 		return (FD_IMPAIR_0);
+// 	if (*i > 1 && *i < data->nb_levels + 1 && *i % 2 != 0)
+// 		return (FD_IMPAIR_MIDDLE);
+// 	if (*i == data->nb_levels && *i % 2 != 0)
+// 		return (FD_IMPAIR_END);
+// 	if (*i > 1 && *i < data->nb_levels + 1 && *i % 2 == 0)
+// 		return (FD_PAIR_MIDDLE);
+// 	if (*i == data->nb_levels + 1 && *i % 2 == 0)
+// 		return (FD_PAIR_END);
+// 	return (0);
+// }
 
 void	multi_pipe(t_ast_node *node, t_data *data, int i)
 {
 	pid_t	pid;
 
-	//int pipe_fd[2];
 	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
 		ft_error(data, "Error creating pipe");
 	pid = fork();

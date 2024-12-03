@@ -71,13 +71,13 @@ static void	ft_read_heredoc(t_redir *redir, t_data *data)
 	char	*read;
 
 	read = redir->file;
-	redir->hd_fd = open(read, O_RDWR | O_CREAT , 0666);
+	redir->hd_fd = open(read, O_TRUNC | O_CREAT | O_RDONLY , 0666);
 	if (redir->hd_fd == -1)
 		perror("heredoc");
 	signal(SIGINT, heredoc_sigint_handler);
 	while (*read && !ft_is_quote(*read))
 		read++;
-	while (1)//(g_exit_status != 130)
+	while (g_exit_status != 130)
 	{
 		line = readline("> ");
 		if (!line)
@@ -101,4 +101,5 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 		create_filename(redir);
 	ft_read_heredoc(redir, data);
 	data->isheredoc = true;
+	close(redir->hd_fd);
 }

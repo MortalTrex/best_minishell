@@ -11,19 +11,6 @@ void	count_levels(t_ast_node *node, int level, t_data *data)
 		count_levels(node->right, level + 1, data);
 }
 
-bool	check_infile(t_ast_node *node, t_data *data)
-{
-	node = data->ast;
-	while (node->redir)
-	{
-		if (node->redir->type == IN)
-		{
-			
-		}
-		node->redir = node->redir->next;
-	}
-	return (false);
-}
 
 void	wait_commands(t_data *data)
 {
@@ -73,11 +60,11 @@ bool	ft_is_delimiter(char *delimiter, char *str)
 	return (!*delimiter);
 }
 
-void	ft_fds_dup2(t_data *data)
-{
-	dup2(data->fd[0], 0);
-	dup2(data->fd[1], 1);
-}
+// void	ft_fds_dup2(t_data *data)
+// {
+// 	dup2(data->fd[0], 0);
+// 	dup2(data->fd[1], 1);
+// }
 
 bool	is_builtin(char *command)
 {
@@ -88,6 +75,7 @@ bool	is_builtin(char *command)
 		return (true);
 	return (false);
 }
+
 
 void	transform_ast(t_ast_node *node, t_data *data)
 {

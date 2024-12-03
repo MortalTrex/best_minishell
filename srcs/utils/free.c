@@ -50,6 +50,19 @@ void	free_ast(t_ast_node **node, t_data *data)
 	*node = NULL;
 	if (data->tok)
 		ft_stackclear(&data->tok);
+	data->new_ast = NULL;
+}
+
+void free_newast(t_ast_node *node)
+{
+    t_ast_node *tmp;
+
+    while (node)
+    {
+        tmp = node->right;
+        free(node);
+        node = tmp;
+    }
 }
 
 void	ft_free_all(t_data *data)
@@ -66,15 +79,13 @@ void	ft_free_all(t_data *data)
 	{
 		close(data->fd[0]);
 		close(data->fd[1]);
+		close(data->stdin_backup);
+		close(data->stdout_backup);
 		if (data->env)
 			ft_envclear(&data->env);
 	}
 	if (data->ast)
 		free_ast(&data->ast, data);
-	// if (data->stdin_backup != -1)
-	// 	close(data->stdin_backup);
-	// if (data->stdout_backup != -1)
-	// 	close(data->stdout_backup);
-	// if (data->new_ast)
-	// 	free_ast(&data->new_ast, data);
+	if (data->new_ast)
+		free_newast(data->new_ast);
 }
