@@ -6,7 +6,7 @@ static void	create_filename(t_redir *redir)
 	char	*temp_num;
 
 	temp_num = ft_itoa(getpid() + 1);
-	temp_file = ft_strjoin("/tmp/minishell_heredoc_", temp_num);
+	temp_file = ft_strjoin("/home/rbalazs/temp", temp_num);
 	free(temp_num);
 	if (!temp_file)
 	{
@@ -71,7 +71,7 @@ static void	ft_read_heredoc(t_redir *redir, t_data *data)
 	char	*read;
 
 	read = redir->file;
-	redir->hd_fd = open(read, O_TRUNC | O_CREAT | O_RDONLY , 0666);
+	redir->hd_fd = open(read, O_TRUNC | O_CREAT | O_WRONLY , 0666);
 	if (redir->hd_fd == -1)
 		perror("heredoc");
 	signal(SIGINT, heredoc_sigint_handler);
@@ -101,5 +101,4 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 		create_filename(redir);
 	ft_read_heredoc(redir, data);
 	data->isheredoc = true;
-	close(redir->hd_fd);
 }
