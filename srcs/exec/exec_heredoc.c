@@ -6,7 +6,7 @@ static void	create_filename(t_redir *redir)
 	char	*temp_num;
 
 	temp_num = ft_itoa(getpid() + 1);
-	temp_file = ft_strjoin("/home/rbalazs/temp", temp_num);
+	temp_file = ft_strjoin("/tmp/minishell_heredoc_", temp_num);
 	free(temp_num);
 	if (!temp_file)
 	{
@@ -16,9 +16,10 @@ static void	create_filename(t_redir *redir)
 	}
 	if (access(temp_file, F_OK) == -1)
 	{
-		redir->file = temp_file;
+		redir->file_here_doc = ft_strdup(temp_file);
 		return ;
 	}
+	redir->file_here_doc = ft_strdup(temp_file);
 	free(temp_file);
 }
 
@@ -56,13 +57,16 @@ static void	ft_expand_heredoc(char *command,int fd, t_data *data)
 	}
 	ft_putchar_fd('\n', fd);
 }
-static void close_hd(t_redir *redir, t_data *data)
+void close_hd(t_redir *redir, t_data *data)
 {
-	if (redir->hd_fd != -1)
+	if (redir && redir->hd_fd != -1)
 		close(redir->hd_fd);
 	close(STDIN_FILENO);
-	dup2(data->fd[0], STDIN_FILENO);
-	close(data->fd[0]);
+	//dup2(data->fd[0], STDIN_FILENO);
+	if (data && data->fd[0] != -1)
+		close(data->fd[0]);
+	// if (redir->file)
+	// 	unlink(redir->file);
 }
 
 static void	ft_read_heredoc(t_redir *redir, t_data *data)
@@ -70,13 +74,18 @@ static void	ft_read_heredoc(t_redir *redir, t_data *data)
 	char	*line;
 	char	*read;
 
-	read = redir->file;
+	if (!redir && !redir->file_here_doc)
+		return;
+
+	read = redir->file_here_doc;
 	redir->hd_fd = open(read, O_TRUNC | O_CREAT | O_WRONLY , 0666);
 	if (redir->hd_fd == -1)
 		perror("heredoc");
 	signal(SIGINT, heredoc_sigint_handler);
 	while (*read && !ft_is_quote(*read))
 		read++;
+
+	int count = 0;
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
@@ -88,17 +97,25 @@ static void	ft_read_heredoc(t_redir *redir, t_data *data)
 			ft_expand_heredoc(line, redir->hd_fd, data);
 		else
 			ft_putendl_fd(line, redir->hd_fd);
+
+		count++;
+	
 	}
 	if (line)
 		free(line);
-	close_hd(redir, data);
+
+	if (redir &&  redir->hd_fd != -1)
+		close(redir->hd_fd);
+
+	close_hd(NULL, NULL);
+	// close_hd(redir, data);
 }
 
 void	ft_process_heredoc(t_redir *redir, t_data *data)
 {
 	data->fd[0] = dup(STDIN_FILENO);
-	if (redir->file == NULL)
-		create_filename(redir);
+	create_filename(redir);
 	ft_read_heredoc(redir, data);
 	data->isheredoc = true;
+	
 }

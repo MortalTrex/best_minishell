@@ -35,6 +35,7 @@ typedef enum e_ast_node_type
 typedef struct s_redir
 {
 	char			*file;
+	char			*file_here_doc;
 	char			**argv;
 	t_redir_type	type;
 	int				hd_fd;

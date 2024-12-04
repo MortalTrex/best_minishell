@@ -1,26 +1,7 @@
-bin
-build
-inc
-infile1.txt
-infile2.txt
-libft
-Makefile
-minishell
-outfile1.txt
-outfile2.txt
-outfile.txt
-README.md
-rlsupp.txt
-srcs
-tlmjkdfglm.c
-[?2004hminishell> ^C[?2004l
-minishell> [?2004hm^C[?2004l
-minishell> [?2004h
-[?2004l[?2004hminishell> ^C[?2004l
-minishell> [?2004h^C[?2004l
-minishell> [?2004h^C[?2004l
-minishell> [?2004hasdasdasd^C[?2004l
-minishell> [?2004h^C[?2004l
-minishell> [?2004h^C[?2004l
-minishell> [?2004h[?2004l
-Exit
+in here doc: 1
+asd
+asd
+asd
+asd
+asd
+asd
