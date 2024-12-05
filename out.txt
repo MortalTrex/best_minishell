@@ -1,7 +1,15 @@
-in here doc: 1
-asd
-asd
-asd
-asd
-asd
-asd
+bin
+build
+in1.txt
+inc
+in.txt
+libft
+Makefile
+minishell
+minishell_tester
+out
+out1.txt
+out.txt
+README.md
+rlsupp.txt
+srcs

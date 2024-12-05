@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/19 17:15:49 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:18:53 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_move_directory(char *path, t_data *data)
 		ft_printf("Path not found\n");
 	new_pwd = getcwd(NULL, 0);
 	set_env_pwd(new_pwd, data);
-	printf("%s\n", new_pwd);
+	//printf("%s\n", new_pwd);
 	free(new_pwd);
 }
 
@@ -97,6 +97,6 @@ void	ft_cd(char **argv, t_data *data)
 		ft_putstr_fd("cd: too many arguments\n", 1);
 		data->exit_status = 1;
 	}
-	ft_putstr_fd("cd: too many arguments\n", 1);
+	//ft_putstr_fd("cd: too many arguments\n", 1);
 	data->exit_status = 0;
 }

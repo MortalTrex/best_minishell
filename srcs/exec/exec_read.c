@@ -26,7 +26,6 @@ void	ft_execution(t_data *data)
 	read_redirs(data->ast, data);
 	if (data->nb_levels == 0)
 	{
-		
 		no_pipe(data->ast, data);
 	}
 	transform_ast(data->ast, data);

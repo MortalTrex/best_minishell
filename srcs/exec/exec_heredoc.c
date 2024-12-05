@@ -117,5 +117,4 @@ void	ft_process_heredoc(t_redir *redir, t_data *data)
 	create_filename(redir);
 	ft_read_heredoc(redir, data);
 	data->isheredoc = true;
-	
 }
