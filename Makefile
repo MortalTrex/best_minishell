@@ -6,7 +6,7 @@
 #    By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/12/06 21:45:56 by dagudelo         ###   ########.fr        #
+#    Updated: 2024/12/06 22:59:41 by dagudelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,7 @@ all: check $(NAME)
 $(NAME): $(OBJS)
 	@$(MAKE) -s -C $(LIBFTDIR)
 	@$(CC) $(FLAGS) -lm $(OBJS) $(LIBS) -o $(NAME) $(LDLIBS)
-	@echo "$(INDI)The best minishell in the world is compiled!$(RESET)"
+	@echo -e "$(INDI)The best minishell in the world is compiled!$(RESET)"
 
 check:
 	@if [ -f $(NAME) ]; then \

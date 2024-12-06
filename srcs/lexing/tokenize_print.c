@@ -6,11 +6,31 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 22:52:25 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:55:53 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char *ft_choose_type_2(t_token_type type)
+{
+	if (type == T_INFILE)
+		return "T_INFILE";
+	else if (type == T_REDIR_OUT)
+		return "T_REDIR_OUT";
+	else if (type == T_OUTFILE)
+		return "T_OUTFILE";
+	else if (type == T_REDIR_APPEND)
+		return "T_REDIR_APPEND";
+	else if (type == T_APPENDFILE)
+		return "T_APPENDFILE";
+	else if (type == T_REDIR_HERE)
+		return "T_REDIR_HERE";
+	else if (type == T_DELIMITER)
+		return "T_DELIMITER";
+	else
+		return "UNKNOWN";
+}
 
 static char *ft_choose_type(t_token_type type)
 {
@@ -28,22 +48,8 @@ static char *ft_choose_type(t_token_type type)
         return "T_VALUE_VAR";
 	else if (type == T_REDIR_IN)
 		return "T_REDIR_IN";
-	else if (type == T_INFILE)
-		return "T_INFILE";
-	else if (type == T_REDIR_OUT)
-		return "T_REDIR_OUT";
-	else if (type == T_OUTFILE)
-		return "T_OUTFILE";
-	else if (type == T_REDIR_APPEND)
-		return "T_REDIR_APPEND";
-	else if (type == T_APPENDFILE)
-		return "T_APPENDFILE";
-	else if (type == T_REDIR_HERE)
-		return "T_REDIR_HERE";
-	else if (type == T_DELIMITER)
-		return "T_DELIMITER";
 	else
-		return "UNKNOWN";
+		return ft_choose_type_2(type);
 }
 
 void ft_print_tokens(t_token *tokens)
