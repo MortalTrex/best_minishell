@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_node.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:03:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/05 13:38:18 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/12/06 14:38:24 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_redir	*ft_create_redir_node(t_token_type type, char *file)
 {
 	t_redir	*redir;
 
-	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
+	redir = ft_calloc(1, sizeof(t_redir));
 	if (!redir)
 		return (NULL);
 	redir->file = ft_strdup(file);

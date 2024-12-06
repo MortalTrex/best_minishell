@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/28 15:22:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/06 17:30:20 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,5 +242,6 @@ void		ft_free_command(t_ast_node *node);
 void		free_node(t_ast_node *node);
 void		free_ast(t_ast_node **node, t_data *data);
 void		ft_free_all(t_data *data);
+void 		free_newast(t_ast_node *node);
 
 #endif

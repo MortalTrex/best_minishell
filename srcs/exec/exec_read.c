@@ -25,10 +25,9 @@ void	ft_execution(t_data *data)
 	count_levels(data->ast, 0, data);
 	read_redirs(data->ast, data);
 	if (data->nb_levels == 0)
-	{
 		no_pipe(data->ast, data);
-	}
 	transform_ast(data->ast, data);
 	if (data->nb_levels >= 1)
 		read_commands(data->new_ast, data);
+	free_newast(data->new_ast);
 }
