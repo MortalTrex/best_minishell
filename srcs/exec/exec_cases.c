@@ -1,22 +1,6 @@
 #include "minishell.h"
 #include <unistd.h>
 
-
-// int	choose_case_of_dup(int *i, t_data *data)
-// {
-// 	if (*i == 1 && *i % 2 != 0)
-// 		return (FD_IMPAIR_0);
-// 	if (*i > 1 && *i < data->nb_levels + 1 && *i % 2 != 0)
-// 		return (FD_IMPAIR_MIDDLE);
-// 	if (*i == data->nb_levels && *i % 2 != 0)
-// 		return (FD_IMPAIR_END);
-// 	if (*i > 1 && *i < data->nb_levels + 1 && *i % 2 == 0)
-// 		return (FD_PAIR_MIDDLE);
-// 	if (*i == data->nb_levels + 1 && *i % 2 == 0)
-// 		return (FD_PAIR_END);
-// 	return (0);
-// }
-
 void	multi_pipe(t_ast_node *node, t_data *data, int i)
 {
 	pid_t	pid;
@@ -50,6 +34,8 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 		close(data->pipe_fd[0]);
 		read_infile(node, data);
 		read_outfile(node, data);
+		close(data->pipe_fd[0]);
+		close(data->pipe_fd[1]);
 		// printf("in here doc: %d\n", in_here_doc);
 		// if (in_here_doc == true)
 		// {
@@ -85,7 +71,8 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 // void	no_pipe(t_ast_node *node, t_data *data)
 // {
 // 	// bool in_here_doc = false;
-	
+// 	if (!node || !node->argv)
+// 		return ;
 // 	data->stdin_backup = dup(STDIN_FILENO);
 //     data->stdout_backup = dup(STDOUT_FILENO);
 // 	if (data->stdin_backup == -1 || data->stdout_backup == -1)
@@ -113,11 +100,11 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 // 			ft_error(data, "Error forking");
 // 		if (node->pid == 0)
 // 		{
-// 			//read_heredoc(node, data);
 
 // 			dup2(data->fd[0], STDIN_FILENO);
 // 			dup2(data->fd[1], STDOUT_FILENO);
 
+// 			read_heredoc(node, data);
 // 			read_infile(node, data);
 // 			read_outfile(node, data);
 // 			close(data->fd[0]);
@@ -140,6 +127,9 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 
 void	no_pipe(t_ast_node *node, t_data *data)
 {
+	read_heredoc(node, data);
+	if (!node || !node->argv)
+		return ;
 	data->stdin_backup = dup(STDIN_FILENO);
     data->stdout_backup = dup(STDOUT_FILENO);
 	if (data->stdin_backup == -1 || data->stdout_backup == -1)
