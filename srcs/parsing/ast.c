@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/29 13:50:08 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:57:18 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,53 +230,320 @@ void restore_spaces_in_words(t_data *data)
 
 
 
-
-
-
-void ft_fill_shell_list(t_data *data)
+int count_total_commands(t_data *data)
 {
-	(void)data;
+	int total_commands = 0;
 	t_token *current = data->tok;
+
+	while (current)
+	{
+		if (current->type == T_PIPE)
+			total_commands++;
+		current = current->next;
+	}
+	return total_commands + 1;
+}
+
+
+int count_total_redirs(t_token *current)
+{
+	int total_redirs = 0;
 
 	while (current)
 	{
 		if (current->type == T_PIPE)
 			break;
 		
-		
-		
+		if (current->type == T_REDIR_IN || current->type == T_REDIR_OUT || current->type == T_REDIR_APPEND || current->type == T_REDIR_HERE)
+			total_redirs++;
 		current = current->next;
 	}
-	
+	return total_redirs;
 }
 
+void ft_free_shell_list(t_shell_list *head)
+{
+    while (head)
+    {
+        t_shell_list *next = head->next;
+        free(head);
+        head = next;
+    }
+}
+
+
+t_shell_list *ft_allocate_new_node_shell_list(void)
+{
+    t_shell_list *new_node = malloc(sizeof(t_shell_list));
+    if (!new_node)
+        return NULL; 
+
+    ft_bzero(new_node, sizeof(t_shell_list));
+    return new_node; 
+}
+
+
+void ft_allocate_shell_list(t_data *data, int total_commands)
+{
+    t_shell_list *head = NULL;
+    t_shell_list *prev = NULL;
+
+    for (int i = 0; i < total_commands; i++)
+    {
+        
+        t_shell_list *new_node = ft_allocate_new_node_shell_list();
+        if (!new_node)
+        {
+            
+            ft_free_shell_list(head);
+            ft_error(data, ERR_MALLOC);
+            return;
+        }
+
+        
+        if (prev)
+        {
+            prev->next = new_node;
+            new_node->prev = prev;
+        }
+
+        
+        if (i == 0)
+            head = new_node;
+
+        prev = new_node; 
+    }
+
+    
+    data->shell_list = head;
+}
+
+t_redir *ft_allocate_new_node_redir(void)
+{
+    t_redir *new_node = malloc(sizeof(t_redir));
+    if (!new_node)
+        return NULL;
+
+    ft_bzero(new_node, sizeof(t_redir));
+    return new_node;
+}
+
+void ft_free_redir_list(t_redir *head)
+{
+    while (head)
+    {
+        t_redir *next = head->next;
+        if (head->value)
+            free(head->value); 
+        free(head); 
+        head = next;
+    }
+}
+
+t_redir_type get_type_redir(t_token_type type)
+{
+	if (type == T_REDIR_IN)
+		return IN;
+	else if (type == T_REDIR_OUT)
+		return OUT;
+	else if (type == T_REDIR_APPEND)
+		return D_APPEND;
+	else if (type == T_REDIR_HERE)
+		return D_HEREDOC;
+	
+	return -1;
+}
+
+void ft_allocate_redirs(t_redir **current, t_token *current_token, t_data *data)
+{
+    t_redir *new_node = ft_allocate_new_node_redir();
+    if (!new_node)
+    {
+        ft_free_redir_list(*current); 
+        ft_error(data, ERR_MALLOC);
+        return;
+    }
+
+	t_redir_type type_redir = get_type_redir(current_token->type);
+    
+    new_node->type = type_redir;
+	
+	char *value = ft_strdup(current_token->next->value);
+	
+    new_node->value = ft_strdup(value); 
+	
+    if (!new_node->value)
+    {
+        free(new_node); 
+        ft_free_redir_list(*current);
+        ft_error(data, ERR_MALLOC);
+        return;
+    }
+
+    
+    if (*current == NULL)
+    {
+        
+        *current = new_node;
+    }
+    else
+    {
+        
+        t_redir *last = *current;
+        while (last->next)
+            last = last->next;
+
+        last->next = new_node;
+        new_node->prev = last;
+    }
+}
+
+
+void ft_allocate_redirs_main(t_shell_list *shell_list, t_data *data)
+{
+    t_shell_list *current = shell_list;
+    t_token *current_token = data->tok;
+
+    while (current)
+    {
+        while (current_token)
+        {
+            if (current_token->type == T_PIPE)
+            {
+                current_token = current_token->next;
+                break;
+            }
+            if (current_token && 
+                (current_token->type == T_REDIR_IN || 
+                 current_token->type == T_REDIR_OUT || 
+                 current_token->type == T_REDIR_APPEND || 
+                 current_token->type == T_REDIR_HERE))
+            {
+                ft_allocate_redirs(&current->redir, current_token, data);
+            }
+            current_token = current_token->next;
+        }
+        current = current->next;
+    }
+}
+
+
+
+void print_shell_list(t_data *data)
+{
+	t_shell_list *current = data->shell_list;
+	int i = 0;
+
+	while (current)
+	{
+		printf("%sCommand %d: %s%s\n", BLUE, i, current->command, RESET);
+		printf("%sArgv: ", GREEN);
+		while (current->argv && *current->argv)
+		{
+			printf("%s ", *current->argv);
+			current->argv++;
+		}
+		printf("\n%s", RESET);
+		// printf("PID: %d\n", current->pid);
+		printf("%sRedirs:\n", YELLOW);
+		t_redir *redir = current->redir;
+		while (redir)
+		{
+			if (redir->type == IN)
+				printf("Type: IN\n");
+			else if (redir->type == OUT)
+				printf("Type: OUT\n");
+			else if (redir->type == D_APPEND)
+				printf("Type: D_APPEND\n");
+			else if (redir->type == D_HEREDOC)
+				printf("Type: D_HEREDOC\n");
+			printf("File: %s\n", redir->value);
+			redir = redir->next;
+		}
+		printf("%s", RESET);
+		current = current->next;
+		i++;
+	}
+}
+
+char **ft_append_to_argv(char **argv, char *value)
+{
+    size_t count = 0;
+
+    if (argv)
+    {
+        while (argv[count])
+            count++;
+    }
+
+    char **new_argv = malloc(sizeof(char *) * (count + 2));
+    if (!new_argv)
+        return NULL;
+
+    for (size_t i = 0; i < count; i++)
+    {
+        new_argv[i] = argv[i];
+    }
+
+    new_argv[count] = ft_strdup(value);
+    if (!new_argv[count])
+    {
+        free(new_argv);
+        return NULL;
+    }
+
+    new_argv[count + 1] = NULL;
+
+    if (argv)
+        free(argv);
+
+    return new_argv;
+}
+
+
+void ft_fill_shell_list(t_data *data)
+{
+	t_shell_list *current = data->shell_list;
+	t_token *current_token = data->tok;
+
+	while (current)
+	{
+		while (current_token)
+		{
+			if (current_token->type == T_PIPE)
+			{
+				current_token = current_token->next;
+				break;
+			}
+
+			if (current_token->type == T_CMD)
+				current->command = ft_strdup(current_token->value);
+
+			if (current_token->type == T_ARG)
+				current->argv = ft_append_to_argv(current->argv, current_token->value);
+			
+			current_token = current_token->next;
+		}
+		
+
+		current = current->next;
+	}
+}
 
 void	parsing_tokens(t_data *data)
 {
-	
 	restore_spaces_in_words(data);
-	
 	check_if_expand_values(data);
-
 	expand_values_in_tokens(data);
-
 	print_tokens(data->tok);
-
-	
+	int total_commands = 0;
+	int total_redirs = 0;
+	total_commands = count_total_commands(data);
+	total_redirs = count_total_redirs(data->tok);
+	printf("%sTotal commands: %d%s\n", GREEN, total_commands, RESET);
+	printf("%sTotal redirs: %d%s\n", GREEN, total_redirs, RESET);
+	ft_allocate_shell_list(data , total_commands);
+	ft_allocate_redirs_main(data->shell_list, data);
 	ft_fill_shell_list(data);
-	
-	
+	print_shell_list(data);
 }
-
-
-// if (!check_pipe_syntax(data->tok, data))
-	// 	ft_parsing_error(data);
-	// data->ast = create_tree(&data->tok, data);
-	// if (data->parsing_error)
-	// 	ft_parsing_error(data);
-	// if (data->ast != NULL)
-	// {
-	// 	printf("AST constructed, printing...\n");
-	// 	print_ast(data->ast, 0);
-	// 	free_ast(&data->ast, data);
-	// }

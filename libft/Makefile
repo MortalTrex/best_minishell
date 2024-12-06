@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
+#    By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/22 11:20:05 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/09/17 22:03:37 by rbalazs          ###   ########.fr        #
+#    Updated: 2024/12/06 18:45:15 by dagudelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS	=	ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 			ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_putchar_fd.c \
 			ft_putnbr_fd.c ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c \
 			ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
-			ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
+			ft_strncmp.c ft_strncpy.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
 			ft_tolower.c ft_toupper.c ft_putendl_fd.c ft_striteri.c \
 			get_next_line.c ft_printf.c ft_format_print.c ft_free_tab.c\
 			ft_isspace.c ft_strcmp.c ft_lstadd_back.c ft_lstadd_front.c\
