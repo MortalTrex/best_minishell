@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 17:33:02 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/06 21:21:58 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_found_token_in_argv(&data))
 			continue ;
 		
-		parsing_tokens(&data);
+		ft_parsing_tokens(&data);
 		exit(0);
 		
 		ft_execution(&data);

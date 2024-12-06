@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 17:27:55 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:04:42 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,43 @@
 # include <minishell.h>
 # include <termios.h>
 
+
+typedef struct s_replace_variables
+{
+	size_t len;
+	char *result;
+	char *res_ptr;
+	const char *start;
+	const char *ptr;
+	size_t var_len;
+	char *var_name;
+	char *var_value;
+	size_t value_len;
+
+
+}				t_replace_variables;
+
+typedef struct s_fill_tokens
+{
+	t_token *last_token;
+    t_token_type type;
+    t_token *new_token;
+    t_token_type subtype;
+    t_token *extra_token;
+    t_token *temp;
+	char **words;
+
+}				t_fill_tokens;
+
+
+typedef struct s_match_tokens
+{
+	char				*new_prompt;
+	char				*dest;
+	bool				matched;
+	size_t				token_len;
+	int					i;
+}				t_match_tokens;
 
 typedef enum e_redir_type
 {

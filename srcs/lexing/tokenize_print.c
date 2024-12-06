@@ -6,13 +6,13 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 18:41:42 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:52:25 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *choose_type(t_token_type type)
+static char *ft_choose_type(t_token_type type)
 {
 	if (type == T_CMD)
 		return "T_CMD";
@@ -46,13 +46,14 @@ static char *choose_type(t_token_type type)
 		return "UNKNOWN";
 }
 
-void print_tokens(t_token *tokens)
+void ft_print_tokens(t_token *tokens)
 {
 	t_token *current = tokens;
+	printf("%sPrinting Tokens %s\n", RED, RESET);
 	while (current)
 	{
 		printf("%svalue: %s - %s", BLUE, current->value, RESET);
-		char *type_str = choose_type(current->type);
+		char *type_str = ft_choose_type(current->type);
 		printf("%s type: %s - ", GREEN, type_str);
         if (current->to_expand)
             printf("to_expand: %strue\n%s", RED, RESET);

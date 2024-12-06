@@ -6,7 +6,7 @@
 #    By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/12/06 18:46:07 by dagudelo         ###   ########.fr        #
+#    Updated: 2024/12/06 21:45:56 by dagudelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRCS = srcs/main.c\
 	srcs/exec/exec_redirs.c\
 	srcs/exec/utils.c\
 	srcs/lexing/tokenize_check.c\
-	srcs/lexing/tokenize_malloc.c\
+	srcs/lexing/tokenize_malloc_1.c\
+	srcs/lexing/tokenize_malloc_2.c\
 	srcs/lexing/tokenize_parsing.c\
 	srcs/lexing/tokenize_print.c\
 	srcs/lexing/tokenize.c\
@@ -53,6 +54,13 @@ SRCS = srcs/main.c\
 	srcs/parsing/handle_quotes.c\
 	srcs/parsing/parse_s_command.c\
 	srcs/parsing/remove_quotes.c\
+	srcs/parsing/shell_list_expand_1.c\
+	srcs/parsing/shell_list_expand_2.c\
+	srcs/parsing/shell_list_malloc_1.c\
+	srcs/parsing/shell_list_malloc_2.c\
+	srcs/parsing/shell_list_malloc_3.c\
+	srcs/parsing/shell_list_print.c\
+	srcs/parsing/shell_list.c\
 	srcs/parsing/utils_parser.c\
 	srcs/signal/signal.c\
 	srcs/utils/errors.c\
