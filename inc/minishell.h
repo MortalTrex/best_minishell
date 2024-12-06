@@ -182,7 +182,7 @@ void			exec(t_data *data, char **cmd);
  * @file exec_read.c
  */
 void			ft_execution(t_data *data);
-void			count_levels(t_ast_node *node, int level, t_data *data);
+void			count_levels(t_shell_list *node, int level, t_data *data);
 void			read_ast(t_ast_node *node, t_data *data);
 
 /**

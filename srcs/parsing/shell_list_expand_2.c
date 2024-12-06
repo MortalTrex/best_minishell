@@ -27,7 +27,7 @@ static bool	ft_initialize_work_variable(t_replace_variables *work,
 
 static bool	ft_char_in_expand_variable(char c)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_')
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '?') || (c == '_')
 		|| (c >= '0' && c <= '9'));
 }
 

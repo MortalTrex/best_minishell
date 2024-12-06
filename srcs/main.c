@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		
 		ft_parsing_tokens(&data);
-		exit(0);
+		// exit(0);
 		
 		ft_execution(&data);
 		data.free_value = 1;

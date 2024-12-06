@@ -35,9 +35,11 @@ void	read_pipe(t_ast_node *node, t_data *data, int i)
 
 void	ft_execution(t_data *data)
 {
-	if (!data->ast)
+	if (!data->shell_list)
 		return ;
-	count_levels(data->ast, 0, data);
+	count_levels(data->shell_list, 0, data);
+	printf("data->levels: %d", data->nb_levels);
+	exit(0);
 	read_redirs(data->ast, data);
 	data->stdin_backup = dup(STDIN_FILENO);
     data->stdout_backup = dup(STDOUT_FILENO);
