@@ -41,21 +41,49 @@ char	*ft_add_spaces_around_tokens(const char *prompt)
 {
 	static const char	*tokens[] = {"=", "<<", ">>", "<", ">", "|", NULL};
 	t_match_tokens		match;
+	bool				in_single_quotes = false;
+	bool				in_double_quotes = false;
 
+	if (!prompt)
+		return NULL;
+
+	
 	match.new_prompt = malloc(ft_strlen(prompt) * 2 + 1);
 	if (!match.new_prompt)
 		return (NULL);
+
 	match.dest = match.new_prompt;
+
 	while (*prompt)
 	{
-		match.matched = false;
-		ft_find_match_tokens(&match, tokens, &prompt);
-		if (!match.matched)
+		
+		if (*prompt == '\'' && !in_double_quotes)
+			in_single_quotes = !in_single_quotes;
+		else if (*prompt == '"' && !in_single_quotes)
+			in_double_quotes = !in_double_quotes;
+
+		
+		if (!in_single_quotes && !in_double_quotes)
+		{
+			match.matched = false;
+			ft_find_match_tokens(&match, tokens, &prompt);
+
+			
+			if (!match.matched)
+				*match.dest++ = *prompt++;
+		}
+		else
+		{
+			
 			*match.dest++ = *prompt++;
+		}
 	}
+
+	
 	*match.dest = '\0';
 	return (match.new_prompt);
 }
+
 
 static void	ft_hex_to_espaces(char *result, bool in_single_quotes,
 		bool in_double_quotes)
@@ -81,6 +109,8 @@ char	*ft_replace_spaces_in_quotes(const char *prompt)
 	bool	in_double_quotes;
 	size_t	i;
 
+	if (!prompt)
+		return NULL;
 	result = ft_strdup(prompt);
 	if (!result)
 		return (NULL);

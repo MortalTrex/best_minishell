@@ -82,7 +82,7 @@ void	copy_env_char(t_data *data)
 	i = 0;
 	while (tmp)
 	{
-		data->envc[i] = ft_strdup(tmp->line);
+		data->envc[i] = strdup(tmp->line);
 		if (!data->envc[i])
 			ft_error(data, "Malloc failed\n");
 		i++;

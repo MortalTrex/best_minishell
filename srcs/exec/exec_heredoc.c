@@ -6,7 +6,7 @@ static void	create_filename(t_redir *redir)
 	char	*temp_num;
 
 	temp_num = ft_itoa(getpid() + 1);
-	temp_file = ft_strjoin("/tmp/minishell_heredoc_", temp_num);
+	temp_file = ft_strjoin("./minishell_heredoc_", temp_num);
 	free(temp_num);
 	if (!temp_file)
 	{
@@ -16,10 +16,13 @@ static void	create_filename(t_redir *redir)
 	}
 	if (access(temp_file, F_OK) == -1)
 	{
-		redir->file = temp_file;
+		redir->file_here_doc = ft_strdup(temp_file);
+		free(temp_file);
 		return ;
 	}
+	redir->file_here_doc = ft_strdup(temp_file);
 	free(temp_file);
+	printf("File: %s\n", redir->file_here_doc);
 }
 
 static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
@@ -56,49 +59,74 @@ static void	ft_expand_heredoc(char *command,int fd, t_data *data)
 	}
 	ft_putchar_fd('\n', fd);
 }
-static void close_hd(t_redir *redir, t_data *data)
+void close_hd(t_redir *redir, t_data *data)
 {
-	if (redir->hd_fd != -1)
+	if (redir && redir->hd_fd != -1)
 		close(redir->hd_fd);
 	close(STDIN_FILENO);
-	dup2(data->fd[0], STDIN_FILENO);
-	close(data->fd[0]);
+	//dup2(data->fd[0], STDIN_FILENO);
+	if (data && data->fd[0] != -1)
+		close(data->fd[0]);
+	// if (redir->file)
+	// 	unlink(redir->file);
 }
 
-static void	ft_read_heredoc(t_redir *redir, t_data *data)
+static void	execute_here_doc(t_redir *redir, t_data *data)
 {
 	char	*line;
-	char	*read;
+	char	*file_path;
+	int file;
 
-	read = redir->file;
-	redir->hd_fd = open(read, O_RDWR | O_CREAT , 0666);
-	if (redir->hd_fd == -1)
+	file = -1;
+
+	if (!redir && !redir->file_here_doc)
+		return;
+
+	file_path = redir->file_here_doc;
+	file = open(file_path, O_TRUNC | O_CREAT | O_WRONLY , 0666);
+	if (file == -1)
 		perror("heredoc");
 	signal(SIGINT, heredoc_sigint_handler);
-	while (*read && !ft_is_quote(*read))
-		read++;
+	while (*file_path && !ft_is_quote(*file_path))
+		file_path++;
+
+	int count = 0;
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_is_delimiter(redir->file, line))
+		if (ft_is_delimiter(redir->value, line))
 			break ;
-		if (!*read)
-			ft_expand_heredoc(line, redir->hd_fd, data);
+		if (!*file_path)
+			ft_expand_heredoc(line, file, data);
 		else
-			ft_putendl_fd(line, redir->hd_fd);
+			ft_putendl_fd(line, file);
+
+		count++;
+	
 	}
 	if (line)
 		free(line);
-	close_hd(redir, data);
+
+	close(file);
+
 }
 
-void	ft_process_heredoc(t_redir *redir, t_data *data)
+void	ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe)
 {
-	data->fd[0] = dup(STDIN_FILENO);
-	if (redir->file == NULL)
-		create_filename(redir);
-	ft_read_heredoc(redir, data);
+	(void)in_multipipe;
+	// if (in_multipipe == true)
+	// {
+	// 	dup2(data->stdin_backup, STDIN_FILENO);
+	// }
+	create_filename(redir);
+	execute_here_doc(redir, data);
 	data->isheredoc = true;
+
+	// if (in_multipipe == true)
+	// {
+	// 	dup2(data->fd[0], STDIN_FILENO);
+	// }
+
 }

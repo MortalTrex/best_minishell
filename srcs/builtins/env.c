@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/26 14:50:09 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/06 14:11:21 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,12 @@ void	ft_env(char **argv, t_data *data)
 	t_env	*current;
 
 	current = data->env;
-	if (argv[1] != NULL)
+	if (argv[1] && ft_strcmp(argv[1], "env"))
 	{
-		ft_putstr_fd("env: too many arguments\n", 1);
-		data->exit_status = 1;
+		ft_putstr_fd("env: ", 1);
+		ft_putstr_fd(argv[1], 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
+		data->exit_status = 127;
 		return ;
 	}
 	while (current != NULL)

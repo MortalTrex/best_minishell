@@ -34,8 +34,8 @@ t_redir	*ft_create_redir_node(t_token_type type, char *file)
 	redir = (t_redir *)ft_calloc(1, sizeof(t_redir));
 	if (!redir)
 		return (NULL);
-	redir->file = ft_strdup(file);
-	if (!redir->file)
+	redir->value = ft_strdup(file);
+	if (!redir->value)
 		return (free(redir), NULL);
 	if (type == T_REDIR_IN)
 		redir->type = IN;

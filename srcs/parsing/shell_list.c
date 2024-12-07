@@ -35,7 +35,7 @@ void	ft_erase_quotes_in_tokens(t_token *tokens)
 	current = tokens;
 	while (current)
 	{
-		current->value = ft_remove_quotes(current->value);
+		// current->value = ft_remove_quotes(current->value);
 		current = current->next;
 	}
 }
@@ -54,5 +54,5 @@ void	ft_parsing_tokens(t_data *data)
 	ft_allocate_shell_list(data, total_commands);
 	ft_allocate_fill_redirs_main(data->shell_list, data);
 	ft_fill_shell_list(data);
-	ft_print_shell_list(data);
+	// ft_print_shell_list(data->shell_list);
 }

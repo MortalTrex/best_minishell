@@ -67,9 +67,8 @@ typedef enum e_redir_type
 
 typedef struct s_redir
 {
-	char			*file;
 	char            *value;
-	char			**argv;
+	char			*file_here_doc;
 	t_redir_type	type;
 	int				hd_fd;
 	int				in_fd;
@@ -124,7 +123,9 @@ typedef struct s_data
 	t_token			*tok;
 	t_env			*env;
 	t_shell_list	*shell_list;
+	t_ast_node      *new_ast;
 	char			**envc;
+	int				pipe_fd[2];
 	char			*user_line;
 	int				fd[2];
 	int             stdin_backup;

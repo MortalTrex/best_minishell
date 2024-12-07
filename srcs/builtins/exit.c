@@ -41,6 +41,7 @@ void	ft_exit(char **argv, t_data *data)
 {
 	int		value;
 
+	value = 0;
 	if (argv[1])
 	{
 		if (ft_is_number(argv[1]))

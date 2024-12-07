@@ -29,22 +29,26 @@ void	ft_print_redirs(t_redir *redir)
 	}
 }
 
-void	ft_print_shell_list(t_data *data)
+void	ft_print_shell_list(t_shell_list *shell_list)
 {
 	t_shell_list	*current;
+	char			**argv_temp; 
 	int				i;
 
-	current = data->shell_list;
+	current = shell_list;
 	i = 0;
     printf("%sPrinting Shell List %s\n", RED, RESET);
 	while (current)
 	{
 		printf("%sCommand %d: %s%s\n", BLUE, i, current->command, RESET);
 		printf("%sArgv: ", GREEN);
-		while (current->argv && *current->argv)
+
+		
+		argv_temp = current->argv;
+		while (argv_temp && *argv_temp)
 		{
-			printf("%s ", *current->argv);
-			current->argv++;
+			printf("%s ", *argv_temp);
+			argv_temp++;
 		}
 		printf("\n%s", RESET);
 		printf("%sRedirs:\n", YELLOW);

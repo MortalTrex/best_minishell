@@ -16,12 +16,13 @@ char	*ft_get_env_value(char *var, t_data *data)
 {
 	t_env	*current;
 
-	if (ft_strcmp(var, "$UID"))
+	// if (ft_strcmp(var, "$UID"))
+	// {
+	// 	return "1";
+	// }
+	if (!ft_strcmp(var, "$?"))
 	{
-		return "1";
-	}
-	if (ft_strcmp(var, "$?"))
-	{
+		// printf("data->exit_status: %d", data->exit_status);
 		return ft_itoa(data->exit_status);
 	}
 	current = data->env;

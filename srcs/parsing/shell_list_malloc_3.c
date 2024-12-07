@@ -66,7 +66,11 @@ void	ft_fill_shell_list(t_data *data)
 			}
 
 			if (current_token->type == T_CMD)
+			{
 				current->command = ft_strdup(current_token->value);
+				current->argv = ft_append_to_argv(current->argv,
+						current_token->value, data);
+			}
 
 			if (current_token->type == T_ARG)
 				current->argv = ft_append_to_argv(current->argv,

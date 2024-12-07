@@ -166,9 +166,9 @@ void			ft_cd(char **argv, t_data *data);
  */
 int				exec_pipe(t_ast_node *node, t_data *data);
 int				exec_onecommand(char **cmd, t_data *data);
-void			multi_pipe(t_ast_node *node, t_data *data, int i);
+void			ft_multi_pipe(t_shell_list *node, t_data *data, int i);
 void			one_pipe(t_ast_node *node, t_data *data);
-void			no_pipe(t_ast_node *node, t_data *data);
+void			ft_no_pipe(t_shell_list *node, t_data *data);
 void			read_pipe(t_ast_node *node, t_data *data, int i);
 int				exec_node(t_ast_node *node, t_data *data, bool ispipe);
 
@@ -182,7 +182,7 @@ void			exec(t_data *data, char **cmd);
  * @file exec_read.c
  */
 void			ft_execution(t_data *data);
-void			count_levels(t_shell_list *node, int level, t_data *data);
+void			ft_count_levels(t_shell_list *node, int level, t_data *data);
 void			read_ast(t_ast_node *node, t_data *data);
 
 /**
@@ -196,15 +196,15 @@ void			wait_commands(t_data *data);
 /**
  * @file exec_heredoc.c
  */
-void			ft_process_heredoc(t_redir *redir, t_data *data);
+void			ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe);
 
 /**
  * @file exec_redirs.c
  */
-void			read_heredoc(t_ast_node *node, t_data *data);
-void			read_infile(t_ast_node *node, t_data *data);
-void			read_outfile(t_ast_node *node, t_data *data);
-void			read_redirs(t_ast_node *node, t_data *data);
+int				ft_read_heredoc(t_shell_list *node, t_data *data);
+void			ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe);
+void			ft_read_outfile(t_shell_list *node, t_data *data);
+void			ft_read_redirs(t_shell_list *node, t_data *data);
 
 /**
  * **********************************************
@@ -313,7 +313,7 @@ void			ft_fill_shell_list(t_data *data);
 /**
  * @file shell_list_print.c
  */
-void			ft_print_shell_list(t_data *data);
+void			ft_print_shell_list(t_shell_list *shell_list);
 
 /**
  * @file shell_list.c

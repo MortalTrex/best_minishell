@@ -27,7 +27,7 @@ void	ft_readline(t_data *data)
 	if (data->user_line == NULL)
 	{
 		ft_printf("Exit\n");
-		ft_free_all(data);
+		// ft_free_all(mdata);
 		exit(0);
 	}
 }
@@ -41,6 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
 	tcgetattr(STDIN_FILENO, &data.terminal);
+	data.exit_status = 0;
 	while (true)
 	{
 		data.free_value = 0;
@@ -55,9 +56,10 @@ int	main(int argc, char **argv, char **envp)
 		ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
+		// data.exit_status = 0;
 	}
 	data.free_value = 0;
-	ft_free_all(&data);
+	// ft_free_all(&data);
 	clear_history();
 	return (data.exit_status);
 }
