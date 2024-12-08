@@ -51,6 +51,19 @@ void	free_ast(t_ast_node **node, t_data *data)
 		ft_stackclear(&data->tok);
 }
 
+void	ft_free_all_redirs(t_shell_list *shell_list)
+{
+	t_shell_list	*current;
+
+	current = shell_list;
+	while (current)
+	{
+		ft_free_redir_list(current->redir);
+		current->redir = NULL;
+		current = current->next;
+	}
+}
+
 void	ft_free_all(t_data *data)
 {
 	if (!data)

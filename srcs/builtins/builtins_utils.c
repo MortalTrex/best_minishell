@@ -90,3 +90,4 @@ void	copy_env_char(t_data *data)
 	}
 	data->envc[i] = NULL;
 }
+

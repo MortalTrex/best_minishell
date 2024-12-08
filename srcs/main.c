@@ -23,8 +23,9 @@ void	ft_readline(t_data *data)
 		add_history(data->user_line);
 	if (data->user_line == NULL)
 	{
-		ft_printf("Exit\n");
-		// ft_free_all(mdata);
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	    data->free_value = 0;
+		ft_free_all(data);
 		exit(0);
 	}
 }
@@ -45,13 +46,13 @@ int	main(int argc, char **argv, char **envp)
 		copy_env_char(&data);
 		if (!ft_found_token_in_argv(&data))
 			continue ;
-		
 		ft_parsing_tokens(&data);
 		ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
-		// data.exit_status = 0;
 	}
+	data.free_value = 0;
+	ft_free_all(&data);
 	clear_history();
 	return (data.exit_status);
 }

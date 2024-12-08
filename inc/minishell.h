@@ -17,7 +17,6 @@
 
 # include "../libft/libft.h"
 # include "colors.h"
-# include "lexer.h"
 # include "structures.h"
 # include <curses.h>
 # include <dirent.h>

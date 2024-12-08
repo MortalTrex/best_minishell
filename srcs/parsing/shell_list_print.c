@@ -36,6 +36,7 @@ void	ft_print_shell_list(t_shell_list *shell_list)
 	int				i;
 
 	current = shell_list;
+	printf("%sPrinting Shell List %s\n", RED, RESET);
 	i = 0;
     printf("%sPrinting Shell List %s\n", RED, RESET);
 	while (current)

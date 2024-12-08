@@ -18,6 +18,33 @@
 # include <minishell.h>
 # include <termios.h>
 
+typedef enum e_token_type
+{
+	T_CMD,
+	T_ARG,
+	T_PIPE,
+	T_ASSIGN,
+	T_VARIABLE,
+	T_VALUE_VAR,
+	T_REDIR_IN,
+	T_INFILE,
+	T_REDIR_OUT,
+	T_OUTFILE,
+	T_REDIR_APPEND,
+	T_APPENDFILE,
+	T_REDIR_HERE,
+	T_DELIMITER,
+	T_WORD,
+}					t_token_type;
+
+typedef struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	bool			to_expand;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
 
 typedef struct s_replace_variables
 {

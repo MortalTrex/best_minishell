@@ -14,9 +14,11 @@
 
 void	ft_close_fd(t_data *data, char *msg)
 {
-	close(data->fd[0]);
-	close(data->fd[1]);
-	ft_error(data, msg);
+	if (data->fd[0] != -1)
+		close(data->fd[0]);
+	if (data->fd[1] != -1)
+		close(data->fd[1]);
+	ft_error_exit(data, msg);
 }
 
 void	ft_error(t_data *data, char *msg)

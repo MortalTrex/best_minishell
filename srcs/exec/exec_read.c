@@ -8,8 +8,6 @@ void    ft_read_commands(t_shell_list *node, t_data *data)
 
 	i = 0;
 	current = node;
-	// if (pipe(data->fd) == -1)
-	// 		ft_error(data, "Error creating pipe");
 	while (current)
 	{
 		ft_multi_pipe(current, data, i);
@@ -24,11 +22,8 @@ void	ft_execution(t_data *data)
 		return ;
 	ft_count_levels(data->shell_list, 0, data);
 	ft_read_redirs(data->shell_list, data);
-	// printf("Levels: %d\n", data->nb_levels);
 	if (data->nb_levels == 0)
 		ft_no_pipe(data->shell_list, data);
 	else if (data->nb_levels >= 1)
 		ft_read_commands(data->shell_list, data);
-	// transform_ast(data->ast, data);
-	// free_newast(data->new_ast);
 }

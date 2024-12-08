@@ -101,30 +101,21 @@ void	change_shlvl(t_data *data)
 void	exec(t_data *data, char **cmd)
 {
 	char	*path;
-	char	*pwd_path;
 	char	*cmd_minishell;
 
-	pwd_path = getcwd(NULL, 0);
-	cmd_minishell = ft_strjoin(pwd_path, "/minishell");
 	if (!cmd || !cmd[0])
-	{
-		free(pwd_path);
-		free(cmd_minishell);
 		ft_close_fd(data, "Error: no command\n");
-	}
 	if (!data->envc)
-	{
-		free(pwd_path);
-		free(cmd_minishell);
 		ft_close_fd(data, "Error: no env\n");
-	}
 	if (ft_strncmp(cmd[0], "./minishell", 11) == 0)
 	{
+		path = getcwd(NULL, 0);
+		cmd_minishell = ft_strjoin(path, "/minishell");
 		change_shlvl(data);
 		copy_env_char(data);
 		if (execve(cmd_minishell, cmd, data->envc) == -1)
 		{
-			free(pwd_path);
+			free(path);
 			free(cmd_minishell);
 			ft_close_fd(data, "execve fail\n");
 		}
@@ -132,13 +123,10 @@ void	exec(t_data *data, char **cmd)
 	path = ft_path(cmd[0], data);
 	if (!path)
 	{
-		ft_printf("Command '%s'", cmd[0]);
-		free(pwd_path);
-		free(cmd_minishell);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(cmd[0], STDERR_FILENO);
 		ft_close_fd(data, " not found\n");
 	}
 	if (execve(path, cmd, data->envc) == -1)
 		ft_close_fd(data, "execve fail\n");
-	free(pwd_path);
-	free(cmd_minishell);
 }

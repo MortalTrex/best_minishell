@@ -86,7 +86,9 @@ void	ft_free_shell_list(t_shell_list *shell_list)
 {
 	t_shell_list	*tmp;
 	size_t			i;
-
+	
+	if (!shell_list)
+		return ;
 	while (shell_list)
 	{
 		tmp = shell_list;
@@ -104,7 +106,20 @@ void	ft_free_shell_list(t_shell_list *shell_list)
 				i++;
 			}
 			free(tmp->argv);
+			tmp->argv = NULL;
 		}
 		free(tmp);
 	}
 }
+
+// void	ft_free_shell_list(t_shell_list *head)
+// {
+// 	t_shell_list	*next;
+
+// 	while (head)
+// 	{
+// 		next = head->next;
+// 		free(head);
+// 		head = next;
+// 	}
+// }

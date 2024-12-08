@@ -25,4 +25,5 @@ void	ft_free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+	tab = NULL;
 }
