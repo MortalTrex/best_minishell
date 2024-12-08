@@ -107,22 +107,38 @@ void	exec(t_data *data, char **cmd)
 	pwd_path = getcwd(NULL, 0);
 	cmd_minishell = ft_strjoin(pwd_path, "/minishell");
 	if (!cmd || !cmd[0])
+	{
+		free(pwd_path);
+		free(cmd_minishell);
 		ft_close_fd(data, "Error: no command\n");
+	}
 	if (!data->envc)
+	{
+		free(pwd_path);
+		free(cmd_minishell);
 		ft_close_fd(data, "Error: no env\n");
+	}
 	if (ft_strncmp(cmd[0], "./minishell", 11) == 0)
 	{
 		change_shlvl(data);
 		copy_env_char(data);
 		if (execve(cmd_minishell, cmd, data->envc) == -1)
+		{
+			free(pwd_path);
+			free(cmd_minishell);
 			ft_close_fd(data, "execve fail\n");
+		}
 	}
 	path = ft_path(cmd[0], data);
 	if (!path)
 	{
 		ft_printf("Command '%s'", cmd[0]);
+		free(pwd_path);
+		free(cmd_minishell);
 		ft_close_fd(data, " not found\n");
 	}
 	if (execve(path, cmd, data->envc) == -1)
 		ft_close_fd(data, "execve fail\n");
+	free(pwd_path);
+	free(cmd_minishell);
 }

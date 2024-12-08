@@ -17,9 +17,6 @@ int		g_exit_status;
 
 void	ft_readline(t_data *data)
 {
-	data->isheredoc = 0;
-	data->isinfile = 0;
-	data->isoutfile = 0;
 	data->user_line = readline(PROMPT);
 	signal(SIGINT, sigint_handler);
 	if (data->user_line)
@@ -41,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
 	tcgetattr(STDIN_FILENO, &data.terminal);
-	data.exit_status = 0;
 	while (true)
 	{
 		data.free_value = 0;
@@ -51,15 +47,11 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		
 		ft_parsing_tokens(&data);
-		// exit(0);
-		
 		ft_execution(&data);
 		data.free_value = 1;
 		ft_free_all(&data);
 		// data.exit_status = 0;
 	}
-	data.free_value = 0;
-	// ft_free_all(&data);
 	clear_history();
 	return (data.exit_status);
 }

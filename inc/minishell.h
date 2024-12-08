@@ -425,5 +425,6 @@ void			ft_free_command(t_ast_node *node);
 void			free_node(t_ast_node *node);
 void			free_ast(t_ast_node **node, t_data *data);
 void			ft_free_all(t_data *data);
+void			ft_free_shell_list(t_shell_list *shell_list);
 
 #endif

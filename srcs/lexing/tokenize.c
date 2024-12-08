@@ -15,12 +15,17 @@
 bool	ft_found_token_in_argv(t_data *data)
 {
 	char	*prompt;
+	char	*temp;
 
 	if (ft_check_if_quotes_closes(data) == false)
 		return (ft_error_quote(data), false);
 	prompt = ft_strdup(data->user_line);
+	temp = prompt;
 	prompt = ft_add_spaces_around_tokens(prompt);
+	free(temp);
+	temp = prompt;
 	prompt = ft_replace_spaces_in_quotes(prompt);
+	free(temp);
 	data->tok = ft_fill_list_tokens(prompt, data);
 	if (!data->tok)
 		return (free(prompt), false);

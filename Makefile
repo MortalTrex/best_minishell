@@ -64,7 +64,6 @@ SRCS = srcs/main.c\
 	srcs/parsing/utils_parser.c\
 	srcs/signal/signal.c\
 	srcs/utils/errors.c\
-	srcs/utils/debug.c\
 	srcs/utils/free.c\
 
 INDI	=	\033[38;5;213m

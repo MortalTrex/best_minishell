@@ -12,17 +12,17 @@
 
 #include "minishell.h"
 
-void	ft_free_shell_list(t_shell_list *head)
-{
-	t_shell_list	*next;
+// void	ft_free_shell_list(t_shell_list *head)
+// {
+// 	t_shell_list	*next;
 
-	while (head)
-	{
-		next = head->next;
-		free(head);
-		head = next;
-	}
-}
+// 	while (head)
+// 	{
+// 		next = head->next;
+// 		free(head);
+// 		head = next;
+// 	}
+// }
 
 static t_shell_list	*ft_allocate_new_node_shell_list(void)
 {

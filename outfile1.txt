@@ -1,1 +1,14 @@
-env: too many arguments
+bin
+build
+inc
+infile1.txt
+infile2.txt
+libft
+ls
+Makefile
+minishell
+outfile1.txt
+outfile2.txt
+README.md
+rlsupp.txt
+srcs

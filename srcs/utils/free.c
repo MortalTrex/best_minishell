@@ -70,4 +70,6 @@ void	ft_free_all(t_data *data)
 	}
 	if (data->ast)
 		free_ast(&data->ast, data);
+	if (data->shell_list)
+		ft_free_shell_list(data->shell_list);
 }

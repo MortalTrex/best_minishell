@@ -82,3 +82,29 @@ void	ft_fill_shell_list(t_data *data)
 		current = current->next;
 	}
 }
+void	ft_free_shell_list(t_shell_list *shell_list)
+{
+	t_shell_list	*tmp;
+	size_t			i;
+
+	while (shell_list)
+	{
+		tmp = shell_list;
+		shell_list = shell_list->next;
+
+		if (tmp->command)
+			free(tmp->command);
+
+		if (tmp->argv)
+		{
+			i = 0;
+			while (tmp->argv[i])
+			{
+				free(tmp->argv[i]);
+				i++;
+			}
+			free(tmp->argv);
+		}
+		free(tmp);
+	}
+}
