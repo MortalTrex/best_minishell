@@ -84,32 +84,36 @@ void	ft_fill_shell_list(t_data *data)
 }
 void	ft_free_shell_list(t_shell_list *shell_list)
 {
-	t_shell_list	*tmp;
-	size_t			i;
-	
-	if (!shell_list)
-		return ;
-	while (shell_list)
-	{
-		tmp = shell_list;
-		shell_list = shell_list->next;
+    t_shell_list	*tmp;
+    size_t			i;
 
-		if (tmp->command)
-			free(tmp->command);
+    if (!shell_list)
+        return ;
+    while (shell_list)
+    {
+        tmp = shell_list;
+        shell_list = shell_list->next;
 
-		if (tmp->argv)
-		{
-			i = 0;
-			while (tmp->argv[i])
-			{
-				free(tmp->argv[i]);
-				i++;
-			}
-			free(tmp->argv);
-			tmp->argv = NULL;
-		}
-		free(tmp);
-	}
+        if (tmp->command != NULL)
+        {
+            free(tmp->command);
+            tmp->command = NULL;
+        }
+        if (tmp->argv)
+        {
+            i = 0;
+            while (tmp->argv[i])
+            {
+                free(tmp->argv[i]);
+                tmp->argv[i] = NULL;
+                i++;
+            }
+            free(tmp->argv);
+            tmp->argv = NULL;
+        }
+        free(tmp);
+        tmp = NULL;
+    }
 }
 
 // void	ft_free_shell_list(t_shell_list *head)

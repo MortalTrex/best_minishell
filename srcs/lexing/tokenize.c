@@ -32,7 +32,7 @@ bool	ft_found_token_in_argv(t_data *data)
 	free(prompt);
 	if (ft_check_errors_in_tokens(data->tok))
 		return (ft_putstr_fd("minishell: syntax error\n", 2),
-			ft_free_tokens(&data->tok), false);
+			ft_free_all(data), false);
 	return (true);
 }
 

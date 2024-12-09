@@ -51,38 +51,56 @@ void	free_ast(t_ast_node **node, t_data *data)
 		ft_stackclear(&data->tok);
 }
 
-void	ft_free_all_redirs(t_shell_list *shell_list)
-{
-	t_shell_list	*current;
+// void	ft_free_all_redirs(t_shell_list *shell_list)
+// {
+// 	t_shell_list	*current;
 
-	current = shell_list;
-	while (current)
-	{
-		ft_free_redir_list(current->redir);
-		current->redir = NULL;
-		current = current->next;
-	}
-}
+// 	current = shell_list;
+// 	while (current)
+// 	{
+// 		ft_free_redir_list(current->redir);
+// 		current->redir = NULL;
+// 		current = current->next;
+// 	}
+// }
 
 void	ft_free_all(t_data *data)
 {
 	if (!data)
 		return ;
 	if (data->user_line)
+	{
 		free(data->user_line);
+		data->user_line = NULL;
+	}
 	if (data->tok)
+	{
 		ft_stackclear(&data->tok);
+		data->tok = NULL;
+	}
 	if (data->envc)
+	{
 		ft_free_tab(data->envc);
+		data->envc = NULL;
+	}
 	if (data->free_value == 0)
 	{
 		close(data->fd[0]);
 		close(data->fd[1]);
 		if (data->env)
+		{
 			ft_envclear(&data->env);
+			data->env = NULL;
+		}
 	}
 	if (data->ast)
+	{
 		free_ast(&data->ast, data);
+		data->ast = NULL;
+	}
 	if (data->shell_list)
+	{
 		ft_free_shell_list(data->shell_list);
+		data->shell_list = NULL;
+	}
 }
