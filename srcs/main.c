@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 21:21:58 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:41:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	ft_readline(t_data *data)
 	signal(SIGINT, sigint_handler);
 	if (data->user_line)
 		add_history(data->user_line);
-	if (data->user_line == NULL)
+	if (data->user_line == NULL || ft_strlen(data->user_line) == 0)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-	    data->free_value = 0;
+		data->free_value = 0;
 		ft_free_all(data);
 		exit(0);
 	}

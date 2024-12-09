@@ -123,7 +123,6 @@ void	ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe)
 	create_filename(redir);
 	execute_here_doc(redir, data);
 	data->isheredoc = true;
-
 	// if (in_multipipe == true)
 	// {
 	// 	dup2(data->fd[0], STDIN_FILENO);

@@ -82,10 +82,10 @@ void	ft_no_pipe(t_shell_list *node, t_data *data)
 		return;
 	if (node && node->argv && is_builtin(node->argv[0]))
 		ft_detect_builtin(node->argv, data);
-	if (pipe(data->fd) == -1)
-		ft_error(data, "Error creating pipe");
 	else
 	{
+		if (pipe(data->fd) == -1)
+			ft_error(data, "Error creating pipe");
 		node->pid = fork();
 		if (node->pid == -1)
 			ft_error(data, "Error forking");
@@ -100,8 +100,8 @@ void	ft_no_pipe(t_shell_list *node, t_data *data)
 			exit(1);
 		}
 		waitpid(node->pid, NULL, 0);
+		ft_erase_all_temp_here_doc(node);
+		close(data->fd[0]);
+		close(data->fd[1]);
 	}
-	ft_erase_all_temp_here_doc(node);
-	close(data->fd[0]);
-	close(data->fd[1]);
 }

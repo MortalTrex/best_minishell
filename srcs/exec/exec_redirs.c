@@ -118,7 +118,7 @@ void	ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe)
 void	ft_read_redirs(t_shell_list *node, t_data *data)
 {
 	t_redir		*current;
-
+	printf ("ENTER READ REDIRS\n");
 	current = node->redir;
 	while (current)
 	{
@@ -127,7 +127,7 @@ void	ft_read_redirs(t_shell_list *node, t_data *data)
 		if (current->type == OUT || current->type == D_APPEND)
 			data->isoutfile = true;
 		if (current->type == D_HEREDOC)
-			data->isheredoc = true;
+			printf("HEREDOC\n");
 		current = current->next;
 	}
 }
