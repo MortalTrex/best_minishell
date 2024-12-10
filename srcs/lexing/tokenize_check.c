@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/09 17:01:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:16:27 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ static bool	ft_check_redirs(t_token *tokens)
 		if (current->type == T_REDIR_HERE && (!current->next
 				|| current->next->type != T_DELIMITER))
 			return (true);
-		if (current->type == T_REDIR_HERE && current->next
-				&& current->next->type == T_DELIMITER)
-			return (false);
 		current = current->next;
 	}
 	return (false);
@@ -59,7 +56,7 @@ static bool	ft_check_if_cmd_exist(t_token *tokens)
 
 bool	ft_check_errors_in_tokens(t_token *tokens)
 {
-	if (ft_check_redirs(tokens))
+	if (!ft_check_redirs(tokens))
 		return (true);
 	if (!ft_check_if_cmd_exist(tokens))
 		return (true);

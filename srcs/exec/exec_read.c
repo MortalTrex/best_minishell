@@ -21,7 +21,6 @@ void	ft_execution(t_data *data)
 	if (!data->shell_list)
 		return ;
 	ft_count_levels(data->shell_list, 0, data);
-	printf("NB LEVELS %d\n", data->nb_levels);
 	ft_read_redirs(data->shell_list, data);
 	if (data->nb_levels == 0)
 		ft_no_pipe(data->shell_list, data);

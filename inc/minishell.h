@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 22:28:14 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:59:04 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ void			ft_env(char **argv, t_data *data);
 /**
  * @file export.c
  */
-bool			check_double(t_data *data, char *line);
+// bool			check_double(t_data *data, char *line);
+bool			check_double(t_data *data, char *name, char *value);
 void			ft_exp_env(t_data *data);
 bool			check_change_value(t_data *data);
 void			ft_export(char **argv, t_data *data);

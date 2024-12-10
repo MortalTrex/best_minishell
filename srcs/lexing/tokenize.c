@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 16:47:03 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:53:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ bool	ft_found_token_in_argv(t_data *data)
 	if (!data->tok)
 		return (free(prompt), false);
 	free(prompt);
-	if (ft_check_errors_in_tokens(data->tok))
-		return (ft_putstr_fd("minishell: syntax error\n", 2),
-			ft_free_all(data), false);
+	// if (ft_check_errors_in_tokens(data->tok) == true)
+	// 	return (ft_putstr_fd("minishell: syntax error\n", 2),
+	// 		ft_free_all(data), false);
 	return (true);
 }
 

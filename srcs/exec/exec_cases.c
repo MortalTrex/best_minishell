@@ -86,12 +86,12 @@ void	ft_no_pipe(t_shell_list *node, t_data *data)
 	{
 		if (pipe(data->fd) == -1)
 			ft_error(data, "Error creating pipe");
+		ft_read_heredoc(node, data);
 		node->pid = fork();
 		if (node->pid == -1)
 			ft_error(data, "Error forking");
 		if (node->pid == 0) 
 		{
-			ft_read_heredoc(node, data);
 			ft_read_infile(node, data, false);
 			ft_read_outfile(node, data);
 			close(data->fd[0]);

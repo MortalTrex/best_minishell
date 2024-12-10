@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:10 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/09 14:02:03 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:23:14 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_echo(char **argv, t_data *data)
 	// 	data->exit_status = 0;
 	// 	return ;
 	// }
-	if (verif_flag(argv[i]) == true)
+	while (verif_flag(argv[i]) == true)
 	{
 		n_flag = true;
 		i++;

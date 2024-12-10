@@ -6,38 +6,30 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/25 08:05:03 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:07:58 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-bool	check_double(t_data *data, char *var)
+bool	check_double(t_data *data, char *name, char *value)
 {
 	t_env	*tmp;
-	char	*name;
-	int		i;
 
-	i = 0;
 	if (!data->env)
 		return (false);
 	tmp = data->env;
-	while (var[i] && var[i] != '=')
-		i++;
-	name = ft_substr(var, 0, i);
-	if (!name)
-		return (false);
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->name, name))
 		{
 			free(tmp->value);
-			tmp->value = put_value(var);
-			return (free(name), true);
+			tmp->value = ft_strdup(value);
+			return (true);
 		}
 		tmp = tmp->next;
 	}
-	return (free(name), false);
+	return (false);
 }
 
 void	ft_exp_env(t_data *data)
@@ -72,29 +64,54 @@ bool	check_ifvalue(char *str)
 
 void	ft_export(char **argv, t_data *data)
 {
-	int	i;
+	int		i;
+	char	*name;
+	char	*value;
+	char	*equal_sign;
 
 	i = 1;
+	equal_sign = NULL;
 	if (!argv[i])
 		ft_exp_env(data);
 	else
 	{
 		while (argv[i])
 		{
-			if (check_ifvalue(argv[i]) == false)
+			if (i == 1 && !ft_strcmp(argv[i], "-p"))
 			{
-				data->exit_status = 0;
-				return ;
+				ft_exp_env(data);
+				i++;
+				continue ;
 			}
-			if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0])
-				|| ft_is_separator(argv[i]) || argv[i][0] == '=')
+			name = ft_substr(argv[i], 0, equal_sign - argv[i]);
+			value = ft_strdup(equal_sign + 1);
+			if (ft_isdigit(name[0]) || ft_is_operator(name[0])
+				|| ft_is_separator(name) || name[0] == '=')
 			{
 				ft_putstr_fd("export: not a valid identifier\n", 2);
 				data->exit_status = 1;
+				free(name);
+				free(value);
 				return ;
 			}
-			if (check_double(data, argv[i]) == false)
-				push_node_to_env(data, argv[i]);
+			if (check_double(data, name, value) == false)
+			{
+				char *name_value = ft_strjoin(name, "=");
+				char *full_name_value = ft_strjoin(name_value, value);
+				free(name_value);
+				push_node_to_env(data, full_name_value);
+				free(full_name_value);
+			}
+			else
+			{
+				char *name_value = ft_strjoin(name, "=");
+				char *full_name_value = ft_strjoin(name_value, value);
+				free(name_value);
+				push_node_to_env(data, full_name_value);
+				free(full_name_value);
+			}
+			free(name);
+			free(value);
 			i++;
 		}
 	}
