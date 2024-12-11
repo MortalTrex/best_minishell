@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/09 13:20:50 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/11 13:33:54 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,27 @@ static bool	ft_check_if_cmd_exist(t_token *tokens)
 	return (false);	
 }
 
+static bool ft_check_if_here_doc_exist(t_token *tokens)
+{
+	t_token	*current;
+
+	current = tokens;
+	while (current)
+	{
+		if (current->type == T_REDIR_HERE)
+			return (true);
+		current = current->next;
+	}
+	return (false);
+}
+
 bool	ft_check_errors_in_tokens(t_token *tokens)
 {
 	printf("check redirs %d\n", ft_check_redirs(tokens));
 	printf("check cmd %d\n", ft_check_if_cmd_exist(tokens));
 	if (ft_check_redirs(tokens))
 		return (true);
-	if (!ft_check_if_cmd_exist(tokens))
+	if (!ft_check_if_cmd_exist(tokens) && !ft_check_if_here_doc_exist(tokens))
 		return (true);
 	return (false);
 }
