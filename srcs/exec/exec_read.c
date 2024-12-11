@@ -27,4 +27,5 @@ void	ft_execution(t_data *data)
 		ft_no_pipe(data->shell_list, data);
 	else if (data->nb_levels >= 1)
 		ft_read_commands(data->shell_list, data);
+	ft_erase_all_temp_here_doc(data->shell_list);
 }

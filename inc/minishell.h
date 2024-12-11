@@ -6,7 +6,7 @@
 /*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 22:28:14 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:01:51 by dagudelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void			one_pipe(t_ast_node *node, t_data *data);
 void			ft_no_pipe(t_shell_list *node, t_data *data);
 void			read_pipe(t_ast_node *node, t_data *data, int i);
 int				exec_node(t_ast_node *node, t_data *data, bool ispipe);
+void 			ft_erase_all_temp_here_doc(t_shell_list *node);
 
 /**
  * @file exec_core.c

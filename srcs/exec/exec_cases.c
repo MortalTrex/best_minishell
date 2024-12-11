@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include <unistd.h>
 
-static void	ft_erase_all_temp_here_doc(t_shell_list *node)
+void	ft_erase_all_temp_here_doc(t_shell_list *node)
 {
 	t_redir *current;
 
@@ -63,7 +63,6 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 		close(data->fd[0]);
 		waitpid(pid, NULL, 0);
 	}
-	ft_erase_all_temp_here_doc(node);
 }
 
 void print_tab(char **str)
@@ -100,7 +99,6 @@ void	ft_no_pipe(t_shell_list *node, t_data *data)
 			exit(1);
 		}
 		waitpid(node->pid, NULL, 0);
-		ft_erase_all_temp_here_doc(node);
 		close(data->fd[0]);
 		close(data->fd[1]);
 	}
