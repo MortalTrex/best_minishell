@@ -64,11 +64,9 @@ void close_hd(t_redir *redir, t_data *data)
 	if (redir && redir->hd_fd != -1)
 		close(redir->hd_fd);
 	close(STDIN_FILENO);
-	//dup2(data->fd[0], STDIN_FILENO);
+	dup2(data->fd[0], STDIN_FILENO);
 	if (data && data->fd[0] != -1)
 		close(data->fd[0]);
-	// if (redir->file)
-	// 	unlink(redir->file);
 }
 
 static void	execute_here_doc(t_redir *redir, t_data *data)
@@ -89,7 +87,6 @@ static void	execute_here_doc(t_redir *redir, t_data *data)
 	signal(SIGINT, heredoc_sigint_handler);
 	while (*file_path && !ft_is_quote(*file_path))
 		file_path++;
-
 	int count = 0;
 	while (g_exit_status != 130)
 	{
@@ -108,9 +105,7 @@ static void	execute_here_doc(t_redir *redir, t_data *data)
 	}
 	if (line)
 		free(line);
-
 	close(file);
-
 }
 
 void	ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe)
@@ -127,5 +122,4 @@ void	ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe)
 	// {
 	// 	dup2(data->fd[0], STDIN_FILENO);
 	// }
-
 }

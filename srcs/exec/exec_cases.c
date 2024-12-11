@@ -17,7 +17,8 @@ static void	ft_erase_all_temp_here_doc(t_shell_list *node)
 void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 {
 	pid_t	pid;
-
+	// if (!node || !node->argv)
+	// 	return;
 	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
 		ft_error(data, "Error creating pipe");
 	ft_read_heredoc(node, data);
@@ -41,13 +42,16 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 		ft_read_outfile(node, data);
 		close(data->pipe_fd[0]);
 		close(data->pipe_fd[1]);
-		if (is_builtin(node->argv[0]) == true)
+		if (node->argv && node->argv[0])
 		{
-			ft_detect_builtin(node->argv, data);
-			ft_free_all(data);
+			if (is_builtin(node->argv[0]))
+			{
+				ft_detect_builtin(node->argv, data);
+				ft_free_all(data);
+			}
+			else
+				exec(data, node->argv);
 		}
-		else
-			exec(data, node->argv);
 		exit(1);
 	}
 	if (i > 0)

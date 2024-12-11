@@ -4,7 +4,6 @@ void read_heredoc_dup(t_shell_list *node, t_data *data)
 {
 	t_redir *current;
 
-
 	current = node->redir;
 	while (current)
 	{
@@ -33,6 +32,8 @@ int    ft_read_heredoc(t_shell_list *node, t_data *data)
 	t_redir *current;
 	bool in_here_doc = false;
 
+	if (node->redir == NULL || node == NULL)
+		return 0;
 	current = node->redir;
 	while (current)
 	{
@@ -43,7 +44,6 @@ int    ft_read_heredoc(t_shell_list *node, t_data *data)
 		}
 		current = current->next;
 	}
-
 	return in_here_doc;
 }
 
@@ -82,6 +82,8 @@ void	ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe)
 
 	(void)in_multipipe;
 
+	if (node->redir == NULL || node == NULL)
+		return ;
 	current = node->redir;
 	while (current)
 	{
@@ -99,7 +101,8 @@ void	ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe)
 		}
 		else if (current->type == D_HEREDOC)
 		{
-			printf("ENTER HERE DOC\n");
+			ft_putstr_fd(current->file_here_doc, 1);
+			dprintf(2, "file : %s\n", current->file_here_doc);
 			fd_in = open(current->file_here_doc, O_RDONLY);
 			if (fd_in == -1)
 				ft_error(data, "Error opening heredoc file");

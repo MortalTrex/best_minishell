@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/12/09 13:40:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/11 09:33:21 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ void	ft_fill_shell_list(t_data *data)
 			if (current_token->type == T_ARG)
 				current->argv = ft_append_to_argv(current->argv,
 						current_token->value, data);
-
 			current_token = current_token->next;
 		}
-
 		current = current->next;
 	}
 }
