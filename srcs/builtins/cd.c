@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/12 10:43:52 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/12 11:53:09 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	ft_move_directory(char *path, t_data *data)
 {
 	char	*new_pwd;
 
+	printf("path: %s\n", path);
 	if (chdir(path) == 0)
 		ft_putstr_fd("cd: no such file or directory: ", 1);
 	new_pwd = getcwd(NULL, 0);
@@ -87,6 +88,8 @@ void	set_home(t_data *data)
 
 void	ft_cd(char **argv, t_data *data)
 {
+	printf("cd\n");
+	printf("argv[1]: %s\n", argv[1]);
 	if (argv[1] == NULL)
 		set_home(data);
 	else if (argv[1] != NULL && argv[2] == NULL)
