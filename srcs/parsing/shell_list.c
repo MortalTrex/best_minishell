@@ -50,11 +50,13 @@ void	ft_parsing_tokens(t_data *data)
 	ft_restore_spaces_in_words(data);
 	ft_check_if_expand_values(data);
 	ft_expand_values_in_tokens(data);
-	ft_print_tokens(data->tok);
+	//ft_print_tokens(data->tok);
 	ft_erase_quotes_in_tokens(data->tok);
 	total_commands = ft_count_total_commands(data);
 	ft_allocate_shell_list(data, total_commands);
+	if (!data->shell_list)
+		return ;
 	ft_allocate_fill_redirs_main(data->shell_list, data);
 	ft_fill_shell_list(data);
-	ft_print_shell_list(data->shell_list);
+	//ft_print_shell_list(data->shell_list);
 }

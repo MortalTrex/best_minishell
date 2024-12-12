@@ -56,47 +56,83 @@ void	ft_exp_env(t_data *data)
 	}
 }
 
-bool	check_ifvalue(char *str)
+char	*ft_strjoin_empty(char const *s2)
+{
+	char	*str;
+	char	*str_ptr;
+
+	if (!s2)
+		return (NULL);
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	str_ptr = str;
+	while (*s2)
+		*str++ = *s2++;
+	*str = '\0';
+	return (str_ptr);
+}
+bool	check_identifier(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (!ft_isalpha(str[i]) && str[i] != '_')
+		return (false);
+	i++;
 	while (str[i])
 	{
-		if (str[i] == '=')
-			return (true);
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
 		i++;
 	}
-	return (false);
+	return (true);
 }
 
 void	ft_export(char **argv, t_data *data)
 {
-	int	i;
+	int		i;
+	bool	equal;
+	char	*export_str;
 
 	i = 1;
+	equal = false;
+	export_str = NULL;
 	if (!argv[i])
 		ft_exp_env(data);
 	else
 	{
 		while (argv[i])
 		{
-			if (check_ifvalue(argv[i]) == false)
+			if (!export_str)
+				export_str = ft_strjoin_empty(argv[i]);
+			else
+				export_str = ft_strjoin(export_str, argv[i]);
+			if (!ft_strcmp(argv[i], "="))
+				equal = true;
+			if (check_identifier(export_str) == false && equal == false)
 			{
-				data->exit_status = 0;
-				return ;
-			}
-			if (ft_isdigit(argv[i][0]) || ft_is_operator(argv[i][0])
-				|| ft_is_separator(argv[i]) || argv[i][0] == '=')
-			{
-				ft_putstr_fd("export: not a valid identifier\n", 2);
+				ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+				ft_putstr_fd(argv[i], STDERR_FILENO);
+				ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 				data->exit_status = 1;
 				return ;
 			}
-			if (check_double(data, argv[i]) == false)
-				push_node_to_env(data, argv[i]);
+			if (equal == true && ft_strcmp(argv[i], "="))
+			{
+				if (check_double(data, export_str))
+					printf("check_double\n");
+				else
+					push_node_to_env(data, export_str);
+				equal = false;
+				free(export_str);
+				export_str = NULL;
+			}
 			i++;
 		}
 	}
+	if (export_str)
+		free(export_str);
+	export_str = NULL;
 	data->exit_status = 0;
 }

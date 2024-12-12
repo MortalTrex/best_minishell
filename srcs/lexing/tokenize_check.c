@@ -70,8 +70,6 @@ static bool ft_check_if_here_doc_exist(t_token *tokens)
 
 bool	ft_check_errors_in_tokens(t_token *tokens)
 {
-	printf("check redirs %d\n", ft_check_redirs(tokens));
-	printf("check cmd %d\n", ft_check_if_cmd_exist(tokens));
 	if (ft_check_redirs(tokens))
 		return (true);
 	if (!ft_check_if_cmd_exist(tokens) && !ft_check_if_here_doc_exist(tokens))

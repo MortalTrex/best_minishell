@@ -16,7 +16,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	char	*str_ptr;
-
+	
 	if (!s1 || !s2)
 		return (NULL);
 	str = (char *) malloc (sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
@@ -30,6 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	*str = '\0';
 	return (str_ptr);
 }
+
 
 /*
 #include <stdlib.h>

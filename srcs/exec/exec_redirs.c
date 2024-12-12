@@ -99,7 +99,6 @@ void	ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe)
 		}
 		else if (current->type == D_HEREDOC)
 		{
-			printf("ENTER HERE DOC\n");
 			fd_in = open(current->file_here_doc, O_RDONLY);
 			if (fd_in == -1)
 				ft_error(data, "Error opening heredoc file");
@@ -118,7 +117,6 @@ void	ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe)
 void	ft_read_redirs(t_shell_list *node, t_data *data)
 {
 	t_redir		*current;
-	printf ("ENTER READ REDIRS\n");
 	current = node->redir;
 	while (current)
 	{
