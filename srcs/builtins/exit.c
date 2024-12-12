@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/31 18:10:38 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/12 13:15:56 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	ft_exit(char **argv, t_data *data)
 	int		value;
 
 	value = 0;
+	if (argv[1] && argv[2])
+	{
+		ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
+		return ;
+	}
 	if (argv[1])
 	{
 		if (ft_is_number(argv[1]))

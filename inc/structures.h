@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/12 11:32:17 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/12 12:58:09 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,7 @@ typedef struct s_data
 {
 	t_token			*tok;
 	t_env			*env;
-	t_shell_list	*sh
-	ell_list;
+	t_shell_list	*shell_list;
 	t_ast_node      *new_ast;
 	char			**envc;
 	int				pipe_fd[2];
