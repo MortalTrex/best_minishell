@@ -83,6 +83,10 @@ void	ft_free_all(t_data *data)
 		ft_free_tab(data->envc);
 		data->envc = NULL;
 	}
+	else
+	{
+		data->envc = NULL;
+	}
 	if (data->free_value == 0)
 	{
 		close(data->fd[0]);

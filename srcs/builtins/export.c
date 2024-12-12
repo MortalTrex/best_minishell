@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/25 08:05:03 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/12 09:46:59 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	ft_export(char **argv, t_data *data)
 	int		i;
 	bool	equal;
 	char	*export_str;
+	char	*tmp;
 
 	i = 1;
 	equal = false;
@@ -107,7 +108,11 @@ void	ft_export(char **argv, t_data *data)
 			if (!export_str)
 				export_str = ft_strjoin_empty(argv[i]);
 			else
-				export_str = ft_strjoin(export_str, argv[i]);
+			{
+				tmp = ft_strjoin(export_str, argv[i]);
+				free(export_str);
+				export_str = tmp;
+			}
 			if (!ft_strcmp(argv[i], "="))
 				equal = true;
 			if (check_identifier(export_str) == false && equal == false)
@@ -116,6 +121,8 @@ void	ft_export(char **argv, t_data *data)
 				ft_putstr_fd(argv[i], STDERR_FILENO);
 				ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 				data->exit_status = 1;
+				free(export_str);
+				export_str = NULL;
 				return ;
 			}
 			if (equal == true && ft_strcmp(argv[i], "="))

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/19 18:20:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/12 10:10:32 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,26 @@ char *ft_strndup(const char *s, size_t n)
 void	search_in_env(t_data *data, char *var)
 {
 	t_env	*tmp_env;
-	char 	*name_var;
 	int 	i;
 
 	tmp_env = data->env;
 	i = 0;
-	while (var[i] && var[i] != '=')
-		i++;
-	name_var = ft_strndup(var, i);
+	printf("var: %s\n", var);
 	while (tmp_env)
 	{
-		if (!ft_strcmp(name_var, tmp_env->name))
+		if (!ft_strcmp(var, tmp_env->name))
 		{
+			printf("found\n");
 			free(tmp_env->line);
-			free(tmp_env->name);
-			free(tmp_env->value);
 			tmp_env->line = NULL;
+			free(tmp_env->name);
 			tmp_env->name = NULL;
+			free(tmp_env->value);
 			tmp_env->value = NULL;
-			free(name_var);
 			return ;
 		}
 		tmp_env = tmp_env->next;
 	}
-	free(name_var);
 }
 
 void	ft_unset(char **argv, t_data *data)
