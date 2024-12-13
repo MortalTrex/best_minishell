@@ -33,9 +33,9 @@ void	ft_sort_env(t_env *env)
 
 void	copy_env(char **envp, t_data *data)
 {
-	int	i;
-	int len;
-	char *pwd;
+	int		i;
+	int		len;
+	char	*pwd;
 
 	i = 0;
 	len = 0;
@@ -65,9 +65,11 @@ void	copy_env_char(t_data *data)
 	t_env	*tmp_count;
 	t_env	*tmp;
 	int		i;
+	int		j;
 
 	i = 0;
-	if (!data->env)
+	j = 0;
+	if (!data->env || !data->env->line)
 		return ;
 	tmp_count = data->env;
 	tmp = data->env;
@@ -79,16 +81,22 @@ void	copy_env_char(t_data *data)
 	data->envc = malloc(sizeof(char *) * (i + 1));
 	if (!data->envc)
 		ft_error(data, "Malloc failed\n");
+	while (j <= i)
+	{
+		data->envc[j] = NULL;
+		j++;
+	}
 	i = 0;
 	while (tmp)
 	{
 		if (tmp->line)
-			data->envc[i] = strdup(tmp->line);
-		// if (!data->envc[i])
-		// 	ft_error(data, "Malloc failed\n");
-		i++;
+		{
+			data->envc[i] = ft_strdup(tmp->line);
+			if (!data->envc[i])
+				ft_error(data, "Malloc failed\n");
+			i++;
+		}
 		tmp = tmp->next;
 	}
 	data->envc[i] = NULL;
 }
-

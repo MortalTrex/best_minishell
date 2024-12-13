@@ -3,10 +3,10 @@
 
 void	ft_erase_all_temp_here_doc(t_shell_list *node)
 {
-	t_redir *current;
+	t_redir	*current;
 
 	current = node->redir;
-	while(current)
+	while (current)
 	{
 		if (current->type == D_HEREDOC && current->file_here_doc != NULL)
 			unlink(current->file_here_doc);
@@ -65,20 +65,22 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 	}
 }
 
-void print_tab(char **str)
+void	print_tab(char **str)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (str[i])
 	{
 		printf("%s\n", str[i]);
 		i++;
 	}
-}	
+}
 
 void	ft_no_pipe(t_shell_list *node, t_data *data)
 {
 	if (!node || !node->argv)
-		return;
+		return ;
 	if (node && node->argv && is_builtin(node->argv[0]))
 		ft_detect_builtin(node->argv, data);
 	else
@@ -88,7 +90,7 @@ void	ft_no_pipe(t_shell_list *node, t_data *data)
 		node->pid = fork();
 		if (node->pid == -1)
 			ft_error(data, "Error forking");
-		if (node->pid == 0) 
+		if (node->pid == 0)
 		{
 			// ft_read_heredoc(node, data);
 			ft_read_infile(node, data, false);

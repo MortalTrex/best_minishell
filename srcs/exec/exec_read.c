@@ -1,10 +1,9 @@
 #include "minishell.h"
 
-
-void    ft_read_commands(t_shell_list *node, t_data *data)
+void	ft_read_commands(t_shell_list *node, t_data *data)
 {
-	t_shell_list *current;
-	int i;
+	t_shell_list	*current;
+	int				i;
 
 	i = 0;
 	current = node;
@@ -18,7 +17,7 @@ void    ft_read_commands(t_shell_list *node, t_data *data)
 
 void	ft_execution(t_data *data)
 {
-	if (!data->shell_list)
+	if (!data->shell_list || !data)
 		return ;
 	ft_count_levels(data->shell_list, 0, data);
 	ft_read_redirs(data->shell_list, data);

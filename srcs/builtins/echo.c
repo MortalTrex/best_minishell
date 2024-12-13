@@ -31,7 +31,7 @@ bool	verif_flag(char *str)
 void	ft_echo(char **argv, t_data *data)
 {
 	bool	n_flag;
-	int 	i;
+	int		i;
 
 	i = 1;
 	n_flag = false;
@@ -40,14 +40,6 @@ void	ft_echo(char **argv, t_data *data)
 		ft_putstr_fd("\n", 1);
 		return ;
 	}
-	// if (!ft_strcmp(argv[1], "$UID"))
-	// {
-	// 	ft_putstr_fd("UID=", 1);
-	// 	ft_putnbr_fd(getuid(), 1);
-	// 	ft_putstr_fd("\n", 1);
-	// 	data->exit_status = 0;
-	// 	return ;
-	// }
 	if (verif_flag(argv[i]) == true)
 	{
 		n_flag = true;
@@ -64,4 +56,3 @@ void	ft_echo(char **argv, t_data *data)
 		ft_putstr_fd("\n", 1);
 	data->exit_status = 0;
 }
-

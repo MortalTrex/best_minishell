@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char *ft_strndup(const char *s, size_t n)
+char	*ft_strndup(const char *s, size_t n)
 {
 	char	*str;
 	size_t	i;
@@ -33,10 +33,8 @@ char *ft_strndup(const char *s, size_t n)
 void	search_in_env(t_data *data, char *var)
 {
 	t_env	*tmp_env;
-	int 	i;
 
 	tmp_env = data->env;
-	i = 0;
 	printf("var: %s\n", var);
 	while (tmp_env)
 	{
@@ -57,7 +55,7 @@ void	search_in_env(t_data *data, char *var)
 
 void	ft_unset(char **argv, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (argv[i])

@@ -9,7 +9,6 @@ void	ft_count_levels(t_shell_list *node, int level, t_data *data)
 		ft_count_levels(node->next, level + 1, data);
 }
 
-
 void	wait_commands(t_data *data)
 {
 	signal(SIGINT, SIG_IGN);
@@ -73,7 +72,6 @@ bool	is_builtin(char *command)
 		return (true);
 	return (false);
 }
-
 
 // void	transform_ast(t_ast_node *node, t_data *data)
 // {
@@ -153,10 +151,13 @@ bool	is_builtin(char *command)
 
 void	transform_ast(t_ast_node *node, t_data *data)
 {
-	t_ast_node *current = node;
-	t_ast_node *new_tree = NULL;
-	t_ast_node **new_tree_ptr = &new_tree;
+	t_ast_node	*current;
+	t_ast_node	*new_tree;
+	t_ast_node	**new_tree_ptr;
 
+	current = node;
+	new_tree = NULL;
+	new_tree_ptr = &new_tree;
 	while (current)
 	{
 		if (current->left && current->left->command)
@@ -170,7 +171,6 @@ void	transform_ast(t_ast_node *node, t_data *data)
 			ft_memcpy(*new_tree_ptr, current->left, sizeof(t_ast_node));
 			new_tree_ptr = &(*new_tree_ptr)->right;
 		}
-
 		if (current->command)
 		{
 			*new_tree_ptr = malloc(sizeof(t_ast_node));
@@ -182,9 +182,7 @@ void	transform_ast(t_ast_node *node, t_data *data)
 			ft_memcpy(*new_tree_ptr, current, sizeof(t_ast_node));
 			new_tree_ptr = &(*new_tree_ptr)->right;
 		}
-
 		current = current->right;
 	}
-
 	data->new_ast = new_tree;
 }

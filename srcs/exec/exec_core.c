@@ -22,6 +22,8 @@ char	*ft_path(char *cmd, t_data *data)
 	int		len;
 	char	*path2;
 
+	if (!data->envc)
+		ft_close_fd(data, "Error: no env\n");
 	i = 0;
 	len = 0;
 	while (data->envc[len])
@@ -36,18 +38,29 @@ char	*ft_path(char *cmd, t_data *data)
 	if (len <= 3)
 	{
 		path2 = ft_strdup("/usr/bin/");
+		if (!path2)
+			ft_close_fd(data, "Error: strdup failed\n");
 		dir_path = ft_split(path2, ':');
+		free(path2);
 	}
 	else
+	{
+		if (!data->envc[i])
+			ft_close_fd(data, "Error: no path\n");
 		dir_path = ft_split(data->envc[i] + 5, ':');
+	}
 	if (!dir_path)
 		ft_close_fd(data, "Error: split failed\n");
 	i = -1;
 	while (dir_path[++i])
 	{
 		join_path = ft_strjoin(dir_path[i], "/");
+		if (!join_path)
+			ft_close_fd(data, "Error: strjoin failed\n");
 		path = ft_strjoin(join_path, cmd);
 		free(join_path);
+		if (!path)
+			ft_close_fd(data, "Error: strjoin failed\n");
 		if (access(path, F_OK) == 0)
 			return (ft_free_tab(dir_path), path);
 		free(path);

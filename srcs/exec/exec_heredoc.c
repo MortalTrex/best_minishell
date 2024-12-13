@@ -45,7 +45,7 @@ static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
 	return (i);
 }
 
-static void	ft_expand_heredoc(char *command,int fd, t_data *data)
+static void	ft_expand_heredoc(char *command, int fd, t_data *data)
 {
 	size_t	i;
 
@@ -59,38 +59,34 @@ static void	ft_expand_heredoc(char *command,int fd, t_data *data)
 	}
 	ft_putchar_fd('\n', fd);
 }
-void close_hd(t_redir *redir, t_data *data)
+
+void	close_hd(t_redir *redir, t_data *data)
 {
 	if (redir && redir->hd_fd != -1)
 		close(redir->hd_fd);
 	close(STDIN_FILENO);
-	//dup2(data->fd[0], STDIN_FILENO);
 	if (data && data->fd[0] != -1)
 		close(data->fd[0]);
-	// if (redir->file)
-	// 	unlink(redir->file);
 }
 
 static void	execute_here_doc(t_redir *redir, t_data *data)
 {
 	char	*line;
 	char	*file_path;
-	int file;
+	int		file;
+	int		count;
 
 	file = -1;
-
+	count = 0;
 	if (!redir && !redir->file_here_doc)
-		return;
-
+		return ;
 	file_path = redir->file_here_doc;
-	file = open(file_path, O_TRUNC | O_CREAT | O_WRONLY , 0666);
+	file = open(file_path, O_TRUNC | O_CREAT | O_WRONLY, 0666);
 	if (file == -1)
 		perror("heredoc");
 	signal(SIGINT, heredoc_sigint_handler);
 	while (*file_path && !ft_is_quote(*file_path))
 		file_path++;
-
-	int count = 0;
 	while (g_exit_status != 130)
 	{
 		line = readline("> ");
@@ -102,30 +98,17 @@ static void	execute_here_doc(t_redir *redir, t_data *data)
 			ft_expand_heredoc(line, file, data);
 		else
 			ft_putendl_fd(line, file);
-
 		count++;
-	
 	}
 	if (line)
 		free(line);
-
 	close(file);
-
 }
 
 void	ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe)
 {
 	(void)in_multipipe;
-	// if (in_multipipe == true)
-	// {
-	// 	dup2(data->stdin_backup, STDIN_FILENO);
-	// }
 	create_filename(redir);
 	execute_here_doc(redir, data);
 	data->isheredoc = true;
-	// if (in_multipipe == true)
-	// {
-	// 	dup2(data->fd[0], STDIN_FILENO);
-	// }
-
 }
