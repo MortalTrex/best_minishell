@@ -25,6 +25,27 @@ static void	create_filename(t_redir *redir)
 	printf("File: %s\n", redir->file_here_doc);
 }
 
+// static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
+// {
+//     size_t	start;
+//     char	*env_var;
+//     char	*env_value;
+// 	(void)data;
+
+//     start = i;
+//     while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+//         i++;
+//     env_var = ft_substr(str, start, i - start);
+//     if (!env_var)
+//         return (-1);
+//     env_value = getenv(env_var);
+//     if (!env_value)
+//         env_value = "";
+//     write(fd, env_value, ft_strlen(env_value));
+//     free(env_var);
+//     return (i);
+// }
+
 static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
 {
 	size_t	start;

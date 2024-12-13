@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/12 15:16:48 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/13 13:14:29 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_env_oldpwd(char *old_pwd, t_data *data)
 	current = data->env;
 	while (current)
 	{
-		if (!ft_strncmp(current->name, "OLDPWD", 6) == 0)
+		if (!ft_strncmp(current->name, "OLDPWD", 6))
 		{
 			free(current->line);
 			current->line = NULL;
@@ -49,12 +49,11 @@ void	set_env_pwd(char *new_pwd, t_data *data)
 	current = data->env;
 	while (current)
 	{
-		if (!ft_strncmp(current->name, "PWD", 3) == 0)
+		if (!ft_strncmp(current->name, "PWD", 3))
 		{
 			if (current->value)
 			{
 				old_pwd = ft_strdup(current->value);
-				//printf("old_pwd: %s\n", old_pwd);
 				free(current->value);
 				current->value = NULL;
 			}
@@ -100,7 +99,7 @@ void	set_home(t_data *data)
 	current = data->env;
 	while (current)
 	{
-		if (!ft_strncmp(current->name, "HOME", 4) == 0)
+		if (!ft_strncmp(current->name, "HOME", 4))
 			ft_move_directory(current->value, data);
 		current = current->next;
 	}
