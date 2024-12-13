@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/25 10:49:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:24:42 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	exec(t_data *data, char **cmd)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd[0], STDERR_FILENO);
-		ft_close_fd(data, " not found\n");
+		ft_close_fd(data, ": command not found\n");
 	}
 	if (execve(path, cmd, data->envc) == -1)
 		ft_close_fd(data, "execve fail\n");

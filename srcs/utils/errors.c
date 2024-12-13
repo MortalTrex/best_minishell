@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 19:59:12 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:20:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@ void	ft_close_fd(t_data *data, char *msg)
 	if (data->fd[1] != -1)
 		close(data->fd[1]);
 	ft_error_exit(data, msg);
+	data->exit_status = 1;
 }
 
 void	ft_error(t_data *data, char *msg)
 {
 	ft_free_all(data);
 	ft_putstr_fd(msg, STDERR_FILENO);
+	data->exit_status = 1;
 }
 
 void 	ft_error_exit(t_data *data, char *msg)
 {
 	ft_error(data, msg);
+	data->exit_status = 1;
 	exit(1);
 }
 
