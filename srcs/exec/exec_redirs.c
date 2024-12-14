@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_redirs.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 22:37:26 by rbalazs           #+#    #+#             */
+/*   Updated: 2024/12/14 23:55:40 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_read_heredoc(t_shell_list *node, t_data *data)
@@ -23,22 +35,20 @@ int	ft_read_heredoc(t_shell_list *node, t_data *data)
 
 void	ft_read_outfile(t_shell_list *node, t_data *data)
 {
-	t_redir	*current;
+	t_redir	*c;
 	int		fd_out;
 
-	if (!node->redir)
-		return ;
-	current = node->redir;
-	while (current)
+	c = node->redir;
+	while (c)
 	{
-		if (current->type == OUT || current->type == D_APPEND)
+		if (c->type == OUT || c->type == D_APPEND)
 		{
-			if (current->type == D_APPEND)
-				fd_out = open(current->value, O_WRONLY | O_CREAT | O_APPEND,
-						0644);
-			if (current->type == OUT)
-				fd_out = open(current->value, O_WRONLY | O_CREAT | O_TRUNC,
-						0644);
+			if (c->value == NULL)
+				ft_close_fd(data, "Error: no output file");
+			if (c->type == D_APPEND)
+				fd_out = open(c->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if (c->type == OUT)
+				fd_out = open(c->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd_out == -1)
 				ft_close_fd(data, "Error opening fd_out");
 			if (dup2(fd_out, STDOUT_FILENO) == -1)
@@ -47,7 +57,7 @@ void	ft_read_outfile(t_shell_list *node, t_data *data)
 			close(data->fd[1]);
 			close(fd_out);
 		}
-		current = current->next;
+		c = c->next;
 	}
 }
 
@@ -56,14 +66,11 @@ void	ft_read_infile(t_shell_list *node, t_data *data)
 	t_redir	*current;
 	int		fd_in;
 
-	if (!node->redir)
-		return ;
 	current = node->redir;
 	while (current)
 	{
 		if (current->type == IN)
 		{
-			//dprintf(2, "current->value: %s\n", current->value);
 			fd_in = open(current->value, O_RDONLY);
 			if (fd_in == -1)
 			{
@@ -80,6 +87,11 @@ void	ft_read_infile(t_shell_list *node, t_data *data)
 		}
 		else if (current->type == D_HEREDOC)
 		{
+			if (current->file_here_doc == NULL)
+			{
+				ft_error(data, "Error: no file here doc");
+				return ;
+			}
 			fd_in = open(current->file_here_doc, O_RDONLY);
 			if (fd_in == -1)
 			{
@@ -96,6 +108,14 @@ void	ft_read_infile(t_shell_list *node, t_data *data)
 		}
 		current = current->next;
 	}
+}
+
+void	ft_exec_redirs(t_shell_list *node, t_data *data)
+{
+	if (!node->redir)
+		return ;
+	ft_read_infile(node, data);
+	ft_read_outfile(node, data);
 }
 
 void	ft_read_redirs(t_shell_list *node, t_data *data)
