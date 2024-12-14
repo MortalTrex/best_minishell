@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/30 16:26:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/14 15:59:41 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	sigint_handler(int sig)
 	g_exit_status = 130;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_replace_line("", STDIN_FILENO);
-	rl_on_new_line();
-	rl_redisplay();
+	// rl_on_new_line();
+	// rl_redisplay();
 }
 
 void	signals(t_data *data)

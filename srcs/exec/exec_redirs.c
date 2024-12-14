@@ -1,45 +1,19 @@
 #include "minishell.h"
 
-void	read_heredoc_dup(t_shell_list *node, t_data *data)
-{
-	t_redir	*current;
-	int		fd_in;
-
-	current = node->redir;
-	while (current)
-	{
-		if (current->type == D_HEREDOC)
-		{
-			if (current->hd_fd != -1)
-			{
-				fd_in = open(current->value, O_RDONLY);
-				if (fd_in == -1)
-					ft_close_fd(data, "Error opening fd_in");
-				if (dup2(fd_in, STDIN_FILENO) == -1)
-					ft_close_fd(data, "Error redirecting stdin");
-				if (data->fd[0] != -1)
-					close(data->fd[0]);
-				if (data->fd[0] != -1)
-					close(data->fd[1]);
-				close(fd_in);
-			}
-		}
-		current = current->next;
-	}
-}
-
 int	ft_read_heredoc(t_shell_list *node, t_data *data)
 {
 	t_redir	*current;
 	bool	in_here_doc;
 
 	in_here_doc = false;
+	if (!node->redir)
+		return (in_here_doc);
 	current = node->redir;
 	while (current)
 	{
 		if (current->type == D_HEREDOC)
 		{
-			ft_process_heredoc(current, data, false);
+			ft_process_heredoc(current, data);
 			in_here_doc = true;
 		}
 		current = current->next;
@@ -52,6 +26,8 @@ void	ft_read_outfile(t_shell_list *node, t_data *data)
 	t_redir	*current;
 	int		fd_out;
 
+	if (!node->redir)
+		return ;
 	current = node->redir;
 	while (current)
 	{
@@ -75,24 +51,30 @@ void	ft_read_outfile(t_shell_list *node, t_data *data)
 	}
 }
 
-void	ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe)
+void	ft_read_infile(t_shell_list *node, t_data *data)
 {
 	t_redir	*current;
 	int		fd_in;
 
-	(void)in_multipipe;
+	if (!node->redir)
+		return ;
 	current = node->redir;
 	while (current)
 	{
 		if (current->type == IN)
 		{
+			//dprintf(2, "current->value: %s\n", current->value);
 			fd_in = open(current->value, O_RDONLY);
 			if (fd_in == -1)
+			{
 				ft_error(data, "Error opening input file");
+				return ;
+			}
 			if (dup2(fd_in, STDIN_FILENO) == -1)
 			{
 				close(fd_in);
 				ft_error(data, "Error redirecting stdin");
+				return ;
 			}
 			close(fd_in);
 		}
@@ -100,11 +82,15 @@ void	ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe)
 		{
 			fd_in = open(current->file_here_doc, O_RDONLY);
 			if (fd_in == -1)
+			{
 				ft_error(data, "Error opening heredoc file");
+				return ;
+			}
 			if (dup2(fd_in, STDIN_FILENO) == -1)
 			{
 				close(fd_in);
 				ft_error(data, "Error redirecting stdin");
+				return ;
 			}
 			close(fd_in);
 		}
@@ -116,6 +102,8 @@ void	ft_read_redirs(t_shell_list *node, t_data *data)
 {
 	t_redir	*current;
 
+	if (!node->redir)
+		return ;
 	current = node->redir;
 	while (current)
 	{
@@ -124,7 +112,7 @@ void	ft_read_redirs(t_shell_list *node, t_data *data)
 		if (current->type == OUT || current->type == D_APPEND)
 			data->isoutfile = true;
 		if (current->type == D_HEREDOC)
-			printf("HEREDOC\n");
+			data->isheredoc = true;
 		current = current->next;
 	}
 }

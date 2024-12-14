@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:27:06 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 19:11:06 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:03:43 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,22 @@ char	*ft_strjoin_free(char *s1, char *s2)
 		joined[i++] = s2[j++];
 	joined[i] = 0;
 	return (free(s1), free(s2), joined);
+}
+
+char	*ft_strndup(const char *s, size_t n)
+{
+	char	*str;
+	size_t	i;
+
+	i = 0;
+	str = malloc(sizeof(char) * (n + 1));
+	if (!str)
+		return (NULL);
+	while (s[i] && i < n)
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

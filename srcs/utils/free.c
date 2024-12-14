@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static	void	free_redir(t_redir **redir)
+void	free_redir(t_redir **redir)
 {
 	t_redir	*next;
 	t_redir	*tmp;
@@ -10,12 +10,61 @@ static	void	free_redir(t_redir **redir)
 	tmp = *redir;
 	while (tmp)
 	{
-		free(tmp->value);
+		if (tmp->value)
+			free(tmp->value);
+		tmp->value = NULL;
+		if (tmp->file_here_doc)
+			free(tmp->file_here_doc);
+		tmp->file_here_doc = NULL;
 		next = tmp->next;
-		free(tmp);
+		if (tmp)
+			free(tmp);
 		tmp = next;
 	}
 	*redir = NULL;
+}
+
+void	ft_free_redir_list(t_redir *head)
+{
+	t_redir	*next;
+
+	while (head)
+	{
+		next = head->next;
+		if (head->value)
+			free(head->value);
+		head->value = NULL;
+		if (head->file_here_doc)
+			free(head->file_here_doc);
+		head->file_here_doc = NULL;
+		free(head);
+		head = next;
+	}
+}
+
+void	ft_free_shell_list(t_shell_list *shell_list)
+{
+    t_shell_list	*tmp;
+
+    if (!shell_list)
+        return ;
+    while (shell_list)
+    {
+        tmp = shell_list;
+        shell_list = shell_list->next;
+
+        if (tmp->command != NULL)
+        {
+            free(tmp->command);
+            tmp->command = NULL;
+        }
+        if (tmp->argv)
+			ft_free_tab(tmp->argv);
+		if (tmp->redir)
+			ft_free_redir_list(tmp->redir);
+        free(tmp);
+        tmp = NULL;
+    }
 }
 
 void	ft_free_command(t_ast_node *node)
@@ -83,10 +132,6 @@ void	ft_free_all(t_data *data)
 		ft_free_tab(data->envc);
 		data->envc = NULL;
 	}
-	else
-	{
-		data->envc = NULL;
-	}
 	if (data->free_value == 0)
 	{
 		close(data->fd[0]);
@@ -96,11 +141,6 @@ void	ft_free_all(t_data *data)
 			ft_envclear(&data->env);
 			data->env = NULL;
 		}
-	}
-	if (data->ast)
-	{
-		free_ast(&data->ast, data);
-		data->ast = NULL;
 	}
 	if (data->shell_list)
 	{

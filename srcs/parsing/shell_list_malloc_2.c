@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_list_malloc_2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/12/06 22:39:12 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:13:04 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ t_redir	*ft_allocate_new_node_redir(void)
 	return (new_node);
 }
 
-void	ft_free_redir_list(t_redir *head)
-{
-	t_redir	*next;
+// void	ft_free_redir_list(t_redir *head)
+// {
+// 	t_redir	*next;
 
-	while (head)
-	{
-		next = head->next;
-		if (head->value)
-			free(head->value);
-		free(head);
-		head = next;
-	}
-}
+// 	while (head)
+// 	{
+// 		next = head->next;
+// 		if (head->value)
+// 			free(head->value);
+// 		free(head);
+// 		head = next;
+// 	}
+// }
 
 t_redir_type	ft_get_type_redir(t_token_type type)
 {

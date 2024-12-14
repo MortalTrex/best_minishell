@@ -20,7 +20,7 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 
 	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
 		ft_error(data, "Error creating pipe");
-	// ft_read_heredoc(node, data);
+	ft_read_heredoc(node, data);
 	pid = fork();
 	if (pid == -1)
 		ft_error(data, "Error forking");
@@ -37,7 +37,7 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 			close(data->pipe_fd[1]);
 		}
 		close(data->pipe_fd[0]);
-		ft_read_infile(node, data, false);
+		ft_read_infile(node, data);
 		ft_read_outfile(node, data);
 		close(data->pipe_fd[0]);
 		close(data->pipe_fd[1]);
@@ -65,17 +65,6 @@ void	ft_multi_pipe(t_shell_list *node, t_data *data, int i)
 	}
 }
 
-void	print_tab(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		printf("%s\n", str[i]);
-		i++;
-	}
-}
 
 void	ft_no_pipe(t_shell_list *node, t_data *data)
 {
@@ -93,7 +82,7 @@ void	ft_no_pipe(t_shell_list *node, t_data *data)
 		if (node->pid == 0)
 		{
 			// ft_read_heredoc(node, data);
-			ft_read_infile(node, data, false);
+			ft_read_infile(node, data);
 			ft_read_outfile(node, data);
 			close(data->fd[0]);
 			close(data->fd[1]);

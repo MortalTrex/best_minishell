@@ -14,37 +14,15 @@ static void	create_filename(t_redir *redir)
 		free(temp_file);
 		return ;
 	}
-	if (access(temp_file, F_OK) == -1)
-	{
-		redir->file_here_doc = ft_strdup(temp_file);
-		free(temp_file);
-		return ;
-	}
+	// if (access(temp_file, F_OK) == -1)
+	// {
+	// 	redir->file_here_doc = ft_strdup(temp_file);
+	// 	free(temp_file);
+	// 	return ;
+	// }
 	redir->file_here_doc = ft_strdup(temp_file);
 	free(temp_file);
-	printf("File: %s\n", redir->file_here_doc);
 }
-
-// static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
-// {
-//     size_t	start;
-//     char	*env_var;
-//     char	*env_value;
-// 	(void)data;
-
-//     start = i;
-//     while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-//         i++;
-//     env_var = ft_substr(str, start, i - start);
-//     if (!env_var)
-//         return (-1);
-//     env_value = getenv(env_var);
-//     if (!env_value)
-//         env_value = "";
-//     write(fd, env_value, ft_strlen(env_value));
-//     free(env_var);
-//     return (i);
-// }
 
 static int	ft_env_var_heredoc(char *str, size_t i, int fd, t_data *data)
 {
@@ -81,14 +59,6 @@ static void	ft_expand_heredoc(char *command, int fd, t_data *data)
 	ft_putchar_fd('\n', fd);
 }
 
-void	close_hd(t_redir *redir, t_data *data)
-{
-	if (redir && redir->hd_fd != -1)
-		close(redir->hd_fd);
-	close(STDIN_FILENO);
-	if (data && data->fd[0] != -1)
-		close(data->fd[0]);
-}
 
 static void	execute_here_doc(t_redir *redir, t_data *data)
 {
@@ -126,9 +96,8 @@ static void	execute_here_doc(t_redir *redir, t_data *data)
 	close(file);
 }
 
-void	ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe)
+void	ft_process_heredoc(t_redir *redir, t_data *data)
 {
-	(void)in_multipipe;
 	create_filename(redir);
 	execute_here_doc(redir, data);
 	data->isheredoc = true;

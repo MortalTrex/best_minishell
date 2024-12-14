@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/11 13:01:51 by dagudelo         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:36:19 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,17 +192,18 @@ bool			ft_is_delimiter(char *delimiter, char *str);
 void			ft_fds_dup2(t_data *data);
 bool			is_builtin(char *command);
 void			wait_commands(t_data *data);
+void			close_hd(t_redir *redir, t_data *data);
 
 /**
  * @file exec_heredoc.c
  */
-void			ft_process_heredoc(t_redir *redir, t_data *data, bool in_multipipe);
+void			ft_process_heredoc(t_redir *redir, t_data *data);
 
 /**
  * @file exec_redirs.c
  */
 int				ft_read_heredoc(t_shell_list *node, t_data *data);
-void			ft_read_infile(t_shell_list *node, t_data *data, bool in_multipipe);
+void			ft_read_infile(t_shell_list *node, t_data *data);
 void			ft_read_outfile(t_shell_list *node, t_data *data);
 void			ft_read_redirs(t_shell_list *node, t_data *data);
 

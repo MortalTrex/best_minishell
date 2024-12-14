@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:15:53 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/12/09 13:40:59 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/14 16:56:26 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,39 +81,6 @@ void	ft_fill_shell_list(t_data *data)
 
 		current = current->next;
 	}
-}
-void	ft_free_shell_list(t_shell_list *shell_list)
-{
-    t_shell_list	*tmp;
-    size_t			i;
-
-    if (!shell_list)
-        return ;
-    while (shell_list)
-    {
-        tmp = shell_list;
-        shell_list = shell_list->next;
-
-        if (tmp->command != NULL)
-        {
-            free(tmp->command);
-            tmp->command = NULL;
-        }
-        if (tmp->argv)
-        {
-            i = 0;
-            while (tmp->argv[i])
-            {
-                free(tmp->argv[i]);
-                tmp->argv[i] = NULL;
-                i++;
-            }
-            free(tmp->argv);
-            tmp->argv = NULL;
-        }
-        free(tmp);
-        tmp = NULL;
-    }
 }
 
 // void	ft_free_shell_list(t_shell_list *head)
