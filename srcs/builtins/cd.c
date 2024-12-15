@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 15:28:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 17:35:57 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	set_env_pwd(char *new_pwd, t_data *data)
 
 	if (!new_pwd || !data->env || !data->env->name)
 		return ;
+	old_pwd = NULL;
 	current = data->env;
 	while (current)
 	{
