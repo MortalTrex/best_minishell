@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dagudelo <dagudelo@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/12/06 22:59:41 by dagudelo         ###   ########.fr        #
+#    Updated: 2024/12/15 01:24:07 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRCS = srcs/main.c\
 	srcs/exec/exec_read.c\
 	srcs/exec/exec_heredoc.c\
 	srcs/exec/exec_redirs.c\
+	srcs/exec/exec_redirs_read.c\
 	srcs/exec/utils.c\
+	srcs/exec/utils_2.c\
 	srcs/lexing/tokenize_check.c\
 	srcs/lexing/tokenize_malloc_1.c\
 	srcs/lexing/tokenize_malloc_2.c\

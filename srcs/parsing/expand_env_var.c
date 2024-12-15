@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_var.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:39:59 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 18:04:46 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:49:11 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*ft_get_env_value(char *var, t_data *data)
 	// }
 	if (!ft_strcmp(var, "$?"))
 	{
-		// printf("data->exit_status: %d", data->exit_status);
 		return ft_itoa(data->exit_status);
 	}
 	current = data->env;

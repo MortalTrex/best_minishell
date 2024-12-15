@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/14 14:36:19 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 01:36:41 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,17 +195,33 @@ void			wait_commands(t_data *data);
 void			close_hd(t_redir *redir, t_data *data);
 
 /**
+ * @file exec_utils_2.c
+ */
+char	*find_path_to_find(t_data *data);
+void	search_index(t_data *data, int *i, char *path);
+void	increment_shlvl(t_data *data, int lvl_int);
+void	change_shlvl(t_data *data);
+
+/**
  * @file exec_heredoc.c
  */
 void			ft_process_heredoc(t_redir *redir, t_data *data);
 
 /**
- * @file exec_redirs.c
+ * @file exec_redirs_read.c
  */
 int				ft_read_heredoc(t_shell_list *node, t_data *data);
 void			ft_read_infile(t_shell_list *node, t_data *data);
 void			ft_read_outfile(t_shell_list *node, t_data *data);
 void			ft_read_redirs(t_shell_list *node, t_data *data);
+
+
+/**
+ * @file exec_redirs.c
+ */
+void			ft_process_infile(t_redir *current, t_data *data);
+void			ft_process_heredoc_file(t_redir *current, t_data *data);
+void    		ft_exec_redirs(t_shell_list *node, t_data *data);
 
 /**
  * **********************************************

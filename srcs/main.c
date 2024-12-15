@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/14 16:02:11 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/14 21:41:20 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,17 @@ int		g_exit_status;
 
 void	ft_readline(t_data *data)
 {
-	data->user_line = readline(PROMPT);
-	if (!data->user_line)
-	{
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		data->free_value = 0;
-		ft_free_all(data);
-		exit(0);
-	}
-	signal(SIGINT, sigint_handler);
-	if (*(data->user_line))
-		add_history(data->user_line);
-	// if (data->user_line == ft_strlen(data->user_line) == 0)
-	// {
-		// ft_putstr_fd("exit\n", STDOUT_FILENO);
-		// data->free_value = 0;
-		// ft_free_all(data);
-		// exit(0);
-	// }
+    data->user_line = readline(PROMPT);
+    signal(SIGINT, sigint_handler);
+    if (!data->user_line)
+    {
+        ft_putstr_fd("exit\n", STDOUT_FILENO);
+        data->free_value = 0;
+        ft_free_all(data);
+        exit(0);
+    }
+    if (*data->user_line)
+        add_history(data->user_line);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -42,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	(void)argc;
-	(void)argv; 
+	(void)argv;
 	ft_bzero(&data, sizeof(t_data));
 	copy_env(envp, &data);
 	tcgetattr(STDIN_FILENO, &data.terminal);

@@ -3,6 +3,7 @@
 		"*.c": "c",
 		"minishell.h": "c",
 		"compare": "c",
-		"type_traits": "c"
+		"type_traits": "c",
+		"unistd.h": "c"
 	}
 }
