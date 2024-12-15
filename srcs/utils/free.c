@@ -44,27 +44,26 @@ void	ft_free_redir_list(t_redir *head)
 
 void	ft_free_shell_list(t_shell_list *shell_list)
 {
-    t_shell_list	*tmp;
+	t_shell_list	*tmp;
 
-    if (!shell_list)
-        return ;
-    while (shell_list)
-    {
-        tmp = shell_list;
-        shell_list = shell_list->next;
-
-        if (tmp->command != NULL)
-        {
-            free(tmp->command);
-            tmp->command = NULL;
-        }
-        if (tmp->argv)
+	if (!shell_list)
+		return ;
+	while (shell_list)
+	{
+		tmp = shell_list;
+		shell_list = shell_list->next;
+		if (tmp->command != NULL)
+		{
+			free(tmp->command);
+			tmp->command = NULL;
+		}
+		if (tmp->argv)
 			ft_free_tab(tmp->argv);
 		if (tmp->redir)
 			ft_free_redir_list(tmp->redir);
-        free(tmp);
-        tmp = NULL;
-    }
+		free(tmp);
+		tmp = NULL;
+	}
 }
 
 void	ft_free_command(t_ast_node *node)
@@ -80,7 +79,7 @@ void	free_node(t_ast_node *node)
 {
 	if (!node)
 		return ;
-	if (node -> type == NODE_CMD)
+	if (node->type == NODE_CMD)
 		ft_free_command(node);
 	else
 	{

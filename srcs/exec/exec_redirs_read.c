@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 00:29:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 00:29:23 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 14:01:52 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,21 @@ void	ft_read_infile(t_shell_list *node, t_data *data)
 	}
 }
 
-void	ft_read_redirs(t_shell_list *node, t_data *data)
-{
-	t_redir	*current;
+// void	ft_read_redirs(t_shell_list *node, t_data *data)
+// {
+// 	t_redir	*current;
 
-	if (!node->redir)
-		return ;
-	current = node->redir;
-	while (current)
-	{
-		if (current->type == IN)
-			data->isinfile = true;
-		if (current->type == OUT || current->type == D_APPEND)
-			data->isoutfile = true;
-		if (current->type == D_HEREDOC)
-			data->isheredoc = true;
-		current = current->next;
-	}
-}
+// 	if (!node->redir)
+// 		return ;
+// 	current = node->redir;
+// 	while (current)
+// 	{
+// 		if (current->type == IN)
+// 			data->isinfile = true;
+// 		if (current->type == OUT || current->type == D_APPEND)
+// 			data->isoutfile = true;
+// 		if (current->type == D_HEREDOC)
+// 			data->isheredoc = true;
+// 		current = current->next;
+// 	}
+// }
