@@ -137,7 +137,7 @@ void	ft_free_all(t_data *data)
 		close(data->fd[1]);
 		if (data->env)
 		{
-			ft_envclear(&data->env);
+			ft_envclear(data->env);
 			data->env = NULL;
 		}
 	}

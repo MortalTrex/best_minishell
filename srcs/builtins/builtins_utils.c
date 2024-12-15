@@ -44,7 +44,6 @@ void	copy_env(char **envp, t_data *data)
 	if (!len)
 	{
 		pwd = ft_strjoin("PWD=", getcwd(NULL, 0));
-		printf("No env\n");
 		push_node_to_env(data, pwd);
 		free(pwd);
 		push_node_to_env(data, "SHLVL=0");
@@ -85,18 +84,15 @@ void	copy_env_char(t_data *data)
 		return ;
 	}
 	i = 0;
-	while (tmp)
+	while (tmp && tmp->line)
 	{
-		if (tmp->line)
+		data->envc[i] = ft_strdup(tmp->line);
+		if (!data->envc[i])
 		{
-			data->envc[i] = ft_strdup(tmp->line);
-			if (!data->envc[i])
-			{
-				ft_error(data, "error environment\n");
-				return ;
-			}
-			i++;
+			ft_error(data, "error environment\n");
+			return ;
 		}
+		i++;
 		tmp = tmp->next;
 	}
 	data->envc[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 17:35:57 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 20:33:34 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_env_oldpwd(char *old_pwd, t_data *data)
 	current = data->env;
 	while (current)
 	{
-		if (!ft_strncmp(current->name, "OLDPWD", 6))
+		if (current->name && !ft_strncmp(current->name, "OLDPWD", 6))
 		{
 			if (current->line)
 				free(current->line);
@@ -30,11 +30,10 @@ void	set_env_oldpwd(char *old_pwd, t_data *data)
 			if (current->value)
 				free(current->value);
 			current->value = NULL;
-			if (current->name)
-				free(current->name);
-			current->name = NULL;
-			new_line = ft_strjoin("OLDPWD=", old_pwd);
+			if (old_pwd)
+				new_line = ft_strjoin("OLDPWD=", old_pwd);
 			current->line = new_line;
+			current->name = ft_strdup("OLDPWD");
 			current->value = ft_strdup(old_pwd);
 		}
 		current = current->next;
@@ -53,7 +52,7 @@ void	set_env_pwd(char *new_pwd, t_data *data)
 	current = data->env;
 	while (current)
 	{
-		if (!ft_strncmp(current->name, "PWD", 3))
+		if (current->name && !ft_strncmp(current->name, "PWD", 3))
 		{
 			if (current->value)
 			{
@@ -69,6 +68,7 @@ void	set_env_pwd(char *new_pwd, t_data *data)
 			current->name = NULL;
 			new_line = ft_strjoin("PWD=", new_pwd);
 			current->line = new_line;
+			current->name = ft_strdup("PWD");
 			current->value = ft_strdup(new_pwd);
 		}
 		current = current->next;
@@ -103,7 +103,7 @@ void	set_home(t_data *data)
 	current = data->env;
 	while (current)
 	{
-		if (!ft_strncmp(current->name, "HOME", 4))
+		if (current->name && !ft_strncmp(current->name, "HOME", 4))
 			ft_move_directory(current->value, data);
 		current = current->next;
 	}

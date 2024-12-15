@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/15 01:36:41 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 20:33:07 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ void			ft_add_node_token(t_token *token, char *value,
 // t_token		*ft_stacknew(t_token_type type, char *value);
 // void		ft_stackadd_back(t_token **stack, t_token *new);
 void			ft_stackclear(t_token **stack);
-void			ft_envclear(t_env **env);
+void			ft_envclear(t_env *env);
 
 /**
  * **********************************************

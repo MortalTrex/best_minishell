@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 14:11:21 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/15 20:24:37 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,14 @@ t_env	*new_node_env(char *line, t_data *data)
 	if (!new_node)
 		return (NULL);
 	new_node->line = ft_strdup(line);
-	new_node->name = put_name(line);
-	new_node->value = put_value(line);
 	if (!new_node->line)
 	{
 		free(new_node);
 		ft_error(data, "Malloc failed\n");
+		return (NULL);
 	}
+	new_node->name = put_name(line);
+	new_node->value = put_value(line);
 	new_node->next = NULL;
 	return (new_node);
 }
