@@ -81,13 +81,13 @@ bool	check_valid_identifier(char *str)
 	i = 0;
 	while (str[i] && str[i] != '=')
 	{
+		if (ft_isdigit(str[i]) || ft_is_operator(str[i]) || ft_is_separator_export(str) || !ft_isalpha(str[i]))
+			return (false);
 		if (str[i] == '-')
 			return (false);
 		i++;
 	}
 	i = 0;
-	if (ft_isdigit(str[0]) || ft_is_operator(str[0]) || ft_is_separator_export(str))
-		return (false);
 	while (str[i])
 	{
 		if (str[i] == '=')
