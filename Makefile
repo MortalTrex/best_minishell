@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2024/11/04 11:55:16 by rbalazs          ###   ########.fr        #
+#    Updated: 2025/01/14 15:39:53 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS = srcs/main.c\
 	srcs/builtins/export.c\
 	srcs/builtins/exit.c\
 	srcs/builtins/cd.c\
+	srcs/builtins/export_utils.c\
 	srcs/exec/exec_cases.c\
 	srcs/exec/exec_core.c\
 	srcs/exec/exec_read.c\

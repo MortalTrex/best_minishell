@@ -13,13 +13,6 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 	
 	if (pid == 0)
 	{
-		// bool in_here_doc = false;
-		
-		// if (read_heredoc(node, data))
-		// {
-		// 	in_here_doc = true;
-		// }
-
 		read_heredoc(node, data);
 		if (i > 0)
 		{
@@ -36,16 +29,9 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 		read_outfile(node, data);
 		close(data->pipe_fd[0]);
 		close(data->pipe_fd[1]);
-		// printf("in here doc: %d\n", in_here_doc);
-		// if (in_here_doc == true)
-		// {
-		// 	read_heredoc_dup(node, data);
-		// }
-		// in_here_doc = false;
-		
 		if (is_builtin(node->argv[0]) == true)
 		{
-			ft_detect_builtin(node->argv, data);
+			data->exit_status = ft_detect_builtin(node->argv, data);
 			ft_free_all(data);
 		}
 		else
@@ -67,64 +53,6 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 	}
 }
 
-
-// void	no_pipe(t_ast_node *node, t_data *data)
-// {
-// 	// bool in_here_doc = false;
-// 	if (!node || !node->argv)
-// 		return ;
-// 	data->stdin_backup = dup(STDIN_FILENO);
-//     data->stdout_backup = dup(STDOUT_FILENO);
-// 	if (data->stdin_backup == -1 || data->stdout_backup == -1)
-//     	ft_error(data, "Error backing up stdin/stdout");
-// 	if (pipe(data->fd) == -1)
-// 		ft_error(data, "Error creating pipe");
-
-	
-// 	// if (read_heredoc(data->ast, data))
-// 	// 	in_here_doc = true;
-	
-// 	// if (in_here_doc == true)
-// 	// {
-// 	// 	read_heredoc_dup(node, data);
-// 	// }
-// 	// in_here_doc = false;
-		
-	
-// 	if (node && node->argv && is_builtin(node->argv[0]))
-// 		ft_detect_builtin(node->argv, data);
-// 	else
-// 	{
-// 		node->pid = fork();
-// 		if (node->pid == -1)
-// 			ft_error(data, "Error forking");
-// 		if (node->pid == 0)
-// 		{
-
-// 			dup2(data->fd[0], STDIN_FILENO);
-// 			dup2(data->fd[1], STDOUT_FILENO);
-
-// 			read_heredoc(node, data);
-// 			read_infile(node, data);
-// 			read_outfile(node, data);
-// 			close(data->fd[0]);
-// 			close(data->fd[1]);
-// 			close(data->stdin_backup);
-// 			close(data->stdout_backup);
-// 			exec(data, node->argv);
-// 			exit(1);
-// 		}
-// 		waitpid(node->pid, NULL, 0);
-// 	}
-// 	if (dup2(data->stdin_backup, STDIN_FILENO) == -1
-// 		|| dup2(data->stdout_backup, STDOUT_FILENO) == -1)
-// 		ft_error(data, "Error restoring stdin/stdout");
-// 	close(data->fd[0]);
-// 	close(data->fd[1]);
-// 	close(data->stdin_backup);
-//     close(data->stdout_backup);
-// }
-
 void	no_pipe(t_ast_node *node, t_data *data)
 {
 	read_heredoc(node, data);
@@ -139,7 +67,7 @@ void	no_pipe(t_ast_node *node, t_data *data)
 	read_infile(node, data);
 	read_outfile(node, data);
 	if (is_builtin(node->argv[0]))
-		ft_detect_builtin(node->argv, data);
+		data->exit_status = ft_detect_builtin(node->argv, data);
 	else
 	{
 		node->pid = fork();

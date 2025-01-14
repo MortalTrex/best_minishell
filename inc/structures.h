@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/03 09:43:57 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/01/14 15:24:30 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_env
 	char			*name;
 	char			*value;
 	struct s_env	*next;
+	struct s_env	*prev;
 }					t_env;
 
 typedef struct s_data

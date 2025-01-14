@@ -6,12 +6,15 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 17:30:20 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/01/14 15:47:02 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define ERROR 1
+# define SUCCESS 0
 
 ////////////////////////// INCLUDES ///////////////////////////
 
@@ -70,7 +73,7 @@ void		ft_free_all(t_data *data);
 
 /////////////// BUILTIN //////////////////
 // builtins_launch.c
-bool		ft_detect_builtin(char **argv, t_data *data);
+int		ft_detect_builtin(char **argv, t_data *data);
 
 // builtins_utils.c
 void		copy_env(char **envp, t_data *data);
@@ -83,23 +86,24 @@ char		*put_name(char *line);
 char		*put_value(char *line);
 t_env		*new_node_env(char *line, t_data *data);
 void		push_node_to_env(t_data *data, char *line);
-void		ft_env(char **argv, t_data *data);
+int		ft_env(char **argv, t_data *data);
 
 // export.c
 bool		check_double(t_data *data, char *line);
 void		ft_exp_env(t_data *data);
 bool		check_change_value(t_data *data);
-void		ft_export(char **argv, t_data *data);
+int			ft_export(char **argv, t_data *data);
+bool 		ft_is_separator_export(char *s);
 
 // echo.c
-void		ft_echo(char **argv, t_data *data);
+int			ft_echo(char **argv);
 
 // pwd.c
-void		ft_pwd(t_data *data);
+int			ft_pwd(t_data *data);
 
 //	unset.c
 void		search_in_env(t_data *data, char *var);
-void		ft_unset(char **argv, t_data *data);
+int			ft_unset(char **argv, t_data *data);
 
 //	exit.c
 bool		ft_is_number(char *str);
@@ -109,9 +113,9 @@ void		ft_exit(char **argv, t_data *data);
 //	cd.c
 void		set_env_oldpwd(char *old_pwd, t_data *data);
 void		set_env_pwd(char *new_pwd, t_data *data);
-void		ft_move_directory(char *path, t_data *data);
+int		ft_move_directory(char *path, t_data *data);
 void		set_home(t_data *data);
-void		ft_cd(char **argv, t_data *data);
+int			ft_cd(char **argv, t_data *data);
 
 //////////////// EXECUTION ////////////////
 // exec_cases.c
@@ -243,5 +247,6 @@ void		free_node(t_ast_node *node);
 void		free_ast(t_ast_node **node, t_data *data);
 void		ft_free_all(t_data *data);
 void 		free_newast(t_ast_node *node);
+void		ft_free(void **ptr);
 
 #endif

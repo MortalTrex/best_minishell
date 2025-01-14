@@ -1,4 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 19:28:14 by rbalazs           #+#    #+#             */
+/*   Updated: 2025/01/14 15:35:55 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+void	set_home(t_data *data)
+{
+	t_env	*current;
+
+	if (!data->env)
+		return ;
+	current = data->env;
+	while (current)
+	{
+		if (current->name && !ft_strncmp(current->name, "HOME", 4))
+			ft_move_directory(current->value, data);
+		current = current->next;
+	}
+}
 
 void	ft_swap_env_lines(t_env *a, t_env *b)
 {

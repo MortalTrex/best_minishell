@@ -65,6 +65,16 @@ void free_newast(t_ast_node *node)
     }
 }
 
+void	ft_free(void **ptr)
+{
+	if (ptr && *ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+	return ;
+}
+
 void	ft_free_all(t_data *data)
 {
 	if (!data)

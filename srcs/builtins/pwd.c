@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/19 16:14:23 by rbalazs          ###   ########.fr       */
+/*   Updated: 2024/12/22 12:28:24 by sben-tay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
-void	ft_pwd(t_data *data)
+int	ft_pwd(t_data *data)
 {
 	char	*pwd;
 
@@ -24,9 +24,8 @@ void	ft_pwd(t_data *data)
 	}
 	else
 	{
-		ft_putstr_fd(pwd, 1);
-		ft_putstr_fd("\n", 1);
-		free(pwd);
+		printf("%s\n", pwd);
+		ft_free((void **)&pwd);
 	}
-	data->exit_status = 0;
+	return (0);
 }

@@ -6,68 +6,43 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/19 18:20:10 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/01/14 12:06:13 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_strndup(const char *s, size_t n)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	str = (char *)malloc(sizeof(char) * (n + 1));
-	if (!str)
-		return (NULL);
-	while (s[i] && i < n)
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
-}
 
 void	search_in_env(t_data *data, char *var)
 {
-	t_env	*tmp_env;
-	char 	*name_var;
-	int 	i;
+	t_env	*current;
 
-	tmp_env = data->env;
-	i = 0;
-	while (var[i] && var[i] != '=')
-		i++;
-	name_var = ft_strndup(var, i);
-	while (tmp_env)
+	if (!var || !data->env)
+		return ;
+	current = data->env;
+	while (current)
 	{
-		if (!ft_strcmp(name_var, tmp_env->name))
+		if (current->name && !ft_strcmp(var, current->name))
 		{
-			free(tmp_env->line);
-			free(tmp_env->name);
-			free(tmp_env->value);
-			tmp_env->line = NULL;
-			tmp_env->name = NULL;
-			tmp_env->value = NULL;
-			free(name_var);
+			ft_envclear(&data->env);
 			return ;
 		}
-		tmp_env = tmp_env->next;
+		current = current->next;
 	}
-	free(name_var);
 }
 
-void	ft_unset(char **argv, t_data *data)
+int	ft_unset(char **argv, t_data *data)
 {
-	int i;
+	int	i;
 
-	i = 1;
+	if (!argv || !data)
+		return (1);
+	i = 0;
 	while (argv[i])
 	{
-		search_in_env(data, argv[i]);
+		if (argv[i][0] != '\0')
+			search_in_env(data, argv[i]);
 		i++;
 	}
-	data->exit_status = 0;
+	return (0);
 }
