@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/12 15:44:42 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:55:04 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	ft_is_number(char *str)
 			return (false);
 		i++;
 	}
-	if (my_atoll(str) > LLONG_MAX || my_atoll(str) < LLONG_MIN)
+	if (my_atoll(str) > LONG_MAX || my_atoll(str) < LONG_MIN)
 		return (false);
 	return (true);
 }
