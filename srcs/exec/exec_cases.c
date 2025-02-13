@@ -1,43 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_cases.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 22:56:32 by rbalazs           #+#    #+#             */
+/*   Updated: 2025/02/13 10:44:08 by rbalazs          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <unistd.h>
 
-void	multi_pipe(t_ast_node *node, t_data *data, int i)
+void	ft_erase_all_temp_here_doc(t_ast_node *node)
+{
+	t_redir	*current;
+
+	current = node->redir;
+	while (current)
+	{
+		if (current->type == D_HEREDOC && current->file_here_doc != NULL)
+			unlink(current->file_here_doc);
+		current = current->next;
+	}
+}
+
+void	ft_multi_pipe_child(t_ast_node *node, t_data *data, int i)
+{
+	if (i > 0)
+	{
+		dup2(data->fd[0], STDIN_FILENO);
+		close(data->fd[0]);
+	}
+	if (i < data->nb_levels)
+	{
+		dup2(data->pipe_fd[1], STDOUT_FILENO);
+		close(data->pipe_fd[1]);
+	}
+	close(data->pipe_fd[0]);
+	ft_exec_redirs(node, data);
+	close(data->pipe_fd[0]);
+	close(data->pipe_fd[1]);
+	if (node->argv)
+	{
+		if (is_builtin(node->argv[0]) == true)
+		{
+			ft_detect_builtin(node->argv, data);
+			ft_free_all(data);
+		}
+		else
+			exec(data, node->argv);
+	}
+	ft_free_all(data);
+	exit(1);
+}
+
+void	ft_multi_pipe(t_ast_node *node, t_data *data, int i)
 {
 	pid_t	pid;
 
 	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
 		ft_error(data, "Error creating pipe");
+	ft_read_heredoc(node, data);
 	pid = fork();
 	if (pid == -1)
 		ft_error(data, "Error forking");
-	
 	if (pid == 0)
-	{
-		read_heredoc(node, data);
-		if (i > 0)
-		{
-			dup2(data->fd[0], STDIN_FILENO);
-			close(data->fd[0]);
-		}
-		if (i < data->nb_levels)
-		{
-			dup2(data->pipe_fd[1], STDOUT_FILENO);
-			close(data->pipe_fd[1]);
-		}
-		close(data->pipe_fd[0]);
-		read_infile(node, data);
-		read_outfile(node, data);
-		close(data->pipe_fd[0]);
-		close(data->pipe_fd[1]);
-		if (is_builtin(node->argv[0]) == true)
-		{
-			data->exit_status = ft_detect_builtin(node->argv, data);
-			ft_free_all(data);
-		}
-		else
-			exec(data, node->argv);
-		exit(1);
-	}
+		ft_multi_pipe_child(node, data, i);
 	if (i > 0)
 		close(data->fd[0]);
 	if (i < data->nb_levels)
@@ -51,44 +81,34 @@ void	multi_pipe(t_ast_node *node, t_data *data, int i)
 		close(data->fd[0]);
 		waitpid(pid, NULL, 0);
 	}
+	ft_erase_all_temp_here_doc(node);
 }
 
-void	no_pipe(t_ast_node *node, t_data *data)
+void	ft_no_pipe(t_ast_node *node, t_data *data)
 {
-	read_heredoc(node, data);
 	if (!node || !node->argv)
 		return ;
-	data->stdin_backup = dup(STDIN_FILENO);
-    data->stdout_backup = dup(STDOUT_FILENO);
-	if (data->stdin_backup == -1 || data->stdout_backup == -1)
-    	ft_error(data, "Error backing up stdin/stdout");
-	if (pipe(data->fd) == -1)
-		ft_error(data, "Error creating pipe");
-	read_infile(node, data);
-	read_outfile(node, data);
-	if (is_builtin(node->argv[0]))
-		data->exit_status = ft_detect_builtin(node->argv, data);
+	if (node && node->argv && is_builtin(node->argv[0]))
+		ft_detect_builtin(node->argv, data);
 	else
 	{
+		if (pipe(data->fd) == -1)
+			ft_error(data, "Error creating pipe");
 		node->pid = fork();
 		if (node->pid == -1)
 			ft_error(data, "Error forking");
 		if (node->pid == 0)
 		{
+			ft_exec_redirs(node, data);
 			close(data->fd[0]);
 			close(data->fd[1]);
-			close(data->stdin_backup);
-			close(data->stdout_backup);
 			exec(data, node->argv);
+			ft_free_all(data);
 			exit(1);
 		}
 		waitpid(node->pid, NULL, 0);
+		close(data->fd[0]);
+		close(data->fd[1]);
 	}
-	if (dup2(data->stdin_backup, STDIN_FILENO) == -1
-		|| dup2(data->stdout_backup, STDOUT_FILENO) == -1)
-		ft_error(data, "Error restoring stdin/stdout");
-	close(data->fd[0]);
-	close(data->fd[1]);
-	close(data->stdin_backup);
-    close(data->stdout_backup);
+	ft_erase_all_temp_here_doc(node);
 }

@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/01/14 15:47:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/13 11:09:36 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,11 @@ int			ft_cd(char **argv, t_data *data);
 // exec_cases.c
 int			exec_pipe(t_ast_node *node, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
-void    	multi_pipe(t_ast_node *node, t_data *data, int i);
-void		one_pipe(t_ast_node *node, t_data *data);
-void		no_pipe(t_ast_node *node, t_data *data);
+void    	ft_multi_pipe(t_ast_node *node, t_data *data, int i);
+void		ft_no_pipe(t_ast_node *node, t_data *data);
 void		read_pipe(t_ast_node *node, t_data *data);
 int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
+void		ft_erase_all_temp_here_doc(t_ast_node *node);
 
 // exec_core.c
 char		*ft_path(char *cmd, t_data *data);
@@ -153,6 +153,29 @@ int        	read_heredoc(t_ast_node *node, t_data *data);
 void        read_infile(t_ast_node *node, t_data *data);
 void        read_outfile(t_ast_node *node, t_data *data);
 void  		read_redirs(t_ast_node *node, t_data *data);
+
+// exec_redirs_process.c
+void		ft_process_infile(t_redir *current, t_data *data);
+void		ft_process_heredoc_file(t_redir *current, t_data *data);
+void		ft_exec_redirs(t_ast_node *node, t_data *data);
+
+// exec_redirs_read.c
+int			ft_read_heredoc(t_ast_node *node, t_data *data);
+void		ft_read_outfile(t_ast_node *node, t_data *data);
+void		ft_read_infile(t_ast_node *node, t_data *data);
+
+// utils_2.c
+char		*find_path_to_find(t_data *data);
+void		search_index(t_data *data, int *i, char *path);
+void		increment_shlvl(t_data *data, int lvl_int);
+void		change_shlvl(t_data *data);
+
+// utils.c
+void		ft_count_levels(t_ast_node *node, int level, t_data *data);
+bool		ft_is_delimiter(char *delimiter, char *str);
+bool		is_builtin(char *command);
+void		close_hd(t_redir *redir, t_data *data);
+
 
 ///////////// LEXING ///////////////
 

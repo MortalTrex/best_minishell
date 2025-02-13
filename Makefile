@@ -6,7 +6,7 @@
 #    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2025/01/14 15:39:53 by rbalazs          ###   ########.fr        #
+#    Updated: 2025/02/13 10:57:05 by rbalazs          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,11 @@ SRCS = srcs/main.c\
 	srcs/builtins/export_utils.c\
 	srcs/exec/exec_cases.c\
 	srcs/exec/exec_core.c\
-	srcs/exec/exec_read.c\
 	srcs/exec/exec_heredoc.c\
-	srcs/exec/exec_redirs.c\
+	srcs/exec/exec_redirs_process.c\
+	srcs/exec/exec_redirs_read.c\
+	srcs/exec/exec_start.c\
+	srcs/exec/utils_2.c\
 	srcs/exec/utils.c\
 	srcs/lexing/tokenize.c\
 	srcs/lexing/append.c\
