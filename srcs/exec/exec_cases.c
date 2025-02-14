@@ -61,7 +61,10 @@ void	no_pipe(t_ast_node *node, t_data *data)
 	data->stdin_backup = dup(STDIN_FILENO);
     data->stdout_backup = dup(STDOUT_FILENO);
 	if (data->stdin_backup == -1 || data->stdout_backup == -1)
+	{
+		data->exit_status = 1;
     	ft_error(data, "Error backing up stdin/stdout");
+	}
 	if (pipe(data->fd) == -1)
 		ft_error(data, "Error creating pipe");
 	read_infile(node, data);

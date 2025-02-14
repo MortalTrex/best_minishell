@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_core.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/02 13:07:53 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/14 17:34:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	exec(t_data *data, char **cmd)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd[0], 2);
+		data->exit_status = 127;
 		ft_close_fd(data, " not found\n");
 	}
 	if (execve(path, cmd, data->envc) == -1)

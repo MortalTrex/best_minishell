@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/06 19:05:16 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:33:46 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,21 @@ void	ft_readline(t_data *data)
 	// 	exit(0);
 	// }
 }
+// static int loop(t_data *data)
+// {
+// 	while (true)
+// 	{
+// 		if(g_exit_status == 130)
+// 		{
+// 			data->exit_status = 130;
+// 			g_exit_status = 0;
+// 		}
+// 		if(!data->user_line)
+// 			if(isatty(STDIN_FILENO))
+// 				ft_putstr_fd("exit\n", 2);
+// 	}
+// 	return(EXIT_SUCCESS)
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
