@@ -26,89 +26,59 @@ void	ft_erase_all_temp_here_doc(t_ast_node *node)
 	}
 }
 
-void	ft_multi_pipe_child(t_ast_node *node, t_data *data, int i)
+void	ft_multi_pipe_child(t_ast_node *node, t_data *data)
 {
-	if (i > 0)
-	{
-		dup2(data->fd[0], STDIN_FILENO);
-		close(data->fd[0]);
-	}
-	if (i < data->nb_levels)
-	{
-		dup2(data->pipe_fd[1], STDOUT_FILENO);
-		close(data->pipe_fd[1]);
-	}
-	close(data->pipe_fd[0]);
-	ft_exec_redirs(node, data);
-	close(data->pipe_fd[0]);
-	close(data->pipe_fd[1]);
 	if (node->argv)
 	{
-		if (is_builtin(node->argv[0]) == true)
+		if (is_builtin(node->argv[0]))
 		{
 			ft_detect_builtin(node->argv, data);
 			ft_free_all(data);
+			exit(data->exit_status);
 		}
 		else
 			exec(data, node->argv);
 	}
-	ft_free_all(data);
-	exit(1);
 }
 
-void	ft_multi_pipe(t_ast_node *node, t_data *data, int i)
+void	ft_multi_pipe(t_ast_node *node, t_data *data)
 {
-	pid_t	pid;
-
-	if (i < data->nb_levels && pipe(data->pipe_fd) == -1)
-		ft_error(data, "Error creating pipe");
-	ft_read_heredoc(node, data);
-	pid = fork();
-	if (pid == -1)
+	pipe(data->pipe_fd);
+	node->pid = fork();
+	if (node->pid == -1)
 		ft_error(data, "Error forking");
-	if (pid == 0)
-		ft_multi_pipe_child(node, data, i);
-	if (i > 0)
-		close(data->fd[0]);
-	if (i < data->nb_levels)
+	if (node->pid == 0)
 	{
-		data->fd[0] = data->pipe_fd[0];
-		data->fd[1] = data->pipe_fd[1];
-		close(data->pipe_fd[1]);
+		ft_exec_redirs(node, data);
+		ft_multi_pipe_child(node, data);
 	}
-	if (i == data->nb_levels)
-	{
-		close(data->fd[0]);
-		waitpid(pid, NULL, 0);
-	}
-	ft_erase_all_temp_here_doc(node);
+}
+
+void	builtin_no_pipe(t_ast_node *node, t_data *data)
+{
+	data->stdin_backup = dup(STDIN_FILENO);
+	data->stdout_backup = dup(STDOUT_FILENO);
+	ft_exec_redirs(node, data);
+	ft_detect_builtin(node->argv, data);
+	dup2(data->stdin_backup, STDIN_FILENO);
+	close(data->stdin_backup);
+	dup2(data->stdout_backup, STDOUT_FILENO);
+	close(data->stdout_backup);
 }
 
 void	ft_no_pipe(t_ast_node *node, t_data *data)
 {
-	if (!node || !node->argv)
-		return ;
 	if (node && node->argv && is_builtin(node->argv[0]))
-		ft_detect_builtin(node->argv, data);
+		builtin_no_pipe(node, data);
 	else
 	{
-		if (pipe(data->fd) == -1)
-			ft_error(data, "Error creating pipe");
 		node->pid = fork();
 		if (node->pid == -1)
-			ft_error(data, "Error forking");
+			ft_error(data, "Error forking\n");
 		if (node->pid == 0)
 		{
 			ft_exec_redirs(node, data);
-			close(data->fd[0]);
-			close(data->fd[1]);
 			exec(data, node->argv);
-			ft_free_all(data);
-			exit(1);
 		}
-		waitpid(node->pid, NULL, 0);
-		close(data->fd[0]);
-		close(data->fd[1]);
 	}
-	ft_erase_all_temp_here_doc(node);
 }

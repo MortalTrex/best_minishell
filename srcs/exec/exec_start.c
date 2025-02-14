@@ -21,7 +21,7 @@ void	ft_read_commands(t_ast_node *node, t_data *data)
 	current = node;
 	while (current)
 	{
-		ft_multi_pipe(current, data, i);
+		ft_multi_pipe(current, data);
 		current = current->right;
 		i++;
 	}

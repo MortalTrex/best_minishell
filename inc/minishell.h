@@ -121,7 +121,7 @@ int			ft_cd(char **argv, t_data *data);
 // exec_cases.c
 int			exec_pipe(t_ast_node *node, t_data *data);
 int			exec_onecommand(char **cmd, t_data *data);
-void    	ft_multi_pipe(t_ast_node *node, t_data *data, int i);
+void    	ft_multi_pipe(t_ast_node *node, t_data *data);
 void		ft_no_pipe(t_ast_node *node, t_data *data);
 void		read_pipe(t_ast_node *node, t_data *data);
 int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
