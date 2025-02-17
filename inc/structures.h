@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/17 16:24:25 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:19:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_data
 	t_ast_node		*new_ast;
 	struct termios	terminal;
 	t_cmd			*commands;
+	t_token			*tokens;
 	int				count;
 	char			**envc;
 	char			*user_line;
