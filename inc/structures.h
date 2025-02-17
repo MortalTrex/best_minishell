@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/01/14 15:24:30 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/17 16:24:25 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ typedef struct s_env
 	struct s_env	*prev;
 }					t_env;
 
+typedef struct s_cmd
+{
+	char			**cmd_args;
+	t_token			*redirs;
+	struct t_command	*next;
+	struct t_command	*prev;
+}		t_cmd;
+
 typedef struct s_data
 {
 	t_token			*tok;
@@ -73,6 +81,7 @@ typedef struct s_data
 	t_ast_node		*ast;
 	t_ast_node		*new_ast;
 	struct termios	terminal;
+	t_cmd			*commands;
 	int				count;
 	char			**envc;
 	char			*user_line;
