@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/19 14:53:13 by mmiilpal         ###   ########.fr       */
+/*   Created: 2025/02/19 14:56:45 by mmiilpal          #+#    #+#             */
+/*   Updated: 2025/02/19 14:57:52 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "minishell.h"
 
-typedef enum e_token_type
+void	set_delimiter_quote_status(t_token *token)
 {
-	T_WORD,
-	T_OPERATOR,
-	T_PIPE,
-	T_REDIR_IN,
-	T_REDIR_OUT,
-	T_REDIR_APPEND,
-	T_REDIR_HERE,
-	T_BUILTIN,
-	T_DELIMITER,
-	T_FILENAME,
-}					t_token_type;
+	int		i;
+	t_token	*tmp;
 
-typedef struct s_token
-{
-	char			*value;
-	t_token_type	type;
-	bool 			quotes;
-	struct s_token	*next;
-	struct s_token	*prev;
-}					t_token;
-
-#endif
+	tmp = token;
+	token->quotes = false;
+	while (tmp)
+	{
+		i = 0;
+		if (tmp->type == T_DELIMITER)
+		{
+			while (tmp->value[i])
+			{
+				if (tmp->value[i] == '\"' || tmp->value[i] == '\'')
+					tmp->quotes = true;
+				i++;
+			}
+		}
+		tmp = tmp->next;
+	}
+}
