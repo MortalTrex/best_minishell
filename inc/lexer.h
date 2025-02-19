@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:50 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/18 17:13:47 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:39:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
+	bool 			quotes;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;

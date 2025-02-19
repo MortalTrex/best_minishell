@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/17 17:19:30 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:39:55 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_cmd
 {
 	char			**cmd_args;
 	t_token			*redirs;
+	bool			is_builtin;
 	struct t_command	*next;
 	struct t_command	*prev;
 }		t_cmd;

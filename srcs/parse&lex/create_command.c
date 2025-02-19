@@ -6,40 +6,40 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:23:05 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/17 17:01:17 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/19 13:10:29 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// char	**tokens_to_command_array(t_token *tokens)
-// {
-// 	char	**cmd_array;
-// 	int		i;
+char	**tokens_to_command_array(t_token *tokens)
+{
+	char	**cmd_array;
+	int		i;
 
-// 	i = -1;
-// 	cmd_array = malloc((count_not_null_tokens(tokens) + 1) * sizeof(char *));
-// 	if (cmd_array == NULL)
-// 		return (NULL);
-// 	while (tokens && tokens->type != T_PIPE)
-// 	{
-// 		if (tokens->value && tokens->value[0] != '\0' && tokens->type == T_WORD)
-// 		{
-// 			cmd_array[++i] = ft_strdup(tokens->value);
-// 			if (cmd_array[i] == NULL)
-// 				return (free_array(cmd_array), NULL);
-// 		}
-// 		else if (tokens->value && tokens->type == T_WORD)
-// 		{
-// 			cmd_array[++i] = ft_strdup("");
-// 			if (cmd_array[i] == NULL)
-// 				return (ft_free_array(cmd_array), NULL);
-// 		}
-// 		tokens = tokens->next;
-// 	}
-// 	cmd_array[++i] = NULL;
-// 	return (cmd_array);
-// }
+	i = -1;
+	cmd_array = malloc((count_not_null_tokens(tokens) + 1) * sizeof(char *));
+	if (cmd_array == NULL)
+		return (NULL);
+	while (tokens && tokens->type != T_PIPE)
+	{
+		if (tokens->value && tokens->value[0] != '\0' && tokens->type == T_WORD)
+		{
+			cmd_array[++i] = ft_strdup(tokens->value);
+			if (cmd_array[i] == NULL)
+				return (ft_free_tab(cmd_array), NULL);
+		}
+		else if (tokens->value && tokens->type == T_WORD)
+		{
+			cmd_array[++i] = ft_strdup("");
+			if (cmd_array[i] == NULL)
+				return (ft_free_tab(cmd_array), NULL);
+		}
+		tokens = tokens->next;
+	}
+	cmd_array[++i] = NULL;
+	return (cmd_array);
+}
 
 t_cmd   *get_last_arg(t_cmd *command_args)
 {
@@ -81,7 +81,8 @@ t_cmd *create_command(t_token *token)
         return (NULL);
     ft_memset(command, 0, sizeof(t_cmd));
     command->cmd_args = tokens_to_command_array(token);
+    handle_redirections(token, command);
     if(command->cmd_args && command->cmd_args[0])
-	
+        command->is_builtin = is_builtin(command->cmd_args[0]);
     return(command);
 }
