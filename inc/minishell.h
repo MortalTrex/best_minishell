@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/01/14 15:47:02 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:30:58 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void		transform_ast(t_ast_node *node, t_data *data);
 // exec_utils.c
 bool		ft_is_delimiter(char *delimiter, char *str);
 void		ft_fds_dup2(t_data *data);
+void		write_line_to_heredoc(int fd, char *tmp, t_data *data, int quotes_status);
 bool		is_builtin(char *command);
 void 	  	wait_commands(t_data *data);
 
@@ -156,13 +157,24 @@ void  		read_redirs(t_ast_node *node, t_data *data);
 
 ///////////// LEXING ///////////////
 
+
+// // lex.c
+int		lexer(t_data *data);
+void	remove_quotes(t_token *tokens);
+void	check_redirs(t_token *tokens);
+
 // append.c
 bool		ft_append_operator(char **command, t_token **tokens);
 bool		ft_append_word(char **command, t_token **tokens, t_data *data);
 
-// tokenize.c
-bool		ft_tokenize(t_data *data);
-t_token		*get_tokens(char *command, t_data *data);
+// expand.c
+char		*expander(char *str, t_data *data);
+int			expansion_count(char *str);
+int			find_quote(char c, char *quote);
+int			is_expandable(char *str, int i, char *quote);
+int			is_heredoc(char *str);
+char		*ft_expand_env_vars(char *str, size_t *i, t_data *data);
+char		*ft_get_env_value(char *var, t_data *data);
 
 // grammar_check.c
 bool		ft_is_operator(char c);
@@ -171,6 +183,12 @@ bool		ft_is_quote(char c);
 bool		ft_skip_quotes(char *line, size_t *i);
 bool		ft_is_separator(char *s);
 
+// lex_utils.c
+void		set_delimiter_quote_status(t_token *token);
+
+// remove_quotes.c
+char		*ft_remove_quotes(char *str);
+
 // stack_utils.c
 int			ft_strcmp(const char *s1, const char *s2);
 t_token		*ft_stacknew(t_token_type type, char *value);
@@ -178,49 +196,83 @@ void		ft_stackadd_back(t_token **stack, t_token *new);
 void		ft_stackclear(t_token **stack);
 void		ft_envclear(t_env **env);
 
+// tokenize.c
+bool		ft_tokenize(char *expanded, t_data *data);
+t_token		*get_tokens(char *command, t_data *data);
+
+// // tokenize.c
+// bool		ft_tokenize(t_data *data);
+// t_token		*get_tokens(char *command, t_data *data);
+
+// // grammar_check.c
+// bool		ft_is_operator(char c);
+// bool		ft_is_multi_char_operator(const char *str);
+// bool		ft_is_quote(char c);
+// bool		ft_skip_quotes(char *line, size_t *i);
+// bool		ft_is_separator(char *s);
+
+// // stack_utils.c
+// int			ft_strcmp(const char *s1, const char *s2);
+// t_token		*ft_stacknew(t_token_type type, char *value);
+// void		ft_stackadd_back(t_token **stack, t_token *new);
+// void		ft_stackclear(t_token **stack);
+// void		ft_envclear(t_env **env);
+
 //////////////// PARSING //////////////////
 
-// ast.c
-t_ast_node	*create_tree(t_token **current_token, t_data *data);
-void		parse_tokens(t_data *data);
+// create_command.c
+t_cmd		*create_command(t_token *token);
+t_cmd		*get_last_arg(t_cmd *command_args);
+t_cmd		add_to_back(t_cmd **command_arguments, t_cmd *new_arg);
+char		**tokens_to_command_array(t_token *tokens);
 
-// create_node.c
-t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left,
-				t_ast_node *right);
-t_redir		*ft_create_redir_node(t_token_type type, char *file);
-t_ast_node	*ft_create_node(t_ast_node_type type);
-void		ft_append_redir(t_redir **rds, t_redir *redir);
+// create_token.c
+int 		count_not_null_tokens(t_token *tokens);
+t_token		*create_token(char *value, int type, bool quotes);
+void		add_token_back(t_token **tokens, t_token *new_token);
 
-// get_clean_argv.c
-char		**ft_ms_split(char const *str);
+//grammar_check.c
+// // ast.c
+// t_ast_node	*create_tree(t_token **current_token, t_data *data);
+// void		parse_tokens(t_data *data);
 
-// expand_and_clean.c
-char		**ft_expand_and_clean(char *str, t_data *data);
+// // create_node.c
+// t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left,
+// 				t_ast_node *right);
+// t_redir		*ft_create_redir_node(t_token_type type, char *file);
+// t_ast_node	*ft_create_node(t_ast_node_type type);
+// void		ft_append_redir(t_redir **rds, t_redir *redir);
 
-// expand_env_vars.c
-char		*ft_get_env_value(char *var, t_data *data);
-char		*ft_expand_env_vars(char *word, size_t *i, t_data *data);
+// // get_clean_argv.c
+// char		**ft_ms_split(char const *str);
 
-// handle_quotes.c
-char		*ft_get_str(char *str, size_t *i);
-char		*ft_get_squote_string(char *str, size_t *i);
-char		*ft_handle_dquotes(char *str, size_t *i, t_data *data);
-char		*ft_clean_command(char *str, t_data *data);
+// // expand_and_clean.c
+// char		**ft_expand_and_clean(char *str, t_data *data);
 
-// parse_s_command.c
-bool		handle_redir(t_redir **redir, t_token **token, t_data *data);
-bool		join_words(char **command, t_token **current, t_data *data);
-t_ast_node	*simple_command(t_token **current_token, t_data *data);
+// // expand_env_vars.c
+// char		*ft_get_env_value(char *var, t_data *data);
+// char		*ft_expand_env_vars(char *word, size_t *i, t_data *data);
 
-// remove_quotes.c
-char		*ft_clean_empty_strs(char *str);
-char		*ft_remove_quotes(char *str);
+// // handle_quotes.c
+// char		*ft_get_str(char *str, size_t *i);
+// char		*ft_get_squote_string(char *str, size_t *i);
+// char		*ft_handle_dquotes(char *str, size_t *i, t_data *data);
+// char		*ft_clean_command(char *str, t_data *data);
 
-// utils_parser.c
-bool		is_redirection(t_token *token);
-bool		check_pipe_syntax(t_token *tokens, t_data *data);
-void		ft_parsing_error(t_data *data);
-char		*ft_strjoin_free(char *s1, char *s2);
+// // parse_s_command.c
+// bool		handle_redir(t_redir **redir, t_token **token, t_data *data);
+// bool		join_words(char **command, t_token **current, t_data *data);
+// t_ast_node	*simple_command(t_token **current_token, t_data *data);
+
+// // remove_quotes.c
+// char		*ft_clean_empty_strs(char *str);
+// char		*ft_remove_quotes(char *str);
+
+// // utils_parser.c
+// bool		is_redirection(t_token *token);
+// bool		check_pipe_syntax(t_token *tokens, t_data *data);
+// void		ft_parsing_error(t_data *data);
+// char		*ft_strjoin_free(char *s1, char *s2);
 
 ///////////SIGNALS//////////////
 

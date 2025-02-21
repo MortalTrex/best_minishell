@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/02 17:38:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:12:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
-
 void	signals(t_data *data)
 {
 	struct termios	terminal;

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/14 17:39:25 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:26:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,12 @@ void	ft_error_quote(t_data *data)
 		STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 	data->exit_status = 2;
+}
+void	ft_heredoc_warning(char *arg)
+{
+	ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
+	ft_putstr_fd("here-document delimited by end-of-file (wanted `",
+		STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd("\')\n", STDERR_FILENO);
 }

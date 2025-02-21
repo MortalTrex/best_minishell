@@ -5,40 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/29 12:36:52 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/11/05 16:33:16 by mmiilpal         ###   ########.fr       */
+/*   Created: 2025/02/19 13:22:20 by mmiilpal          #+#    #+#             */
+/*   Updated: 2025/02/19 14:30:43 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	ft_is_operator(char c)
-{
-	return (c == '|' || c == '>' || c == '<');
-}
-
-bool	ft_is_quote(char c)
-{
-	if (c == '\'' || c == '"')
-		return (true);
-	return (false);
-}
-
-bool	ft_skip_quotes(char *line, size_t *i)
-{
-	char	quote;
-
-	quote = line[*i];
-	if (ft_strchr(line + *i + 1, quote))
-	{
-		(*i)++;
-		while (line[*i] != quote)
-			(*i)++;
-		(*i)++;
-		return (true);
-	}
-	return (false);
-}
 
 bool	ft_is_wordchar(char c)
 
@@ -48,10 +20,33 @@ bool	ft_is_wordchar(char c)
 	return (false);
 }
 
-bool	ft_is_separator(char *s)
+int str_is_empty(char *str)
 {
-	if (*s == ' ' || *s == '\t'
-		|| *s == '<' || *s == '>' || *s == '|' )
-		return (true);
-	return (false);
+    if (!str)
+        return (1);
+    while (*str)
+    {
+        if (*str != ' ' && *str != '\t')
+            return (0);
+        str++;
+    }
+    return (1);
+}
+
+int check_quotes(char *str)
+{
+    bool sq;
+    bool dq;
+    
+    sq = false;
+    dq = false;
+    while(*str)
+    {
+        if (*str == '\'' && !dq)
+            sq = !sq;
+        if (*str == '\"' && !sq)
+            dq = !dq;
+        str++;
+    }
+    return (sq || dq);
 }

@@ -6,11 +6,29 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:23:05 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/19 13:10:29 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:55:34 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	count_not_null_tokens(t_token *tokens)
+{
+	int		count;
+	t_token	*temp;
+
+	count = 0;
+	temp = tokens;
+	if (temp->type == T_PIPE)
+		temp = temp->next;
+	while (temp && temp->type != T_PIPE)
+	{
+		if (temp->value)
+			count++;
+		temp = temp->next;
+	}
+	return (count);
+}
 
 char	**tokens_to_command_array(t_token *tokens)
 {

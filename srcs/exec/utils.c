@@ -76,6 +76,17 @@ bool	is_builtin(char *command)
 	return (false);
 }
 
+void	write_line_to_heredoc(int fd, char *tmp, t_data *data, 
+	int quotes_status)
+{
+if (quotes_status == 0)
+	tmp = expander(tmp, data);
+if (tmp)
+	write(fd, tmp, ft_strlen(tmp));
+write(fd, "\n", 1);
+if (tmp)
+	free(tmp);
+}
 
 // void	transform_ast(t_ast_node *node, t_data *data)
 // {

@@ -6,11 +6,12 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:12:49 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/19 14:28:32 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:39:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 char	*ft_get_env_value(char *var, t_data *data)
 {
 	t_env	*current;

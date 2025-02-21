@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/19 12:39:55 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:13:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct s_data
 	bool			isheredoc;
 	bool            isoutfile;
 	bool			isinfile;
+	char			*heredoc;
+	int				stdin_old;
 }					t_data;
 
 extern int			g_exit_status;

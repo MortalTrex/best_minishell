@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:13:13 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/19 13:11:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:56:04 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int parse(t_data *data)
     {
         if (token->type != T_PIPE)
         {
-            command = create_command(token, data);
+            command = create_command(token);
             if (!command)
                 return (1); //  add free !!! error
             add_to_back(&data->commands, command);
