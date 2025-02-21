@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:47:35 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/21 17:48:24 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:50:28 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ temp = env_list;
 name = name + 1;
 while (temp)
 {
-    if (ft_strcmp(temp->var_name, name) == 0)
+    if (ft_strcmp(temp->name, name) == 0)
         return (temp->value);
     temp = temp->next;
 }
@@ -84,7 +84,7 @@ char	*var_name;
 char	*value;
 char	*new_str_value;
 
-d_quoted = ft_strchr(str, D_QUOTE);
+d_quoted = ft_strchr(str, "\"");
 if (str[*i] == '$' && str[*i + 1] == '?')
 {
     value = ft_itoa(data->exit_status);
