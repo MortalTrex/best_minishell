@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:22:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 11:10:43 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:42:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	valid_quotes(char *str)
 	in_double_quote = 0;
 	while (str[i])
 	{
-		if (str[i] == "\'" && !in_double_quote)
+		if (str[i] == S_QUOTE && !in_double_quote)
 			in_single_quote = !in_single_quote;
-		else if (str[i] == "\"" && !in_single_quote)
+		else if (str[i] == D_QUOTE && !in_single_quote)
 			in_double_quote = !in_double_quote;
 		i++;
 	}
@@ -52,16 +52,16 @@ void	set_delimiter_quote_status(t_token *token)
 	t_token	*tmp;
 
 	tmp = token;
-	token->quotes = 0;
+	token->quotes_status = 0;
 	while (tmp)
 	{
 		i = 0;
-		if (tmp->type == T_DELIMITER)
+		if (tmp->type == DELIMITER)
 		{
 			while (tmp->value[i])
 			{
-				if (tmp->value[i] == "\"" || tmp->value[i] == "\'")
-					tmp->quotes= 1;
+				if (tmp->value[i] == D_QUOTE || tmp->value[i] == S_QUOTE)
+					tmp->quotes_status = 1;
 				i++;
 			}
 		}

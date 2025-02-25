@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:08:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:20:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ static int	get_exit_status(t_command *commands, char *arg,
 				t_shell *shell, bool pipe)
 {
 	long	stat;
+    char	*endptr;
 
-	stat = ft_atol(arg);
-	if (errno == ERANGE)
+    errno = 0; // Reset errno before calling ft_atoi_long
+    stat = ft_atoi_long(arg, &endptr);
+	if (errno == ERANGE ||*endptr != '\0')
 	{
 		if (pipe == false)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:05:24 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 11:23:16 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:36:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	remove_dollar_sign(t_token **token)
 	while ((*token)->value[i])
 	{
 		if ((*token)->value[0] == '$' && (*token)->value[i + 1]
-			&& ((*token)->value[i + 1] == "\"" || (*token)->value[i
-					+ 1] == "\'"))
+			&& ((*token)->value[i + 1] == D_QUOTE || (*token)->value[i
+					+ 1] == S_QUOTE))
 			(*token)->value = remove_char((*token)->value, '$');
 		i++;
 	}

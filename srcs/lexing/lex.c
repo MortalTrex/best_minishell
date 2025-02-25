@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:16:40 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 11:13:14 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:42:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	get_token_size(char *str)
 	type = get_type(str);
 	if (type == -1)
 		return (len_invalid_type(str));
-	if (type == T_REDIR_APPEND || type == T_REDIR_HERE)
+	if (type == GREATGREAT || type == LESSLESS)
 		return (2);
-	if (type == T_PIPE || type == T_REDIR_IN || type == T_REDIR_OUT)
+	if (type == PIPE || type == LESS || type == GREAT)
 		return (1);
 	i = 0;
 	while (str[i] && !ft_isspace(str[i]) && str[i] != '|' && str[i] != '<'
 		&& str[i] != '>')
 	{
-		if ((str[i] == "\"" || str[i] == "\'") && str[i + 1] != '\0')
+		if ((str[i] == D_QUOTE || str[i] == S_QUOTE) && str[i + 1] != '\0')
 			i += ft_strchr(&str[i + 1], str[i]) - &str[i] + 1;
 		else
 			i++;
@@ -52,7 +52,7 @@ char	*get_token(char *str)
 	return (token_value);
 }
 
-t_token	*tokenize(char *str, t_data *data)
+t_token	*tokenize(char *str, t_shell *shell)
 {
 	int		i;
 	char	*substr;
@@ -67,43 +67,43 @@ t_token	*tokenize(char *str, t_data *data)
 		{
 			substr = get_token(str);
 			if (!substr)
-				return (free_tokens(&data->tokens), NULL);
+				return (free_tokens(&shell->tokens), NULL);
 			new_token = create_token(substr, get_type(substr), 0);
 			if (!new_token)
-				return (free(substr), free_tokens(&data->tokens), NULL);
-			add_token_back(&data->tokens, new_token);
+				return (free(substr), free_tokens(&shell->tokens), NULL);
+			add_token_back(&shell->tokens, new_token);
 			str += ft_strlen(substr);
 			free(substr);
 			i++;
 		}
 	}
-	return (data->tokens);
+	return (shell->tokens);
 }
 
-int	lexer(t_data *data)
+int	lexer(t_shell *shell)
 {
-	char	*expanded_user_line;
+	char	*expanded_input;
 
-	if (!data->user_line)
+	if (!shell->input)
 		exit(EXIT_FAILURE);
-	else if (ft_strcmp(data->user_line, "\0") == 0)
+	else if (ft_strcmp(shell->input, "\0") == 0)
 		return (EXIT_FAILURE);
-	else if (str_is_empty_or_space_only(data->user_line))
+	else if (str_is_empty_or_space_only(shell->input))
 		return (EXIT_SUCCESS);
-	add_history(data->user_line);
-	if (!valid_quotes(data->user_line))
+	add_history(shell->input);
+	if (!valid_quotes(shell->input))
 		return (printf("Error: invalid quotes\n"), EXIT_FAILURE);
-	expanded_user_line = expander(data->user_line, data);
-	if (!expanded_user_line)
+	expanded_input = expander(shell->input, shell);
+	if (!expanded_input)
 		return (EXIT_SUCCESS);
-	data->tokens = tokenize(expanded_user_line, data);
-	free(expanded_user_line);
-	if (!data->tokens)
+	shell->tokens = tokenize(expanded_input, shell);
+	free(expanded_input);
+	if (!shell->tokens)
 		return (EXIT_FAILURE);
-	assign_type_redirections(data->tokens);
-	set_delimiter_quote_status(data->tokens);
-	remove_quotes(data->tokens);
-	if (!check_syntax(data->tokens, data))
+	assign_type_redirections(shell->tokens);
+	set_delimiter_quote_status(shell->tokens);
+	remove_quotes(shell->tokens);
+	if (!check_syntax(shell->tokens, shell))
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }

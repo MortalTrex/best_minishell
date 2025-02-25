@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+         #
+#    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2025/01/14 15:39:53 by rbalazs          ###   ########.fr        #
+#    Updated: 2025/02/25 16:01:26 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ LDLIBS = -lreadline
 LIBS = -L$(LIBFTDIR) -lft
 
 SRCS = srcs/main.c\
-	srcs/builtins/builtins_launch.c\
-	srcs/builtins/builtins_utils.c\
+	srcs/builtins/env_set_free.c\
+	srcs/builtins/env_init.c\
+	srcs/builtins/env_utils.c\
 	srcs/builtins/echo.c\
 	srcs/builtins/env.c\
 	srcs/builtins/pwd.c\
@@ -32,28 +33,27 @@ SRCS = srcs/main.c\
 	srcs/builtins/exit.c\
 	srcs/builtins/cd.c\
 	srcs/builtins/export_utils.c\
-	srcs/exec/exec_cases.c\
-	srcs/exec/exec_core.c\
-	srcs/exec/exec_read.c\
-	srcs/exec/exec_heredoc.c\
+	srcs/exec/exec_cmd.c\
+	srcs/exec/exec_open.c\
+	srcs/exec/exec.c\
 	srcs/exec/exec_redirs.c\
+	srcs/exec/exec_redirs_ut.c\
 	srcs/exec/utils.c\
-	srcs/lexing/tokenize.c\
-	srcs/lexing/append.c\
-	srcs/lexing/stack_utils.c\
+	srcs/lexing/expand.c\
 	srcs/lexing/grammar_check.c\
-	srcs/parsing/ast.c\
-	srcs/parsing/create_node.c\
-	srcs/parsing/expand_and_clean.c\
-	srcs/parsing/expand_env_var.c\
-	srcs/parsing/get_clean_argv.c\
-	srcs/parsing/handle_quotes.c\
-	srcs/parsing/parse_s_command.c\
-	srcs/parsing/remove_quotes.c\
-	srcs/parsing/utils_parser.c\
+	srcs/lexing/heredoc.c\
+	srcs/lexing/lex.c\
+	srcs/lexing/redir_types.c\
+	srcs/lexing/remove_quotes.c\
+	srcs/lexing/string_utils.c\
+	srcs/lexing/syntax_check.c\
+	srcs/parsing/create_command.c\
+	srcs/parsing/parse.c\
+	srcs/parsing/redirs_utils.c\
+	srcs/parsing/tokens_utils.c\
 	srcs/signal/signal.c\
 	srcs/utils/errors.c\
-	srcs/utils/debug.c\
+	srcs/utils/stack_utils.c\
 	srcs/utils/free.c\
 
 INDI	=	\033[38;5;213m

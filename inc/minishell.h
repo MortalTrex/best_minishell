@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:04:05 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:03:56 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 ////////////////////////// INCLUDES ///////////////////////////
 
 # include "../libft/libft.h"
-# include "lexer.h"
 # include "structures.h"
 # include <curses.h>
 # include <dirent.h>
@@ -50,6 +49,8 @@
 # define FD_IMPAIR_END 12
 # define FD_PAIR_MIDDLE 13
 # define FD_PAIR_END 14
+# define S_QUOTE '\''
+# define D_QUOTE '\"'
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 

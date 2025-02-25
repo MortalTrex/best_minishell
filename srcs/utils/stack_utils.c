@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 14:27:19 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:50:58 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token	*create_token(char *value, int type, int quotes_status)
 		return (NULL);
 	}
 	token->type = type;
-	token->quotes = quotes_status;
+	token->quotes_status = quotes_status;
 	token->next = NULL;
 	token->prev = NULL;
 	return (token);

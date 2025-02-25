@@ -1,88 +1,95 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
+/*   Updated: 2025/02/25 15:31:38 by mmiilpal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	count_levels(t_ast_node *node, int level, t_data *data)
+int	check_if_other_heredoc(t_token *current)
 {
-	if (!node)
-		return ;
-	data->nb_levels = level;
-	if (node->left)
-		count_levels(node->left, level + 1, data);
-	if (node->right)
-		count_levels(node->right, level + 1, data);
+	t_token	*tmp;
+
+	tmp = current->next;
+	while (tmp)
+	{
+		if (tmp->type == LESSLESS)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
-bool	ft_is_delimiter(char *delimiter, char *str)
+void	write_line_to_heredoc(int fd, char *tmp, t_shell *shell,
+		int quotes_status)
 {
-	while (*str)
-	{
-		if (*delimiter == '"' || *delimiter == '\'')
-		{
-			delimiter++;
-			continue ;
-		}
-		else if (*str == *delimiter)
-		{
-			str++;
-			delimiter++;
-		}
-		else
-			return (false);
-	}
-	while (*delimiter == '"' || *delimiter == '\'')
-		delimiter++;
-	return (!*delimiter);
+	if (quotes_status == 0)
+		tmp = expander(tmp, shell);
+	if (tmp)
+		write(fd, tmp, ft_strlen(tmp));
+	write(fd, "\n", 1);
+	if (tmp)
+		free(tmp);
 }
-void	duplicate_fd(int fd, int new_fd, t_data *data, int exit_status)
+
+void	free_line(char *line, t_token *tmp)
 {
-	if (dup2(fd, new_fd) == -1)
+	free(line);
+	if (tmp->value != line)
 	{
-		perror("dup2");
-		data->exit_status = exit_status;
-		free_and_exit_data(data, data->exit_status);
+		free(tmp->value);
+		tmp->value = NULL;
 	}
 }
 
-void	close_fds(t_data *data)
+void	pipe_and_fork(t_command *current, t_shell *shell)
 {
-	if (data->infile_fd >= 0)
-		close(data->infile_fd);
-	if (data->outfile_fd >= 0)
-		close(data->outfile_fd);
+	if (current->next)
+	{
+		if (pipe(shell->pipe_fd) == -1)
+		{
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
+	}
+	shell->last_pid = fork();
+	if (shell->last_pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
 }
 
-void	close_pipe_fds(t_data *data)
+void	wait_commands(t_shell *shell)
 {
-	if (data->pipe_fd[0] != -2)
-		close(data->pipe_fd[0]);
-	if (data->pipe_fd[1] != -2)
-		close(data->pipe_fd[1]);
-}
-// void	ft_fds_dup2(t_data *data)
-// {
-// 	dup2(data->fd[0], 0);
-// 	dup2(data->fd[1], 1);
-// }
-
-bool	is_builtin(char *command)
-{
-	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "cd")
-		|| !ft_strcmp(command, "pwd") || !ft_strcmp(command, "export")
-		|| !ft_strcmp(command, "unset") || !ft_strcmp(command, "env")
-		|| !ft_strcmp(command, "exit"))
-		return (true);
-	return (false);
-}
-
-void	write_line_to_heredoc(int fd, char *tmp, t_data *data, 
-	int quotes_status)
-{
-if (quotes_status == 0)
-	tmp = expander(tmp, data);
-if (tmp)
-	write(fd, tmp, ft_strlen(tmp));
-write(fd, "\n", 1);
-if (tmp)
-	free(tmp);
+	signal(SIGINT, SIG_IGN);
+	while (errno != ECHILD)
+	{
+		if (wait(&shell->wstatus) == shell->last_pid)
+		{
+			if (WIFEXITED(shell->wstatus))
+				shell->exit_status = WEXITSTATUS(shell->wstatus);
+			else
+			{
+				shell->exit_status = 128 + WTERMSIG(shell->wstatus);
+				if (shell->exit_status == 131)
+					ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+				else if (shell->exit_status == 139)
+					ft_putstr_fd("Segmentation fault (core dumped)\n",
+						STDERR_FILENO);
+			}
+			if (shell->exit_status == 130)
+				ft_putstr_fd("\n", STDERR_FILENO);
+		}
+	}
+	if (g_exit_code == 130)
+		shell->exit_status = 130;
 }
 
 // void	transform_ast(t_ast_node *node, t_data *data)

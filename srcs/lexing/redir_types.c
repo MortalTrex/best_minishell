@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 11:18:58 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:43:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	check_redir_type(char *str, int i, int count, char ch)
 	result_single = -1;
 	if (ch == '>')
 	{
-		result_double = T_REDIR_APPEND;
-		result_single = T_REDIR_OUT;
+		result_double = GREATGREAT;
+		result_single = GREAT;
 	}
 	else if (ch == '<')
 	{
-		result_double = T_REDIR_HERE;
-		result_single = T_REDIR_IN;
+		result_double = LESSLESS;
+		result_single = LESS;
 	}
 	count = i;
 	while (str[count] == ch)
@@ -46,7 +46,7 @@ int	check_pipe_type(char *str, int i, int count)
 		count++;
 	if (count - i != 1)
 		return (-1);
-	return (T_PIPE);
+	return (PIPE);
 }
 
 int	get_type(char *str)
@@ -65,7 +65,7 @@ int	get_type(char *str)
 		else if (str[i] == '<')
 			return (check_redir_type(str, i, count, '<'));
 		else
-			return (T_WORD);
+			return (WORD);
 		i++;
 	}
 	return (-1);
@@ -75,12 +75,12 @@ void	assign_type_redirections(t_token *tokens)
 {
 	while (tokens)
 	{
-		if ((tokens->type >= T_REDIR_IN && tokens->type <= T_REDIR_APPEND)
-			&& (tokens->next && tokens->next->type == T_WORD))
-			tokens->next->type = T_FILENAME;
-		else if (tokens->type == T_REDIR_HERE && (tokens->next
-				&& tokens->next->type == T_WORD))
-			tokens->next->type = T_DELIMITER;
+		if ((tokens->type >= LESS && tokens->type <= GREATGREAT)
+			&& (tokens->next && tokens->next->type == WORD))
+			tokens->next->type = FILENAME;
+		else if (tokens->type == LESSLESS && (tokens->next
+				&& tokens->next->type == WORD))
+			tokens->next->type = DELIMITER;
 		tokens = tokens->next;
 	}
 }

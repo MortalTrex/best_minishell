@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 11:22:06 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:36:52 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_env_var_value(char *str, t_env *env_list, char *name,
 	name = name + 1;
 	while (temp)
 	{
-		if (ft_strcmp(temp->name, name) == 0)
+		if (ft_strcmp(temp->var_name, name) == 0)
 			return (temp->value);
 		temp = temp->next;
 	}
@@ -77,24 +77,24 @@ char	*get_new_str_value(char *str, char *old_value, char *new_value,
 	return (new_str);
 }
 
-char	*get_value_after_expansion(char *str, t_data *data, int *i)
+char	*get_value_after_expansion(char *str, t_shell *shell, int *i)
 {
 	char	*d_quoted;
 	char	*var_name;
 	char	*value;
 	char	*new_str_value;
 
-	d_quoted = ft_strchr(str, "\"");
+	d_quoted = ft_strchr(str, D_QUOTE);
 	if (str[*i] == '$' && str[*i + 1] == '?')
 	{
-		value = ft_itoa(data->exit_status);
+		value = ft_itoa(shell->exit_status);
 		new_str_value = get_new_str_value(str, "$?", value, *i);
 		return (free(value), free(str), new_str_value);
 	}
 	var_name = get_env_from_str(str + *i);
 	if (!var_name)
 		return (free(str), NULL);
-	value = get_env_var_value(str, data->env, var_name, d_quoted);
+	value = get_env_var_value(str, shell->env_list, var_name, d_quoted);
 	if (value == NULL && *i == 0 && ft_strcmp(str, var_name) != 0)
 	{
 		new_str_value = ft_strtrim(str, var_name);

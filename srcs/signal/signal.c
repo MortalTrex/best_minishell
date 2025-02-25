@@ -6,45 +6,35 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 14:26:42 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:50:24 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_sigint_handler(int sig)
+void	heredoc_sigint(int signum)
 {
-	(void)sig;
-	g_exit_status = 130;
+	(void)signum;
+	g_exit_code = 130;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	close(STDIN_FILENO);
 }
 
-void	sigquit_handler(int sig)
+void	catch_sigint(int signum)
 {
-	(void)sig;
-	g_exit_status = 131;
-	ft_putstr_fd("Quit: 3\n", 1);
+	if (signum == SIGINT)
+	{
+		g_exit_code = 130;
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_replace_line("", STDIN_FILENO);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-// Launch CONTROL C
-void	sigint_handler(int sig)
+void	ignore_signals(void)
 {
-	(void)sig;
-	g_exit_status = 130;
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_replace_line("", STDIN_FILENO);
-	rl_on_new_line();
-	rl_redisplay();
-}
-void	signals(t_data *data)
-{
-	// struct termios	terminal;
-	// terminal = data->terminal;
-	// terminal.c_lflag &= ~ECHOCTL;
-	// tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
-	
-	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
-	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, catch_sigint);
 }

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:13:13 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 11:29:48 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:46:02 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ char	**get_cmd_array_from_tokens(t_token *tokens)
 	cmd_array = malloc((count_not_null_tokens(tokens) + 1) * sizeof(char *));
 	if (cmd_array == NULL)
 		return (NULL);
-	while (tokens && tokens->type != T_PIPE)
+	while (tokens && tokens->type != PIPE)
 	{
-		if (tokens->value && tokens->value[0] != '\0' && tokens->type == T_WORD)
+		if (tokens->value && tokens->value[0] != '\0' && tokens->type == WORD)
 		{
 			cmd_array[++i] = ft_strdup(tokens->value);
 			if (cmd_array[i] == NULL)
 				return (free_array(cmd_array), NULL);
 		}
-		else if (tokens->value && tokens->type == T_WORD)
+		else if (tokens->value && tokens->type == WORD)
 		{
 			cmd_array[++i] = ft_strdup("");
 			if (cmd_array[i] == NULL)
@@ -58,21 +58,21 @@ bool	is_builtin(char *cmd)
 	return (false);
 }
 
-int	parser(t_data *data)
+int	parser(t_shell *shell)
 {
 	t_token		*temp;
-	t_cmd	*new_command;
+	t_command	*new_command;
 
-	temp = data->tokens;
-	data->commands = NULL;
+	temp = shell->tokens;
+	shell->commands = NULL;
 	while (temp)
 	{
-		if (temp->type != T_PIPE)
+		if (temp->type != PIPE)
 		{
 			new_command = get_command(temp);
 			if (!new_command)
-				return (free_commands(&data->commands), -1);
-			add_command_back(&data->commands, new_command);
+				return (free_commands(&shell->commands), -1);
+			add_command_back(&shell->commands, new_command);
 			temp = get_next_pipe(temp);
 			if (!temp)
 				break ;

@@ -6,36 +6,36 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 11:16:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:43:44 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	invalid_type_syntax_error(t_token *token, t_data *data)
+int	invalid_type_syntax_error(t_token *token, t_shell *shell)
 {
 	if (token->value[0] == '>' && token->value[1] == '>'
 		&& ft_strlen(token->value) >= 4)
-		return (syntax_error_in_token(">>", data));
+		return (syntax_error_in_token(">>", shell));
 	else if (token->value[0] == '<' && token->value[1] == '<'
 		&& ft_strlen(token->value) >= 6)
-		return (syntax_error_in_token("<<<", data));
+		return (syntax_error_in_token("<<<", shell));
 	else if (token->value[0] == '<' && token->value[1] == '<'
 		&& ft_strlen(token->value) >= 4)
-		return (syntax_error_in_token("<<", data));
+		return (syntax_error_in_token("<<", shell));
 	else if (token->value[0] == '>')
-		return (syntax_error_in_token(">", data));
+		return (syntax_error_in_token(">", shell));
 	else if (token->value[0] == '<')
-		return (syntax_error_in_token("<", data));
+		return (syntax_error_in_token("<", shell));
 	else if (token->value[0] == '|' && token->value[1] == '|'
 		&& ft_strlen(token->value) >= 2)
-		return (syntax_error_in_token("||", data));
+		return (syntax_error_in_token("||", shell));
 	if (token->value[0] == '|')
-		return (syntax_error_in_token("|", data));
+		return (syntax_error_in_token("|", shell));
 	return (0);
 }
 
-int	case_heredoc_syntax(t_token *tokens, t_data *data)
+int	case_heredoc_syntax(t_token *tokens, t_shell *shell)
 {
 	t_token	*tmp;
 
@@ -43,42 +43,42 @@ int	case_heredoc_syntax(t_token *tokens, t_data *data)
 	while (tmp)
 	{
 		if (tmp->type == -1)
-			return (invalid_type_syntax_error(tmp, data));
-		else if (tmp->type == T_PIPE && (!tmp->prev || !tmp->next
+			return (invalid_type_syntax_error(tmp, shell));
+		else if (tmp->type == PIPE && (!tmp->prev || !tmp->next
 				|| tmp->prev->value[0] == '|' || tmp->next->value[0] == '|'))
-			return (invalid_type_syntax_error(tmp, data));
-		else if (tmp->type >= T_REDIR_IN && tmp->type <= T_REDIR_HERE)
+			return (invalid_type_syntax_error(tmp, shell));
+		else if (tmp->type >= LESS && tmp->type <= LESSLESS)
 		{
 			if (!tmp->next)
-				return (syntax_error_in_token("newline", data));
-			else if (tmp->next->type != T_FILENAME
-				&& tmp->next->type != T_DELIMITER)
-				return (syntax_error_in_token(tmp->next->value, data));
+				return (syntax_error_in_token("newline", shell));
+			else if (tmp->next->type != FILENAME
+				&& tmp->next->type != DELIMITER)
+				return (syntax_error_in_token(tmp->next->value, shell));
 		}
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-int	no_heredoc_syntax(t_token *tmp, t_data *data)
+int	no_heredoc_syntax(t_token *tmp, t_shell *shell)
 {
 	if (tmp->type == -1)
-		return (invalid_type_syntax_error(tmp, data));
-	else if (tmp->type == T_PIPE && (!tmp->prev || !tmp->next
-			|| tmp->prev->type == T_PIPE || tmp->next->type == T_PIPE))
-		return (invalid_type_syntax_error(tmp, data));
-	else if (tmp->type >= T_REDIR_IN && tmp->type <= T_REDIR_HERE)
+		return (invalid_type_syntax_error(tmp, shell));
+	else if (tmp->type == PIPE && (!tmp->prev || !tmp->next
+			|| tmp->prev->type == PIPE || tmp->next->type == PIPE))
+		return (invalid_type_syntax_error(tmp, shell));
+	else if (tmp->type >= LESS && tmp->type <= LESSLESS)
 	{
 		if (!tmp->next)
-			return (syntax_error_in_token("newline", data));
-		else if (tmp->next->type != T_FILENAME
-			&& tmp->next->type != T_DELIMITER)
-			return (syntax_error_in_token(tmp->next->value, data));
+			return (syntax_error_in_token("newline", shell));
+		else if (tmp->next->type != FILENAME
+			&& tmp->next->type != DELIMITER)
+			return (syntax_error_in_token(tmp->next->value, shell));
 	}
 	return (0);
 }
 
-int	process_heredocs(t_token *tokens, t_data *data)
+int	process_heredocs(t_token *tokens, t_shell *shell)
 {
 	t_token	*tmp;
 	int		heredoc;
@@ -89,12 +89,12 @@ int	process_heredocs(t_token *tokens, t_data *data)
 	ret = 0;
 	while (tmp && tmp->type != -1)
 	{
-		if (tmp->type == T_DELIMITER)
+		if (tmp->type == DELIMITER)
 		{
 			if (heredoc == 0)
-				ret = handle_heredoc(tmp, data, heredoc);
+				ret = handle_heredoc(tmp, shell, heredoc);
 			else
-				handle_heredoc(tmp, data, heredoc);
+				handle_heredoc(tmp, shell, heredoc);
 			heredoc++;
 		}
 		tmp = tmp->next;
@@ -102,19 +102,19 @@ int	process_heredocs(t_token *tokens, t_data *data)
 	return (ret);
 }
 
-int	check_syntax(t_token *tokens, t_data *data)
+int	check_syntax(t_token *tokens, t_shell *shell)
 {
 	t_token	*tmp;
 	int		ret;
 
 	tmp = tokens;
 	ret = 0;
-	ret = process_heredocs(tokens, data);
+	ret = process_heredocs(tokens, shell);
 	if (ret != 0)
 		return (ret);
 	while (tmp)
 	{
-		ret = no_heredoc_syntax(tmp, data);
+		ret = no_heredoc_syntax(tmp, shell);
 		if (ret != 0)
 			return (ret);
 		tmp = tmp->next;

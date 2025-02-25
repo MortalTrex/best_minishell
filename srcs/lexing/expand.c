@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:47:35 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 11:24:58 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:35:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_heredoc(char *str)
 
 int	valid_expansion(char *str, int i, char *quote)
 {
-	if (*quote == "\'")
+	if (*quote == S_QUOTE)
 		return (0);
 	if (str && is_heredoc(str))
 		return (0);
@@ -46,7 +46,7 @@ int	valid_expansion(char *str, int i, char *quote)
 
 int	get_quote(char *quote, char c)
 {
-	if (c == "\'" || c == "\"")
+	if (c == S_QUOTE || c == D_QUOTE)
 	{
 		if (*quote == 0)
 			*quote = c;
@@ -73,7 +73,7 @@ int	count_dollars(char *str)
 	return (count);
 }
 
-char	*expander(char *str, t_data *data)
+char	*expander(char *str, t_shell *shell)
 {
 	int		i;
 	char	quote;
@@ -87,7 +87,7 @@ char	*expander(char *str, t_data *data)
 		get_quote(&quote, str[i]);
 		if (valid_expansion(str, i, &quote) && expansions_counter-- > 0)
 		{
-			str = get_value_after_expansion(str, data, &i);
+			str = get_value_after_expansion(str, shell, &i);
 			if (!str || !str[0])
 				break ;
 		}
