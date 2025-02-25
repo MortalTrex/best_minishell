@@ -6,19 +6,11 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:49 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/19 12:49:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:28:31 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	is_redirection(t_token *token)
-{
-	if (token->type == T_REDIR_IN || token->type == T_REDIR_OUT \
-			||token->type == T_REDIR_HERE || token->type == T_REDIR_APPEND)
-		return (true);
-	return (false);
-}
 
 void	handle_redirections(t_token *tokens, t_cmd *command)
 {

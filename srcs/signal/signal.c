@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/21 17:12:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:26:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	sigint_handler(int sig)
 }
 void	signals(t_data *data)
 {
-	struct termios	terminal;
-
-	terminal = data->terminal;
-	terminal.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
-	signal(SIGINT, sigint_handler);
+	// struct termios	terminal;
+	// terminal = data->terminal;
+	// terminal.c_lflag &= ~ECHOCTL;
+	// tcsetattr(STDIN_FILENO, TCSANOW, &terminal);
+	
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
+	signal(SIGINT, sigint_handler);
 }

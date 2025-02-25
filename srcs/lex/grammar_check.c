@@ -6,47 +6,90 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:22:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/19 14:30:43 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:10:43 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	ft_is_wordchar(char c)
-
+int	str_is_empty_or_space_only(char *str)
 {
-	if (ft_isalnum(c) || c == '_')
-		return (true);
-	return (false);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-int str_is_empty(char *str)
+int	valid_quotes(char *str)
 {
-    if (!str)
-        return (1);
-    while (*str)
-    {
-        if (*str != ' ' && *str != '\t')
-            return (0);
-        str++;
-    }
-    return (1);
+	int	i;
+	int	in_single_quote;
+	int	in_double_quote;
+
+	i = 0;
+	in_single_quote = 0;
+	in_double_quote = 0;
+	while (str[i])
+	{
+		if (str[i] == "\'" && !in_double_quote)
+			in_single_quote = !in_single_quote;
+		else if (str[i] == "\"" && !in_single_quote)
+			in_double_quote = !in_double_quote;
+		i++;
+	}
+	return (!(in_single_quote || in_double_quote));
 }
 
-int check_quotes(char *str)
+void	set_delimiter_quote_status(t_token *token)
 {
-    bool sq;
-    bool dq;
-    
-    sq = false;
-    dq = false;
-    while(*str)
-    {
-        if (*str == '\'' && !dq)
-            sq = !sq;
-        if (*str == '\"' && !sq)
-            dq = !dq;
-        str++;
-    }
-    return (sq || dq);
+	int		i;
+	t_token	*tmp;
+
+	tmp = token;
+	token->quotes = 0;
+	while (tmp)
+	{
+		i = 0;
+		if (tmp->type == T_DELIMITER)
+		{
+			while (tmp->value[i])
+			{
+				if (tmp->value[i] == "\"" || tmp->value[i] == "\'")
+					tmp->quotes= 1;
+				i++;
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
+int	len_between_tokens(char *str, int i, char c)
+{
+	int	j;
+
+	j = i;
+	if (str[i] == c)
+	{
+		while (str[j] == c)
+			j++;
+		return (j - i);
+	}
+	return (0);
+}
+
+int	len_invalid_type(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && !ft_isspace(str[i])
+		&& (str[i] == '|' || str[i] == '<' || str[i] == '>'))
+		i++;
+	return (i);
 }

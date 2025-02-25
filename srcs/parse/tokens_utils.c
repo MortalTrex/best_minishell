@@ -1,26 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:08:25 by mmiilpal         ###   ########.fr       */
+/*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
+/*   Updated: 2025/02/25 11:26:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(t_shell *shell)
+t_token	*get_next_pipe(t_token *token)
 {
-	t_env	*env;
-
-	env = shell->env_list;
-	while (env)
+	if (!token)
+		return (NULL);
+	while (token)
 	{
-		printf("%s=%s\n", env->var_name, env->value);
-		env = env->next;
+		if (token->type == T_PIPE)
+			return (token);
+		token = token->next;
 	}
-	return (EXIT_SUCCESS);
+	return (NULL);
 }
+
+int	count_not_null_tokens(t_token *tokens)
+{
+	int		count;
+	t_token	*temp;
+
+	count = 0;
+	temp = tokens;
+	if (temp->type == T_PIPE)
+		temp = temp->next;
+	while (temp && temp->type != T_PIPE)
+	{
+		if (temp->value)
+			count++;
+		temp = temp->next;
+	}
+	return (count);
+}
+

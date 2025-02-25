@@ -3,81 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/01/14 15:38:44 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:08:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	ft_is_number(char *str)
+static void	compute_exit_status(long stat, t_shell *shell, bool pipe)
 {
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (false);
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (false);
-		i++;
-	}
-	return (true);
+	if (stat > 255)
+		stat = stat % 256;
+	else if (stat < 0)
+		stat = (stat % 256) + 256;
+	if (pipe == false)
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	shell->exit_status = stat;
 }
 
-int	ft_value(int value)
+static int	get_exit_status(t_command *commands, char *arg,
+				t_shell *shell, bool pipe)
 {
-	if (value > 255 || value < 0)
-		value = (value % 256 + 256) % 256;
-	return (value);
-}
+	long	stat;
 
-void	ft_exit_one_argument(t_data *data, char **argv)
-{
-	int	value;
-
-	value = 0;
-	if (ft_is_number(argv[1]))
+	stat = ft_atol(arg);
+	if (errno == ERANGE)
 	{
-		value = ft_atoi(argv[1]);
-		value = ft_value(value);
-		ft_free_all(data);
-		exit(value);
-	}
-	else
-		ft_error(data, "exit: numeric argument required\n");
-}
-
-void	ft_exit(char **argv, t_data *data)
-{
-	dup2(data->stdin_backup, STDIN_FILENO);
-	close(data->stdin_backup);
-	dup2(data->stdout_backup, STDOUT_FILENO);
-	close(data->stdout_backup);
-	if (argv[1] && !ft_is_number(argv[1]))
-	{
-		ft_putstr_fd("exit: ", STDERR_FILENO);
-		ft_putstr_fd(argv[1], STDERR_FILENO);
+		if (pipe == false)
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		ft_free_all(data);
-		exit(2);
+		shell->exit_status = 2;
 	}
-	if (argv[1] && argv[2])
+	else if (commands->cmd_name[1] && commands->cmd_name[2])
 	{
-		ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
-		exit(1);
-		return ;
+		if (pipe == false)
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
+		write_error("exit", "too many arguments", NULL);
+		shell->exit_status = 1;
+		return (1);
 	}
-	if (argv[1])
-		ft_exit_one_argument(data, argv);
 	else
+		compute_exit_status(stat, shell, pipe);
+	return (0);
+}
+
+void	ft_exit(t_command *commands, t_shell *shell, bool pipe)
+{
+	if (commands->redirections)
+		get_fds(commands->redirections, shell);
+	close_fds(shell);
+	if (commands->cmd_name[1])
 	{
-		ft_free_all(data);
-		exit(0);
+		if (get_exit_status(commands, commands->cmd_name[1], shell, pipe) == 1)
+			return ;
 	}
+	else if (pipe == false)
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	free_and_exit_shell(shell, shell->exit_status);
 }

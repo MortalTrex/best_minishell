@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/21 17:30:58 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:04:05 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,252 +53,125 @@
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
-///////////////// MAIN //////////////////
+/* lexer */
+int						valid_quotes(char *str);
+int						lexer(t_shell *shell);
+int						get_type(char *str);
+int						len_between_tokens(char *str, int i, char c);
+int						len_invalid_type(char *str);
+int						check_redir_type(char *str, int i, int count, char ch);
+void					assign_type_redirections(t_token *tokens);
+void					set_delimiter_quote_status(t_token *token);
 
-// main.c
-void		print_tokens(t_data *data);
-int			main(int argc, char **argv, char **envp);
+/* parser */
+int						parser(t_shell *shell);
+int						count_not_null_tokens(t_token *tokens);
+void					handle_redirections(t_token *tokens,
+							t_command *command);
+char					**get_cmd_array_from_tokens(t_token *tokens);
+bool					is_builtin(char *cmd);
+t_command				*get_command(t_token *tokens);
+t_token					*get_next_pipe(t_token *token);
 
-// Errors
-void		ft_error(t_data *data, char *msg);
-bool		ft_is_wordchar(char c);
-void		ft_close_fd(t_data *data, char *msg);
-void		ft_error_quote(t_data *data);
+/* expander */
+char					*expander(char *str, t_shell *shell);
+char					*get_value_after_expansion(char *str, t_shell *shell,
+							int *i);
+char					*get_new_str_value(char *str, char *old_value,
+							char *new_value, int prev_index);
+int						var_exists(t_env *env_head, char *var_name);
+void					remove_quotes(t_token *tokens);
+int						get_quote(char *str, char c);
 
-// free.c
-void		ft_free_command(t_ast_node *node);
-void		free_node(t_ast_node *node);
-void		free_ast(t_ast_node **node, t_data *data);
-void		ft_free_all(t_data *data);
+/* env */
+t_env					*init_env(char **env);
+char					**init_env_array(t_env *env_head);
+t_env					*init_default_env(void);
+t_env					*init_env_node(char *str);
+t_env					*init_default_env_node(char *var_name, char *value);
+void					add_back_env_var(t_env **head, t_env *new_node);
+char					*ft_getenv(t_env *env_list, char *key);
+char					*get_env_value(char *str, char *var_name);
+char					*get_env_from_str(char *str);
+void					ft_setenv(t_env *env_head, char *name, char *value);
 
-/////////////// BUILTIN //////////////////
-// builtins_launch.c
-int		ft_detect_builtin(char **argv, t_data *data);
+/* executer */
+int						init_shell(t_shell *shell, char **env);
+int						minishell_loop(t_shell *shell);
+int						executer(t_shell *shell);
+char					*get_cmd_path(char *cmd, t_shell *shell);
+void					wait_commands(t_shell *shell);
+void					pipe_and_fork(t_command *current, t_shell *shell);
+void					close_pipe_fds(t_shell *shell);
+void					handle_error(char *cmd, char *error, int exit_status,
+							t_shell *shell);
 
-// builtins_utils.c
-void		copy_env(char **envp, t_data *data);
-void		copy_env_char(t_data *data);
-void		ft_sort_env(t_env *env);
-void		ft_swap_env_lines(t_env *a, t_env *b);
+/* redirections */
+void					get_fds(t_token *redirections, t_shell *shell);
+void					has_no_filename(t_command *current, t_shell *shell,
+							int prev_fd);
+void					open_and_redirect_fd(t_command *current,
+							t_shell *shell);
+void					get_fd_out(t_token *redirections, t_shell *shell);
+void					get_fd_in(t_token *redirections, t_shell *shell);
+void					close_fds(t_shell *shell);
+void					duplicate_fd(int fd, int new_fd, t_shell *shell,
+							int exit_status);
 
-// env.c
-char		*put_name(char *line);
-char		*put_value(char *line);
-t_env		*new_node_env(char *line, t_data *data);
-void		push_node_to_env(t_data *data, char *line);
-int		ft_env(char **argv, t_data *data);
+/* heredoc */
+int						handle_heredoc(t_token *tmp, t_shell *shell,
+							int option);
+void					unlink_heredoc(t_shell *shell);
+void					free_line(char *line, t_token *tmp);
+void					write_line_to_heredoc(int fd, char *tmp, t_shell *shell,
+							int quotes_status);
+int						check_if_other_heredoc(t_token *current);
 
-// export.c
-bool		check_double(t_data *data, char *line);
-void		ft_exp_env(t_data *data);
-bool		check_change_value(t_data *data);
-int			ft_export(char **argv, t_data *data);
-bool 		ft_is_separator_export(char *s);
+/* builtins */
+int						ft_echo(t_command *commands);
+int						ft_pwd(t_command *commands);
+int						ft_cd(t_command *commands, t_shell *shell);
+void					ft_exit(t_command *commands, t_shell *shell, bool pipe);
+int						ft_env(t_shell *shell);
+int						ft_export(char **cmd, t_shell *shell);
+int						ft_unset(char **cmd, t_shell *shell);
+int						is_valid_identifier(char *str);
+int						free_and_return(char *curr_dir, char *old_dir, int ret);
+int						handle_chdir_error(char *curr_dir, char *old_dir);
 
-// echo.c
-int			ft_echo(char **argv);
+/* linked lists*/
+t_command				*init_command(void);
+t_command				*get_last_command(t_command *head);
+void					add_command_back(t_command **commands,
+							t_command *new_node);
+t_token					*create_token(char *value, int type, int quotes_status);
+void					add_token_back(t_token **tokens, t_token *new_node);
+void					free_tokens(t_token **tokens);
 
-// pwd.c
-int			ft_pwd(t_data *data);
+/* errors */
+int						check_syntax(t_token *tokens, t_shell *shell);
+int						invalid_type_syntax_error(t_token *token,
+							t_shell *shell);
+int						syntax_error_eof(void);
+int						syntax_error_in_token(char *token, t_shell *shell);
+int						case_heredoc_syntax(t_token *tokens, t_shell *shell);
+void					write_warning(char *arg);
+int						invalid_arg(int argc);
 
-//	unset.c
-void		search_in_env(t_data *data, char *var);
-int			ft_unset(char **argv, t_data *data);
+/* utils */
+void					free_and_exit_shell(t_shell *shell, int exit_code);
+void					free_shell(t_shell *shell);
+void					free_env(t_env *env);
+void					free_commands(t_command **commands);
+char					**init_array(int size);
+void					free_array(char **arr);
+int						str_is_empty_or_space_only(char *str);
+void					write_error(char *cmd, char *error, char *arg);
+char					*remove_char(char *str, char c);
 
-//	exit.c
-bool		ft_is_number(char *str);
-int			ft_value(int value);
-void		ft_exit(char **argv, t_data *data);
-
-//	cd.c
-void		set_env_oldpwd(char *old_pwd, t_data *data);
-void		set_env_pwd(char *new_pwd, t_data *data);
-int		ft_move_directory(char *path, t_data *data);
-void		set_home(t_data *data);
-int			ft_cd(char **argv, t_data *data);
-
-//////////////// EXECUTION ////////////////
-// exec_cases.c
-int			exec_pipe(t_ast_node *node, t_data *data);
-int			exec_onecommand(char **cmd, t_data *data);
-void    	multi_pipe(t_ast_node *node, t_data *data, int i);
-void		one_pipe(t_ast_node *node, t_data *data);
-void		no_pipe(t_ast_node *node, t_data *data);
-void		read_pipe(t_ast_node *node, t_data *data);
-int  		exec_node(t_ast_node *node, t_data *data, bool ispipe);
-
-// exec_core.c
-char		*ft_path(char *cmd, t_data *data);
-void		exec(t_data *data, char **cmd);
-
-// exec_read.c
-void		ft_execution(t_data *data);
-void		count_levels(t_ast_node *node, int level, t_data *data);
-void		read_ast(t_ast_node *node, t_data *data);
-void		transform_ast(t_ast_node *node, t_data *data);
-
-// exec_utils.c
-bool		ft_is_delimiter(char *delimiter, char *str);
-void		ft_fds_dup2(t_data *data);
-void		write_line_to_heredoc(int fd, char *tmp, t_data *data, int quotes_status);
-bool		is_builtin(char *command);
-void 	  	wait_commands(t_data *data);
-
-// exec_heredoc.c
-void		ft_process_heredoc(t_redir *redir, t_data *data);
-void 		close_hd(t_redir *redir, t_data *data);
-
-// exec_redirs.c
-void        read_heredoc_dup(t_ast_node *node, t_data *data);
-int        	read_heredoc(t_ast_node *node, t_data *data);
-void        read_infile(t_ast_node *node, t_data *data);
-void        read_outfile(t_ast_node *node, t_data *data);
-void  		read_redirs(t_ast_node *node, t_data *data);
-
-///////////// LEXING ///////////////
-
-
-// // lex.c
-int		lexer(t_data *data);
-void	remove_quotes(t_token *tokens);
-void	check_redirs(t_token *tokens);
-
-// append.c
-bool		ft_append_operator(char **command, t_token **tokens);
-bool		ft_append_word(char **command, t_token **tokens, t_data *data);
-
-// expand.c
-char		*expander(char *str, t_data *data);
-int			expansion_count(char *str);
-int			find_quote(char c, char *quote);
-int			is_expandable(char *str, int i, char *quote);
-int			is_heredoc(char *str);
-char		*ft_expand_env_vars(char *str, size_t *i, t_data *data);
-char		*ft_get_env_value(char *var, t_data *data);
-
-// grammar_check.c
-bool		ft_is_operator(char c);
-bool		ft_is_multi_char_operator(const char *str);
-bool		ft_is_quote(char c);
-bool		ft_skip_quotes(char *line, size_t *i);
-bool		ft_is_separator(char *s);
-
-// lex_utils.c
-void		set_delimiter_quote_status(t_token *token);
-
-// remove_quotes.c
-char		*ft_remove_quotes(char *str);
-
-// stack_utils.c
-int			ft_strcmp(const char *s1, const char *s2);
-t_token		*ft_stacknew(t_token_type type, char *value);
-void		ft_stackadd_back(t_token **stack, t_token *new);
-void		ft_stackclear(t_token **stack);
-void		ft_envclear(t_env **env);
-
-// tokenize.c
-bool		ft_tokenize(char *expanded, t_data *data);
-t_token		*get_tokens(char *command, t_data *data);
-
-// // tokenize.c
-// bool		ft_tokenize(t_data *data);
-// t_token		*get_tokens(char *command, t_data *data);
-
-// // grammar_check.c
-// bool		ft_is_operator(char c);
-// bool		ft_is_multi_char_operator(const char *str);
-// bool		ft_is_quote(char c);
-// bool		ft_skip_quotes(char *line, size_t *i);
-// bool		ft_is_separator(char *s);
-
-// // stack_utils.c
-// int			ft_strcmp(const char *s1, const char *s2);
-// t_token		*ft_stacknew(t_token_type type, char *value);
-// void		ft_stackadd_back(t_token **stack, t_token *new);
-// void		ft_stackclear(t_token **stack);
-// void		ft_envclear(t_env **env);
-
-//////////////// PARSING //////////////////
-
-// create_command.c
-t_cmd		*create_command(t_token *token);
-t_cmd		*get_last_arg(t_cmd *command_args);
-t_cmd		add_to_back(t_cmd **command_arguments, t_cmd *new_arg);
-char		**tokens_to_command_array(t_token *tokens);
-
-// create_token.c
-int 		count_not_null_tokens(t_token *tokens);
-t_token		*create_token(char *value, int type, bool quotes);
-void		add_token_back(t_token **tokens, t_token *new_token);
-
-//grammar_check.c
-// // ast.c
-// t_ast_node	*create_tree(t_token **current_token, t_data *data);
-// void		parse_tokens(t_data *data);
-
-// // create_node.c
-// t_ast_node	*ft_create_pipe_node(t_data *data, t_ast_node *left,
-// 				t_ast_node *right);
-// t_redir		*ft_create_redir_node(t_token_type type, char *file);
-// t_ast_node	*ft_create_node(t_ast_node_type type);
-// void		ft_append_redir(t_redir **rds, t_redir *redir);
-
-// // get_clean_argv.c
-// char		**ft_ms_split(char const *str);
-
-// // expand_and_clean.c
-// char		**ft_expand_and_clean(char *str, t_data *data);
-
-// // expand_env_vars.c
-// char		*ft_get_env_value(char *var, t_data *data);
-// char		*ft_expand_env_vars(char *word, size_t *i, t_data *data);
-
-// // handle_quotes.c
-// char		*ft_get_str(char *str, size_t *i);
-// char		*ft_get_squote_string(char *str, size_t *i);
-// char		*ft_handle_dquotes(char *str, size_t *i, t_data *data);
-// char		*ft_clean_command(char *str, t_data *data);
-
-// // parse_s_command.c
-// bool		handle_redir(t_redir **redir, t_token **token, t_data *data);
-// bool		join_words(char **command, t_token **current, t_data *data);
-// t_ast_node	*simple_command(t_token **current_token, t_data *data);
-
-// // remove_quotes.c
-// char		*ft_clean_empty_strs(char *str);
-// char		*ft_remove_quotes(char *str);
-
-// // utils_parser.c
-// bool		is_redirection(t_token *token);
-// bool		check_pipe_syntax(t_token *tokens, t_data *data);
-// void		ft_parsing_error(t_data *data);
-// char		*ft_strjoin_free(char *s1, char *s2);
-
-///////////SIGNALS//////////////
-
-// signal.c
-void		heredoc_sigint_handler(int sig);
-void		sigquit_handler(int sig);
-void		sigint_handler(int sig);
-void		signals(t_data *data);
-
-/////////////UTILS//////////////
-
-// debug.c
-void		print_ast(t_ast_node *node, int level);
-void		print_tab(char **str);
-
-// errors.c
-void		ft_error(t_data *data, char *msg);
-void		ft_close_fd(t_data *data, char *msg);
-void		ft_error_quote(t_data *data);
-
-// free.c
-void		ft_free_command(t_ast_node *node);
-void		free_node(t_ast_node *node);
-void		free_ast(t_ast_node **node, t_data *data);
-void		ft_free_all(t_data *data);
-void 		free_newast(t_ast_node *node);
-void		ft_free(void **ptr);
+/* signals */
+void					catch_sigint(int signum);
+void					heredoc_sigint(int signum);
+void					ignore_signals(void);
 
 #endif

@@ -3,29 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sben-tay <sben-tay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/12/22 12:28:24 by sben-tay         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:09:54 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(t_data *data)
+int	ft_pwd(t_command *commands)
 {
-	char	*pwd;
+	char	cwd[4096];
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
+	if (commands->cmd_name[1] && commands->cmd_name[1][0]
+			&& commands->cmd_name[1][0] == '-')
 	{
-		perror("Error PWD");
-		data->exit_status = 1;
+		write_error(commands->cmd_name[1], "invalid option", NULL);
+		return (2);
 	}
-	else
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
 	{
-		printf("%s\n", pwd);
-		ft_free((void **)&pwd);
+		ft_putstr_fd("pwd: error retrieving ", STDERR_FILENO);
+		perror("current directory: getcwd: cannot access parent directories");
+		return (1);
 	}
+	ft_putstr_fd(cwd, STDOUT_FILENO);
+	write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }

@@ -6,45 +6,78 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:13:13 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/21 16:56:04 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 11:29:48 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*get_next_pipe_token(t_token *token)
+char	**get_cmd_array_from_tokens(t_token *tokens)
 {
-	if (!token)
+	char	**cmd_array;
+	int		i;
+
+	i = -1;
+	cmd_array = malloc((count_not_null_tokens(tokens) + 1) * sizeof(char *));
+	if (cmd_array == NULL)
 		return (NULL);
-	while (token)
+	while (tokens && tokens->type != T_PIPE)
 	{
-		if (token->type == T_PIPE)
-			return (token);
-		token = token->next;
+		if (tokens->value && tokens->value[0] != '\0' && tokens->type == T_WORD)
+		{
+			cmd_array[++i] = ft_strdup(tokens->value);
+			if (cmd_array[i] == NULL)
+				return (free_array(cmd_array), NULL);
+		}
+		else if (tokens->value && tokens->type == T_WORD)
+		{
+			cmd_array[++i] = ft_strdup("");
+			if (cmd_array[i] == NULL)
+				return (free_array(cmd_array), NULL);
+		}
+		tokens = tokens->next;
 	}
-	return (NULL);
+	cmd_array[++i] = NULL;
+	return (cmd_array);
 }
 
-int parse(t_data *data)
+bool	is_builtin(char *cmd)
 {
-    t_token *token;
-    t_cmd *command;
+	int	i;
 
-    token = data->tokens;
-    data->commands = NULL;
-    while (token)
-    {
-        if (token->type != T_PIPE)
-        {
-            command = create_command(token);
-            if (!command)
-                return (1); //  add free !!! error
-            add_to_back(&data->commands, command);
-            token = get_next_pipe_token(token);
-            if (!token)
-                break;
-        }
-        token = token->next;
-    }
-    return (EXIT_SUCCESS);
+	i = 0;
+	while (i < 7)
+	{
+		if (!ft_strcmp("echo", cmd) || !ft_strcmp("cd", cmd)
+			|| !ft_strcmp("pwd", cmd) || !ft_strcmp("export", cmd)
+			|| !ft_strcmp("unset", cmd) || !ft_strcmp("env", cmd)
+			|| !ft_strcmp("exit", cmd))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+int	parser(t_data *data)
+{
+	t_token		*temp;
+	t_cmd	*new_command;
+
+	temp = data->tokens;
+	data->commands = NULL;
+	while (temp)
+	{
+		if (temp->type != T_PIPE)
+		{
+			new_command = get_command(temp);
+			if (!new_command)
+				return (free_commands(&data->commands), -1);
+			add_command_back(&data->commands, new_command);
+			temp = get_next_pipe(temp);
+			if (!temp)
+				break ;
+		}
+		temp = temp->next;
+	}
+	return (EXIT_SUCCESS);
 }

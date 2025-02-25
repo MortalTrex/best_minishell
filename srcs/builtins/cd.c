@@ -3,141 +3,111 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/01/14 15:24:01 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:03:19 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_env_oldpwd(char *old_pwd, t_data *data)
+void	update_pwd(t_shell *shell, char *command)
 {
-	t_env	*current;
-	char	*new_line;
+	char	cwd[4096];
+	char	*old_dir;
 
-	if (!old_pwd || !data->env || !data->env->name)
-		return ;
-	current = data->env;
-	while (current)
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
 	{
-		if (current->name && !ft_strncmp(current->name, "OLDPWD", 6))
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		perror(command);
+		return ;
+	}
+	old_dir = ft_getenv(shell->env_list, "PWD");
+	if (!old_dir)
+		return ;
+	ft_setenv(shell->env_list, "OLDPWD", old_dir);
+	free(old_dir);
+	ft_setenv(shell->env_list, "PWD", cwd);
+}
+
+int	cd_minus(t_shell *shell, int option)
+{
+	char	*curr_dir;
+	char	*old_dir;
+
+	curr_dir = ft_getenv(shell->env_list, "OLDPWD");
+	old_dir = ft_getenv(shell->env_list, "PWD");
+	if (!curr_dir)
+	{
+		write_error("cd", "OLDPWD not set", NULL);
+		return (free_and_return(curr_dir, old_dir, 1));
+	}
+	else if (!old_dir)
+	{
+		write_error("cd", "PWD not set", NULL);
+		return (free_and_return(curr_dir, old_dir, 1));
+	}
+	if (curr_dir && chdir(curr_dir) == -1)
+		return (handle_chdir_error(curr_dir, old_dir));
+	if (option == 1)
+	{
+		ft_putstr_fd(curr_dir, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	}
+	ft_setenv(shell->env_list, "PWD", curr_dir);
+	ft_setenv(shell->env_list, "OLDPWD", old_dir);
+	return (free_and_return(curr_dir, old_dir, 0));
+}
+
+int	check_for_arguments(t_command *commands, t_shell *shell)
+{
+	if (commands->cmd_name[1])
+	{
+		if (commands->cmd_name[1][0] == '-' && !commands->cmd_name[1][1])
+			return (cd_minus(shell, 1));
+		else if (commands->cmd_name[1][0] == '-'
+			&& commands->cmd_name[1][1] == '-' && !commands->cmd_name[1][2])
+			return (cd_minus(shell, 0));
+		else if (commands->cmd_name[1][0] == '-' && commands->cmd_name[1][1])
 		{
-			if (current->line)
-				ft_free((void **)&current->line);
-			if (current->value)
-				ft_free((void **)&current->value);
-			if (old_pwd)
-				new_line = ft_strjoin("OLDPWD=", old_pwd);
-			current->line = new_line;
-			ft_free((void **)&current->name);
-			current->name = ft_strdup("OLDPWD");
-			ft_free((void **)&current->value);
-			current->value = ft_strdup(old_pwd);
+			write_error("cd", "invalid option", commands->cmd_name[1]);
+			return (2);
 		}
-		current = current->next;
-	}
-}
-
-void	update_pwd_value(t_env *current, char *new_pwd, char **old_pwd)
-{
-	if (current->value)
-	{
-		*old_pwd = ft_strdup(current->value);
-		ft_free((void **)&current->value);
-	}
-	if (current->line)
-		ft_free((void **)&current->line);
-	if (current->name)
-		ft_free((void **)&current->name);
-	current->line = ft_strjoin("PWD=", new_pwd);
-	current->name = ft_strdup("PWD");
-	current->value = ft_strdup(new_pwd);
-}
-
-void	set_env_pwd(char *new_pwd, t_data *data)
-{
-	t_env	*current;
-	char	*old_pwd;
-
-	if (!new_pwd || !data->env || !data->env->name)
-		return ;
-	old_pwd = NULL;
-	current = data->env;
-	while (current)
-	{
-		if (current->name && !ft_strncmp(current->name, "PWD", 3))
-			update_pwd_value(current, new_pwd, &old_pwd);
-		current = current->next;
-		if (old_pwd)
+		else if (chdir(commands->cmd_name[1]) == -1)
 		{
-			set_env_oldpwd(old_pwd, data);
-			ft_free((void **)&old_pwd);
-		}
-	}
-}
-void	ft_error_file_directory(char *cmd)
-{
-	char	*tmp;
-	char	*msg;
-
-	tmp = ft_strjoin("bash: ", cmd);
-	if (!tmp)
-		return ;
-	msg = ft_strjoin(tmp, ": No such file or directory\n");
-	if (!msg)
-	{
-		ft_free((void **)&tmp);
-		return ;
-	}
-	ft_putstr_fd(msg, 2);
-	ft_free((void **)&tmp);
-	ft_free((void **)&msg);
-}
-
-int	ft_move_directory(char *path, t_data *data)
-{
-	char	*new_pwd;
-
-	if (!path)
-		return (false);
-	if (chdir(path) != 0 && ft_strncmp(path, "-", 1) != 0)
-	{
-		ft_error_file_directory(path);
-		return (false);
-	}
-	new_pwd = getcwd(NULL, 0);
-	set_env_pwd(new_pwd, data);
-	ft_free((void **)&new_pwd);
-	return (true);
-}
-
-int	ft_cd(char **argv, t_data *data)
-{
-	if (!data->env)
-	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
-		data->exit_status = 1;
-		return (1);
-	}
-	if (argv[1] == NULL)
-	{
-		set_home(data);
-		return (0);
-	}
-	else if (argv[1] != NULL)
-	{
-		if (ft_strncmp(argv[1], "-", 1) == 0)
-			ft_move_directory(ft_get_env_value("OLDPWD", data), data);
-		if (ft_move_directory(argv[1], data) == false)
+			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			perror(commands->cmd_name[1]);
 			return (1);
-	}
-	if (argv[2] != NULL)
-	{
-		ft_putstr_fd("cd: too many arguments\n", 2);
-		data->exit_status = 1;
-		return (1);
+		}
+		update_pwd(shell, commands->cmd_name[1]);
 	}
 	return (0);
+}
+
+int	ft_cd(t_command *commands, t_shell *shell)
+{
+	char	*value;
+
+	if (commands->cmd_name[0] && commands->cmd_name[1] && commands->cmd_name[2])
+	{
+		write_error("cd", "too many arguments", NULL);
+		return (1);
+	}
+	if (!commands->cmd_name[1])
+	{
+		value = ft_getenv(shell->env_list, "HOME");
+		if (!value)
+			return (write_error("cd", "HOME not set", NULL), free(value), 1);
+		if (ft_strlen(value) == 0)
+		{
+			free(value);
+			value = getcwd(NULL, 0);
+		}
+		if (chdir(value) == -1)
+			return (perror("minishell: cd:"), free(value), 1);
+		update_pwd(shell, commands->cmd_name[0]);
+		free(value);
+	}
+	return (check_for_arguments(commands, shell));
 }

@@ -11,33 +11,6 @@ void	count_levels(t_ast_node *node, int level, t_data *data)
 		count_levels(node->right, level + 1, data);
 }
 
-
-void	wait_commands(t_data *data)
-{
-	signal(SIGINT, SIG_IGN);
-	while (errno != ECHILD)
-	{
-		if (wait(&data->wstatus) == data->last_pid)
-		{
-			if (WIFEXITED(data->wstatus))
-				data->exit_status = WEXITSTATUS(data->wstatus);
-			else
-			{
-				data->exit_status = 128 + WTERMSIG(data->wstatus);
-				if (data->exit_status == 131)
-					ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-				else if (data->exit_status == 139)
-					ft_putstr_fd("Segmentation fault (core dumped)\n",
-						STDERR_FILENO);
-			}
-			if (data->exit_status == 130)
-				ft_putstr_fd("\n", STDERR_FILENO);
-		}
-	}
-	if (g_exit_status == 130)
-		data->exit_status = 130;
-}
-
 bool	ft_is_delimiter(char *delimiter, char *str)
 {
 	while (*str)
@@ -59,7 +32,31 @@ bool	ft_is_delimiter(char *delimiter, char *str)
 		delimiter++;
 	return (!*delimiter);
 }
+void	duplicate_fd(int fd, int new_fd, t_data *data, int exit_status)
+{
+	if (dup2(fd, new_fd) == -1)
+	{
+		perror("dup2");
+		data->exit_status = exit_status;
+		free_and_exit_data(data, data->exit_status);
+	}
+}
 
+void	close_fds(t_data *data)
+{
+	if (data->infile_fd >= 0)
+		close(data->infile_fd);
+	if (data->outfile_fd >= 0)
+		close(data->outfile_fd);
+}
+
+void	close_pipe_fds(t_data *data)
+{
+	if (data->pipe_fd[0] != -2)
+		close(data->pipe_fd[0]);
+	if (data->pipe_fd[1] != -2)
+		close(data->pipe_fd[1]);
+}
 // void	ft_fds_dup2(t_data *data)
 // {
 // 	dup2(data->fd[0], 0);
@@ -164,40 +161,40 @@ if (tmp)
 // 	data->new_ast = new_tree_head;
 // }
 
-void	transform_ast(t_ast_node *node, t_data *data)
-{
-	t_ast_node *current = node;
-	t_ast_node *new_tree = NULL;
-	t_ast_node **new_tree_ptr = &new_tree;
+// void	transform_ast(t_ast_node *node, t_data *data)
+// {
+// 	t_ast_node *current = node;
+// 	t_ast_node *new_tree = NULL;
+// 	t_ast_node **new_tree_ptr = &new_tree;
 
-	while (current)
-	{
-		if (current->left && current->left->command)
-		{
-			*new_tree_ptr = malloc(sizeof(t_ast_node));
-			if (!*new_tree_ptr)
-			{
-				perror("malloc");
-				exit(EXIT_FAILURE);
-			}
-			ft_memcpy(*new_tree_ptr, current->left, sizeof(t_ast_node));
-			new_tree_ptr = &(*new_tree_ptr)->right;
-		}
+// 	while (current)
+// 	{
+// 		if (current->left && current->left->command)
+// 		{
+// 			*new_tree_ptr = malloc(sizeof(t_ast_node));
+// 			if (!*new_tree_ptr)
+// 			{
+// 				perror("malloc");
+// 				exit(EXIT_FAILURE);
+// 			}
+// 			ft_memcpy(*new_tree_ptr, current->left, sizeof(t_ast_node));
+// 			new_tree_ptr = &(*new_tree_ptr)->right;
+// 		}
 
-		if (current->command)
-		{
-			*new_tree_ptr = malloc(sizeof(t_ast_node));
-			if (!*new_tree_ptr)
-			{
-				perror("malloc");
-				exit(EXIT_FAILURE);
-			}
-			ft_memcpy(*new_tree_ptr, current, sizeof(t_ast_node));
-			new_tree_ptr = &(*new_tree_ptr)->right;
-		}
+// 		if (current->command)
+// 		{
+// 			*new_tree_ptr = malloc(sizeof(t_ast_node));
+// 			if (!*new_tree_ptr)
+// 			{
+// 				perror("malloc");
+// 				exit(EXIT_FAILURE);
+// 			}
+// 			ft_memcpy(*new_tree_ptr, current, sizeof(t_ast_node));
+// 			new_tree_ptr = &(*new_tree_ptr)->right;
+// 		}
 
-		current = current->right;
-	}
+// 		current = current->right;
+// 	}
 
-	data->new_ast = new_tree;
-}
+// 	data->new_ast = new_tree;
+// }

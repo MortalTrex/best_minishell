@@ -3,46 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/01/14 12:06:13 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/25 15:10:14 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-void	search_in_env(t_data *data, char *var)
+int	var_exists(t_env *env_head, char *var_name)
 {
-	t_env	*current;
+	t_env	*env;
 
-	if (!var || !data->env)
-		return ;
-	current = data->env;
-	while (current)
+	env = env_head;
+	if (!var_name)
+		return (0);
+	while (env)
 	{
-		if (current->name && !ft_strcmp(var, current->name))
+		if (ft_strcmp(env->var_name, var_name) == 0)
+			return (1);
+		env = env->next;
+	}
+	return (0);
+}
+
+void	delete_env_var(t_env *env_head, char *var_name)
+{
+	t_env	*env;
+	t_env	*prev;
+
+	env = env_head;
+	prev = NULL;
+	while (env)
+	{
+		if (ft_strcmp(env->var_name, var_name) == 0)
 		{
-			ft_envclear(&data->env);
+			if (prev)
+				prev->next = env->next;
+			else
+				env_head = env->next;
+			free(env->var_name);
+			free(env->value);
+			free(env);
 			return ;
 		}
-		current = current->next;
+		prev = env;
+		env = env->next;
 	}
 }
 
-int	ft_unset(char **argv, t_data *data)
+int	ft_unset(char **cmd, t_shell *shell)
 {
 	int	i;
 
-	if (!argv || !data)
-		return (1);
-	i = 0;
-	while (argv[i])
+	if (!cmd[1])
+		return (EXIT_SUCCESS);
+	i = 1;
+	while (cmd[i])
 	{
-		if (argv[i][0] != '\0')
-			search_in_env(data, argv[i]);
+		if (cmd[1][0] == '-')
+			return (write_error(cmd[1], "invalid option", "export"), 2);
+		if (var_exists(shell->env_list, shell->commands->cmd_name[i]))
+			delete_env_var(shell->env_list, shell->commands->cmd_name[i]);
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

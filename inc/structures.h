@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/21 17:13:51 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:06:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,96 +18,63 @@
 # include <minishell.h>
 # include <termios.h>
 
-typedef enum e_redir_type
-{
-	IN,
-	OUT,
-	D_APPEND,
-	D_HEREDOC
-}					t_redir_type;
+extern int				g_exit_code;
 
-typedef enum e_ast_node_type
+/* enums */
+typedef enum s_type
 {
-	NODE_CMD,
-	NODE_PIPE,
-}			t_ast_node_type;
+	WORD,
+	PIPE,
+	LESS,
+	GREAT,
+	GREATGREAT,
+	LESSLESS,
+	FILENAME,
+	DELIMITER,
+}						t_type;
 
-typedef struct s_redir
+/* structures */
+typedef struct s_token
 {
-	char			*file;
-	char			*file_here_doc;
-	char			**argv;
-	t_redir_type	type;
-	int				hd_fd;
-	int				in_fd;
-	int 		   	out_fd;
-	struct s_redir	*prev;
-	struct s_redir	*next;
-}					t_redir;
+	int					type;
+	char				*value;
+	int					quotes_status;
+	struct s_token		*next;
+	struct s_token		*prev;
+}						t_token;
 
-typedef struct s_ast_node
+typedef struct s_command
 {
-	t_ast_node_type		type;
-	char				*command;
-	char				**argv;
-	pid_t				pid;
-	t_redir				*redir;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-	struct s_ast_node   *prev;
-}					t_ast_node;
+	char				**cmd_name;
+	bool				is_builtin;
+	t_token				*redirections;
+	struct s_command	*next;
+	struct s_command	*prev;
+}						t_command;
 
 typedef struct s_env
 {
-	char			*line;
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-	struct s_env	*prev;
-}					t_env;
+	char				*var_name;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
 
-typedef struct s_cmd
+typedef struct s_shell
 {
-	char			**cmd_args;
-	t_token			*redirs;
-	bool			is_builtin;
-	struct t_command	*next;
-	struct t_command	*prev;
-}		t_cmd;
-
-typedef struct s_data
-{
-	t_token			*tok;
-	t_env			*env;
-	t_ast_node		*ast;
-	t_ast_node		*new_ast;
-	struct termios	terminal;
-	t_cmd			*commands;
-	t_token			*tokens;
-	int				count;
-	char			**envc;
-	char			*user_line;
-	int				fd[2];
-	int 		    pipe_fd[2];
-	// int				fd_pair[2];
-	// int				fd_impair[2];
-	// int				fd_next[2];
-	// int 			fd_prev[2];
-	int             stdin_backup;
-	int             stdout_backup;
-	int				parsing_error;
-	int				exit_status;
-	int				last_pid;
-	int				wstatus;
-	int				free_value;
-	int             nb_levels;
-	bool			isheredoc;
-	bool            isoutfile;
-	bool			isinfile;
-	char			*heredoc;
-	int				stdin_old;
-}					t_data;
-
-extern int			g_exit_status;
+	char				*input;
+	t_token				*tokens;
+	t_command			*commands;
+	int					infile_fd;
+	int					outfile_fd;
+	pid_t				last_pid;
+	int					pipe_fd[2];
+	int					wstatus;
+	char				*cmd_path;
+	char				**env;
+	char				*heredoc;
+	int					old_stdin;
+	int					exit_status;
+	t_env				*env_list;
+}						t_shell;
 
 #endif

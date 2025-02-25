@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/21 17:46:55 by mmiilpal         ###   ########.fr       */
+/*   Created: 2025/02/21 17:47:35 by mmiilpal          #+#    #+#             */
+/*   Updated: 2025/02/25 11:24:58 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	valid_expansion(char *str, int i, char *quote)
 
 int	get_quote(char *quote, char c)
 {
-	if (c == "\'"|| c == "\"")
+	if (c == "\'" || c == "\"")
 	{
 		if (*quote == 0)
 			*quote = c;
