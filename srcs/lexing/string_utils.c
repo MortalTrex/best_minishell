@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:05:31 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*get_value_after_expansion(char *str, t_data *shell, int *i)
 	char	*value;
 	char	*new_str_value;
 
-	d_quoted = ft_strchr(str, D_QUOTE);
+	d_quoted = ft_strchr(str, DQ);
 	if (str[*i] == '$' && str[*i + 1] == '?')
 	{
 		value = ft_itoa(shell->exit_status);

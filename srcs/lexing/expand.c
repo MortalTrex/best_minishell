@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:47:35 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:09:48 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	is_heredoc(char *str)
 
 static int	valid_expansion(char *str, int i, char *quote)
 {
-	if (*quote == S_QUOTE)
+	if (*quote == SQ)
 		return (0);
 	if (str && is_heredoc(str))
 		return (0);
@@ -46,7 +46,7 @@ static int	valid_expansion(char *str, int i, char *quote)
 
 int	get_quote(char *quote, char c)
 {
-	if (c == S_QUOTE || c == D_QUOTE)
+	if (c == SQ || c == DQ)
 	{
 		if (*quote == 0)
 			*quote = c;
@@ -73,7 +73,7 @@ static int	count_dollars(char *str)
 	return (count);
 }
 
-char	*expander(char *str, t_data *shell)
+char	*expanding(char *str, t_data *shell)
 {
 	int		i;
 	char	quote;

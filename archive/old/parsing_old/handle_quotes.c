@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 18:05:38 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/04 15:06:54 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:03:53 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_get_str(char *str, size_t *i)
 	size_t	start;
 
 	start = *i;
-	while (str[*i] && !ft_is_quote(str[*i]) && str[*i] != '$')
+	while (str[*i] && !ft_i(str[*i]) && str[*i] != '$')
 		(*i)++;
 	return (ft_substr(str, start, *i - start));
 }

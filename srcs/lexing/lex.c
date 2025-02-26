@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:16:40 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:59:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:09:48 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	get_token_size(char *str)
 	while (str[i] && !ft_isspace(str[i]) && str[i] != '|' && str[i] != '<'
 		&& str[i] != '>')
 	{
-		if ((str[i] == D_QUOTE || str[i] == S_QUOTE) && str[i + 1] != '\0')
+		if ((str[i] == DQ || str[i] == SQ) && str[i + 1] != '\0')
 			i += ft_strchr(&str[i + 1], str[i]) - &str[i] + 1;
 		else
 			i++;
@@ -88,20 +88,20 @@ int	lexer(t_data *shell)
 		exit(EXIT_FAILURE);
 	else if (ft_strcmp(shell->user_line, "\0") == 0)
 		return (EXIT_FAILURE);
-	else if (str_is_empty_or_space_only(shell->user_line))
+	else if (check_empty_or_whitespace(shell->user_line))
 		return (EXIT_SUCCESS);
 	add_history(shell->user_line);
 	if (!valid_quotes(shell->user_line))
 		return (printf("Error: invalid quotes\n"), EXIT_FAILURE);
-	expanded_input = expander(shell->user_line, shell);
+	expanded_input = expanding(shell->user_line, shell);
 	if (!expanded_input)
 		return (EXIT_SUCCESS);
 	shell->tokens = tokenize(expanded_input, shell);
 	free(expanded_input);
 	if (!shell->tokens)
 		return (EXIT_FAILURE);
-	assign_type_redirections(shell->tokens);
-	set_delimiter_quote_status(shell->tokens);
+	set_redirection_types(shell->tokens);
+	update_token_quote_status(shell->tokens);
 	remove_quotes(shell->tokens);
 	if (!check_syntax(shell->tokens, shell))
 		return (EXIT_SUCCESS);

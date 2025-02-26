@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:08:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	invalid_type_syntax_error(t_token *token, t_data *shell)
 	return (0);
 }
 
-int	case_heredoc_syntax(t_token *tokens, t_data *shell)
+int	validate_heredoc_syntax(t_token *tokens, t_data *shell)
 {
 	t_token	*tmp;
 

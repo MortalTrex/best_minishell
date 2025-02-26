@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:22:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:50:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:09:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	str_is_empty_or_space_only(char *str)
+int	check_empty_or_whitespace(char *str)
 {
 	int	i;
 
@@ -37,16 +37,16 @@ int	valid_quotes(char *str)
 	in_double_quote = 0;
 	while (str[i])
 	{
-		if (str[i] == S_QUOTE && !in_double_quote)
+		if (str[i] == SQ && !in_double_quote)
 			in_single_quote = !in_single_quote;
-		else if (str[i] == D_QUOTE && !in_single_quote)
+		else if (str[i] == DQ && !in_single_quote)
 			in_double_quote = !in_double_quote;
 		i++;
 	}
 	return (!(in_single_quote || in_double_quote));
 }
 
-void	set_delimiter_quote_status(t_token *token)
+void	update_token_quote_status(t_token *token)
 {
 	int		i;
 	t_token	*tmp;
@@ -60,7 +60,7 @@ void	set_delimiter_quote_status(t_token *token)
 		{
 			while (tmp->value[i])
 			{
-				if (tmp->value[i] == D_QUOTE || tmp->value[i] == S_QUOTE)
+				if (tmp->value[i] == DQ || tmp->value[i] == SQ)
 					tmp->quotes_status = 1;
 				i++;
 			}

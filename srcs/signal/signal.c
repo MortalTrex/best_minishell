@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:51:51 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:12:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_sigint(int signum)
+void	heredoc_sigint_handler(int signum)
 {
 	(void)signum;
 	g_exit_status = 130;
@@ -32,7 +32,7 @@ void	catch_sigint(int signum)
 	}
 }
 
-void	ignore_signals(void)
+void	signals_handler(void)
 {
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

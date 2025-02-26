@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:23:05 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:08:26 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_cmd	*get_command(t_token *tokens)
 	if (!command)
 		return (NULL);
 	ft_memset(command, 0, sizeof(t_cmd));
-	command->cmd_args = get_cmd_array_from_tokens(tokens);
+	command->cmd_args = convert_tokens_to_cmd_array(tokens);
 	handle_redirections(tokens, command);
 	if (command->cmd_args && command->cmd_args[0])
 		command->is_builtin = is_builtin(command->cmd_args[0]);

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:12:49 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/21 15:39:37 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:09:48 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int expansion_count(char *str)
     return(count);
 }
 
-char *expander(char *str, t_data *data)
+char *expanding(char *str, t_data *data)
 {
     char quote;
     int dollars_count;

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:10:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	check_if_other_heredoc(t_token *current)
 	return (0);
 }
 
-void	write_line_to_heredoc(int fd, char *tmp, t_data *shell,
+void	save_heredoc_line(int fd, char *tmp, t_data *shell,
 		int quotes_status)
 {
 	if (quotes_status == 0)
-		tmp = expander(tmp, shell);
+		tmp = expanding(tmp, shell);
 	if (tmp)
 		write(fd, tmp, ft_strlen(tmp));
 	write(fd, "\n", 1);

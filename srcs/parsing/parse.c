@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:13:13 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:08:26 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**get_cmd_array_from_tokens(t_token *tokens)
+char	**convert_tokens_to_cmd_array(t_token *tokens)
 {
 	char	**cmd_array;
 	int		i;

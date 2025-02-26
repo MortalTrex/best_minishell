@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:50:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:08:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	get_type(char *str)
 	return (-1);
 }
 
-void	assign_type_redirections(t_token *tokens)
+void	set_redirection_types(t_token *tokens)
 {
 	while (tokens)
 	{

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:13:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,16 @@ static void	execute_command(t_cmd *current, t_data *shell)
 	}
 }
 
-static int	handle_parent(t_cmd *current, t_data *shell, int prev_fd)
+static int	handle_parent(t_cmd *current, t_data *data, int prev_fd)
 {
 	if (prev_fd != 0)
 		close(prev_fd);
 	if (current->next)
 	{
-		close(shell->pipe_fd[1]);
-		prev_fd = shell->pipe_fd[0];
+		close(data->pipe_fd[1]);
+		prev_fd = data->pipe_fd[0];
 	}
-	close_fds(shell);
+	close_fds(data);
 	return (prev_fd);
 }
 
@@ -81,30 +81,30 @@ static void	handle_child(t_cmd *current, t_data *shell, int prev_fd)
 	execute_command(current, shell);
 }
 
-int	executer(t_data *shell)
+int	executing(t_data *data)
 {
 	t_cmd	*current;
 	int			prev_fd;
 
-	if (shell == NULL || shell->commands == NULL)
+	if (data == NULL || data->commands == NULL)
 		return (-1);
-	current = shell->commands;
+	current = data->commands;
 	prev_fd = 0;
 	if (!current->next && current->is_builtin == true && (!current->redirs
 			|| ft_strcmp(current->cmd_args[0], "exit") == 0))
-		exec_builtin(current, shell, false);
+		exec_builtin(current, data, false);
 	else
 	{
 		while (current)
 		{
-			pipe_and_fork(current, shell);
-			if (shell->last_pid == 0)
-				handle_child(current, shell, prev_fd);
+			pipe_and_fork(current, data);
+			if (data->last_pid == 0)
+				handle_child(current, data, prev_fd);
 			else
-				prev_fd = handle_parent(current, shell, prev_fd);
+				prev_fd = handle_parent(current, data, prev_fd);
 			current = current->next;
 		}
 	}
-	wait_commands(shell);
-	return (shell->exit_status);
+	wait_commands(data);
+	return (data->exit_status);
 }

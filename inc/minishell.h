@@ -6,15 +6,12 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:37 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:12:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define ERROR 1
-# define SUCCESS 0
 
 ////////////////////////// INCLUDES ///////////////////////////
 
@@ -41,16 +38,8 @@
 ////////////////////////// DEFINITIONS ////////////////////////////
 
 # define PROMPT "minishell> "
-# define ERR_SYN 1
-# define ERR_MEM 2
-# define BUFF_SIZE 4096
-# define FD_IMPAIR_0 10
-# define FD_IMPAIR_MIDDLE 11
-# define FD_IMPAIR_END 12
-# define FD_PAIR_MIDDLE 13
-# define FD_PAIR_END 14
-# define S_QUOTE '\''
-# define D_QUOTE '\"'
+# define SQ '\''
+# define DQ '\"'
 
 ////////////////////////// FUNCTION PROTOTYPES /////////////////////////
 
@@ -58,12 +47,12 @@
 
 //	expand.c
 int						get_quote(char *str, char c);
-char					*expander(char *str, t_data *shell);
+char					*expanding(char *str, t_data *shell);
 
 //	grammar_check.c
-int						str_is_empty_or_space_only(char *str);
+int						check_empty_or_whitespace(char *str);
 int						valid_quotes(char *str);
-void					set_delimiter_quote_status(t_token *token);
+void					update_token_quote_status(t_token *token);
 int						len_between_tokens(char *str, int i, char c);
 int						len_invalid_type(char *str);
 
@@ -77,7 +66,7 @@ int						lexer(t_data *shell);
 
 //	redir_types.c
 int						get_type(char *str);
-void					assign_type_redirections(t_token *tokens);
+void					set_redirection_types(t_token *tokens);
 
 //	remove_quotes.c
 void					remove_quotes(t_token *tokens);
@@ -87,18 +76,18 @@ char					*get_value_after_expansion(char *str, t_data *shell,
 							int *i);
 
 //	syntax_check.c
-int						case_heredoc_syntax(t_token *tokens, t_data *shell);
+int						validate_heredoc_syntax(t_token *tokens, t_data *shell);
 int						check_syntax(t_token *tokens, t_data *shell);
 
 ////////////////////////// PARSING ////////////////////////////
 
 // create_command.c
-t_cmd				*get_command(t_token *tokens);
+t_cmd					*get_command(t_token *tokens);
 void					add_command_back(t_cmd **commands,
 	t_cmd *new_node);
 
 //	parse.c
-char					**get_cmd_array_from_tokens(t_token *tokens);
+char					**convert_tokens_to_cmd_array(t_token *tokens);
 bool					is_builtin(char *cmd);
 int						parser(t_data *shell);
 
@@ -179,11 +168,11 @@ void					has_no_filename(t_cmd *current, t_data *shell,
 							int prev_fd);
 
 //	exec.c
-int						executer(t_data *shell);
+int						executing(t_data *shell);
 
 // utils.c
-void					write_line_to_heredoc(int fd, char *tmp, t_data *shell,
-							int quotes_status);
+void					save_heredoc_line(int fd, char *tmp, t_data *shell,
+							int quotes);
 void					pipe_and_fork(t_cmd *current, t_data *shell);
 void					wait_commands(t_data *shell);
 
@@ -203,7 +192,7 @@ void					free_tokens(t_token **tokens);
 void					free_commands(t_cmd **commands);
 
 // stack_utils.c
-t_token					*create_token(char *value, int type, int quotes_status);
+t_token					*create_token(char *value, int type, int quotes);
 void					add_token_back(t_token **tokens, t_token *new_node);
 char					**init_array(int size);
 void					free_array(char **arr);
@@ -212,7 +201,7 @@ void					free_array(char **arr);
 
 //	signals.c
 void					catch_sigint(int signum);
-void					heredoc_sigint(int signum);
-void					ignore_signals(void);
+void					heredoc_sigint_handler(int signum);
+void					signals_handler(void);
 
 #endif

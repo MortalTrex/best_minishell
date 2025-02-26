@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:37 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:12:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	minishell_loop(t_data *shell)
 {
 	while (1)
 	{
-		ignore_signals();
+		signals_handler();
 		shell->user_line = readline(PROMPT);
 		if (g_exit_status == 130)
 		{
@@ -51,7 +51,7 @@ int	minishell_loop(t_data *shell)
 			free_and_exit(shell, shell->exit_status);
 		}
 		if (lexer(shell) == EXIT_SUCCESS && parser(shell) == EXIT_SUCCESS)
-			g_exit_status = executer(shell);
+			g_exit_status = executing(shell);
 		else
 			g_exit_status = 1;
 		free_data(shell);
