@@ -6,16 +6,16 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 19:04:43 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 16:24:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:25:12 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long ft_atoi_long(const char *str, char **endptr)
+long	ft_atoi_long(const char *str, char **endptr)
 {
-	long result;
-	int sign;
+	long	result;
+	int		sign;
 
 	result = 0;
 	sign = 1;

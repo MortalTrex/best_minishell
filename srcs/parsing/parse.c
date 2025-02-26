@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:13:13 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:08:26 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:22:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool	is_builtin(char *cmd)
 int	parser(t_data *shell)
 {
 	t_token		*temp;
-	t_cmd	*new_command;
+	t_cmd		*new_command;
 
 	temp = shell->tokens;
 	shell->commands = NULL;

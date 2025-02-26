@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:12:17 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:26:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int						len_invalid_type(char *str);
 // heredoc.c
 void					unlink_heredoc(t_data *shell);
 int						handle_heredoc(t_token *tmp, t_data *shell,
-	int option);
+							int option);
 
 //	lex.c
 int						lexer(t_data *shell);
@@ -84,7 +84,7 @@ int						check_syntax(t_token *tokens, t_data *shell);
 // create_command.c
 t_cmd					*get_command(t_token *tokens);
 void					add_command_back(t_cmd **commands,
-	t_cmd *new_node);
+							t_cmd *new_node);
 
 //	parse.c
 char					**convert_tokens_to_cmd_array(t_token *tokens);

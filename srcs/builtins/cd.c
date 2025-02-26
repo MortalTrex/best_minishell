@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:21:07 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_pwd(t_data *shell, char *command)
+static void	update_pwd(t_data *data, char *command)
 {
 	char	cwd[4096];
 	char	*old_dir;
@@ -23,21 +23,21 @@ static void	update_pwd(t_data *shell, char *command)
 		perror(command);
 		return ;
 	}
-	old_dir = ft_getenv(shell->env_list, "PWD");
+	old_dir = ft_getenv(data->env_list, "PWD");
 	if (!old_dir)
 		return ;
-	ft_setenv(shell->env_list, "OLDPWD", old_dir);
+	ft_setenv(data->env_list, "OLDPWD", old_dir);
 	free(old_dir);
-	ft_setenv(shell->env_list, "PWD", cwd);
+	ft_setenv(data->env_list, "PWD", cwd);
 }
 
-static int	cd_minus(t_data *shell, int option)
+static int	cd_minus(t_data *data, int option)
 {
 	char	*curr_dir;
 	char	*old_dir;
 
-	curr_dir = ft_getenv(shell->env_list, "OLDPWD");
-	old_dir = ft_getenv(shell->env_list, "PWD");
+	curr_dir = ft_getenv(data->env_list, "OLDPWD");
+	old_dir = ft_getenv(data->env_list, "PWD");
 	if (!curr_dir)
 	{
 		write_error("cd", "OLDPWD not set", NULL);
@@ -55,8 +55,8 @@ static int	cd_minus(t_data *shell, int option)
 		ft_putstr_fd(curr_dir, STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
-	ft_setenv(shell->env_list, "PWD", curr_dir);
-	ft_setenv(shell->env_list, "OLDPWD", old_dir);
+	ft_setenv(data->env_list, "PWD", curr_dir);
+	ft_setenv(data->env_list, "OLDPWD", old_dir);
 	return (free_and_return(curr_dir, old_dir, 0));
 }
 

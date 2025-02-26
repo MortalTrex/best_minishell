@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 14:22:48 by rbalazs           #+#    #+#             */
-/*   Updated: 2024/10/29 15:42:09 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:25:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_free_tab(char **tab)
 
 	i = 0;
 	if (tab == NULL)
-		return;
+		return ;
 	while (tab[i])
 	{
 		free(tab[i]);

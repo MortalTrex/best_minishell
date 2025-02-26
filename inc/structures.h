@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:59:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:27:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 extern int				g_exit_status;
 
-/* enums */
 typedef enum s_type
 {
 	T_WORD,
@@ -45,8 +44,8 @@ typedef struct s_cmd
 	char				**cmd_args;
 	bool				is_builtin;
 	t_token				*redirs;
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
+	struct s_cmd		*next;
+	struct s_cmd		*prev;
 }						t_cmd;
 
 typedef struct s_env
