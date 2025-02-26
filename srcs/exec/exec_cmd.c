@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:31:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*check_if_directory(char *cmd, t_data *shell)
 	return (NULL);
 }
 
-static char	*search_executable_cmd(char **path_dirs, char *cmd)
+static char	*locate_command_in_paths(char **path_dirs, char *cmd)
 {
 	char	*cmd_path;
 	char	*temp;
@@ -89,5 +89,5 @@ char	*get_cmd_path(char *cmd, t_data *shell)
 	if (!path_dirs)
 		return (free(path_var), NULL);
 	free(path_var);
-	return (search_executable_cmd(path_dirs, cmd));
+	return (locate_command_in_paths(path_dirs, cmd));
 }
