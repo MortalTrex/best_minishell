@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:47:35 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 13:48:17 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	count_dollars(char *str)
 	return (count);
 }
 
-char	*expander(char *str, t_shell *shell)
+char	*expander(char *str, t_data *shell)
 {
 	int		i;
 	char	quote;

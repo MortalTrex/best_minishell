@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:04 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:50:24 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:51:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	heredoc_sigint(int signum)
 {
 	(void)signum;
-	g_exit_code = 130;
+	g_exit_status = 130;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	close(STDIN_FILENO);
 }
@@ -24,7 +24,7 @@ void	catch_sigint(int signum)
 {
 	if (signum == SIGINT)
 	{
-		g_exit_code = 130;
+		g_exit_status = 130;
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_replace_line("", STDIN_FILENO);
 		rl_on_new_line();

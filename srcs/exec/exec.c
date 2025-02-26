@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:39:11 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	exec_builtin(t_command *commands, t_shell *shell, bool pipe)
+static void	exec_builtin(t_command *commands, t_data *shell, bool pipe)
 {
 	if (ft_strcmp(commands->cmd_name[0], "cd") == 0)
 		shell->exit_status = ft_cd(commands, shell);
@@ -32,7 +32,7 @@ static void	exec_builtin(t_command *commands, t_shell *shell, bool pipe)
 		free_and_exit_shell(shell, shell->exit_status);
 }
 
-static void	execute_command(t_command *current, t_shell *shell)
+static void	execute_command(t_command *current, t_data *shell)
 {
 	char	**env;
 
@@ -60,7 +60,7 @@ static void	execute_command(t_command *current, t_shell *shell)
 	}
 }
 
-static int	handle_parent(t_command *current, t_shell *shell, int prev_fd)
+static int	handle_parent(t_command *current, t_data *shell, int prev_fd)
 {
 	if (prev_fd != 0)
 		close(prev_fd);
@@ -73,7 +73,7 @@ static int	handle_parent(t_command *current, t_shell *shell, int prev_fd)
 	return (prev_fd);
 }
 
-static void	handle_child(t_command *current, t_shell *shell, int prev_fd)
+static void	handle_child(t_command *current, t_data *shell, int prev_fd)
 {
 	if (current->redirections)
 		open_and_redirect_fd(current, shell);
@@ -81,7 +81,7 @@ static void	handle_child(t_command *current, t_shell *shell, int prev_fd)
 	execute_command(current, shell);
 }
 
-int	executer(t_shell *shell)
+int	executer(t_data *shell)
 {
 	t_command	*current;
 	int			prev_fd;

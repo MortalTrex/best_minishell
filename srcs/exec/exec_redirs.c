@@ -6,15 +6,15 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:30:01 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 13:31:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_fds(t_token *redirections, t_shell *shell)
+void	get_fds(t_token *redirections, t_data *shell)
 {
-	if (redirections->type == GREAT || redirections->type == GREATGREAT)
+	if (redirections->type == T_REDIR_OUT || redirections->type == T_REDIR_APPEND)
 	{
 		get_fd_out(redirections, shell);
 		get_fd_in(redirections, shell);
@@ -26,7 +26,7 @@ void	get_fds(t_token *redirections, t_shell *shell)
 	}
 }
 
-void	open_and_redirect_fd(t_command *current, t_shell *shell)
+void	open_and_redirect_fd(t_command *current, t_data *shell)
 {
 	get_fds(current->redirections, shell);
 	if (shell->infile_fd != -2)
@@ -43,7 +43,7 @@ void	open_and_redirect_fd(t_command *current, t_shell *shell)
 		unlink_heredoc(shell);
 }
 
-void	has_no_filename(t_command *current, t_shell *shell, int prev_fd)
+void	has_no_filename(t_command *current, t_data *shell, int prev_fd)
 {
 	if (prev_fd != 0 && shell->infile_fd == -2)
 	{

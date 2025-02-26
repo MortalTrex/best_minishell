@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:31:03 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	delete_env_var(t_env *env_head, char *var_name)
 	}
 }
 
-int	ft_unset(char **cmd, t_shell *shell)
+int	ft_unset(char **cmd, t_data *shell)
 {
 	int	i;
 

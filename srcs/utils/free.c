@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:22:04 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 13:30:32 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_and_exit_shell(t_shell *shell, int exit_code)
+void	free_and_exit_shell(t_data *shell, int exit_code)
 {
 	if (shell)
 	{
@@ -24,7 +24,7 @@ void	free_and_exit_shell(t_shell *shell, int exit_code)
 	exit(exit_code);
 }
 
-void	free_shell(t_shell *shell)
+void	free_shell(t_data *shell)
 {
 	if (shell)
 	{

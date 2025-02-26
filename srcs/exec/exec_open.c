@@ -6,22 +6,22 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:45:19 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:33:44 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	get_file_as_fd_in(t_token *redirections, t_shell *shell)
+static void	get_file_as_fd_in(t_token *redirections, t_data *shell)
 {
 	t_token	*current;
 
 	current = redirections;
 	while (current)
 	{
-		if (current->next && (current->next->type == FILENAME))
+		if (current->next && (current->next->type == T_FILENAME))
 		{
-			if (current->type == LESS)
+			if (current->type == T_REDIR_IN)
 			{
 				if (shell->infile_fd != -2)
 					close(shell->infile_fd);
@@ -38,9 +38,9 @@ static void	get_file_as_fd_in(t_token *redirections, t_shell *shell)
 	}
 }
 
-void	get_fd_in(t_token *redirections, t_shell *shell)
+void	get_fd_in(t_token *redirections, t_data *shell)
 {
-	if (shell->heredoc && redirections->type == LESSLESS)
+	if (shell->heredoc && redirections->type == T_REDIR_HERE)
 	{
 		if (shell->infile_fd != -2)
 			close(shell->infile_fd);
@@ -49,29 +49,29 @@ void	get_fd_in(t_token *redirections, t_shell *shell)
 	get_file_as_fd_in(redirections, shell);
 }
 
-static void	open_outfile(char *filename, t_shell *shell, int flags)
+static void	open_outfile(char *filename, t_data *shell, int flags)
 {
 	if (shell->outfile_fd != -2)
 		close(shell->outfile_fd);
-	if (flags == GREAT)
+	if (flags == T_REDIR_OUT)
 		shell->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
 		shell->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 }
 
-void	get_fd_out(t_token *redirections, t_shell *shell)
+void	get_fd_out(t_token *redirections, t_data *shell)
 {
 	t_token	*current;
 
 	current = redirections;
 	while (current)
 	{
-		if (current->next && current->next->type == FILENAME)
+		if (current->next && current->next->type == T_FILENAME)
 		{
-			if (current->type == GREAT)
-				open_outfile(current->next->value, shell, GREAT);
-			else if (current->type == GREATGREAT)
-				open_outfile(current->next->value, shell, GREATGREAT);
+			if (current->type == T_REDIR_OUT)
+				open_outfile(current->next->value, shell, T_REDIR_OUT);
+			else if (current->type == T_REDIR_APPEND)
+				open_outfile(current->next->value, shell, T_REDIR_APPEND);
 		}
 		if (shell->outfile_fd == -1)
 		{

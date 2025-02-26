@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 13:37:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 # include <minishell.h>
 # include <termios.h>
 
-extern int				g_exit_code;
+extern int				g_exit_status;
 
 /* enums */
 typedef enum s_type
 {
-	WORD,
-	PIPE,
-	LESS,
-	GREAT,
-	GREATGREAT,
-	LESSLESS,
-	FILENAME,
-	DELIMITER,
+	T_WORD,
+	T_PIPE,
+	T_REDIR_IN,
+	T_REDIR_OUT,
+	T_REDIR_APPEND,
+	T_REDIR_HERE,
+	T_FILENAME,
+	T_DELIMITER,
 }						t_type;
 
 typedef struct s_token
@@ -72,6 +72,6 @@ typedef struct s_shell
 	int					old_stdin;
 	int					exit_status;
 	t_env				*env_list;
-}						t_shell;
+}						t_data;
 
 #endif

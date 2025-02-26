@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:49 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 13:30:46 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:50:07 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	handle_redirections(t_token *tokens, t_command *command)
 	redirections = NULL;
 	temp = tokens;
 	next = NULL;
-	if (temp->type == PIPE && temp->next)
+	if (temp->type == T_PIPE && temp->next)
 		temp = temp->next;
-	while (temp && temp->type != PIPE)
+	while (temp && temp->type != T_PIPE)
 	{
-		if (temp->next && temp->type >= LESS && temp->type <= LESSLESS)
+		if (temp->next && temp->type >= T_REDIR_IN && temp->type <= T_REDIR_HERE)
 		{
 			next = temp->next->next;
 			add_token_back(&redirections, create_token(temp->value,

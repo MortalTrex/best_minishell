@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:03:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	invalid_type_syntax_error(t_token *token, t_shell *shell)
+static int	invalid_type_syntax_error(t_token *token, t_data *shell)
 {
 	if (token->value[0] == '>' && token->value[1] == '>'
 		&& ft_strlen(token->value) >= 4)
@@ -35,7 +35,7 @@ static int	invalid_type_syntax_error(t_token *token, t_shell *shell)
 	return (0);
 }
 
-int	case_heredoc_syntax(t_token *tokens, t_shell *shell)
+int	case_heredoc_syntax(t_token *tokens, t_data *shell)
 {
 	t_token	*tmp;
 
@@ -44,15 +44,15 @@ int	case_heredoc_syntax(t_token *tokens, t_shell *shell)
 	{
 		if (tmp->type == -1)
 			return (invalid_type_syntax_error(tmp, shell));
-		else if (tmp->type == PIPE && (!tmp->prev || !tmp->next
+		else if (tmp->type == T_PIPE && (!tmp->prev || !tmp->next
 				|| tmp->prev->value[0] == '|' || tmp->next->value[0] == '|'))
 			return (invalid_type_syntax_error(tmp, shell));
-		else if (tmp->type >= LESS && tmp->type <= LESSLESS)
+		else if (tmp->type >= T_REDIR_IN && tmp->type <= T_REDIR_HERE)
 		{
 			if (!tmp->next)
 				return (syntax_error_in_token("newline", shell));
-			else if (tmp->next->type != FILENAME
-				&& tmp->next->type != DELIMITER)
+			else if (tmp->next->type != T_FILENAME
+				&& tmp->next->type != T_DELIMITER)
 				return (syntax_error_in_token(tmp->next->value, shell));
 		}
 		tmp = tmp->next;
@@ -60,25 +60,25 @@ int	case_heredoc_syntax(t_token *tokens, t_shell *shell)
 	return (0);
 }
 
-static int	no_heredoc_syntax(t_token *tmp, t_shell *shell)
+static int	no_heredoc_syntax(t_token *tmp, t_data *shell)
 {
 	if (tmp->type == -1)
 		return (invalid_type_syntax_error(tmp, shell));
-	else if (tmp->type == PIPE && (!tmp->prev || !tmp->next
-			|| tmp->prev->type == PIPE || tmp->next->type == PIPE))
+	else if (tmp->type == T_PIPE && (!tmp->prev || !tmp->next
+			|| tmp->prev->type == T_PIPE || tmp->next->type == T_PIPE))
 		return (invalid_type_syntax_error(tmp, shell));
-	else if (tmp->type >= LESS && tmp->type <= LESSLESS)
+	else if (tmp->type >= T_REDIR_IN && tmp->type <= T_REDIR_HERE)
 	{
 		if (!tmp->next)
 			return (syntax_error_in_token("newline", shell));
-		else if (tmp->next->type != FILENAME
-			&& tmp->next->type != DELIMITER)
+		else if (tmp->next->type != T_FILENAME
+			&& tmp->next->type != T_DELIMITER)
 			return (syntax_error_in_token(tmp->next->value, shell));
 	}
 	return (0);
 }
 
-static int	process_heredocs(t_token *tokens, t_shell *shell)
+static int	process_heredocs(t_token *tokens, t_data *shell)
 {
 	t_token	*tmp;
 	int		heredoc;
@@ -89,7 +89,7 @@ static int	process_heredocs(t_token *tokens, t_shell *shell)
 	ret = 0;
 	while (tmp && tmp->type != -1)
 	{
-		if (tmp->type == DELIMITER)
+		if (tmp->type == T_DELIMITER)
 		{
 			if (heredoc == 0)
 				ret = handle_heredoc(tmp, shell, heredoc);
@@ -102,7 +102,7 @@ static int	process_heredocs(t_token *tokens, t_shell *shell)
 	return (ret);
 }
 
-int	check_syntax(t_token *tokens, t_shell *shell)
+int	check_syntax(t_token *tokens, t_data *shell)
 {
 	t_token	*tmp;
 	int		ret;

@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 13:36:22 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	calculate_exit_status(long status, t_shell *shell, bool pipe)
+static void	calculate_exit_status(long status, t_data *shell, bool pipe)
 {
 	if (status > 255)
 		status = status % 256;
@@ -24,7 +24,7 @@ static void	calculate_exit_status(long status, t_shell *shell, bool pipe)
 }
 
 static int	get_exit_status(t_command *commands, char *arg,
-				t_shell *shell, bool pipe)
+				t_data *shell, bool pipe)
 {
 	long	status;
 	char	*endptr;
@@ -53,7 +53,7 @@ static int	get_exit_status(t_command *commands, char *arg,
 	return (0);
 }
 
-void	ft_exit(t_command *commands, t_shell *shell, bool pipe)
+void	ft_exit(t_command *commands, t_data *shell, bool pipe)
 {
 	if (commands->redirections)
 		get_fds(commands->redirections, shell);

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:16:40 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 13:53:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ static int	get_token_size(char *str)
 	type = get_type(str);
 	if (type == -1)
 		return (len_invalid_type(str));
-	if (type == GREATGREAT || type == LESSLESS)
+	if (type == T_REDIR_APPEND || type == T_REDIR_HERE)
 		return (2);
-	if (type == PIPE || type == LESS || type == GREAT)
+	if (type == T_PIPE || type == T_REDIR_IN || type == T_REDIR_OUT)
 		return (1);
 	i = 0;
 	while (str[i] && !ft_isspace(str[i]) && str[i] != '|' && str[i] != '<'
@@ -52,7 +52,7 @@ static char	*get_token(char *str)
 	return (token_value);
 }
 
-static t_token	*tokenize(char *str, t_shell *shell)
+static t_token	*tokenize(char *str, t_data *shell)
 {
 	int		i;
 	char	*substr;
@@ -80,7 +80,7 @@ static t_token	*tokenize(char *str, t_shell *shell)
 	return (shell->tokens);
 }
 
-int	lexer(t_shell *shell)
+int	lexer(t_data *shell)
 {
 	char	*expanded_input;
 

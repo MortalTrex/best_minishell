@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 13:59:29 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*get_new_str_value(char *str, char *old_value, char *new_value,
 	return (new_str);
 }
 
-char	*get_value_after_expansion(char *str, t_shell *shell, int *i)
+char	*get_value_after_expansion(char *str, t_data *shell, int *i)
 {
 	char	*d_quoted;
 	char	*var_name;

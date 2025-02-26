@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:28:35 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	valid_for_export(char *str)
 	return (free_array(split), 0);
 }
 
-static void	handle_export(char *str, t_shell *shell)
+static void	handle_export(char *str, t_data *shell)
 {
 	t_env	*tmp;
 	char	**split;
@@ -97,7 +97,7 @@ static void	handle_export(char *str, t_shell *shell)
 	free_array(split);
 }
 
-int	ft_export(char **cmd, t_shell *shell)
+int	ft_export(char **cmd, t_data *shell)
 {
 	int	i;
 	int	exit_code;

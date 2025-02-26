@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:43:24 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	check_if_other_heredoc(t_token *current)
 	tmp = current->next;
 	while (tmp)
 	{
-		if (tmp->type == LESSLESS)
+		if (tmp->type == T_REDIR_HERE)
 			return (1);
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-void	write_line_to_heredoc(int fd, char *tmp, t_shell *shell,
+void	write_line_to_heredoc(int fd, char *tmp, t_data *shell,
 		int quotes_status)
 {
 	if (quotes_status == 0)
@@ -38,7 +38,7 @@ void	write_line_to_heredoc(int fd, char *tmp, t_shell *shell,
 		free(tmp);
 }
 
-void	pipe_and_fork(t_command *current, t_shell *shell)
+void	pipe_and_fork(t_command *current, t_data *shell)
 {
 	if (current->next)
 	{
@@ -56,7 +56,7 @@ void	pipe_and_fork(t_command *current, t_shell *shell)
 	}
 }
 
-void	wait_commands(t_shell *shell)
+void	wait_commands(t_data *shell)
 {
 	signal(SIGINT, SIG_IGN);
 	while (errno != ECHILD)
@@ -78,7 +78,7 @@ void	wait_commands(t_shell *shell)
 				ft_putstr_fd("\n", STDERR_FILENO);
 		}
 	}
-	if (g_exit_code == 130)
+	if (g_exit_status == 130)
 		shell->exit_status = 130;
 }
 

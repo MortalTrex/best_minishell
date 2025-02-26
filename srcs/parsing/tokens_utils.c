@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 13:30:48 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:48:31 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token	*get_next_pipe(t_token *token)
 		return (NULL);
 	while (token)
 	{
-		if (token->type == PIPE)
+		if (token->type == T_PIPE)
 			return (token);
 		token = token->next;
 	}
@@ -32,9 +32,9 @@ int	count_not_null_tokens(t_token *tokens)
 
 	count = 0;
 	temp = tokens;
-	if (temp->type == PIPE)
+	if (temp->type == T_PIPE)
 		temp = temp->next;
-	while (temp && temp->type != PIPE)
+	while (temp && temp->type != T_PIPE)
 	{
 		if (temp->value)
 			count++;

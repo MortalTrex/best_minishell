@@ -6,21 +6,21 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:32:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	handle_error(char *cmd, char *error,
-				int exit_status, t_shell *shell)
+				int exit_status, t_data *shell)
 {
 	write_error(cmd, error, NULL);
 	shell->exit_status = exit_status;
 	free_and_exit_shell(shell, shell->exit_status);
 }
 
-static char	*check_if_directory(char *cmd, t_shell *shell)
+static char	*check_if_directory(char *cmd, t_data *shell)
 {
 	struct stat	path_stat;
 
@@ -75,7 +75,7 @@ static char	*search_executable_cmd(char **path_dirs, char *cmd)
 	return (NULL);
 }
 
-char	*get_cmd_path(char *cmd, t_shell *shell)
+char	*get_cmd_path(char *cmd, t_data *shell)
 {
 	char	**path_dirs;
 	char	*path_var;

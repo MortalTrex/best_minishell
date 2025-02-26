@@ -6,16 +6,16 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 13:33:57 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
-int	g_exit_code;
+int	g_exit_status;
 
-int	init_shell(t_shell *shell, char **env)
+int	init_shell(t_data *shell, char **env)
 {
 	shell->env_list = init_env(env);
 	if (shell->env_list == NULL)
@@ -33,16 +33,16 @@ int	init_shell(t_shell *shell, char **env)
 	return (EXIT_SUCCESS);
 }
 
-int	minishell_loop(t_shell *shell)
+int	minishell_loop(t_data *shell)
 {
 	while (1)
 	{
 		ignore_signals();
 		shell->input = readline(PROMPT);
-		if (g_exit_code == 130)
+		if (g_exit_status == 130)
 		{
 			shell->exit_status = 130;
-			g_exit_code = 0;
+			g_exit_status = 0;
 		}
 		if (!shell->input)
 		{
@@ -51,9 +51,9 @@ int	minishell_loop(t_shell *shell)
 			free_and_exit_shell(shell, shell->exit_status);
 		}
 		if (lexer(shell) == EXIT_SUCCESS && parser(shell) == EXIT_SUCCESS)
-			g_exit_code = executer(shell);
+			g_exit_status = executer(shell);
 		else
-			g_exit_code = 1;
+			g_exit_status = 1;
 		free_shell(shell);
 	}
 	return (EXIT_SUCCESS);
@@ -61,7 +61,7 @@ int	minishell_loop(t_shell *shell)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell	shell;
+	t_data	shell;
 
 	(void)argv;
 	if (invalid_arg(argc) || init_shell(&shell, env))

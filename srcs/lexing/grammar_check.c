@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:22:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 13:29:57 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:50:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	set_delimiter_quote_status(t_token *token)
 	while (tmp)
 	{
 		i = 0;
-		if (tmp->type == DELIMITER)
+		if (tmp->type == T_DELIMITER)
 		{
 			while (tmp->value[i])
 			{
