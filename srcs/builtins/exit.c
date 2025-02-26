@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ void	ft_exit(t_cmd *commands, t_data *shell, bool pipe)
 	}
 	else if (pipe == false)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-	free_and_exit_shell(shell, shell->exit_status);
+	free_and_exit(shell, shell->exit_status);
 }

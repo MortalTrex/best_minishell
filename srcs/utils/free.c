@@ -6,17 +6,17 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:22:04 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:15 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_and_exit_shell(t_data *shell, int exit_code)
+void	free_and_exit(t_data *shell, int exit_code)
 {
 	if (shell)
 	{
-		free_shell(shell);
+		free_data(shell);
 		if (shell->env_list)
 			free_env((shell->env_list));
 	}
@@ -24,7 +24,7 @@ void	free_and_exit_shell(t_data *shell, int exit_code)
 	exit(exit_code);
 }
 
-void	free_shell(t_data *shell)
+void	free_data(t_data *shell)
 {
 	if (shell)
 	{

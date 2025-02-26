@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:45:19 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	get_file_as_fd_in(t_token *redirections, t_data *shell)
 		{
 			perror(current->next->value);
 			shell->exit_status = 1;
-			free_and_exit_shell(shell, shell->exit_status);
+			free_and_exit(shell, shell->exit_status);
 		}
 		current = current->next;
 	}
@@ -77,7 +77,7 @@ void	get_fd_out(t_token *redirections, t_data *shell)
 		{
 			perror(current->next->value);
 			shell->exit_status = 1;
-			free_and_exit_shell(shell, shell->exit_status);
+			free_and_exit(shell, shell->exit_status);
 		}
 		current = current->next;
 	}

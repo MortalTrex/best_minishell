@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:59:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,25 @@ int	minishell_loop(t_data *shell)
 		{
 			if (isatty(STDIN_FILENO))
 				write(2, "exit\n", 6);
-			free_and_exit_shell(shell, shell->exit_status);
+			free_and_exit(shell, shell->exit_status);
 		}
 		if (lexer(shell) == EXIT_SUCCESS && parser(shell) == EXIT_SUCCESS)
 			g_exit_status = executer(shell);
 		else
 			g_exit_status = 1;
-		free_shell(shell);
+		free_data(shell);
 	}
 	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data	shell;
+	t_data	data;
 
 	(void)argv;
-	if (invalid_arg(argc) || init_shell(&shell, env))
-		free_and_exit_shell(NULL, EXIT_FAILURE);
-	minishell_loop(&shell);
-	free_and_exit_shell(&shell, shell.exit_status);
+	if (check_args(argc) || init_shell(&data, env))
+		free_and_exit(NULL, EXIT_FAILURE);
+	minishell_loop(&data);
+	free_and_exit(&data, data.exit_status);
 	return (0);
 }

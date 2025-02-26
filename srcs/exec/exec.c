@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	exec_builtin(t_cmd *commands, t_data *shell, bool pipe)
 	else if (ft_strcmp(commands->cmd_args[0], "exit") == 0)
 		ft_exit(commands, shell, pipe);
 	if (pipe == true)
-		free_and_exit_shell(shell, shell->exit_status);
+		free_and_exit(shell, shell->exit_status);
 }
 
 static void	execute_command(t_cmd *current, t_data *shell)
@@ -41,7 +41,7 @@ static void	execute_command(t_cmd *current, t_data *shell)
 	if (!current->cmd_args[0])
 	{
 		shell->exit_status = 0;
-		free_and_exit_shell(shell, shell->exit_status);
+		free_and_exit(shell, shell->exit_status);
 	}
 	if (current->is_builtin == true)
 		exec_builtin(current, shell, true);
@@ -56,7 +56,7 @@ static void	execute_command(t_cmd *current, t_data *shell)
 		perror(shell->cmd_path);
 		if (shell && shell->cmd_path)
 			free(shell->cmd_path);
-		free_and_exit_shell(shell, shell->exit_status);
+		free_and_exit(shell, shell->exit_status);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	write_warning(char *arg)
 	ft_putstr_fd("\')\n", STDERR_FILENO);
 }
 
-int	invalid_arg(int argc)
+int	check_args(int argc)
 {
 	if (argc != 1)
 		return (write_error(NULL, "minishell doesn't take any arguments", NULL),

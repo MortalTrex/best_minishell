@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_error(char *cmd, char *error,
 {
 	write_error(cmd, error, NULL);
 	shell->exit_status = exit_status;
-	free_and_exit_shell(shell, shell->exit_status);
+	free_and_exit(shell, shell->exit_status);
 }
 
 static char	*check_if_directory(char *cmd, t_data *shell)
@@ -28,7 +28,7 @@ static char	*check_if_directory(char *cmd, t_data *shell)
 	{
 		perror(cmd);
 		shell->exit_status = 127;
-		free_and_exit_shell(shell, shell->exit_status);
+		free_and_exit(shell, shell->exit_status);
 	}
 	stat(cmd, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))

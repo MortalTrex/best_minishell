@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:01:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,11 +194,11 @@ int						syntax_error_eof(void);
 int						syntax_error_in_token(char *token, t_data *shell);
 void					write_error(char *cmd, char *error, char *arg);
 void					write_warning(char *arg);
-int						invalid_arg(int argc);
+int						check_args(int argc);
 
 //	free.c
-void					free_and_exit_shell(t_data *shell, int exit_code);
-void					free_shell(t_data *shell);
+void					free_and_exit(t_data *shell, int exit_code);
+void					free_data(t_data *shell);
 void					free_tokens(t_token **tokens);
 void					free_commands(t_cmd **commands);
 
