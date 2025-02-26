@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,41 +60,41 @@ static int	cd_minus(t_data *shell, int option)
 	return (free_and_return(curr_dir, old_dir, 0));
 }
 
-static int	check_for_arguments(t_command *commands, t_data *shell)
+static int	check_for_arguments(t_cmd *commands, t_data *shell)
 {
-	if (commands->cmd_name[1])
+	if (commands->cmd_args[1])
 	{
-		if (commands->cmd_name[1][0] == '-' && !commands->cmd_name[1][1])
+		if (commands->cmd_args[1][0] == '-' && !commands->cmd_args[1][1])
 			return (cd_minus(shell, 1));
-		else if (commands->cmd_name[1][0] == '-'
-			&& commands->cmd_name[1][1] == '-' && !commands->cmd_name[1][2])
+		else if (commands->cmd_args[1][0] == '-'
+			&& commands->cmd_args[1][1] == '-' && !commands->cmd_args[1][2])
 			return (cd_minus(shell, 0));
-		else if (commands->cmd_name[1][0] == '-' && commands->cmd_name[1][1])
+		else if (commands->cmd_args[1][0] == '-' && commands->cmd_args[1][1])
 		{
-			write_error("cd", "invalid option", commands->cmd_name[1]);
+			write_error("cd", "invalid option", commands->cmd_args[1]);
 			return (2);
 		}
-		else if (chdir(commands->cmd_name[1]) == -1)
+		else if (chdir(commands->cmd_args[1]) == -1)
 		{
 			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-			perror(commands->cmd_name[1]);
+			perror(commands->cmd_args[1]);
 			return (1);
 		}
-		update_pwd(shell, commands->cmd_name[1]);
+		update_pwd(shell, commands->cmd_args[1]);
 	}
 	return (0);
 }
 
-int	ft_cd(t_command *commands, t_data *shell)
+int	ft_cd(t_cmd *commands, t_data *shell)
 {
 	char	*value;
 
-	if (commands->cmd_name[0] && commands->cmd_name[1] && commands->cmd_name[2])
+	if (commands->cmd_args[0] && commands->cmd_args[1] && commands->cmd_args[2])
 	{
 		write_error("cd", "too many arguments", NULL);
 		return (1);
 	}
-	if (!commands->cmd_name[1])
+	if (!commands->cmd_args[1])
 	{
 		value = ft_getenv(shell->env_list, "HOME");
 		if (!value)
@@ -106,7 +106,7 @@ int	ft_cd(t_command *commands, t_data *shell)
 		}
 		if (chdir(value) == -1)
 			return (perror("minishell: cd:"), free(value), 1);
-		update_pwd(shell, commands->cmd_name[0]);
+		update_pwd(shell, commands->cmd_args[0]);
 		free(value);
 	}
 	return (check_for_arguments(commands, shell));

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	write_line_to_heredoc(int fd, char *tmp, t_data *shell,
 		free(tmp);
 }
 
-void	pipe_and_fork(t_command *current, t_data *shell)
+void	pipe_and_fork(t_cmd *current, t_data *shell)
 {
 	if (current->next)
 	{

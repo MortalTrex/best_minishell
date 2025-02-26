@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	calculate_exit_status(long status, t_data *shell, bool pipe)
 	shell->exit_status = status;
 }
 
-static int	get_exit_status(t_command *commands, char *arg,
+static int	get_exit_status(t_cmd *commands, char *arg,
 				t_data *shell, bool pipe)
 {
 	long	status;
@@ -40,7 +40,7 @@ static int	get_exit_status(t_command *commands, char *arg,
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		shell->exit_status = 2;
 	}
-	else if (commands->cmd_name[1] && commands->cmd_name[2])
+	else if (commands->cmd_args[1] && commands->cmd_args[2])
 	{
 		if (pipe == false)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
@@ -53,14 +53,14 @@ static int	get_exit_status(t_command *commands, char *arg,
 	return (0);
 }
 
-void	ft_exit(t_command *commands, t_data *shell, bool pipe)
+void	ft_exit(t_cmd *commands, t_data *shell, bool pipe)
 {
-	if (commands->redirections)
-		get_fds(commands->redirections, shell);
+	if (commands->redirs)
+		get_fds(commands->redirs, shell);
 	close_fds(shell);
-	if (commands->cmd_name[1])
+	if (commands->cmd_args[1])
 	{
-		if (get_exit_status(commands, commands->cmd_name[1], shell, pipe) == 1)
+		if (get_exit_status(commands, commands->cmd_args[1], shell, pipe) == 1)
 			return ;
 	}
 	else if (pipe == false)

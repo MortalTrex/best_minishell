@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:49 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:50:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_redirections(t_token *tokens, t_command *command)
+void	handle_redirections(t_token *tokens, t_cmd *command)
 {
 	t_token	*temp;
 	t_token	*redirections;
@@ -37,5 +37,5 @@ void	handle_redirections(t_token *tokens, t_command *command)
 		else
 			temp = temp->next;
 	}
-	command->redirections = redirections;
+	command->redirs = redirections;
 }

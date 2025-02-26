@@ -6,39 +6,39 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	exec_builtin(t_command *commands, t_data *shell, bool pipe)
+static void	exec_builtin(t_cmd *commands, t_data *shell, bool pipe)
 {
-	if (ft_strcmp(commands->cmd_name[0], "cd") == 0)
+	if (ft_strcmp(commands->cmd_args[0], "cd") == 0)
 		shell->exit_status = ft_cd(commands, shell);
-	else if (ft_strcmp(commands->cmd_name[0], "pwd") == 0)
+	else if (ft_strcmp(commands->cmd_args[0], "pwd") == 0)
 		shell->exit_status = ft_pwd(commands);
-	else if (ft_strcmp(commands->cmd_name[0], "echo") == 0)
+	else if (ft_strcmp(commands->cmd_args[0], "echo") == 0)
 		shell->exit_status = ft_echo(commands);
-	else if (ft_strcmp(commands->cmd_name[0], "export") == 0)
-		shell->exit_status = ft_export(commands->cmd_name, shell);
-	else if (ft_strcmp(commands->cmd_name[0], "unset") == 0)
-		shell->exit_status = ft_unset(commands->cmd_name, shell);
-	else if (ft_strcmp(commands->cmd_name[0], "env") == 0)
+	else if (ft_strcmp(commands->cmd_args[0], "export") == 0)
+		shell->exit_status = ft_export(commands->cmd_args, shell);
+	else if (ft_strcmp(commands->cmd_args[0], "unset") == 0)
+		shell->exit_status = ft_unset(commands->cmd_args, shell);
+	else if (ft_strcmp(commands->cmd_args[0], "env") == 0)
 		shell->exit_status = ft_env(shell);
-	else if (ft_strcmp(commands->cmd_name[0], "exit") == 0)
+	else if (ft_strcmp(commands->cmd_args[0], "exit") == 0)
 		ft_exit(commands, shell, pipe);
 	if (pipe == true)
 		free_and_exit_shell(shell, shell->exit_status);
 }
 
-static void	execute_command(t_command *current, t_data *shell)
+static void	execute_command(t_cmd *current, t_data *shell)
 {
 	char	**env;
 
 	env = NULL;
 	signal(SIGQUIT, SIG_DFL);
-	if (!current->cmd_name[0])
+	if (!current->cmd_args[0])
 	{
 		shell->exit_status = 0;
 		free_and_exit_shell(shell, shell->exit_status);
@@ -47,11 +47,11 @@ static void	execute_command(t_command *current, t_data *shell)
 		exec_builtin(current, shell, true);
 	else
 	{
-		shell->cmd_path = get_cmd_path(current->cmd_name[0], shell);
+		shell->cmd_path = get_cmd_path(current->cmd_args[0], shell);
 		if (!shell->cmd_path)
-			handle_error(current->cmd_name[0], "command not found", 127, shell);
+			handle_error(current->cmd_args[0], "command not found", 127, shell);
 		env = init_env_array(shell->env_list);
-		execve(shell->cmd_path, current->cmd_name, env);
+		execve(shell->cmd_path, current->cmd_args, env);
 		free_array(env);
 		perror(shell->cmd_path);
 		if (shell && shell->cmd_path)
@@ -60,7 +60,7 @@ static void	execute_command(t_command *current, t_data *shell)
 	}
 }
 
-static int	handle_parent(t_command *current, t_data *shell, int prev_fd)
+static int	handle_parent(t_cmd *current, t_data *shell, int prev_fd)
 {
 	if (prev_fd != 0)
 		close(prev_fd);
@@ -73,9 +73,9 @@ static int	handle_parent(t_command *current, t_data *shell, int prev_fd)
 	return (prev_fd);
 }
 
-static void	handle_child(t_command *current, t_data *shell, int prev_fd)
+static void	handle_child(t_cmd *current, t_data *shell, int prev_fd)
 {
-	if (current->redirections)
+	if (current->redirs)
 		open_and_redirect_fd(current, shell);
 	has_no_filename(current, shell, prev_fd);
 	execute_command(current, shell);
@@ -83,15 +83,15 @@ static void	handle_child(t_command *current, t_data *shell, int prev_fd)
 
 int	executer(t_data *shell)
 {
-	t_command	*current;
+	t_cmd	*current;
 	int			prev_fd;
 
 	if (shell == NULL || shell->commands == NULL)
 		return (-1);
 	current = shell->commands;
 	prev_fd = 0;
-	if (!current->next && current->is_builtin == true && (!current->redirections
-			|| ft_strcmp(current->cmd_name[0], "exit") == 0))
+	if (!current->next && current->is_builtin == true && (!current->redirs
+			|| ft_strcmp(current->cmd_args[0], "exit") == 0))
 		exec_builtin(current, shell, false);
 	else
 	{

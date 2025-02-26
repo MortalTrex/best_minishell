@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:16:40 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:59:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ int	lexer(t_data *shell)
 {
 	char	*expanded_input;
 
-	if (!shell->input)
+	if (!shell->user_line)
 		exit(EXIT_FAILURE);
-	else if (ft_strcmp(shell->input, "\0") == 0)
+	else if (ft_strcmp(shell->user_line, "\0") == 0)
 		return (EXIT_FAILURE);
-	else if (str_is_empty_or_space_only(shell->input))
+	else if (str_is_empty_or_space_only(shell->user_line))
 		return (EXIT_SUCCESS);
-	add_history(shell->input);
-	if (!valid_quotes(shell->input))
+	add_history(shell->user_line);
+	if (!valid_quotes(shell->user_line))
 		return (printf("Error: invalid quotes\n"), EXIT_FAILURE);
-	expanded_input = expander(shell->input, shell);
+	expanded_input = expander(shell->user_line, shell);
 	if (!expanded_input)
 		return (EXIT_SUCCESS);
 	shell->tokens = tokenize(expanded_input, shell);

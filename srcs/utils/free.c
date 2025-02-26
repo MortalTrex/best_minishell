@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:22:04 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	free_tokens(t_token **tokens)
 	*tokens = NULL;
 }
 
-void	free_commands(t_command **commands)
+void	free_commands(t_cmd **commands)
 {
-	t_command	*temp;
-	t_command	*current;
+	t_cmd	*temp;
+	t_cmd	*current;
 
 	if (!*commands)
 		return ;
@@ -70,9 +70,9 @@ void	free_commands(t_command **commands)
 	while (current)
 	{
 		temp = current->next;
-		if (current->cmd_name)
-			free_array(current->cmd_name);
-		free_tokens(&(current->redirections));
+		if (current->cmd_args)
+			free_array(current->cmd_args);
+		free_tokens(&(current->redirs));
 		free(current);
 		current = temp;
 	}

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ int						check_syntax(t_token *tokens, t_data *shell);
 ////////////////////////// PARSING ////////////////////////////
 
 // create_command.c
-t_command				*get_command(t_token *tokens);
-void					add_command_back(t_command **commands,
-	t_command *new_node);
+t_cmd				*get_command(t_token *tokens);
+void					add_command_back(t_cmd **commands,
+	t_cmd *new_node);
 
 //	parse.c
 char					**get_cmd_array_from_tokens(t_token *tokens);
@@ -104,7 +104,7 @@ int						parser(t_data *shell);
 
 //	redirs_utils.c
 void					handle_redirections(t_token *tokens,
-							t_command *command);
+							t_cmd *command);
 
 //	tokens_utils.c
 t_token					*get_next_pipe(t_token *token);
@@ -113,10 +113,10 @@ int						count_not_null_tokens(t_token *tokens);
 ////////////////////////// BUILTINS ////////////////////////////
 
 //	cd.c
-int						ft_cd(t_command *commands, t_data *shell);
+int						ft_cd(t_cmd *commands, t_data *shell);
 
 //	echo.c
-int						ft_echo(t_command *commands);
+int						ft_echo(t_cmd *commands);
 
 //	env_init.c
 t_env					*init_default_env(void);
@@ -138,7 +138,7 @@ void					add_back_env_var(t_env **head, t_env *new_node);
 int						ft_env(t_data *shell);
 
 //	exit.c
-void					ft_exit(t_command *commands, t_data *shell, bool pipe);
+void					ft_exit(t_cmd *commands, t_data *shell, bool pipe);
 
 //	export_utils.c
 int						free_and_return(char *curr_dir, char *old_dir, int ret);
@@ -148,7 +148,7 @@ int						handle_chdir_error(char *curr_dir, char *old_dir);
 int						ft_export(char **cmd, t_data *shell);
 
 //	pwd.c
-int						ft_pwd(t_command *commands);
+int						ft_pwd(t_cmd *commands);
 
 //	unset.c
 int						var_exists(t_env *env_head, char *var_name);
@@ -173,9 +173,9 @@ void					get_fd_out(t_token *redirections, t_data *shell);
 
 //	exec_redirs.c
 void					get_fds(t_token *redirections, t_data *shell);
-void					open_and_redirect_fd(t_command *current,
+void					open_and_redirect_fd(t_cmd *current,
 							t_data *shell);
-void					has_no_filename(t_command *current, t_data *shell,
+void					has_no_filename(t_cmd *current, t_data *shell,
 							int prev_fd);
 
 //	exec.c
@@ -184,7 +184,7 @@ int						executer(t_data *shell);
 // utils.c
 void					write_line_to_heredoc(int fd, char *tmp, t_data *shell,
 							int quotes_status);
-void					pipe_and_fork(t_command *current, t_data *shell);
+void					pipe_and_fork(t_cmd *current, t_data *shell);
 void					wait_commands(t_data *shell);
 
 ////////////////////////// UTILS ////////////////////////////
@@ -200,7 +200,7 @@ int						invalid_arg(int argc);
 void					free_and_exit_shell(t_data *shell, int exit_code);
 void					free_shell(t_data *shell);
 void					free_tokens(t_token **tokens);
-void					free_commands(t_command **commands);
+void					free_commands(t_cmd **commands);
 
 // stack_utils.c
 t_token					*create_token(char *value, int type, int quotes_status);

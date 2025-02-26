@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:59:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ typedef struct s_token
 	struct s_token		*prev;
 }						t_token;
 
-typedef struct s_command
+typedef struct s_cmd
 {
-	char				**cmd_name;
+	char				**cmd_args;
 	bool				is_builtin;
-	t_token				*redirections;
-	struct s_command	*next;
-	struct s_command	*prev;
-}						t_command;
+	t_token				*redirs;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}						t_cmd;
 
 typedef struct s_env
 {
@@ -56,11 +56,11 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
-typedef struct s_shell
+typedef struct s_data
 {
-	char				*input;
+	char				*user_line;
 	t_token				*tokens;
-	t_command			*commands;
+	t_cmd				*commands;
 	int					infile_fd;
 	int					outfile_fd;
 	pid_t				last_pid;

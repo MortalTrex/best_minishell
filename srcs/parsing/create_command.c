@@ -6,26 +6,26 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:23:05 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 14:17:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command	*get_command(t_token *tokens)
+t_cmd	*get_command(t_token *tokens)
 {
-	t_command	*command;
+	t_cmd	*command;
 
 	if (!tokens)
 		return (NULL);
-	command = malloc(sizeof(t_command));
+	command = malloc(sizeof(t_cmd));
 	if (!command)
 		return (NULL);
-	ft_memset(command, 0, sizeof(t_command));
-	command->cmd_name = get_cmd_array_from_tokens(tokens);
+	ft_memset(command, 0, sizeof(t_cmd));
+	command->cmd_args = get_cmd_array_from_tokens(tokens);
 	handle_redirections(tokens, command);
-	if (command->cmd_name && command->cmd_name[0])
-		command->is_builtin = is_builtin(command->cmd_name[0]);
+	if (command->cmd_args && command->cmd_args[0])
+		command->is_builtin = is_builtin(command->cmd_args[0]);
 	return (command);
 }
 
@@ -41,7 +41,7 @@ t_command	*get_command(t_token *tokens)
 // 	return (new_command);
 // }
 
-static t_command	*get_last_command(t_command *head)
+static t_cmd	*get_last_command(t_cmd *head)
 {
 	if (!head)
 		return (NULL);
@@ -50,9 +50,9 @@ static t_command	*get_last_command(t_command *head)
 	return (head);
 }
 
-void	add_command_back(t_command **commands, t_command *new_node)
+void	add_command_back(t_cmd **commands, t_cmd *new_node)
 {
-	t_command	*temp;
+	t_cmd	*temp;
 
 	if (!new_node)
 		return ;

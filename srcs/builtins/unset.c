@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:57:25 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	ft_unset(char **cmd, t_data *shell)
 	{
 		if (cmd[1][0] == '-')
 			return (write_error(cmd[1], "invalid option", "export"), 2);
-		if (var_exists(shell->env_list, shell->commands->cmd_name[i]))
-			delete_env_var(shell->env_list, shell->commands->cmd_name[i]);
+		if (var_exists(shell->env_list, shell->commands->cmd_args[i]))
+			delete_env_var(shell->env_list, shell->commands->cmd_args[i]);
 		i++;
 	}
 	return (EXIT_SUCCESS);

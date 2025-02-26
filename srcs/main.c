@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:59:20 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ int	minishell_loop(t_data *shell)
 	while (1)
 	{
 		ignore_signals();
-		shell->input = readline(PROMPT);
+		shell->user_line = readline(PROMPT);
 		if (g_exit_status == 130)
 		{
 			shell->exit_status = 130;
 			g_exit_status = 0;
 		}
-		if (!shell->input)
+		if (!shell->user_line)
 		{
 			if (isatty(STDIN_FILENO))
 				write(2, "exit\n", 6);
