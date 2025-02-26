@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:27:17 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
-	char				*var_name;
+	char				*name;
 	char				*value;
 	struct s_env		*next;
 }						t_env;

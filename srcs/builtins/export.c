@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	handle_export(char *str, t_data *shell)
 	{
 		while (tmp)
 		{
-			if (ft_strcmp(tmp->var_name, split[0]) == 0)
+			if (ft_strcmp(tmp->name, split[0]) == 0)
 			{
 				free(tmp->value);
 				tmp->value = get_env_value(str, split[0]);

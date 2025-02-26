@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:05:31 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*get_env_var_value(char *str, t_env *env_list, char *name,
 	name = name + 1;
 	while (temp)
 	{
-		if (ft_strcmp(temp->var_name, name) == 0)
+		if (ft_strcmp(temp->name, name) == 0)
 			return (temp->value);
 		temp = temp->next;
 	}

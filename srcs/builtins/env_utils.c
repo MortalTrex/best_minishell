@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:31:17 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:23:22 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ t_env	*init_env_node(char *str)
 	split = ft_split(str, '=');
 	if (!split)
 		return (NULL);
-	env_node->var_name = ft_strdup(split[0]);
-	if (!env_node->var_name)
+	env_node->name = ft_strdup(split[0]);
+	if (!env_node->name)
 		return (NULL);
 	env_node->value = get_env_value(str, split[0]);
 	env_node->next = NULL;
@@ -77,7 +77,7 @@ t_env	*init_default_env_node(char *var_name, char *value)
 	env_node = malloc(sizeof(t_env));
 	if (!env_node)
 		return (NULL);
-	env_node->var_name = ft_strdup(var_name);
+	env_node->name = ft_strdup(var_name);
 	env_node->value = ft_strdup(value);
 	env_node->next = NULL;
 	return (env_node);

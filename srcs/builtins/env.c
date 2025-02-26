@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:12 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 14:52:40 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_env(t_data *shell)
 	env = shell->env_list;
 	while (env)
 	{
-		printf("%s=%s\n", env->var_name, env->value);
+		printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}
 	return (EXIT_SUCCESS);
