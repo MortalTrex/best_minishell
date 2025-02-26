@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:34:21 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_env_var_value(char *str, t_env *env_list, char *name,
+static char	*extract_env_value(char *str, t_env *env_list, char *name,
 		char *d_quoted)
 {
 	t_env	*temp;
@@ -30,7 +30,7 @@ static char	*get_env_var_value(char *str, t_env *env_list, char *name,
 	return (NULL);
 }
 
-static char	*get_env_from_str(char *str)
+static char	*parse_env_from_string(char *str)
 {
 	int		i;
 	char	*var_name;
@@ -48,7 +48,7 @@ static char	*get_env_from_str(char *str)
 	return (var_name);
 }
 
-static char	*get_new_str_value(char *str, char *old_value, char *new_value,
+static char	*replace_substring(char *str, char *old_value, char *new_value,
 		int prev_index)
 {
 	char	*new_str;
@@ -88,19 +88,19 @@ char	*get_value_after_expansion(char *str, t_data *shell, int *i)
 	if (str[*i] == '$' && str[*i + 1] == '?')
 	{
 		value = ft_itoa(shell->exit_status);
-		new_str_value = get_new_str_value(str, "$?", value, *i);
+		new_str_value = replace_substring(str, "$?", value, *i);
 		return (free(value), free(str), new_str_value);
 	}
-	var_name = get_env_from_str(str + *i);
+	var_name = parse_env_from_string(str + *i);
 	if (!var_name)
 		return (free(str), NULL);
-	value = get_env_var_value(str, shell->env_list, var_name, d_quoted);
+	value = extract_env_value(str, shell->env_list, var_name, d_quoted);
 	if (value == NULL && *i == 0 && ft_strcmp(str, var_name) != 0)
 	{
 		new_str_value = ft_strtrim(str, var_name);
 		return (free(var_name), free(str), new_str_value);
 	}
-	new_str_value = get_new_str_value(str, var_name, value, *i);
+	new_str_value = replace_substring(str, var_name, value, *i);
 	*i = 0;
 	return (free(var_name), free(str), new_str_value);
 }
