@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:30:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_token
 {
 	int					type;
 	char				*value;
-	int					quotes_status;
+	int					quotes;
 	struct s_token		*next;
 	struct s_token		*prev;
 }						t_token;
@@ -50,9 +50,11 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
+	char				*line;
 	char				*name;
 	char				*value;
 	struct s_env		*next;
+	struct s_env		*prev;
 }						t_env;
 
 typedef struct s_data
@@ -62,13 +64,13 @@ typedef struct s_data
 	t_cmd				*commands;
 	int					infile_fd;
 	int					outfile_fd;
-	pid_t				last_pid;
+	pid_t				prev_pid;
 	int					pipe_fd[2];
 	int					wstatus;
 	char				*cmd_path;
 	char				**env;
 	char				*heredoc;
-	int					old_stdin;
+	int					stdin_old;
 	int					exit_status;
 	t_env				*env_list;
 }						t_data;

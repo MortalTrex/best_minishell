@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:21:12 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	var_exists(t_env *env_head, char *var_name)
+int	is_variable_defined(t_env *env_head, char *var_name)
 {
 	t_env	*env;
 
@@ -28,7 +28,7 @@ int	var_exists(t_env *env_head, char *var_name)
 	return (0);
 }
 
-static void	delete_env_var(t_env *env_head, char *var_name)
+static void	erase_env_variable(t_env *env_head, char *var_name)
 {
 	t_env	*env;
 	t_env	*prev;
@@ -63,9 +63,9 @@ int	ft_unset(char **cmd, t_data *shell)
 	while (cmd[i])
 	{
 		if (cmd[1][0] == '-')
-			return (write_error(cmd[1], "invalid option", "export"), 2);
-		if (var_exists(shell->env_list, shell->commands->cmd_args[i]))
-			delete_env_var(shell->env_list, shell->commands->cmd_args[i]);
+			return (print_error(cmd[1], "invalid option", "export"), 2);
+		if (is_variable_defined(shell->env_list, shell->commands->cmd_args[i]))
+			erase_env_variable(shell->env_list, shell->commands->cmd_args[i]);
 		i++;
 	}
 	return (EXIT_SUCCESS);

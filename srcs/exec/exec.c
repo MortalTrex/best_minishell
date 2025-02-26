@@ -6,27 +6,27 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:24:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:30:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	exec_builtin(t_cmd *commands, t_data *data, bool pipe)
+static void	ft_detect_builtin(t_cmd *commands, t_data *data, bool pipe)
 {
-	if (ft_strcmp(commands->cmd_args[0], "cd") == 0)
+	if (!ft_strcmp(commands->cmd_args[0], "cd"))
 		data->exit_status = ft_cd(commands, data);
-	else if (ft_strcmp(commands->cmd_args[0], "pwd") == 0)
+	else if (!ft_strcmp(commands->cmd_args[0], "pwd"))
 		data->exit_status = ft_pwd(commands);
-	else if (ft_strcmp(commands->cmd_args[0], "echo") == 0)
+	else if (!ft_strcmp(commands->cmd_args[0], "echo"))
 		data->exit_status = ft_echo(commands);
-	else if (ft_strcmp(commands->cmd_args[0], "export") == 0)
+	else if (!ft_strcmp(commands->cmd_args[0], "export"))
 		data->exit_status = ft_export(commands->cmd_args, data);
-	else if (ft_strcmp(commands->cmd_args[0], "unset") == 0)
+	else if (!ft_strcmp(commands->cmd_args[0], "unset"))
 		data->exit_status = ft_unset(commands->cmd_args, data);
-	else if (ft_strcmp(commands->cmd_args[0], "env") == 0)
+	else if (!ft_strcmp(commands->cmd_args[0], "env"))
 		data->exit_status = ft_env(data);
-	else if (ft_strcmp(commands->cmd_args[0], "exit") == 0)
+	else if (!ft_strcmp(commands->cmd_args[0], "exit"))
 		ft_exit(commands, data, pipe);
 	if (pipe == true)
 		free_and_exit(data, data->exit_status);
@@ -44,7 +44,7 @@ static void	execute_command(t_cmd *current, t_data *data)
 		free_and_exit(data, data->exit_status);
 	}
 	if (current->is_builtin == true)
-		exec_builtin(current, data, true);
+		ft_detect_builtin(current, data, true);
 	else
 	{
 		data->cmd_path = get_cmd_path(current->cmd_args[0], data);
@@ -52,7 +52,7 @@ static void	execute_command(t_cmd *current, t_data *data)
 			handle_error(current->cmd_args[0], "command not found", 127, data);
 		env = init_env_array(data->env_list);
 		execve(data->cmd_path, current->cmd_args, env);
-		free_array(env);
+		ft_free_tab(env);
 		perror(data->cmd_path);
 		if (data && data->cmd_path)
 			free(data->cmd_path);
@@ -92,13 +92,13 @@ int	executing(t_data *data)
 	prev_fd = 0;
 	if (!current->next && current->is_builtin == true && (!current->redirs
 			|| ft_strcmp(current->cmd_args[0], "exit") == 0))
-		exec_builtin(current, data, false);
+		ft_detect_builtin(current, data, false);
 	else
 	{
 		while (current)
 		{
 			pipe_and_fork(current, data);
-			if (data->last_pid == 0)
+			if (data->prev_pid == 0)
 				handle_child(current, data, prev_fd);
 			else
 				prev_fd = handle_parent(current, data, prev_fd);

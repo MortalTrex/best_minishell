@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:22:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:09:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:29:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	update_token_quote_status(t_token *token)
 	t_token	*tmp;
 
 	tmp = token;
-	token->quotes_status = 0;
+	token->quotes = 0;
 	while (tmp)
 	{
 		i = 0;
@@ -61,7 +61,7 @@ void	update_token_quote_status(t_token *token)
 			while (tmp->value[i])
 			{
 				if (tmp->value[i] == DQ || tmp->value[i] == SQ)
-					tmp->quotes_status = 1;
+					tmp->quotes = 1;
 				i++;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:07:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	get_exit_status(t_cmd *commands, char *arg,
 	{
 		if (pipe == false)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
-		write_error("exit", "too many arguments", NULL);
+		print_error("exit", "too many arguments", NULL);
 		shell->exit_status = 1;
 		return (1);
 	}
@@ -53,17 +53,17 @@ static int	get_exit_status(t_cmd *commands, char *arg,
 	return (0);
 }
 
-void	ft_exit(t_cmd *commands, t_data *shell, bool pipe)
+void	ft_exit(t_cmd *commands, t_data *data, bool pipe)
 {
 	if (commands->redirs)
-		get_fds(commands->redirs, shell);
-	close_fds(shell);
+		get_fds(commands->redirs, data);
+	close_fds(data);
 	if (commands->cmd_args[1])
 	{
-		if (get_exit_status(commands, commands->cmd_args[1], shell, pipe) == 1)
+		if (get_exit_status(commands, commands->cmd_args[1], data, pipe) == 1)
 			return ;
 	}
 	else if (pipe == false)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-	free_and_exit(shell, shell->exit_status);
+	free_and_exit(data, data->exit_status);
 }

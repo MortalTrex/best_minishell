@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:21:07 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:41:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static int	cd_minus(t_data *data, int option)
 	old_dir = ft_getenv(data->env_list, "PWD");
 	if (!curr_dir)
 	{
-		write_error("cd", "OLDPWD not set", NULL);
+		print_error("cd", "OLDPWD not set", NULL);
 		return (free_and_return(curr_dir, old_dir, 1));
 	}
 	else if (!old_dir)
 	{
-		write_error("cd", "PWD not set", NULL);
+		print_error("cd", "PWD not set", NULL);
 		return (free_and_return(curr_dir, old_dir, 1));
 	}
 	if (curr_dir && chdir(curr_dir) == -1)
@@ -71,7 +71,7 @@ static int	check_for_arguments(t_cmd *commands, t_data *shell)
 			return (cd_minus(shell, 0));
 		else if (commands->cmd_args[1][0] == '-' && commands->cmd_args[1][1])
 		{
-			write_error("cd", "invalid option", commands->cmd_args[1]);
+			print_error("cd", "invalid option", commands->cmd_args[1]);
 			return (2);
 		}
 		else if (chdir(commands->cmd_args[1]) == -1)
@@ -91,14 +91,14 @@ int	ft_cd(t_cmd *commands, t_data *shell)
 
 	if (commands->cmd_args[0] && commands->cmd_args[1] && commands->cmd_args[2])
 	{
-		write_error("cd", "too many arguments", NULL);
+		print_error("cd", "too many arguments", NULL);
 		return (1);
 	}
 	if (!commands->cmd_args[1])
 	{
 		value = ft_getenv(shell->env_list, "HOME");
 		if (!value)
-			return (write_error("cd", "HOME not set", NULL), free(value), 1);
+			return (print_error("cd", "HOME not set", NULL), free(value), 1);
 		if (ft_strlen(value) == 0)
 		{
 			free(value);

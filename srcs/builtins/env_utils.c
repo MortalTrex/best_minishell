@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:31:17 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:12:50 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_env	*init_env_node(char *str)
 		return (NULL);
 	env_node->value = get_env_value(str, split[0]);
 	env_node->next = NULL;
-	free_array(split);
+	ft_free_tab(split);
 	return (env_node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:26:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:29:45 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void					add_command_back(t_cmd **commands,
 //	parse.c
 char					**convert_tokens_to_cmd_array(t_token *tokens);
 bool					is_builtin(char *cmd);
-int						parser(t_data *shell);
+int						parsing(t_data *shell);
 
 //	redirs_utils.c
 void					handle_redirections(t_token *tokens,
@@ -140,7 +140,7 @@ int						ft_export(char **cmd, t_data *shell);
 int						ft_pwd(t_cmd *commands);
 
 //	unset.c
-int						var_exists(t_env *env_head, char *var_name);
+int						is_variable_defined(t_env *env_head, char *var_name);
 int						ft_unset(char **cmd, t_data *shell);
 
 ////////////////////////// EXEC ////////////////////////////
@@ -181,8 +181,8 @@ void					wait_commands(t_data *shell);
 //	errors.c
 int						syntax_error_eof(void);
 int						syntax_error_in_token(char *token, t_data *shell);
-void					write_error(char *cmd, char *error, char *arg);
-void					write_warning(char *arg);
+void					print_error(char *cmd, char *error, char *arg);
+void					print_warning(char *arg);
 int						check_args(int argc);
 
 //	free.c
@@ -194,8 +194,7 @@ void					free_commands(t_cmd **commands);
 // stack_utils.c
 t_token					*create_token(char *value, int type, int quotes);
 void					add_token_back(t_token **tokens, t_token *new_node);
-char					**init_array(int size);
-void					free_array(char **arr);
+char					**init_tab(int size);
 
 ////////////////////////// SIGNALS ////////////////////////////
 

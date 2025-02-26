@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:05:24 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:05:31 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:32:36 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_unquoted_value(char *str)
+static char	*unquote_string(char *str)
 {
 	char	*new_str;
 	char	quote;
@@ -34,7 +34,7 @@ static char	*get_unquoted_value(char *str)
 	return (new_str);
 }
 
-static char	*remove_char(char *str, char c)
+static char	*delete_char_from_string(char *str, char c)
 {
 	int	i;
 	int	j;
@@ -57,7 +57,7 @@ static char	*remove_char(char *str, char c)
 	return (str);
 }
 
-static void	remove_dollar_sign(t_token **token)
+static void	clear_dollar_token(t_token **token)
 {
 	int	i;
 
@@ -69,7 +69,7 @@ static void	remove_dollar_sign(t_token **token)
 		if ((*token)->value[0] == '$' && (*token)->value[i + 1]
 			&& ((*token)->value[i + 1] == DQ || (*token)->value[i
 					+ 1] == SQ))
-			(*token)->value = remove_char((*token)->value, '$');
+			(*token)->value = delete_char_from_string((*token)->value, '$');
 		i++;
 	}
 }
@@ -84,8 +84,8 @@ void	remove_quotes(t_token *tokens)
 	{
 		if (temp->value)
 		{
-			remove_dollar_sign(&temp);
-			unquoted_value = get_unquoted_value(temp->value);
+			clear_dollar_token(&temp);
+			unquoted_value = unquote_string(temp->value);
 			if (unquoted_value)
 			{
 				free(temp->value);

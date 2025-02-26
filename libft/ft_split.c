@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 15:57:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/08/23 18:46:24 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/02/26 18:15:37 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static size_t	get_word_len(char const *s, char c)
 	return (i);
 }
 
-static void	free_array(int i, char **array)
+static void	ft_freetab(int i, char **array)
 {
 	while (i >= 0)
 	{
@@ -66,7 +66,7 @@ static char	**ft_split1(char const *s, char c, char **array, size_t words_count)
 			j++;
 		*(array + i) = ft_substr(s, j, get_word_len((const char *)(s + j), c));
 		if (!*(array + i))
-			return (free_array(i, array), NULL);
+			return (ft_freetab(i, array), NULL);
 		while (*(s + j) && *(s + j) != c)
 			j++;
 		i++;

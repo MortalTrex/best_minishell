@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 11:53:49 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:22:05 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:29:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	handle_redirections(t_token *tokens, t_cmd *command)
 		{
 			next = temp->next->next;
 			add_token_back(&redirections, create_token(temp->value,
-					temp->type, temp->quotes_status));
+					temp->type, temp->quotes));
 			add_token_back(&redirections, create_token(temp->next->value,
-					temp->next->type, temp->next->quotes_status));
+					temp->next->type, temp->next->quotes));
 			temp = next;
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:10:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:30:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	pipe_and_fork(t_cmd *current, t_data *shell)
 			exit(EXIT_FAILURE);
 		}
 	}
-	shell->last_pid = fork();
-	if (shell->last_pid == -1)
+	shell->prev_pid = fork();
+	if (shell->prev_pid == -1)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);
@@ -61,7 +61,7 @@ void	wait_commands(t_data *shell)
 	signal(SIGINT, SIG_IGN);
 	while (errno != ECHILD)
 	{
-		if (wait(&shell->wstatus) == shell->last_pid)
+		if (wait(&shell->wstatus) == shell->prev_pid)
 		{
 			if (WIFEXITED(shell->wstatus))
 				shell->exit_status = WEXITSTATUS(shell->wstatus);

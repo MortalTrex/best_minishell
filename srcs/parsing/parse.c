@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:13:13 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:22:17 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:29:45 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ char	**convert_tokens_to_cmd_array(t_token *tokens)
 		{
 			cmd_array[++i] = ft_strdup(tokens->value);
 			if (cmd_array[i] == NULL)
-				return (free_array(cmd_array), NULL);
+				return (ft_free_tab(cmd_array), NULL);
 		}
 		else if (tokens->value && tokens->type == T_WORD)
 		{
 			cmd_array[++i] = ft_strdup("");
 			if (cmd_array[i] == NULL)
-				return (free_array(cmd_array), NULL);
+				return (ft_free_tab(cmd_array), NULL);
 		}
 		tokens = tokens->next;
 	}
@@ -58,7 +58,7 @@ bool	is_builtin(char *cmd)
 	return (false);
 }
 
-int	parser(t_data *shell)
+int	parsing(t_data *shell)
 {
 	t_token		*temp;
 	t_cmd		*new_command;

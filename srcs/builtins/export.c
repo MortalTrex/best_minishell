@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:21:02 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_valid_identifier(char *str)
+static int	check_valid_identifier(char *str)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ static int	is_valid_identifier(char *str)
 	return (1);
 }
 
-static int	is_valid_env_value(char *str)
+static int	check_if_value(char *str)
 {
 	int	i;
 
@@ -49,27 +49,27 @@ static int	valid_for_export(char *str)
 	char	**split;
 
 	if (ft_strlen(str) == 0)
-		return (write_error("export", "not a valid identifier", str), 1);
+		return (print_error("export", "not a valid identifier", str), 1);
 	if (!ft_strchr(str, '=') || str[0] == '=')
 	{
-		if (!is_valid_identifier(str))
-			return (write_error("export", "not a valid identifier", str), 1);
+		if (!check_valid_identifier(str))
+			return (print_error("export", "not a valid identifier", str), 1);
 		return (-1);
 	}
 	split = ft_split(str, '=');
-	if (ft_strcmp(str, "=") == 0 || !is_valid_identifier(split[0]))
+	if (ft_strcmp(str, "=") == 0 || !check_valid_identifier(split[0]))
 	{
 		if (split[0][0] == '-')
-			return (write_error("export", "invalid option", split[0]),
-				free_array(split), 2);
-		return (write_error("export", "not a valid identifier", str),
-			free_array(split), 1);
+			return (print_error("export", "invalid option", split[0]),
+				ft_free_tab(split), 2);
+		return (print_error("export", "not a valid identifier", str),
+			ft_free_tab(split), 1);
 	}
 	if (!split[1])
-		return (free_array(split), 0);
-	if (!is_valid_env_value(split[1]))
-		return (free_array(split), 1);
-	return (free_array(split), 0);
+		return (ft_free_tab(split), 0);
+	if (!check_if_value(split[1]))
+		return (ft_free_tab(split), 1);
+	return (ft_free_tab(split), 0);
 }
 
 static void	handle_export(char *str, t_data *shell)
@@ -79,7 +79,7 @@ static void	handle_export(char *str, t_data *shell)
 
 	split = ft_split(str, '=');
 	tmp = shell->env_list;
-	if (!var_exists(shell->env_list, split[0]))
+	if (!is_variable_defined(shell->env_list, split[0]))
 		add_back_env_var(&shell->env_list, init_env_node(str));
 	else
 	{
@@ -94,7 +94,7 @@ static void	handle_export(char *str, t_data *shell)
 			tmp = tmp->next;
 		}
 	}
-	free_array(split);
+	ft_free_tab(split);
 }
 
 int	ft_export(char **cmd, t_data *shell)

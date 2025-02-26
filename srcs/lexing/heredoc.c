@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:58:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:11:47 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:30:44 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static void	cleanup_heredoc(int fd, t_data *shell)
 	if (fd != -1)
 		close(fd);
 	close(STDIN_FILENO);
-	dup2(shell->old_stdin, STDIN_FILENO);
-	close(shell->old_stdin);
+	dup2(shell->stdin_old, STDIN_FILENO);
+	close(shell->stdin_old);
 }
 
 static void	create_heredoc(char *delimiter, t_data *shell, int quote_status)
@@ -74,7 +74,7 @@ static void	create_heredoc(char *delimiter, t_data *shell, int quote_status)
 		if (line == NULL)
 		{
 			if (g_exit_status != 130)
-				write_warning(delimiter);
+				print_warning(delimiter);
 			break ;
 		}
 		tmp = line;
@@ -90,14 +90,14 @@ int	handle_heredoc(t_token *tmp, t_data *shell, int option)
 	int	ret;
 
 	ret = 0;
-	shell->old_stdin = dup(STDIN_FILENO);
+	shell->stdin_old = dup(STDIN_FILENO);
 	if (option == 0)
 		ret = validate_heredoc_syntax(shell->tokens, shell);
 	if (shell->heredoc)
 		free(shell->heredoc);
 	create_filename(shell);
 	signal(SIGINT, heredoc_sigint_handler);
-	create_heredoc(tmp->value, shell, tmp->quotes_status);
+	create_heredoc(tmp->value, shell, tmp->quotes);
 	if (!shell->heredoc)
 		return (1);
 	return (ret);

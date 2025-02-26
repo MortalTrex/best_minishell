@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:22:04 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:15 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:13:03 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	free_commands(t_cmd **commands)
 	{
 		temp = current->next;
 		if (current->cmd_args)
-			free_array(current->cmd_args);
+			ft_free_tab(current->cmd_args);
 		free_tokens(&(current->redirs));
 		free(current);
 		current = temp;

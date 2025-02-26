@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:30:01 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:23:29 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:17:40 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ void	get_fds(t_token *redirs, t_data *data)
 void	open_and_redirect_fd(t_cmd *current, t_data *data)
 {
 	get_fds(current->redirs, data);
-	if (data->infile_fd != -2)
-	{
-		duplicate_fd(data->infile_fd, STDIN_FILENO, data, 1);
-		close(data->infile_fd);
-	}
 	if (data->outfile_fd != -2)
 	{
 		duplicate_fd(data->outfile_fd, STDOUT_FILENO, data, 1);
 		close(data->outfile_fd);
+	}
+	if (data->infile_fd != -2)
+	{
+		duplicate_fd(data->infile_fd, STDIN_FILENO, data, 1);
+		close(data->infile_fd);
 	}
 	if (data->heredoc && !current->next)
 		unlink_heredoc(data);

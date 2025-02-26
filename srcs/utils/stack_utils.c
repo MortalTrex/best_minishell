@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 13:30:34 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:29:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*create_token(char *value, int type, int quotes_status)
+t_token	*create_token(char *value, int type, int quotes)
 {
 	t_token		*token;
 
@@ -26,7 +26,7 @@ t_token	*create_token(char *value, int type, int quotes_status)
 		return (NULL);
 	}
 	token->type = type;
-	token->quotes_status = quotes_status;
+	token->quotes = quotes;
 	token->next = NULL;
 	token->prev = NULL;
 	return (token);
@@ -50,7 +50,7 @@ void	add_token_back(t_token **tokens, t_token *new_node)
 	}
 }
 
-char	**init_array(int size)
+char	**init_tab(int size)
 {
 	char	**array;
 
@@ -60,18 +60,3 @@ char	**init_array(int size)
 	return (array);
 }
 
-void	free_array(char **arr)
-{
-	int	i;
-
-	if (arr)
-	{
-		i = 0;
-		while (arr[i])
-		{
-			free(arr[i]);
-			i++;
-		}
-		free(arr);
-	}
-}

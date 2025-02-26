@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:31:42 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:12:50 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_error(char *cmd, char *error,
 				int exit_status, t_data *shell)
 {
-	write_error(cmd, error, NULL);
+	print_error(cmd, error, NULL);
 	shell->exit_status = exit_status;
 	free_and_exit(shell, shell->exit_status);
 }
@@ -55,7 +55,7 @@ static char	*locate_command_in_paths(char **path_dirs, char *cmd)
 	i = 0;
 	if (cmd[0] == '\0')
 	{
-		free_array(path_dirs);
+		ft_free_tab(path_dirs);
 		return (NULL);
 	}
 	while (path_dirs[i++])
@@ -65,13 +65,13 @@ static char	*locate_command_in_paths(char **path_dirs, char *cmd)
 		if (cmd_path && access(cmd_path, X_OK) == 0)
 		{
 			free(temp);
-			free_array(path_dirs);
+			ft_free_tab(path_dirs);
 			return (cmd_path);
 		}
 		free(cmd_path);
 		free(temp);
 	}
-	free_array(path_dirs);
+	ft_free_tab(path_dirs);
 	return (NULL);
 }
 

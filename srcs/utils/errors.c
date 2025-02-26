@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:37 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:41:59 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	syntax_error_eof(void)
 	return (1);
 }
 
-void	write_error(char *cmd, char *error, char *arg)
+void	print_error(char *cmd, char *error, char *arg)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	if (cmd)
@@ -48,7 +48,7 @@ void	write_error(char *cmd, char *error, char *arg)
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-void	write_warning(char *arg)
+void	print_warning(char *arg)
 {
 	ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
 	ft_putstr_fd("here-document delimited by end-of-file (wanted `",
@@ -60,7 +60,7 @@ void	write_warning(char *arg)
 int	check_args(int argc)
 {
 	if (argc != 1)
-		return (write_error(NULL, "minishell doesn't take any arguments", NULL),
+		return (print_error(NULL, "minishell doesn't take any arguments", NULL),
 			EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

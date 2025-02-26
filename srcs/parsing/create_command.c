@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:23:05 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:08:26 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:19:00 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,6 @@ t_cmd	*get_command(t_token *tokens)
 		command->is_builtin = is_builtin(command->cmd_args[0]);
 	return (command);
 }
-
-// static t_command	*init_command(void)
-// {
-// 	t_command	*new_command;
-
-// 	new_command = malloc(sizeof(t_command));
-// 	if (!new_command)
-// 		exit(EXIT_FAILURE);
-// 	new_command->cmd_name = NULL;
-// 	new_command->is_builtin = false;
-// 	return (new_command);
-// }
 
 static t_cmd	*get_last_command(t_cmd *head)
 {

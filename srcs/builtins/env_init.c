@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:28:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:28:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:12:50 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ static char	**fill_env_array(t_env *current, char **res)
 	{
 		tmp = ft_strjoin(current->name, "=");
 		if (!tmp)
-			return (free_array(res), NULL);
+			return (ft_free_tab(res), NULL);
 		if (current->value)
 		{
 			res[i] = ft_strjoin(tmp, current->value);
 			free(tmp);
 			if (!res[i])
-				return (free_array(res), NULL);
+				return (ft_free_tab(res), NULL);
 		}
 		i++;
 		current = current->next;
