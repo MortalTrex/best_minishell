@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:31:17 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:17:38 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:23:22 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*value_mem_alloc(char *str, size_t var_name_len)
+static char	*value_mem_alloc(char *str, size_t var_name_len)
 {
 	char	*value;
 	size_t	full_str_len;

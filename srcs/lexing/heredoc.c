@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:58:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:37:25 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:51:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	unlink_heredoc(t_shell *shell)
 	}
 }
 
-void	create_filename(t_shell *shell)
+static void	create_filename(t_shell *shell)
 {
 	char	*temp_file;
 	int		fd;
@@ -47,7 +47,7 @@ void	create_filename(t_shell *shell)
 	shell->heredoc = temp_file;
 }
 
-void	cleanup_heredoc(int fd, t_shell *shell)
+static void	cleanup_heredoc(int fd, t_shell *shell)
 {
 	if (fd != -1)
 		close(fd);
@@ -56,7 +56,7 @@ void	cleanup_heredoc(int fd, t_shell *shell)
 	close(shell->old_stdin);
 }
 
-void	create_heredoc(char *delimiter, t_shell *shell, int quote_status)
+static void	create_heredoc(char *delimiter, t_shell *shell, int quote_status)
 {
 	int		fd;
 	char	*line;

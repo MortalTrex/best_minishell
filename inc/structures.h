@@ -6,14 +6,12 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:06:30 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:37:07 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
-
-# include <minishell.h>
 
 # include <minishell.h>
 # include <termios.h>
@@ -33,7 +31,6 @@ typedef enum s_type
 	DELIMITER,
 }						t_type;
 
-/* structures */
 typedef struct s_token
 {
 	int					type;

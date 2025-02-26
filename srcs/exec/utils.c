@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:31:38 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:43:24 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,6 @@ void	write_line_to_heredoc(int fd, char *tmp, t_shell *shell,
 	write(fd, "\n", 1);
 	if (tmp)
 		free(tmp);
-}
-
-void	free_line(char *line, t_token *tmp)
-{
-	free(line);
-	if (tmp->value != line)
-	{
-		free(tmp->value);
-		tmp->value = NULL;
-	}
 }
 
 void	pipe_and_fork(t_command *current, t_shell *shell)
@@ -92,6 +82,15 @@ void	wait_commands(t_shell *shell)
 		shell->exit_status = 130;
 }
 
+// static void	free_line(char *line, t_token *tmp)
+// {
+// 	free(line);
+// 	if (tmp->value != line)
+// 	{
+// 		free(tmp->value);
+// 		tmp->value = NULL;
+// 	}
+// }
 // void	transform_ast(t_ast_node *node, t_data *data)
 // {
 // 	(void)node;

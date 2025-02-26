@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:57 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:46:35 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:30:48 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ int	count_not_null_tokens(t_token *tokens)
 	}
 	return (count);
 }
-

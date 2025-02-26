@@ -6,32 +6,32 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 16:20:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:36:22 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	compute_exit_status(long stat, t_shell *shell, bool pipe)
+static void	calculate_exit_status(long status, t_shell *shell, bool pipe)
 {
-	if (stat > 255)
-		stat = stat % 256;
-	else if (stat < 0)
-		stat = (stat % 256) + 256;
+	if (status > 255)
+		status = status % 256;
+	else if (status < 0)
+		status = (status % 256) + 256;
 	if (pipe == false)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-	shell->exit_status = stat;
+	shell->exit_status = status;
 }
 
 static int	get_exit_status(t_command *commands, char *arg,
 				t_shell *shell, bool pipe)
 {
-	long	stat;
-    char	*endptr;
+	long	status;
+	char	*endptr;
 
-    errno = 0; // Reset errno before calling ft_atoi_long
-    stat = ft_atoi_long(arg, &endptr);
-	if (errno == ERANGE ||*endptr != '\0')
+	errno = 0;
+	status = ft_atoi_long(arg, &endptr);
+	if (errno == ERANGE || *endptr != '\0')
 	{
 		if (pipe == false)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
@@ -49,7 +49,7 @@ static int	get_exit_status(t_command *commands, char *arg,
 		return (1);
 	}
 	else
-		compute_exit_status(stat, shell, pipe);
+		calculate_exit_status(status, shell, pipe);
 	return (0);
 }
 

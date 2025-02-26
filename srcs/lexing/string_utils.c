@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:36:52 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:59:29 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_var_value(char *str, t_env *env_list, char *name,
+static char	*get_env_var_value(char *str, t_env *env_list, char *name,
 		char *d_quoted)
 {
 	t_env	*temp;
@@ -30,7 +30,7 @@ char	*get_env_var_value(char *str, t_env *env_list, char *name,
 	return (NULL);
 }
 
-char	*get_env_from_str(char *str)
+static char	*get_env_from_str(char *str)
 {
 	int		i;
 	char	*var_name;
@@ -48,7 +48,7 @@ char	*get_env_from_str(char *str)
 	return (var_name);
 }
 
-char	*get_new_str_value(char *str, char *old_value, char *new_value,
+static char	*get_new_str_value(char *str, char *old_value, char *new_value,
 		int prev_index)
 {
 	char	*new_str;

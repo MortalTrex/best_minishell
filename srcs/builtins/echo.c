@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:10 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:07:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:43:36 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ static void	check_for_n_flag(t_command *commands, bool *n_flag, int *i)
 	}
 }
 
-/*gets the length of the command to write, then writes it.
-Separate multiple commands by one space
-If the n_flag is present, does not write \n*/
 static void	write_commands(t_command *commands, bool n_flag, int *i)
 {
 	while (commands->cmd_name[*i])
@@ -46,8 +43,6 @@ static void	write_commands(t_command *commands, bool n_flag, int *i)
 		write(STDOUT_FILENO, "\n", 1);
 }
 
-/*If there is not argument, prints \n and returns.
-Otherwise, checks for valid flags and writes the commands*/
 int	ft_echo(t_command *commands)
 {
 	bool	n_flag;

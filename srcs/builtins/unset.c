@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:10:14 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:31:03 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	var_exists(t_env *env_head, char *var_name)
 	return (0);
 }
 
-void	delete_env_var(t_env *env_head, char *var_name)
+static void	delete_env_var(t_env *env_head, char *var_name)
 {
 	t_env	*env;
 	t_env	*prev;

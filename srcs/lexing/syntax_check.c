@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:43:44 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:03:21 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	invalid_type_syntax_error(t_token *token, t_shell *shell)
+static int	invalid_type_syntax_error(t_token *token, t_shell *shell)
 {
 	if (token->value[0] == '>' && token->value[1] == '>'
 		&& ft_strlen(token->value) >= 4)
@@ -60,7 +60,7 @@ int	case_heredoc_syntax(t_token *tokens, t_shell *shell)
 	return (0);
 }
 
-int	no_heredoc_syntax(t_token *tmp, t_shell *shell)
+static int	no_heredoc_syntax(t_token *tmp, t_shell *shell)
 {
 	if (tmp->type == -1)
 		return (invalid_type_syntax_error(tmp, shell));
@@ -78,7 +78,7 @@ int	no_heredoc_syntax(t_token *tmp, t_shell *shell)
 	return (0);
 }
 
-int	process_heredocs(t_token *tokens, t_shell *shell)
+static int	process_heredocs(t_token *tokens, t_shell *shell)
 {
 	t_token	*tmp;
 	int		heredoc;

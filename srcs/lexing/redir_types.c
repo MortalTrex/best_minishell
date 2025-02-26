@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:58 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:43:16 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:54:47 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_redir_type(char *str, int i, int count, char ch)
+static int	check_redir_type(char *str, int i, int count, char ch)
 {
 	int	result_double;
 	int	result_single;

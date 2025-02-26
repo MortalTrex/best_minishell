@@ -6,16 +6,16 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 16:26:26 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:33:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 // valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
-int g_exit_code;
+int	g_exit_code;
 
-int init_shell(t_shell *shell, char **env)
+int	init_shell(t_shell *shell, char **env)
 {
 	shell->env_list = init_env(env);
 	if (shell->env_list == NULL)
@@ -33,7 +33,7 @@ int init_shell(t_shell *shell, char **env)
 	return (EXIT_SUCCESS);
 }
 
-int minishell_loop(t_shell *shell)
+int	minishell_loop(t_shell *shell)
 {
 	while (1)
 	{
@@ -59,9 +59,9 @@ int minishell_loop(t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	t_shell shell;
+	t_shell	shell;
 
 	(void)argv;
 	if (invalid_arg(argc) || init_shell(&shell, env))

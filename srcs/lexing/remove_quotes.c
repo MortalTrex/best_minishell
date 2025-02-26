@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:05:24 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:36:35 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:56:57 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_unquoted_value(char *str)
+static char	*get_unquoted_value(char *str)
 {
 	char	*new_str;
 	char	quote;
@@ -34,7 +34,7 @@ char	*get_unquoted_value(char *str)
 	return (new_str);
 }
 
-char	*remove_char(char *str, char c)
+static char	*remove_char(char *str, char c)
 {
 	int	i;
 	int	j;
@@ -57,7 +57,7 @@ char	*remove_char(char *str, char c)
 	return (str);
 }
 
-void	remove_dollar_sign(t_token **token)
+static void	remove_dollar_sign(t_token **token)
 {
 	int	i;
 

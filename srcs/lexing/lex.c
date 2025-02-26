@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:16:40 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:42:51 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:53:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_token_size(char *str)
+static int	get_token_size(char *str)
 {
 	int	type;
 	int	i;
@@ -38,7 +38,7 @@ int	get_token_size(char *str)
 	return (i);
 }
 
-char	*get_token(char *str)
+static char	*get_token(char *str)
 {
 	char	*token_value;
 	int		len;
@@ -52,7 +52,7 @@ char	*get_token(char *str)
 	return (token_value);
 }
 
-t_token	*tokenize(char *str, t_shell *shell)
+static t_token	*tokenize(char *str, t_shell *shell)
 {
 	int		i;
 	char	*substr;

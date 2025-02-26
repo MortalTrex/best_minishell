@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:47:35 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:35:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:48:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_heredoc(char *str)
+static int	is_heredoc(char *str)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ int	is_heredoc(char *str)
 	return (0);
 }
 
-int	valid_expansion(char *str, int i, char *quote)
+static int	valid_expansion(char *str, int i, char *quote)
 {
 	if (*quote == S_QUOTE)
 		return (0);
@@ -57,7 +57,7 @@ int	get_quote(char *quote, char c)
 	return (-1);
 }
 
-int	count_dollars(char *str)
+static int	count_dollars(char *str)
 {
 	int	i;
 	int	count;

@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_free.c                                         :+:      :+:    :+:   */
+/*   env_set_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:15:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 15:16:20 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:16:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_env_node(t_env *env)
-{
-	free(env->var_name);
-	free(env->value);
-	free(env);
-}
 
 void	free_env(t_env *env)
 {
@@ -28,7 +21,9 @@ void	free_env(t_env *env)
 	while (current)
 	{
 		next = current->next;
-		free_env_node(current);
+		free(current->var_name);
+		free(current->value);
+		free(current);
 		current = next;
 	}
 }
@@ -46,6 +41,7 @@ char	*ft_getenv(t_env *env_list, char *key)
 	}
 	return (NULL);
 }
+
 void	ft_setenv(t_env *env_head, char *name, char *value)
 {
 	t_env	*current;

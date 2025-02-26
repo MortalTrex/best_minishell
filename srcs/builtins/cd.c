@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:03:19 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:10:24 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	update_pwd(t_shell *shell, char *command)
+static void	update_pwd(t_shell *shell, char *command)
 {
 	char	cwd[4096];
 	char	*old_dir;
@@ -31,7 +31,7 @@ void	update_pwd(t_shell *shell, char *command)
 	ft_setenv(shell->env_list, "PWD", cwd);
 }
 
-int	cd_minus(t_shell *shell, int option)
+static int	cd_minus(t_shell *shell, int option)
 {
 	char	*curr_dir;
 	char	*old_dir;
@@ -60,7 +60,7 @@ int	cd_minus(t_shell *shell, int option)
 	return (free_and_return(curr_dir, old_dir, 0));
 }
 
-int	check_for_arguments(t_command *commands, t_shell *shell)
+static int	check_for_arguments(t_command *commands, t_shell *shell)
 {
 	if (commands->cmd_name[1])
 	{

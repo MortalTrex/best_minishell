@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:28:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:11:51 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:19:17 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_env	*init_env(char **env)
 	return (head);
 }
 
-int	list_len(t_env *env_head)
+static int	list_len(t_env *env_head)
 {
 	int		i;
 	t_env	*current;
@@ -71,7 +71,7 @@ int	list_len(t_env *env_head)
 	return (i);
 }
 
-char	**fill_env_array(t_env *current, char **res)
+static char	**fill_env_array(t_env *current, char **res)
 {
 	int		i;
 	char	*tmp;

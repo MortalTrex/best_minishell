@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:19:54 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/25 14:20:03 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:44:22 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,15 @@ void	print_tab(char **str)
 	}
 }
 
+//char					*remove_char(char *str, char c);
+//char					*get_env_from_str(char *str);
+//char					*get_new_str_value(char *str, char *old_value,char *new_value, int prev_index);
+//int						invalid_type_syntax_error(t_token *token, t_shell *shell);
+//t_command				*init_command(void);
+//t_command				*get_last_command(t_command *head);
+//int						is_valid_identifier(char *str);
+//int						check_if_other_heredoc(t_token *current);
+//void					free_line(char *line, t_token *tmp);
+
+// int						init_shell(t_shell *shell, char **env);
+// int						minishell_loop(t_shell *shell);

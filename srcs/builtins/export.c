@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/25 15:09:33 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:28:35 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_valid_identifier(char *str)
+static int	is_valid_identifier(char *str)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ int	is_valid_identifier(char *str)
 	return (1);
 }
 
-int	is_valid_env_value(char *str)
+static int	is_valid_env_value(char *str)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ int	is_valid_env_value(char *str)
 	return (1);
 }
 
-int	valid_for_export(char *str)
+static int	valid_for_export(char *str)
 {
 	char	**split;
 
@@ -72,7 +72,7 @@ int	valid_for_export(char *str)
 	return (free_array(split), 0);
 }
 
-void	handle_export(char *str, t_shell *shell)
+static void	handle_export(char *str, t_shell *shell)
 {
 	t_env	*tmp;
 	char	**split;
