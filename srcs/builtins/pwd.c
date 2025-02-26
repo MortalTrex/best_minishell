@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:21 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 17:36:26 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:36:24 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void ft_free(void **ptr)
+static void	ft_free(void **ptr)
 {
 	if (*ptr)
 	{

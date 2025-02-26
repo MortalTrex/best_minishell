@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:31:17 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:12:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:35:50 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*value_mem_alloc(char *str, size_t var_name_len)
+static char	*allocate_env_value_memory(char *str, size_t var_name_len)
 {
 	char	*value;
 	size_t	full_str_len;
@@ -43,7 +43,7 @@ char	*get_env_value(char *str, char *var_name)
 	char	*value;
 
 	var_name_len = ft_strlen(var_name);
-	value = value_mem_alloc(str, var_name_len);
+	value = allocate_env_value_memory(str, var_name_len);
 	if (value != NULL)
 		ft_strlcpy(value, str + var_name_len + 1, ft_strlen(str)
 			- var_name_len);
@@ -83,7 +83,7 @@ t_env	*init_default_env_node(char *var_name, char *value)
 	return (env_node);
 }
 
-void	add_back_env_var(t_env **head, t_env *new_node)
+void	append_env_variable(t_env **head, t_env *new_node)
 {
 	t_env	*current;
 

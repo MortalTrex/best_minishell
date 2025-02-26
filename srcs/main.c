@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:31:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:37:38 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	init_shell(t_data *shell, char **env)
 	shell->outfile_fd = -2;
 	shell->pipe_fd[0] = -2;
 	shell->pipe_fd[1] = -2;
-
 	return (EXIT_SUCCESS);
 }
 

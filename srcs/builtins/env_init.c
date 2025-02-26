@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 19:28:14 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:12:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:35:39 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ t_env	*init_default_env(void)
 	new = init_default_env_node("PWD", getcwd(NULL, 0));
 	if (!new)
 		return (free_env(res), NULL);
-	add_back_env_var(&res, new);
+	append_env_variable(&res, new);
 	new = init_default_env_node("SHLVL", "1");
 	if (!new)
 		return (free_env(res), NULL);
-	add_back_env_var(&res, new);
+	append_env_variable(&res, new);
 	new = init_default_env_node("_", "/usr/bin/env");
 	if (!new)
 		return (free_env(res), NULL);
-	add_back_env_var(&res, new);
-	add_back_env_var(&res, NULL);
+	append_env_variable(&res, new);
+	append_env_variable(&res, NULL);
 	return (res);
 }
 
@@ -47,10 +47,10 @@ t_env	*init_env(char **env)
 		new_node = init_env_node(env[i]);
 		if (!new_node)
 			return (free_env(head), NULL);
-		add_back_env_var(&head, new_node);
+		append_env_variable(&head, new_node);
 		i++;
 	}
-	add_back_env_var(&head, NULL);
+	append_env_variable(&head, NULL);
 	if (!head)
 		head = init_default_env();
 	return (head);

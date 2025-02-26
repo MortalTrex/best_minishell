@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:29:45 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:39:28 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void					ft_setenv(t_env *env_head, char *name, char *value);
 char					*get_env_value(char *str, char *var_name);
 t_env					*init_env_node(char *str);
 t_env					*init_default_env_node(char *var_name, char *value);
-void					add_back_env_var(t_env **head, t_env *new_node);
+void					append_env_variable(t_env **head, t_env *new_node);
 
 //	env.c
 int						ft_env(t_data *shell);
@@ -180,7 +180,7 @@ void					wait_commands(t_data *shell);
 
 //	errors.c
 int						syntax_error_eof(void);
-int						syntax_error_in_token(char *token, t_data *shell);
+int						handle_token_syntax_error(char *token, t_data *shell);
 void					print_error(char *cmd, char *error, char *arg);
 void					print_warning(char *arg);
 int						check_args(int argc);

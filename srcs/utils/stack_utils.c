@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:43 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:29:13 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:36:14 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ char	**init_tab(int size)
 		exit(EXIT_FAILURE);
 	return (array);
 }
-

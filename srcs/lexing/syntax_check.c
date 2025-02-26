@@ -6,32 +6,32 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 14:56:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:08:42 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:39:41 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	invalid_type_syntax_error(t_token *token, t_data *shell)
+static int	handle_invalid_syntax_error(t_token *token, t_data *shell)
 {
 	if (token->value[0] == '>' && token->value[1] == '>'
 		&& ft_strlen(token->value) >= 4)
-		return (syntax_error_in_token(">>", shell));
+		return (handle_token_syntax_error(">>", shell));
 	else if (token->value[0] == '<' && token->value[1] == '<'
 		&& ft_strlen(token->value) >= 6)
-		return (syntax_error_in_token("<<<", shell));
+		return (handle_token_syntax_error("<<<", shell));
 	else if (token->value[0] == '<' && token->value[1] == '<'
 		&& ft_strlen(token->value) >= 4)
-		return (syntax_error_in_token("<<", shell));
+		return (handle_token_syntax_error("<<", shell));
 	else if (token->value[0] == '>')
-		return (syntax_error_in_token(">", shell));
+		return (handle_token_syntax_error(">", shell));
 	else if (token->value[0] == '<')
-		return (syntax_error_in_token("<", shell));
+		return (handle_token_syntax_error("<", shell));
 	else if (token->value[0] == '|' && token->value[1] == '|'
 		&& ft_strlen(token->value) >= 2)
-		return (syntax_error_in_token("||", shell));
+		return (handle_token_syntax_error("||", shell));
 	if (token->value[0] == '|')
-		return (syntax_error_in_token("|", shell));
+		return (handle_token_syntax_error("|", shell));
 	return (0);
 }
 
@@ -43,17 +43,17 @@ int	validate_heredoc_syntax(t_token *tokens, t_data *shell)
 	while (tmp)
 	{
 		if (tmp->type == -1)
-			return (invalid_type_syntax_error(tmp, shell));
+			return (handle_invalid_syntax_error(tmp, shell));
 		else if (tmp->type == T_PIPE && (!tmp->prev || !tmp->next
 				|| tmp->prev->value[0] == '|' || tmp->next->value[0] == '|'))
-			return (invalid_type_syntax_error(tmp, shell));
+			return (handle_invalid_syntax_error(tmp, shell));
 		else if (tmp->type >= T_REDIR_IN && tmp->type <= T_REDIR_HERE)
 		{
 			if (!tmp->next)
-				return (syntax_error_in_token("newline", shell));
+				return (handle_token_syntax_error("newline", shell));
 			else if (tmp->next->type != T_FILENAME
 				&& tmp->next->type != T_DELIMITER)
-				return (syntax_error_in_token(tmp->next->value, shell));
+				return (handle_token_syntax_error(tmp->next->value, shell));
 		}
 		tmp = tmp->next;
 	}
@@ -63,17 +63,17 @@ int	validate_heredoc_syntax(t_token *tokens, t_data *shell)
 static int	no_heredoc_syntax(t_token *tmp, t_data *shell)
 {
 	if (tmp->type == -1)
-		return (invalid_type_syntax_error(tmp, shell));
+		return (handle_invalid_syntax_error(tmp, shell));
 	else if (tmp->type == T_PIPE && (!tmp->prev || !tmp->next
 			|| tmp->prev->type == T_PIPE || tmp->next->type == T_PIPE))
-		return (invalid_type_syntax_error(tmp, shell));
+		return (handle_invalid_syntax_error(tmp, shell));
 	else if (tmp->type >= T_REDIR_IN && tmp->type <= T_REDIR_HERE)
 	{
 		if (!tmp->next)
-			return (syntax_error_in_token("newline", shell));
+			return (handle_token_syntax_error("newline", shell));
 		else if (tmp->next->type != T_FILENAME
 			&& tmp->next->type != T_DELIMITER)
-			return (syntax_error_in_token(tmp->next->value, shell));
+			return (handle_token_syntax_error(tmp->next->value, shell));
 	}
 	return (0);
 }
