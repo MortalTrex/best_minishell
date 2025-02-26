@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:39:28 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/26 18:54:03 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 
 //	expand.c
 int						get_quote(char *str, char c);
-char					*expanding(char *str, t_data *shell);
+char					*expanding(char *str, t_data *data);
 
 //	grammar_check.c
 int						check_empty_or_whitespace(char *str);
@@ -57,12 +57,12 @@ int						len_between_tokens(char *str, int i, char c);
 int						len_invalid_type(char *str);
 
 // heredoc.c
-void					unlink_heredoc(t_data *shell);
-int						handle_heredoc(t_token *tmp, t_data *shell,
+void					unlink_heredoc(t_data *data);
+int						handle_heredoc(t_token *tmp, t_data *data,
 							int option);
 
 //	lex.c
-int						lexer(t_data *shell);
+int						lexer(t_data *data);
 
 //	redir_types.c
 int						get_type(char *str);
@@ -72,12 +72,12 @@ void					set_redirection_types(t_token *tokens);
 void					remove_quotes(t_token *tokens);
 
 //	string_utils.c
-char					*get_value_after_expansion(char *str, t_data *shell,
+char					*get_value_after_expansion(char *str, t_data *data,
 							int *i);
 
 //	syntax_check.c
-int						validate_heredoc_syntax(t_token *tokens, t_data *shell);
-int						check_syntax(t_token *tokens, t_data *shell);
+int						validate_heredoc_syntax(t_token *tokens, t_data *data);
+int						check_syntax(t_token *tokens, t_data *data);
 
 ////////////////////////// PARSING ////////////////////////////
 
@@ -89,7 +89,7 @@ void					add_command_back(t_cmd **commands,
 //	parse.c
 char					**convert_tokens_to_cmd_array(t_token *tokens);
 bool					is_builtin(char *cmd);
-int						parsing(t_data *shell);
+int						parsing(t_data *data);
 
 //	redirs_utils.c
 void					handle_redirections(t_token *tokens,
@@ -102,7 +102,7 @@ int						count_not_null_tokens(t_token *tokens);
 ////////////////////////// BUILTINS ////////////////////////////
 
 //	cd.c
-int						ft_cd(t_cmd *commands, t_data *shell);
+int						ft_cd(t_cmd *commands, t_data *data);
 
 //	echo.c
 int						ft_echo(t_cmd *commands);
@@ -124,70 +124,70 @@ t_env					*init_default_env_node(char *var_name, char *value);
 void					append_env_variable(t_env **head, t_env *new_node);
 
 //	env.c
-int						ft_env(t_data *shell);
+int						ft_env(t_data *data);
 
 //	exit.c
-void					ft_exit(t_cmd *commands, t_data *shell, bool pipe);
+void					ft_exit(t_cmd *commands, t_data *data, bool pipe);
 
 //	export_utils.c
 int						free_and_return(char *curr_dir, char *old_dir, int ret);
 int						handle_chdir_error(char *curr_dir, char *old_dir);
 
 //	export.c
-int						ft_export(char **cmd, t_data *shell);
+int						ft_export(char **cmd, t_data *data);
 
 //	pwd.c
 int						ft_pwd(t_cmd *commands);
 
 //	unset.c
 int						is_variable_defined(t_env *env_head, char *var_name);
-int						ft_unset(char **cmd, t_data *shell);
+int						ft_unset(char **cmd, t_data *data);
 
 ////////////////////////// EXEC ////////////////////////////
 
 //	exec_cmd.c
 void					handle_error(char *cmd, char *error, int exit_status,
-							t_data *shell);
-char					*get_cmd_path(char *cmd, t_data *shell);
+							t_data *data);
+char					*get_cmd_path(char *cmd, t_data *data);
 
 //	exec_fds_utils.c
-void					duplicate_fd(int fd, int new_fd, t_data *shell,
+void					duplicate_fd(int fd, int new_fd, t_data *data,
 							int exit_status);
-void					close_fds(t_data *shell);
-void					close_pipe_fds(t_data *shell);
+void					close_fds(t_data *data);
+void					close_pipe_fds(t_data *data);
 
 //	exec_open.c
-void					get_fd_in(t_token *redirections, t_data *shell);
-void					get_fd_out(t_token *redirections, t_data *shell);
+void					get_fd_in(t_token *redirections, t_data *data);
+void					get_fd_out(t_token *redirections, t_data *data);
 
 //	exec_redirs.c
-void					get_fds(t_token *redirections, t_data *shell);
+void					get_fds(t_token *redirections, t_data *data);
 void					open_and_redirect_fd(t_cmd *current,
-							t_data *shell);
-void					has_no_filename(t_cmd *current, t_data *shell,
+							t_data *data);
+void					has_no_filename(t_cmd *current, t_data *data,
 							int prev_fd);
 
 //	exec.c
-int						executing(t_data *shell);
+int						executing(t_data *data);
 
 // utils.c
-void					save_heredoc_line(int fd, char *tmp, t_data *shell,
+void					save_heredoc_line(int fd, char *tmp, t_data *data,
 							int quotes);
-void					pipe_and_fork(t_cmd *current, t_data *shell);
-void					wait_commands(t_data *shell);
+void					pipe_and_fork(t_cmd *current, t_data *data);
+void					wait_commands(t_data *data);
 
 ////////////////////////// UTILS ////////////////////////////
 
 //	errors.c
 int						syntax_error_eof(void);
-int						handle_token_syntax_error(char *token, t_data *shell);
+int						handle_token_syntax_error(char *token, t_data *data);
 void					print_error(char *cmd, char *error, char *arg);
 void					print_warning(char *arg);
 int						check_args(int argc);
 
 //	free.c
-void					free_and_exit(t_data *shell, int exit_code);
-void					free_data(t_data *shell);
+void					free_and_exit(t_data *data, int exit_code);
+void					free_data(t_data *data);
 void					free_tokens(t_token **tokens);
 void					free_commands(t_cmd **commands);
 
