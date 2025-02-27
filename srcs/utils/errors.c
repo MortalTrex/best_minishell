@@ -6,28 +6,11 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:39:28 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:59:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	handle_token_syntax_error(char *token, t_data *shell)
-{
-	ft_putstr_fd("minishell: syntax error near unexpected token `",
-		STDERR_FILENO);
-	ft_putstr_fd(token, 2);
-	ft_putstr_fd("'\n", 2);
-	shell->exit_status = 2;
-	return (1);
-}
-
-int	syntax_error_eof(void)
-{
-	ft_putstr_fd("minishell: syntax error: unexpected end of file\n",
-		STDERR_FILENO);
-	return (1);
-}
 
 void	print_error(char *cmd, char *error, char *arg)
 {
@@ -39,28 +22,45 @@ void	print_error(char *cmd, char *error, char *arg)
 	}
 	if (arg)
 	{
-		ft_putchar_fd('`', STDERR_FILENO);
+		ft_putstr_fd("`", STDERR_FILENO);
 		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putchar_fd('\'', STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd("': ", STDERR_FILENO);
 	}
 	ft_putstr_fd(error, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
+}
+
+int	handle_token_syntax_error(char *token, t_data *shell)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token `", \
+		STDERR_FILENO);
+	ft_putstr_fd(token, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	shell->exit_status = 2;
+	return (1);
+}
+
+int	syntax_error_eof(void)
+{
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", \
+		STDERR_FILENO);
+	return (1);
 }
 
 void	print_warning(char *arg)
 {
-	ft_putstr_fd("minishell: warning: ", STDERR_FILENO);
-	ft_putstr_fd("here-document delimited by end-of-file (wanted `",
-		STDERR_FILENO);
+	ft_putstr_fd("minishell: warning: here-document delimited by \
+					end-of-file (wanted `", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
-	ft_putstr_fd("\')\n", STDERR_FILENO);
+	ft_putstr_fd("')\n", STDERR_FILENO);
 }
 
 int	check_args(int argc)
 {
 	if (argc != 1)
-		return (print_error(NULL, "minishell doesn't take any arguments", NULL),
-			EXIT_FAILURE);
+	{
+		print_error(NULL, "minishell doesn't take any arguments", NULL);
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

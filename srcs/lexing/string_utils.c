@@ -6,17 +6,18 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 16:15:52 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:57:32 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*extract_env_value(char *str, t_env *env_list, char *name, char *d_quoted)
+static char	*extract_env_value(char *str, t_env *env_list, char *name, \
+	char *d_quoted)
 {
 	t_env	*temp;
 
-	name++; // Move past '$'
+	name++;
 	temp = env_list;
 	while (temp)
 	{
@@ -24,7 +25,9 @@ static char	*extract_env_value(char *str, t_env *env_list, char *name, char *d_q
 			return (temp->value);
 		temp = temp->next;
 	}
-	return ((d_quoted || ft_strcmp(str, name) != 0) ? "" : NULL);
+	if (d_quoted || ft_strcmp(str, name) != 0)
+		return ("");
+	return (NULL);
 }
 
 static char	*parse_env_from_string(char *str)
@@ -42,7 +45,8 @@ static char	*parse_env_from_string(char *str)
 	return (var_name);
 }
 
-static char	*replace_substring(char *str, char *old_value, char *new_value, int prev_index)
+static char	*replace_substring(char *str, char *old_value, char *new_value, \
+	int prev_index)
 {
 	char	*new_str;
 	int		size;
@@ -53,13 +57,16 @@ static char	*replace_substring(char *str, char *old_value, char *new_value, int 
 	new_str = malloc(size + 1);
 	if (!new_str)
 		return (NULL);
-	i = j = 0;
+	i = 0;
+	j = 0;
 	while (str[i] && j <= size)
 	{
-		if (!ft_strncmp(str + i, old_value, ft_strlen(old_value)) && i == prev_index)
+		if (!ft_strncmp(str + i, old_value, ft_strlen(old_value)) && \
+				i == prev_index)
 		{
 			j += ft_strlcpy(new_str + j, new_value, ft_strlen(new_value) + 1);
-			ft_strlcpy(new_str + j, str + i + ft_strlen(old_value), ft_strlen(str) - i);
+			ft_strlcpy(new_str + j, str + i + ft_strlen(old_value), \
+					ft_strlen(str) - i);
 			return (new_str);
 		}
 		new_str[j++] = str[i++];

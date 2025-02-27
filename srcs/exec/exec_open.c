@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:45:19 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 16:11:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:02:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void	get_file_as_fd_in(t_token *redirections, t_data *shell)
 	current = redirections;
 	while (current)
 	{
-		if (current->next && current->next->type == T_FILENAME && current->type == T_REDIR_IN)
+		if (current->next && current->next->type == T_FILENAME && \
+			current->type == T_REDIR_IN)
 			open_infile(current->next->value, shell);
 		current = current->next;
 	}
@@ -55,16 +56,19 @@ void	get_fd_in(t_token *redirections, t_data *data)
 	get_file_as_fd_in(redirections, data);
 }
 
-static void	open_outfile(char *filename, t_data *shell, int flags)
+static void	open_outfile(char *filename, t_data *data, int flags)
 {
-	if (shell->outfile_fd != -2)
-		close(shell->outfile_fd);
-	shell->outfile_fd = open(filename, O_WRONLY | O_CREAT | (flags == T_REDIR_OUT ? O_TRUNC : O_APPEND), 0644);
-	if (shell->outfile_fd == -1)
+	if (data->outfile_fd != -2)
+		close(data->outfile_fd);
+	if (flags == T_REDIR_OUT)
+		data->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		data->outfile_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (data->outfile_fd == -1)
 	{
 		perror(filename);
-		shell->exit_status = 1;
-		ft_free_all_and_exit(shell, shell->exit_status);
+		data->exit_status = 1;
+		ft_free_all_and_exit(data, data->exit_status);
 	}
 }
 
@@ -83,4 +87,3 @@ void	get_fd_out(t_token *redirections, t_data *data)
 		current = current->next;
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 16:08:30 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:59:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,3 @@ char	*get_cmd_path(char *cmd, t_data *shell)
 		return (NULL);
 	return (locate_command_in_paths(path_dirs, cmd));
 }
-

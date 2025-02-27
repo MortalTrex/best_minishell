@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:29:42 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,28 @@ int	init_shell(t_data *data, char **env)
 	return (EXIT_SUCCESS);
 }
 
-int	minishell_loop(t_data *shell)
+int	minishell_loop(t_data *data)
 {
 	while (1)
 	{
 		signals_handler();
-		shell->user_line = readline(PROMPT);
+		data->user_line = readline(PROMPT);
 		if (g_exit_status == 130)
 		{
-			shell->exit_status = 130;
+			data->exit_status = 130;
 			g_exit_status = 0;
 		}
-		if (!shell->user_line)
+		if (!data->user_line)
 		{
 			if (isatty(STDIN_FILENO))
-				write(2, "exit\n", 6);
-			ft_free_all_and_exit(shell, shell->exit_status);
+				write(2, "exit\n", 5);
+			ft_free_all_and_exit(data, data->exit_status);
 		}
-		if (lexer(shell) == EXIT_SUCCESS && parsing(shell) == EXIT_SUCCESS)
-			g_exit_status = executing(shell);
+		if (lexer(data) == EXIT_SUCCESS && parsing(data) == EXIT_SUCCESS)
+			g_exit_status = executing(data);
 		else
 			g_exit_status = 1;
-		free_data(shell);
+		ft_free_all(data);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:04:13 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ int						ft_env(t_data *data);
 void					ft_exit(t_cmd *commands, t_data *data, bool pipe);
 
 //	export_utils.c
-int						cleanup_and_return(char *curr_dir, char *old_dir, int ret);
+int						cleanup_and_return(char *curr_dir, char *old_dir, \
+							int ret);
 int						handle_export_error(char *curr_dir, char *old_dir);
 
 //	export.c
@@ -140,7 +141,8 @@ int						ft_export(char **cmd, t_data *data);
 int						ft_pwd(t_cmd *commands);
 
 //	unset.c
-int						check_if_variable_exists(t_env *env_head, char *var_name);
+int						check_if_variable_exists(t_env *env_head, \
+							char *var_name);
 int						ft_unset(char **cmd, t_data *data);
 
 ////////////////////////// EXEC ////////////////////////////
@@ -187,9 +189,9 @@ int						check_args(int argc);
 
 //	free.c
 void					ft_free_all_and_exit(t_data *data, int exit_code);
-void					free_data(t_data *data);
+void					ft_free_all(t_data *data);
 void					free_tokens(t_token **tokens);
-void					free_commands(t_cmd **commands);
+void					ft_free_cmds(t_cmd **commands);
 
 // stack_utils.c
 t_token					*create_token(char *value, int type, int quotes);

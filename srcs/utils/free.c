@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:22:04 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:49:54 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_free_all_and_exit(t_data *shell, int exit_code)
 {
 	if (shell)
 	{
-		free_data(shell);
+		ft_free_all(shell);
 		if (shell->env)
 			ft_free_env((shell->env));
 	}
@@ -24,7 +24,7 @@ void	ft_free_all_and_exit(t_data *shell, int exit_code)
 	exit(exit_code);
 }
 
-void	free_data(t_data *shell)
+void	ft_free_all(t_data *shell)
 {
 	if (shell)
 	{
@@ -36,7 +36,7 @@ void	free_data(t_data *shell)
 		if (shell->tokens)
 			free_tokens(&(shell->tokens));
 		if (shell->commands)
-			free_commands(&(shell->commands));
+			ft_free_cmds(&(shell->commands));
 	}
 }
 
@@ -59,7 +59,7 @@ void	free_tokens(t_token **tokens)
 	*tokens = NULL;
 }
 
-void	free_commands(t_cmd **commands)
+void	ft_free_cmds(t_cmd **commands)
 {
 	t_cmd	*temp;
 	t_cmd	*current;
