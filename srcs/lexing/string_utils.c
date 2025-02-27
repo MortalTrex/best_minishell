@@ -6,28 +6,25 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 18:34:21 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:15:52 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*extract_env_value(char *str, t_env *env_list, char *name,
-		char *d_quoted)
+static char	*extract_env_value(char *str, t_env *env_list, char *name, char *d_quoted)
 {
 	t_env	*temp;
 
+	name++; // Move past '$'
 	temp = env_list;
-	name = name + 1;
 	while (temp)
 	{
 		if (ft_strcmp(temp->name, name) == 0)
 			return (temp->value);
 		temp = temp->next;
 	}
-	if (d_quoted || ft_strcmp(str, name) != 0)
-		return ("");
-	return (NULL);
+	return ((d_quoted || ft_strcmp(str, name) != 0) ? "" : NULL);
 }
 
 static char	*parse_env_from_string(char *str)
@@ -41,39 +38,33 @@ static char	*parse_env_from_string(char *str)
 	var_name = ft_calloc(i + 1, sizeof(char));
 	if (!var_name)
 		return (free(str), NULL);
-	i = 0;
-	var_name[i] = '$';
-	while (str[++i] && (ft_isalnum(str[i]) || str[i] == '_'))
-		var_name[i] = str[i];
+	ft_strlcpy(var_name, str, i + 1);
 	return (var_name);
 }
 
-static char	*replace_substring(char *str, char *old_value, char *new_value,
-		int prev_index)
+static char	*replace_substring(char *str, char *old_value, char *new_value, int prev_index)
 {
 	char	*new_str;
 	int		size;
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
 	size = ft_strlen(new_value) - ft_strlen(old_value) + ft_strlen(str);
 	new_str = malloc(size + 1);
 	if (!new_str)
 		return (NULL);
+	i = j = 0;
 	while (str[i] && j <= size)
 	{
-		if (!ft_strncmp(str + i, old_value, ft_strlen(old_value))
-			&& i == prev_index)
+		if (!ft_strncmp(str + i, old_value, ft_strlen(old_value)) && i == prev_index)
 		{
 			j += ft_strlcpy(new_str + j, new_value, ft_strlen(new_value) + 1);
-			ft_strlcpy(new_str + j, str + i + ft_strlen(old_value),
-				ft_strlen(str));
+			ft_strlcpy(new_str + j, str + i + ft_strlen(old_value), ft_strlen(str) - i);
 			return (new_str);
 		}
 		new_str[j++] = str[i++];
 	}
+	new_str[j] = '\0';
 	return (new_str);
 }
 
@@ -94,8 +85,8 @@ char	*get_value_after_expansion(char *str, t_data *shell, int *i)
 	var_name = parse_env_from_string(str + *i);
 	if (!var_name)
 		return (free(str), NULL);
-	value = extract_env_value(str, shell->env_list, var_name, d_quoted);
-	if (value == NULL && *i == 0 && ft_strcmp(str, var_name) != 0)
+	value = extract_env_value(str, shell->env, var_name, d_quoted);
+	if (!value && *i == 0 && ft_strcmp(str, var_name) != 0)
 	{
 		new_str_value = ft_strtrim(str, var_name);
 		return (free(var_name), free(str), new_str_value);

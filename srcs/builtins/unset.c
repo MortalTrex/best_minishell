@@ -6,50 +6,50 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:23 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:21:12 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:16:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_variable_defined(t_env *env_head, char *var_name)
+int	check_if_variable_exists(t_env *env, char *var)
 {
-	t_env	*env;
+	t_env	*current;
 
-	env = env_head;
-	if (!var_name)
+	current = env;
+	if (!var)
 		return (0);
-	while (env)
+	while (current)
 	{
-		if (ft_strcmp(env->name, var_name) == 0)
+		if (!ft_strcmp(current->name, var))
 			return (1);
-		env = env->next;
+		current = current->next;
 	}
 	return (0);
 }
 
-static void	erase_env_variable(t_env *env_head, char *var_name)
+static void	search_in_env(t_env *env_head, char *var)
 {
-	t_env	*env;
+	t_env	*current;
 	t_env	*prev;
 
-	env = env_head;
+	current = env_head;
 	prev = NULL;
-	while (env)
+	while (current)
 	{
-		if (ft_strcmp(env->name, var_name) == 0)
+		if (!ft_strcmp(current->name, var))
 		{
 			if (prev)
-				prev->next = env->next;
+				prev->next = current->next;
 			else
-				env_head = env->next;
-			free(env->name);
-			free(env->value);
-			free(env);
+				env_head = current->next;
+			free(current->name);
+			free(current->value);
+			free(current);
 			return ;
 		}
-		prev = env;
-		env = env->next;
+		prev = current;
+		current = current->next;
 	}
 }
 
@@ -64,8 +64,8 @@ int	ft_unset(char **cmd, t_data *shell)
 	{
 		if (cmd[1][0] == '-')
 			return (print_error(cmd[1], "invalid option", "export"), 2);
-		if (is_variable_defined(shell->env_list, shell->commands->cmd_args[i]))
-			erase_env_variable(shell->env_list, shell->commands->cmd_args[i]);
+		if (check_if_variable_exists(shell->env, shell->commands->cmd_args[i]))
+			search_in_env(shell->env, shell->commands->cmd_args[i]);
 		i++;
 	}
 	return (EXIT_SUCCESS);

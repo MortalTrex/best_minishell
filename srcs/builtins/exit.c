@@ -6,25 +6,23 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:15 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:07:57 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:01:05 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	calculate_exit_status(long status, t_data *shell, bool pipe)
+static void	ft_value(long value, t_data *shell, bool pipe)
 {
-	if (status > 255)
-		status = status % 256;
-	else if (status < 0)
-		status = (status % 256) + 256;
+	if (value > 255 || value < 0)
+		value = (value % 256 + 256) % 256;
 	if (pipe == false)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-	shell->exit_status = status;
+	shell->exit_status = value;
 }
 
 static int	get_exit_status(t_cmd *commands, char *arg,
-				t_data *shell, bool pipe)
+				t_data *data, bool pipe)
 {
 	long	status;
 	char	*endptr;
@@ -38,19 +36,19 @@ static int	get_exit_status(t_cmd *commands, char *arg,
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(arg, STDERR_FILENO);
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-		shell->exit_status = 2;
+		data->exit_status = 2;
 	}
 	else if (commands->cmd_args[1] && commands->cmd_args[2])
 	{
 		if (pipe == false)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 		print_error("exit", "too many arguments", NULL);
-		shell->exit_status = 1;
-		return (1);
+		data->exit_status = 1;
+		return (EXIT_FAILURE);
 	}
 	else
-		calculate_exit_status(status, shell, pipe);
-	return (0);
+		ft_value(status, data, pipe);
+	return (EXIT_SUCCESS);
 }
 
 void	ft_exit(t_cmd *commands, t_data *data, bool pipe)
@@ -65,5 +63,5 @@ void	ft_exit(t_cmd *commands, t_data *data, bool pipe)
 	}
 	else if (pipe == false)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-	free_and_exit(data, data->exit_status);
+	ft_free_all_and_exit(data, data->exit_status);
 }

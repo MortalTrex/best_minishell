@@ -6,13 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:07 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 15:41:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:30:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	update_pwd(t_data *data, char *command)
+static void	update_pwd_value(t_data *data, char *command)
 {
 	char	cwd[4096];
 	char	*old_dir;
@@ -23,91 +23,91 @@ static void	update_pwd(t_data *data, char *command)
 		perror(command);
 		return ;
 	}
-	old_dir = ft_getenv(data->env_list, "PWD");
+	old_dir = ft_getenv(data->env, "PWD");
 	if (!old_dir)
 		return ;
-	ft_setenv(data->env_list, "OLDPWD", old_dir);
+	ft_setenv(data->env, "OLDPWD", old_dir);
 	free(old_dir);
-	ft_setenv(data->env_list, "PWD", cwd);
+	ft_setenv(data->env, "PWD", cwd);
 }
 
-static int	cd_minus(t_data *data, int option)
+static int	ft_move_directoy(t_data *data, int option)
 {
 	char	*curr_dir;
 	char	*old_dir;
 
-	curr_dir = ft_getenv(data->env_list, "OLDPWD");
-	old_dir = ft_getenv(data->env_list, "PWD");
+	curr_dir = ft_getenv(data->env, "OLDPWD");
+	old_dir = ft_getenv(data->env, "PWD");
 	if (!curr_dir)
 	{
 		print_error("cd", "OLDPWD not set", NULL);
-		return (free_and_return(curr_dir, old_dir, 1));
+		return (cleanup_and_return(curr_dir, old_dir, 1));
 	}
 	else if (!old_dir)
 	{
 		print_error("cd", "PWD not set", NULL);
-		return (free_and_return(curr_dir, old_dir, 1));
+		return (cleanup_and_return(curr_dir, old_dir, 1));
 	}
 	if (curr_dir && chdir(curr_dir) == -1)
-		return (handle_chdir_error(curr_dir, old_dir));
+		return (handle_export_error(curr_dir, old_dir));
 	if (option == 1)
 	{
 		ft_putstr_fd(curr_dir, STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	}
-	ft_setenv(data->env_list, "PWD", curr_dir);
-	ft_setenv(data->env_list, "OLDPWD", old_dir);
-	return (free_and_return(curr_dir, old_dir, 0));
+	ft_setenv(data->env, "PWD", curr_dir);
+	ft_setenv(data->env, "OLDPWD", old_dir);
+	return (cleanup_and_return(curr_dir, old_dir, 0));
 }
 
-static int	check_for_arguments(t_cmd *commands, t_data *shell)
+static int	check_for_arguments(t_cmd *cmds, t_data *data)
 {
-	if (commands->cmd_args[1])
+	if (cmds->cmd_args[1])
 	{
-		if (commands->cmd_args[1][0] == '-' && !commands->cmd_args[1][1])
-			return (cd_minus(shell, 1));
-		else if (commands->cmd_args[1][0] == '-'
-			&& commands->cmd_args[1][1] == '-' && !commands->cmd_args[1][2])
-			return (cd_minus(shell, 0));
-		else if (commands->cmd_args[1][0] == '-' && commands->cmd_args[1][1])
+		if (cmds->cmd_args[1][0] == '-' && !cmds->cmd_args[1][1])
+			return (ft_move_directoy(data, 1));
+		else if (cmds->cmd_args[1][0] == '-'
+			&& cmds->cmd_args[1][1] == '-' && !cmds->cmd_args[1][2])
+			return (ft_move_directoy(data, 0));
+		else if (cmds->cmd_args[1][0] == '-' && cmds->cmd_args[1][1])
 		{
-			print_error("cd", "invalid option", commands->cmd_args[1]);
+			print_error("cd", "invalid option", cmds->cmd_args[1]);
 			return (2);
 		}
-		else if (chdir(commands->cmd_args[1]) == -1)
+		else if (chdir(cmds->cmd_args[1]) == -1)
 		{
 			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-			perror(commands->cmd_args[1]);
-			return (1);
+			perror(cmds->cmd_args[1]);
+			return (EXIT_FAILURE);
 		}
-		update_pwd(shell, commands->cmd_args[1]);
+		update_pwd_value(data, cmds->cmd_args[1]);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
-int	ft_cd(t_cmd *commands, t_data *shell)
+int	ft_cd(t_cmd *cmds, t_data *data)
 {
 	char	*value;
 
-	if (commands->cmd_args[0] && commands->cmd_args[1] && commands->cmd_args[2])
+	if (cmds->cmd_args[0] && cmds->cmd_args[1] && cmds->cmd_args[2])
 	{
 		print_error("cd", "too many arguments", NULL);
-		return (1);
+		return (EXIT_FAILURE);
 	}
-	if (!commands->cmd_args[1])
+	if (!cmds->cmd_args[1])
 	{
-		value = ft_getenv(shell->env_list, "HOME");
+		value = ft_getenv(data->env, "HOME");
 		if (!value)
 			return (print_error("cd", "HOME not set", NULL), free(value), 1);
-		if (ft_strlen(value) == 0)
+		if (!ft_strlen(value))
 		{
 			free(value);
 			value = getcwd(NULL, 0);
 		}
 		if (chdir(value) == -1)
-			return (perror("minishell: cd:"), free(value), 1);
-		update_pwd(shell, commands->cmd_args[0]);
+			return (perror("minishell: cd:"), free(value), EXIT_FAILURE);
+		update_pwd_value(data, cmds->cmd_args[0]);
 		free(value);
 	}
-	return (check_for_arguments(commands, shell));
+	return (check_for_arguments(cmds, data));
 }

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 18:39:59 by mmiilpal          #+#    #+#             */
-/*   Updated: 2024/11/02 18:04:46 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:01:32 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_get_env_value(char *var, t_data *data)
 {
 	t_env	*current;
 
-	current = data->env;
+	current = data->envArray;
 	while (current)
 	{
 		if (!ft_strcmp(var, current->name))

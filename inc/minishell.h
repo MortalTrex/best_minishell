@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:54:03 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_env					*init_env(char **env);
 char					**init_env_array(t_env *env_head);
 
 //	env_set_free.c
-void					free_env(t_env *env);
+void					ft_free_env(t_env *env);
 char					*ft_getenv(t_env *env_list, char *key);
 void					ft_setenv(t_env *env_head, char *name, char *value);
 
@@ -130,8 +130,8 @@ int						ft_env(t_data *data);
 void					ft_exit(t_cmd *commands, t_data *data, bool pipe);
 
 //	export_utils.c
-int						free_and_return(char *curr_dir, char *old_dir, int ret);
-int						handle_chdir_error(char *curr_dir, char *old_dir);
+int						cleanup_and_return(char *curr_dir, char *old_dir, int ret);
+int						handle_export_error(char *curr_dir, char *old_dir);
 
 //	export.c
 int						ft_export(char **cmd, t_data *data);
@@ -140,7 +140,7 @@ int						ft_export(char **cmd, t_data *data);
 int						ft_pwd(t_cmd *commands);
 
 //	unset.c
-int						is_variable_defined(t_env *env_head, char *var_name);
+int						check_if_variable_exists(t_env *env_head, char *var_name);
 int						ft_unset(char **cmd, t_data *data);
 
 ////////////////////////// EXEC ////////////////////////////
@@ -186,7 +186,7 @@ void					print_warning(char *arg);
 int						check_args(int argc);
 
 //	free.c
-void					free_and_exit(t_data *data, int exit_code);
+void					ft_free_all_and_exit(t_data *data, int exit_code);
 void					free_data(t_data *data);
 void					free_tokens(t_token **tokens);
 void					free_commands(t_cmd **commands);

@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 18:12:50 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:08:30 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,28 @@ void	handle_error(char *cmd, char *error,
 {
 	print_error(cmd, error, NULL);
 	shell->exit_status = exit_status;
-	free_and_exit(shell, shell->exit_status);
+	ft_free_all_and_exit(shell, shell->exit_status);
 }
 
-static char	*check_if_directory(char *cmd, t_data *shell)
+static char	*check_if_directory(char *cmd, t_data *data)
 {
 	struct stat	path_stat;
 
 	if (stat(cmd, &path_stat) == -1)
 	{
 		perror(cmd);
-		shell->exit_status = 127;
-		free_and_exit(shell, shell->exit_status);
+		data->exit_status = 127;
+		ft_free_all_and_exit(data, data->exit_status);
 	}
-	stat(cmd, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
-		handle_error(cmd, "Is a directory", 126, shell);
+		handle_error(cmd, "Is a directory", 126, data);
 	else if (access(cmd, X_OK) == 0)
 		return (cmd);
-	if (!S_ISDIR(path_stat.st_mode))
-	{
-		if (access(cmd, F_OK) == -1)
-			handle_error(cmd, "No such file or directory", 127, shell);
-		else
-			shell->exit_status = 126;
-		return (cmd);
-	}
-	return (NULL);
+	if (access(cmd, F_OK) == -1)
+		handle_error(cmd, "No such file or directory", 127, data);
+	else
+		data->exit_status = 126;
+	return (cmd);
 }
 
 static char	*locate_command_in_paths(char **path_dirs, char *cmd)
@@ -52,24 +47,18 @@ static char	*locate_command_in_paths(char **path_dirs, char *cmd)
 	char	*temp;
 	int		i;
 
-	i = 0;
 	if (cmd[0] == '\0')
-	{
-		ft_free_tab(path_dirs);
-		return (NULL);
-	}
-	while (path_dirs[i++])
+		return (ft_free_tab(path_dirs), NULL);
+	i = 0;
+	while (path_dirs[i])
 	{
 		temp = ft_strjoin(path_dirs[i], "/");
 		cmd_path = ft_strjoin(temp, cmd);
-		if (cmd_path && access(cmd_path, X_OK) == 0)
-		{
-			free(temp);
-			ft_free_tab(path_dirs);
-			return (cmd_path);
-		}
-		free(cmd_path);
 		free(temp);
+		if (cmd_path && access(cmd_path, X_OK) == 0)
+			return (ft_free_tab(path_dirs), cmd_path);
+		free(cmd_path);
+		i++;
 	}
 	ft_free_tab(path_dirs);
 	return (NULL);
@@ -80,14 +69,15 @@ char	*get_cmd_path(char *cmd, t_data *shell)
 	char	**path_dirs;
 	char	*path_var;
 
-	if (ft_strchr(cmd, '/') != NULL)
+	if (ft_strchr(cmd, '/'))
 		return (check_if_directory(cmd, shell));
-	path_var = ft_getenv(shell->env_list, "PATH");
+	path_var = ft_getenv(shell->env, "PATH");
 	if (!path_var)
 		return (NULL);
 	path_dirs = ft_split(path_var, ':');
-	if (!path_dirs)
-		return (free(path_var), NULL);
 	free(path_var);
+	if (!path_dirs)
+		return (NULL);
 	return (locate_command_in_paths(path_dirs, cmd));
 }
+

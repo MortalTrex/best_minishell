@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:35:39 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:16:16 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ static void	handle_export(char *str, t_data *shell)
 	char	**split;
 
 	split = ft_split(str, '=');
-	tmp = shell->env_list;
-	if (!is_variable_defined(shell->env_list, split[0]))
-		append_env_variable(&shell->env_list, init_env_node(str));
+	tmp = shell->env;
+	if (!check_if_variable_exists(shell->env, split[0]))
+		append_env_variable(&shell->env, init_env_node(str));
 	else
 	{
 		while (tmp)

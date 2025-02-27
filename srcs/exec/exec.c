@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:30:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_detect_builtin(t_cmd *commands, t_data *data, bool pipe)
 	else if (!ft_strcmp(commands->cmd_args[0], "exit"))
 		ft_exit(commands, data, pipe);
 	if (pipe == true)
-		free_and_exit(data, data->exit_status);
+		ft_free_all_and_exit(data, data->exit_status);
 }
 
 static void	execute_command(t_cmd *current, t_data *data)
@@ -41,7 +41,7 @@ static void	execute_command(t_cmd *current, t_data *data)
 	if (!current->cmd_args[0])
 	{
 		data->exit_status = 0;
-		free_and_exit(data, data->exit_status);
+		ft_free_all_and_exit(data, data->exit_status);
 	}
 	if (current->is_builtin == true)
 		ft_detect_builtin(current, data, true);
@@ -50,13 +50,13 @@ static void	execute_command(t_cmd *current, t_data *data)
 		data->cmd_path = get_cmd_path(current->cmd_args[0], data);
 		if (!data->cmd_path)
 			handle_error(current->cmd_args[0], "command not found", 127, data);
-		env = init_env_array(data->env_list);
+		env = init_env_array(data->env);
 		execve(data->cmd_path, current->cmd_args, env);
 		ft_free_tab(env);
 		perror(data->cmd_path);
 		if (data && data->cmd_path)
 			free(data->cmd_path);
-		free_and_exit(data, data->exit_status);
+		ft_free_all_and_exit(data, data->exit_status);
 	}
 }
 

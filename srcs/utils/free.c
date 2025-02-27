@@ -6,19 +6,19 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:22:04 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 18:13:03 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_and_exit(t_data *shell, int exit_code)
+void	ft_free_all_and_exit(t_data *shell, int exit_code)
 {
 	if (shell)
 	{
 		free_data(shell);
-		if (shell->env_list)
-			free_env((shell->env_list));
+		if (shell->env)
+			ft_free_env((shell->env));
 	}
 	rl_clear_history();
 	exit(exit_code);

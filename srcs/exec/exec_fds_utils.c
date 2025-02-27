@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:50:27 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:01:01 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	duplicate_fd(int fd, int new_fd, t_data *shell, int exit_status)
 	{
 		perror("dup2");
 		shell->exit_status = exit_status;
-		free_and_exit(shell, shell->exit_status);
+		ft_free_all_and_exit(shell, shell->exit_status);
 	}
 }
 

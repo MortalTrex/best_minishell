@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:48:06 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	g_exit_status;
 
 int	init_shell(t_data *data, char **env)
 {
-	data->env_list = init_env(env);
-	if (data->env_list == NULL)
+	data->env = init_env(env);
+	if (data->env == NULL)
 		return (EXIT_FAILURE);
 	data->exit_status = 0;
 	data->heredoc = NULL;
@@ -48,7 +48,7 @@ int	minishell_loop(t_data *shell)
 		{
 			if (isatty(STDIN_FILENO))
 				write(2, "exit\n", 6);
-			free_and_exit(shell, shell->exit_status);
+			ft_free_all_and_exit(shell, shell->exit_status);
 		}
 		if (lexer(shell) == EXIT_SUCCESS && parsing(shell) == EXIT_SUCCESS)
 			g_exit_status = executing(shell);
@@ -65,8 +65,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	if (check_args(argc) || init_shell(&data, env))
-		free_and_exit(NULL, EXIT_FAILURE);
+		ft_free_all_and_exit(NULL, EXIT_FAILURE);
 	minishell_loop(&data);
-	free_and_exit(&data, data.exit_status);
+	ft_free_all_and_exit(&data, data.exit_status);
 	return (0);
 }

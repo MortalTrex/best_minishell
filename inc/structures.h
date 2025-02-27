@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:33:44 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/26 18:30:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:05:06 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ typedef struct s_data
 	int					pipe_fd[2];
 	int					wstatus;
 	char				*cmd_path;
-	char				**env;
+	char				**envArray;
 	char				*heredoc;
 	int					stdin_old;
 	int					exit_status;
-	t_env				*env_list;
+	t_env				*env;
 }						t_data;
 
 #endif
