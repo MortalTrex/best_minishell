@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 13:35:31 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/28 16:22:28 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:30:00 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int argc, char *argv[])
 	}
 	else
 	{
-		
 		return (printf("input error"), 0);
 	}
 	return (0);

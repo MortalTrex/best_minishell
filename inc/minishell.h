@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:13:32 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/27 17:04:56 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:57:51 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,9 @@ void					has_no_filename(t_cmd *current, t_data *data,
 
 //	exec.c
 int						executing(t_data *data);
+
+//	shlvl.c
+void					change_shlvl(t_data *data);
 
 // utils.c
 void					save_heredoc_line(int fd, char *tmp, t_data *data,

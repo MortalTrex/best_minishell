@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:32:18 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/27 15:16:16 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:36:36 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,15 @@ static int	valid_for_export(char *str)
 	return (ft_free_tab(split), 0);
 }
 
-static void	handle_export(char *str, t_data *shell)
+static void	handle_export(char *str, t_data *data)
 {
 	t_env	*tmp;
 	char	**split;
 
 	split = ft_split(str, '=');
-	tmp = shell->env;
-	if (!check_if_variable_exists(shell->env, split[0]))
-		append_env_variable(&shell->env, init_env_node(str));
+	tmp = data->env;
+	if (!check_if_variable_exists(data->env, split[0]))
+		append_env_variable(&data->env, init_env_node(str));
 	else
 	{
 		while (tmp)
@@ -97,14 +97,14 @@ static void	handle_export(char *str, t_data *shell)
 	ft_free_tab(split);
 }
 
-int	ft_export(char **cmd, t_data *shell)
+int	ft_export(char **cmd, t_data *data)
 {
 	int	i;
 	int	exit_code;
 
 	if (!cmd[1])
 	{
-		ft_env(shell);
+		ft_env(data);
 		return (0);
 	}
 	i = 1;
@@ -112,7 +112,7 @@ int	ft_export(char **cmd, t_data *shell)
 	{
 		exit_code = valid_for_export(cmd[i]);
 		if (exit_code == 0)
-			handle_export(cmd[i], shell);
+			handle_export(cmd[i], data);
 		else if (exit_code == 1)
 			return (1);
 		else if (exit_code == 2)

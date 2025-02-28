@@ -6,7 +6,7 @@
 #    By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 13:39:46 by mmiilpal          #+#    #+#              #
-#    Updated: 2025/02/26 14:35:58 by mmiilpal         ###   ########.fr        #
+#    Updated: 2025/02/28 18:58:12 by mmiilpal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS = srcs/main.c\
 	srcs/exec/exec.c\
 	srcs/exec/exec_redirs.c\
 	srcs/exec/exec_fds_utils.c\
+	srcs/exec/shlvl.c\
 	srcs/exec/utils.c\
 	srcs/lexing/expand.c\
 	srcs/lexing/grammar_check.c\

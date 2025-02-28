@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/27 15:49:49 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:40:12 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	execute_command(t_cmd *current, t_data *data)
 		data->exit_status = 0;
 		ft_free_all_and_exit(data, data->exit_status);
 	}
+	
 	if (current->is_builtin == true)
 		ft_detect_builtin(current, data, true);
 	else

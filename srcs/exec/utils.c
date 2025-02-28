@@ -6,11 +6,13 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/28 16:04:22 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:45:29 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 int	check_if_other_heredoc(t_token *current)
 {
