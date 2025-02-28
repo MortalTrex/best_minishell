@@ -6,26 +6,26 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:45:19 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 17:02:16 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:04:04 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	open_infile(char *filename, t_data *shell)
+static void	open_infile(char *filename, t_data *data)
 {
-	if (shell->infile_fd != -2)
-		close(shell->infile_fd);
-	shell->infile_fd = open(filename, O_RDONLY);
-	if (shell->infile_fd == -1)
+	if (data->infile_fd != -2)
+		close(data->infile_fd);
+	data->infile_fd = open(filename, O_RDONLY);
+	if (data->infile_fd == -1)
 	{
 		perror(filename);
-		shell->exit_status = 1;
-		ft_free_all_and_exit(shell, shell->exit_status);
+		data->exit_status = 1;
+		ft_free_all_and_exit(data, data->exit_status);
 	}
 }
 
-static void	get_file_as_fd_in(t_token *redirections, t_data *shell)
+static void	get_file_as_fd_in(t_token *redirections, t_data *data)
 {
 	t_token	*current;
 
@@ -34,7 +34,7 @@ static void	get_file_as_fd_in(t_token *redirections, t_data *shell)
 	{
 		if (current->next && current->next->type == T_FILENAME && \
 			current->type == T_REDIR_IN)
-			open_infile(current->next->value, shell);
+			open_infile(current->next->value, data);
 		current = current->next;
 	}
 }

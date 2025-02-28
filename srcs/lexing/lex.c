@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:16:40 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 15:09:48 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:07:10 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*get_token(char *str)
 	return (token_value);
 }
 
-static t_token	*tokenize(char *str, t_data *shell)
+static t_token	*tokenize(char *str, t_data *data)
 {
 	int		i;
 	char	*substr;
@@ -67,43 +67,43 @@ static t_token	*tokenize(char *str, t_data *shell)
 		{
 			substr = get_token(str);
 			if (!substr)
-				return (free_tokens(&shell->tokens), NULL);
+				return (free_tokens(&data->tokens), NULL);
 			new_token = create_token(substr, get_type(substr), 0);
 			if (!new_token)
-				return (free(substr), free_tokens(&shell->tokens), NULL);
-			add_token_back(&shell->tokens, new_token);
+				return (free(substr), free_tokens(&data->tokens), NULL);
+			add_token_back(&data->tokens, new_token);
 			str += ft_strlen(substr);
 			free(substr);
 			i++;
 		}
 	}
-	return (shell->tokens);
+	return (data->tokens);
 }
 
-int	lexer(t_data *shell)
+int	lexer(t_data *data)
 {
 	char	*expanded_input;
 
-	if (!shell->user_line)
+	if (!data->user_line)
 		exit(EXIT_FAILURE);
-	else if (ft_strcmp(shell->user_line, "\0") == 0)
+	else if (ft_strcmp(data->user_line, "\0") == 0)
 		return (EXIT_FAILURE);
-	else if (check_empty_or_whitespace(shell->user_line))
+	else if (check_empty_or_whitespace(data->user_line))
 		return (EXIT_SUCCESS);
-	add_history(shell->user_line);
-	if (!valid_quotes(shell->user_line))
+	add_history(data->user_line);
+	if (!valid_quotes(data->user_line))
 		return (printf("Error: invalid quotes\n"), EXIT_FAILURE);
-	expanded_input = expanding(shell->user_line, shell);
+	expanded_input = expanding(data->user_line, data);
 	if (!expanded_input)
 		return (EXIT_SUCCESS);
-	shell->tokens = tokenize(expanded_input, shell);
+	data->tokens = tokenize(expanded_input, data);
 	free(expanded_input);
-	if (!shell->tokens)
+	if (!data->tokens)
 		return (EXIT_FAILURE);
-	set_redirection_types(shell->tokens);
-	update_token_quote_status(shell->tokens);
-	remove_quotes(shell->tokens);
-	if (!check_syntax(shell->tokens, shell))
+	set_redirection_types(data->tokens);
+	update_token_quote_status(data->tokens);
+	remove_quotes(data->tokens);
+	if (!check_syntax(data->tokens, data))
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }

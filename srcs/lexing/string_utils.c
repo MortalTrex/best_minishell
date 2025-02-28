@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:44:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 16:57:32 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:12:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*parse_env_from_string(char *str)
 }
 
 static char	*replace_substring(char *str, char *old_value, char *new_value, \
-	int prev_index)
+	int last_index)
 {
 	char	*new_str;
 	int		size;
@@ -62,7 +62,7 @@ static char	*replace_substring(char *str, char *old_value, char *new_value, \
 	while (str[i] && j <= size)
 	{
 		if (!ft_strncmp(str + i, old_value, ft_strlen(old_value)) && \
-				i == prev_index)
+				i == last_index)
 		{
 			j += ft_strlcpy(new_str + j, new_value, ft_strlen(new_value) + 1);
 			ft_strlcpy(new_str + j, str + i + ft_strlen(old_value), \
@@ -75,30 +75,30 @@ static char	*replace_substring(char *str, char *old_value, char *new_value, \
 	return (new_str);
 }
 
-char	*get_value_after_expansion(char *str, t_data *shell, int *i)
+char	*get_value_after_expansion(char *str, t_data *data, int *i)
 {
 	char	*d_quoted;
-	char	*var_name;
-	char	*value;
-	char	*new_str_value;
+	char	*env_var;
+	char	*val;
+	char	*updated_string;
 
 	d_quoted = ft_strchr(str, DQ);
 	if (str[*i] == '$' && str[*i + 1] == '?')
 	{
-		value = ft_itoa(shell->exit_status);
-		new_str_value = replace_substring(str, "$?", value, *i);
-		return (free(value), free(str), new_str_value);
+		val = ft_itoa(data->exit_status);
+		updated_string = replace_substring(str, "$?", val, *i);
+		return (free(val), free(str), updated_string);
 	}
-	var_name = parse_env_from_string(str + *i);
-	if (!var_name)
+	env_var = parse_env_from_string(str + *i);
+	if (!env_var)
 		return (free(str), NULL);
-	value = extract_env_value(str, shell->env, var_name, d_quoted);
-	if (!value && *i == 0 && ft_strcmp(str, var_name) != 0)
+	val = extract_env_value(str, data->env, env_var, d_quoted);
+	if (!val && *i == 0 && ft_strcmp(str, env_var) != 0)
 	{
-		new_str_value = ft_strtrim(str, var_name);
-		return (free(var_name), free(str), new_str_value);
+		updated_string = ft_strtrim(str, env_var);
+		return (free(env_var), free(str), updated_string);
 	}
-	new_str_value = replace_substring(str, var_name, value, *i);
+	updated_string = replace_substring(str, env_var, val, *i);
 	*i = 0;
-	return (free(var_name), free(str), new_str_value);
+	return (free(env_var), free(str), updated_string);
 }

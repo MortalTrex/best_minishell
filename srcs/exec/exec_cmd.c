@@ -6,18 +6,18 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:55 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 16:59:27 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:13:00 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	handle_error(char *cmd, char *error,
-				int exit_status, t_data *shell)
+				int exit_status, t_data *data)
 {
 	print_error(cmd, error, NULL);
-	shell->exit_status = exit_status;
-	ft_free_all_and_exit(shell, shell->exit_status);
+	data->exit_status = exit_status;
+	ft_free_all_and_exit(data, data->exit_status);
 }
 
 static char	*check_if_directory(char *cmd, t_data *data)
@@ -64,14 +64,14 @@ static char	*locate_command_in_paths(char **path_dirs, char *cmd)
 	return (NULL);
 }
 
-char	*get_cmd_path(char *cmd, t_data *shell)
+char	*get_cmd_path(char *cmd, t_data *data)
 {
 	char	**path_dirs;
 	char	*path_var;
 
 	if (ft_strchr(cmd, '/'))
-		return (check_if_directory(cmd, shell));
-	path_var = ft_getenv(shell->env, "PATH");
+		return (check_if_directory(cmd, data));
+	path_var = ft_getenv(data->env, "PATH");
 	if (!path_var)
 		return (NULL);
 	path_dirs = ft_split(path_var, ':');

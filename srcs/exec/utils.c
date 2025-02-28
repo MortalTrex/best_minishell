@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 18:30:59 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:04:22 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	check_if_other_heredoc(t_token *current)
 	return (0);
 }
 
-void	save_heredoc_line(int fd, char *tmp, t_data *shell,
+void	save_heredoc_line(int fd, char *tmp, t_data *data,
 		int quotes_status)
 {
 	if (quotes_status == 0)
-		tmp = expanding(tmp, shell);
+		tmp = expanding(tmp, data);
 	if (tmp)
 		write(fd, tmp, ft_strlen(tmp));
 	write(fd, "\n", 1);
@@ -38,48 +38,48 @@ void	save_heredoc_line(int fd, char *tmp, t_data *shell,
 		free(tmp);
 }
 
-void	pipe_and_fork(t_cmd *current, t_data *shell)
+void	pipe_and_fork(t_cmd *current, t_data *data)
 {
 	if (current->next)
 	{
-		if (pipe(shell->pipe_fd) == -1)
+		if (pipe(data->pipe_fd) == -1)
 		{
 			perror("pipe");
 			exit(EXIT_FAILURE);
 		}
 	}
-	shell->prev_pid = fork();
-	if (shell->prev_pid == -1)
+	data->prev_pid = fork();
+	if (data->prev_pid == -1)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	wait_commands(t_data *shell)
+void	wait_commands(t_data *data)
 {
 	signal(SIGINT, SIG_IGN);
 	while (errno != ECHILD)
 	{
-		if (wait(&shell->wstatus) == shell->prev_pid)
+		if (wait(&data->wstatus) == data->prev_pid)
 		{
-			if (WIFEXITED(shell->wstatus))
-				shell->exit_status = WEXITSTATUS(shell->wstatus);
+			if (WIFEXITED(data->wstatus))
+				data->exit_status = WEXITSTATUS(data->wstatus);
 			else
 			{
-				shell->exit_status = 128 + WTERMSIG(shell->wstatus);
-				if (shell->exit_status == 131)
+				data->exit_status = 128 + WTERMSIG(data->wstatus);
+				if (data->exit_status == 131)
 					ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
-				else if (shell->exit_status == 139)
+				else if (data->exit_status == 139)
 					ft_putstr_fd("Segmentation fault (core dumped)\n",
 						STDERR_FILENO);
 			}
-			if (shell->exit_status == 130)
+			if (data->exit_status == 130)
 				ft_putstr_fd("\n", STDERR_FILENO);
 		}
 	}
 	if (g_exit_status == 130)
-		shell->exit_status = 130;
+		data->exit_status = 130;
 }
 
 // static void	free_line(char *line, t_token *tmp)

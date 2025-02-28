@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:31:53 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/27 16:59:13 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:08:07 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	print_error(char *cmd, char *error, char *arg)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-int	handle_token_syntax_error(char *token, t_data *shell)
+int	handle_token_syntax_error(char *token, t_data *data)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token `", \
 		STDERR_FILENO);
 	ft_putstr_fd(token, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
-	shell->exit_status = 2;
+	data->exit_status = 2;
 	return (1);
 }
 

@@ -6,22 +6,22 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 16:58:20 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/26 18:30:44 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:05:14 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unlink_heredoc(t_data *shell)
+void	unlink_heredoc(t_data *data)
 {
-	if (unlink(shell->heredoc) == -1)
+	if (unlink(data->heredoc) == -1)
 	{
 		perror("unlink");
 		exit(EXIT_FAILURE);
 	}
 }
 
-static void	create_filename(t_data *shell)
+static void	create_filename(t_data *data)
 {
 	char	*temp_file;
 	int		fd;
@@ -44,25 +44,25 @@ static void	create_filename(t_data *shell)
 		return ;
 	}
 	close(fd);
-	shell->heredoc = temp_file;
+	data->heredoc = temp_file;
 }
 
-static void	cleanup_heredoc(int fd, t_data *shell)
+static void	cleanup_heredoc(int fd, t_data *data)
 {
 	if (fd != -1)
 		close(fd);
 	close(STDIN_FILENO);
-	dup2(shell->stdin_old, STDIN_FILENO);
-	close(shell->stdin_old);
+	dup2(data->stdin_old, STDIN_FILENO);
+	close(data->stdin_old);
 }
 
-static void	create_heredoc(char *delimiter, t_data *shell, int quote_status)
+static void	create_heredoc(char *delimiter, t_data *data, int quote_status)
 {
 	int		fd;
 	char	*line;
 	char	*tmp;
 
-	fd = open(shell->heredoc, O_RDWR | O_CREAT, 0666);
+	fd = open(data->heredoc, O_RDWR | O_CREAT, 0666);
 	if (fd == -1)
 		return (perror("open"));
 	signal(SIGINT, heredoc_sigint_handler);
@@ -78,27 +78,27 @@ static void	create_heredoc(char *delimiter, t_data *shell, int quote_status)
 			break ;
 		}
 		tmp = line;
-		save_heredoc_line(fd, tmp, shell, quote_status);
+		save_heredoc_line(fd, tmp, data, quote_status);
 	}
 	if (line)
 		free(line);
-	cleanup_heredoc(fd, shell);
+	cleanup_heredoc(fd, data);
 }
 
-int	handle_heredoc(t_token *tmp, t_data *shell, int option)
+int	handle_heredoc(t_token *tmp, t_data *data, int option)
 {
 	int	ret;
 
 	ret = 0;
-	shell->stdin_old = dup(STDIN_FILENO);
+	data->stdin_old = dup(STDIN_FILENO);
 	if (option == 0)
-		ret = validate_heredoc_syntax(shell->tokens, shell);
-	if (shell->heredoc)
-		free(shell->heredoc);
-	create_filename(shell);
+		ret = validate_heredoc_syntax(data->tokens, data);
+	if (data->heredoc)
+		free(data->heredoc);
+	create_filename(data);
 	signal(SIGINT, heredoc_sigint_handler);
-	create_heredoc(tmp->value, shell, tmp->quotes);
-	if (!shell->heredoc)
+	create_heredoc(tmp->value, data, tmp->quotes);
+	if (!data->heredoc)
 		return (1);
 	return (ret);
 }

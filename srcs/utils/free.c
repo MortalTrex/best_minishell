@@ -6,37 +6,37 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 14:22:04 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/27 16:49:54 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:08:28 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_all_and_exit(t_data *shell, int exit_code)
+void	ft_free_all_and_exit(t_data *data, int exit_code)
 {
-	if (shell)
+	if (data)
 	{
-		ft_free_all(shell);
-		if (shell->env)
-			ft_free_env((shell->env));
+		ft_free_all(data);
+		if (data->env)
+			ft_free_env((data->env));
 	}
 	rl_clear_history();
 	exit(exit_code);
 }
 
-void	ft_free_all(t_data *shell)
+void	ft_free_all(t_data *data)
 {
-	if (shell)
+	if (data)
 	{
-		if (shell->heredoc)
+		if (data->heredoc)
 		{
-			free(shell->heredoc);
-			shell->heredoc = NULL;
+			free(data->heredoc);
+			data->heredoc = NULL;
 		}
-		if (shell->tokens)
-			free_tokens(&(shell->tokens));
-		if (shell->commands)
-			ft_free_cmds(&(shell->commands));
+		if (data->tokens)
+			free_tokens(&(data->tokens));
+		if (data->commands)
+			ft_free_cmds(&(data->commands));
 	}
 }
 
