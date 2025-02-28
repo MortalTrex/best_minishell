@@ -6,7 +6,7 @@
 /*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:15:45 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/28 13:49:04 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:15:27 by mmiilpal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	ft_free_env(t_env *env)
 	while (current)
 	{
 		next = current->next;
-		free(current->line);
 		free(current->name);
 		free(current->value);
 		free(current);
