@@ -3,5 +3,6 @@
 		"*.c": "c",
 		"minishell.h": "c",
 		"type_traits": "c"
-	}
+	},
+	"makefile.configureOnOpen": false
 }

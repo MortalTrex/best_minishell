@@ -6,7 +6,7 @@
 /*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/03/01 16:33:31 by rbalazs          ###   ########.fr       */
+/*   Updated: 2025/03/01 16:49:13 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int	minishell_loop(t_data *data)
 		signals_handler();
 		data->user_line = readline(PROMPT);
 		if (g_received_signal == SIGINT)
-		{
-			data->exit_status = 130;
 			g_received_signal = 0;
-		}
 		if (!data->user_line)
 		{
 			if (isatty(STDIN_FILENO))
@@ -51,8 +48,6 @@ int	minishell_loop(t_data *data)
 		}
 		if (lexer(data) == EXIT_SUCCESS && parsing(data) == EXIT_SUCCESS)
 			data->exit_status = executing(data);
-		else
-			g_received_signal = 2;
 		ft_free_all(data);
 	}
 	return (EXIT_SUCCESS);
