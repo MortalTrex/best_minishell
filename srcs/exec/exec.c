@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 17:07:33 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/28 19:40:12 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:33:47 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	execute_command(t_cmd *current, t_data *data)
 		data->exit_status = 0;
 		ft_free_all_and_exit(data, data->exit_status);
 	}
-	
 	if (current->is_builtin == true)
 		ft_detect_builtin(current, data, true);
 	else
@@ -88,7 +87,7 @@ int	executing(t_data *data)
 	int			prev_fd;
 
 	if (data == NULL || data->commands == NULL)
-		return (-1);
+		return (EXIT_FAILURE);
 	current = data->commands;
 	prev_fd = 0;
 	if (!current->next && current->is_builtin == true && (!current->redirs

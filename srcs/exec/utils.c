@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:31:37 by mmiilpal          #+#    #+#             */
-/*   Updated: 2025/02/28 18:45:29 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:35:07 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 int	check_if_other_heredoc(t_token *current)
 {
@@ -80,7 +78,7 @@ void	wait_commands(t_data *data)
 				ft_putstr_fd("\n", STDERR_FILENO);
 		}
 	}
-	if (g_exit_status == 130)
+	if (g_received_signal == SIGINT)
 		data->exit_status = 130;
 }
 

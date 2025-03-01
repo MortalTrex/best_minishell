@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmiilpal <mmiilpal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbalazs <rbalazs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 14:17:40 by rbalazs           #+#    #+#             */
-/*   Updated: 2025/02/27 16:29:42 by mmiilpal         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:33:31 by rbalazs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// valgrind --suppressions=rlsupp.txt --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
-int	g_exit_status;
+int	g_received_signal;
 
 int	init_shell(t_data *data, char **env)
 {
@@ -39,10 +38,10 @@ int	minishell_loop(t_data *data)
 	{
 		signals_handler();
 		data->user_line = readline(PROMPT);
-		if (g_exit_status == 130)
+		if (g_received_signal == SIGINT)
 		{
 			data->exit_status = 130;
-			g_exit_status = 0;
+			g_received_signal = 0;
 		}
 		if (!data->user_line)
 		{
@@ -51,9 +50,9 @@ int	minishell_loop(t_data *data)
 			ft_free_all_and_exit(data, data->exit_status);
 		}
 		if (lexer(data) == EXIT_SUCCESS && parsing(data) == EXIT_SUCCESS)
-			g_exit_status = executing(data);
+			data->exit_status = executing(data);
 		else
-			g_exit_status = 1;
+			g_received_signal = 2;
 		ft_free_all(data);
 	}
 	return (EXIT_SUCCESS);
